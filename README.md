@@ -19,9 +19,4 @@
 
 [A useful reading list for basic and advanced Unix.] (http://www.ee.surrey.ac.uk/Teaching/Unix/books-uk.html)  
 
-## Course notes
-
-* [Introduction to the Course] (intro.rst)
-    + The Structure of the Course<structure>
-   Introduction to Unix<unix_intro>    
-   Some Unix Tools and Concepts<unix_two>
+## [Course notes](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/index.ipynb)
