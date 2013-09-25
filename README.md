@@ -21,7 +21,7 @@
 
 ## Course notes
 
-* [Introduction to the Course] (intro)
+* [Introduction to the Course] (intro.rst)
     + The Structure of the Course<structure>
    Introduction to Unix<unix_intro>    
    Some Unix Tools and Concepts<unix_two>
