@@ -1,25 +1,48 @@
 import networkx as nx
 import pylab as plt
+import numpy as np
+
+# this is far from perfect, but does a reasonable job
 
 plt.clf()
 G=nx.MultiDiGraph()
-H=nx.Graph(G)
-G.add_edge('root /','/home')
-G.add_edge('root /','/data')
-G.add_edge('/data','/data/geospatial_10')
-G.add_edge('/data/geospatial_10','/data/geospatial_10/plewis')
-G.add_edge('/data/geospatial_10','/data/geospatial_10/ucfajlg')
-G.add_edge('/home','/home/plewis')
-G.add_edge('/home/plewis','/home/plewis/Data')
-G.add_edge('/home/plewis','/home/plewis/msc')
-G.add_edge('/home/plewis/msc','/home/plewis/msc/hello.dat')
-G.add_edge('/home/plewis/msc','/home/plewis/msc/helloWorld.dat')
-G.add_edge('/home/plewis/msc','/home/plewis/msc/head.dat')
+
+names = np.array(['/data/geospatial_10','/data/geospatial_20','/home/ucfajlg/README',\
+                  '/home/plewis/msc/helloWorld.dat','/home/plewis/msc/hello.dat',\
+                  '/home/plewis/msc/head.dat'])
+all = {}
+for nn in names:
+  thisN = nn.split('/')
+  for i in xrange(len(thisN)):
+    try:
+      all[i].append(thisN[i])
+    except:
+      all[i] = [thisN[i]] 
+
+xpos = {}
+ypos = {}
+for k in all.keys():
+  all[k] = np.unique(all[k])
+  xpos[k] = np.arange(len(all[k]))*200 - (len(all[k])-1)*200/2
+  ypos[k] = k * -200
 
 
-pos=nx.spring_layout(G,iterations=2000)
-#pos=nx.graphviz_layout(G)
-#nx.draw_networkx_labels(G,pos,fontsize=14)
+for nn in names:
+  thisN = ['/' + i for i in nn.split('/')]
+  for i in xrange(1,len(thisN)):
+    G.add_edge(thisN[i-1],thisN[i])
+
+pos = {}
+for nn in names:
+  thisN = ['/' + i for i in nn.split('/')]
+  for level in xrange(len(thisN)):
+    thisAll = all[level]
+    ww = np.where(thisAll == thisN[level][1:])[0]
+    thisX = xpos[level][ww][0]
+    thisY = ypos[level]
+    pos[thisN[level]] = np.array([thisX,thisY])
+    G.add_node(thisN[level],pos=pos[thisN[level]])
+
 nx.draw(G,pos,node_size=0,alpha=0.4,edge_color='r',font_size=16)
 plt.savefig("diagramSystem1.png")
 plt.show()
