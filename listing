@@ -1,0 +1,15 @@
+total 1288
+-rw-r--r--  1 plewis  staff   57460 30 Sep 11:27 atm.dat
+-rw-r--r--  1 plewis  staff     356 30 Sep 11:27 country.dat
+-rw-r--r--  1 plewis  staff    2261 30 Sep 11:27 dem.dat
+-rw-r--r--  1 plewis  staff    1046 30 Sep 11:27 forest.dat
+-rw-r--r--  1 plewis  staff     375 30 Sep 11:27 head.dat
+-rw-r--r--  1 plewis  staff      84 30 Sep 11:27 header.dat
+-rw-r--r--  1 plewis  staff      14 30 Sep 11:27 hello.dat
+-rw-r--r--  1 plewis  staff      13 30 Sep 11:27 helloWorld.dat
+-rw-r--r--  1 plewis  staff  524603 30 Sep 11:27 landsat.dat
+-rw-r--r--  1 plewis  staff   22786 30 Sep 11:27 listing.dat
+-rw-r--r--  1 plewis  staff    2295 30 Sep 11:27 max.dat
+-rw-r--r--  1 plewis  staff     452 30 Sep 11:27 ndvi.awk
+-rw-r--r--  1 plewis  staff      75 30 Sep 11:27 points.dat
+-rw-r--r--  1 plewis  staff     355 30 Sep 11:27 popden.dat
