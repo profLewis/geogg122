@@ -19,4 +19,4 @@
 
 [A useful reading list for basic and advanced Unix.] (http://www.ee.surrey.ac.uk/Teaching/Unix/books-uk.html)  
 
-## [Course notes](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/index.ipynb)
+## [Course notes](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/f1_index.ipynb)
