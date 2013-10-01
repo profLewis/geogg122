@@ -1793,6 +1793,13 @@ In&nbsp;[1]:
 
 </div>
 <div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Index">Index<a class="anchor-link" href="#Index">&#182;</a></h1>
+</div>
+
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="#1.-A-Brief-Introduction-to-Unix">1. A Brief Introduction to Unix</a><br /><a href="#2.-Making-and-breaking-things-in-Unix">2. Making and breaking things in Unix</a><br /><a href="#3.-Some-more-Unix-and-associated-tools">3. Some more Unix and associated tools</a><br /><a href="#4.-Summary-of-all-commands">4. Summary of all commands</a></p>
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="1.-A-Brief-Introduction-to-Unix">1. A Brief Introduction to Unix<a class="anchor-link" href="#1.-A-Brief-Introduction-to-Unix">&#182;</a></h1>
 </div>
 
@@ -4591,7 +4598,7 @@ now you don&apos;t
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[85]:
+In&nbsp;[1]:
 </div>
 <div class="input_area box-flex1">
 <div class="highlight"><pre><span class="o">%%</span><span class="k">bash</span>
@@ -4627,7 +4634,7 @@ now you still see me
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[86]:
+In&nbsp;[2]:
 </div>
 <div class="input_area box-flex1">
 <div class="highlight"><pre><span class="o">%%</span><span class="k">bash</span>
@@ -4648,6 +4655,252 @@ In&nbsp;[86]:
 Now you see me
 now you still see me
 ad nauseam
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="more">more<a class="anchor-link" href="#more">&#182;</a></h4>
+</div>
+
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If the text file you are looking at has a lot of lines, it can scroll off the screen, which can be a bit frustrating.</p>
+<p>The unix command <code>more</code> lets you view a file one page at a time.</p>
+<p>First, let's create a long file:</p>
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[5]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="o">%%</span><span class="k">bash</span>
+<span class="n">echo</span> <span class="s">&quot;this is the start of file&quot;</span> <span class="o">&gt;</span> <span class="o">~/</span><span class="n">Data</span><span class="o">/</span><span class="n">unix</span><span class="o">/</span><span class="n">test2</span><span class="o">.</span><span class="n">dat</span>
+<span class="n">cat</span> <span class="o">~/</span><span class="n">Data</span><span class="o">/</span><span class="n">unix</span><span class="o">/</span><span class="n">test</span><span class="o">.</span><span class="n">dat</span> <span class="o">&gt;&gt;</span> <span class="o">~/</span><span class="n">Data</span><span class="o">/</span><span class="n">unix</span><span class="o">/</span><span class="n">test2</span><span class="o">.</span><span class="n">dat</span>
+<span class="n">cat</span> <span class="o">~/</span><span class="n">Data</span><span class="o">/</span><span class="n">unix</span><span class="o">/</span><span class="n">test</span><span class="o">.</span><span class="n">dat</span> <span class="o">&gt;&gt;</span> <span class="o">~/</span><span class="n">Data</span><span class="o">/</span><span class="n">unix</span><span class="o">/</span><span class="n">test2</span><span class="o">.</span><span class="n">dat</span>
+<span class="n">cat</span> <span class="o">~/</span><span class="n">Data</span><span class="o">/</span><span class="n">unix</span><span class="o">/</span><span class="n">test</span><span class="o">.</span><span class="n">dat</span> <span class="o">&gt;&gt;</span> <span class="o">~/</span><span class="n">Data</span><span class="o">/</span><span class="n">unix</span><span class="o">/</span><span class="n">test2</span><span class="o">.</span><span class="n">dat</span>
+<span class="n">cat</span> <span class="o">~/</span><span class="n">Data</span><span class="o">/</span><span class="n">unix</span><span class="o">/</span><span class="n">test</span><span class="o">.</span><span class="n">dat</span> <span class="o">&gt;&gt;</span> <span class="o">~/</span><span class="n">Data</span><span class="o">/</span><span class="n">unix</span><span class="o">/</span><span class="n">test2</span><span class="o">.</span><span class="n">dat</span>
+<span class="n">cat</span> <span class="o">~/</span><span class="n">Data</span><span class="o">/</span><span class="n">unix</span><span class="o">/</span><span class="n">test</span><span class="o">.</span><span class="n">dat</span> <span class="o">&gt;&gt;</span> <span class="o">~/</span><span class="n">Data</span><span class="o">/</span><span class="n">unix</span><span class="o">/</span><span class="n">test2</span><span class="o">.</span><span class="n">dat</span>
+<span class="n">cat</span> <span class="o">~/</span><span class="n">Data</span><span class="o">/</span><span class="n">unix</span><span class="o">/</span><span class="n">test</span><span class="o">.</span><span class="n">dat</span> <span class="o">&gt;&gt;</span> <span class="o">~/</span><span class="n">Data</span><span class="o">/</span><span class="n">unix</span><span class="o">/</span><span class="n">test2</span><span class="o">.</span><span class="n">dat</span>
+<span class="n">cat</span> <span class="o">~/</span><span class="n">Data</span><span class="o">/</span><span class="n">unix</span><span class="o">/</span><span class="n">test</span><span class="o">.</span><span class="n">dat</span> <span class="o">&gt;&gt;</span> <span class="o">~/</span><span class="n">Data</span><span class="o">/</span><span class="n">unix</span><span class="o">/</span><span class="n">test2</span><span class="o">.</span><span class="n">dat</span>
+<span class="n">cat</span> <span class="o">~/</span><span class="n">Data</span><span class="o">/</span><span class="n">unix</span><span class="o">/</span><span class="n">test</span><span class="o">.</span><span class="n">dat</span> <span class="o">&gt;&gt;</span> <span class="o">~/</span><span class="n">Data</span><span class="o">/</span><span class="n">unix</span><span class="o">/</span><span class="n">test2</span><span class="o">.</span><span class="n">dat</span>
+<span class="n">cat</span> <span class="o">~/</span><span class="n">Data</span><span class="o">/</span><span class="n">unix</span><span class="o">/</span><span class="n">test</span><span class="o">.</span><span class="n">dat</span> <span class="o">&gt;&gt;</span> <span class="o">~/</span><span class="n">Data</span><span class="o">/</span><span class="n">unix</span><span class="o">/</span><span class="n">test2</span><span class="o">.</span><span class="n">dat</span>
+<span class="n">cat</span> <span class="o">~/</span><span class="n">Data</span><span class="o">/</span><span class="n">unix</span><span class="o">/</span><span class="n">test</span><span class="o">.</span><span class="n">dat</span> <span class="o">&gt;&gt;</span> <span class="o">~/</span><span class="n">Data</span><span class="o">/</span><span class="n">unix</span><span class="o">/</span><span class="n">test2</span><span class="o">.</span><span class="n">dat</span>
+<span class="n">cat</span> <span class="o">~/</span><span class="n">Data</span><span class="o">/</span><span class="n">unix</span><span class="o">/</span><span class="n">test</span><span class="o">.</span><span class="n">dat</span> <span class="o">&gt;&gt;</span> <span class="o">~/</span><span class="n">Data</span><span class="o">/</span><span class="n">unix</span><span class="o">/</span><span class="n">test2</span><span class="o">.</span><span class="n">dat</span>
+<span class="n">cat</span> <span class="o">~/</span><span class="n">Data</span><span class="o">/</span><span class="n">unix</span><span class="o">/</span><span class="n">test</span><span class="o">.</span><span class="n">dat</span> <span class="o">&gt;&gt;</span> <span class="o">~/</span><span class="n">Data</span><span class="o">/</span><span class="n">unix</span><span class="o">/</span><span class="n">test2</span><span class="o">.</span><span class="n">dat</span>
+<span class="n">cat</span> <span class="o">~/</span><span class="n">Data</span><span class="o">/</span><span class="n">unix</span><span class="o">/</span><span class="n">test</span><span class="o">.</span><span class="n">dat</span> <span class="o">&gt;&gt;</span> <span class="o">~/</span><span class="n">Data</span><span class="o">/</span><span class="n">unix</span><span class="o">/</span><span class="n">test2</span><span class="o">.</span><span class="n">dat</span>
+<span class="n">echo</span> <span class="s">&quot;this is the end of file&quot;</span> <span class="o">&gt;&gt;</span> <span class="o">~/</span><span class="n">Data</span><span class="o">/</span><span class="n">unix</span><span class="o">/</span><span class="n">test2</span><span class="o">.</span><span class="n">dat</span>
+<span class="n">cat</span> <span class="o">~/</span><span class="n">Data</span><span class="o">/</span><span class="n">unix</span><span class="o">/</span><span class="n">test2</span><span class="o">.</span><span class="n">dat</span>
+</pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre>
+this is the start of file
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+this is the end of file
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This is probably long enough to scroll off your terminal.</p>
+<p>Instead of using <code>cat</code> to view such a file, use <code>more</code>.</p>
+<p>You can use the <code>space bar</code> to go down one page at a time, or <code>return</code> for a line at a time (also <code>b</code> to go back, <code>:3</code> to go to line 3, <code>/end</code> to search for the string <code>end</code>, etc.)</p>
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[6]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="o">%%</span><span class="k">bash</span>
+<span class="n">more</span> <span class="o">~/</span><span class="n">Data</span><span class="o">/</span><span class="n">unix</span><span class="o">/</span><span class="n">test2</span><span class="o">.</span><span class="n">dat</span>
+</pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre>
+this is the start of file
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+this is the end of file
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="less">less<a class="anchor-link" href="#less">&#182;</a></h4>
+</div>
+
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In some ways better that <code>more</code> is <code>less</code>. Try that on the file now.</p>
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[7]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="o">%%</span><span class="k">bash</span>
+<span class="n">less</span> <span class="o">~/</span><span class="n">Data</span><span class="o">/</span><span class="n">unix</span><span class="o">/</span><span class="n">test2</span><span class="o">.</span><span class="n">dat</span>
+</pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre>
+this is the start of file
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+this is the end of file
 
 </pre>
 </div>
@@ -4816,15 +5069,15 @@ ad nauseam
 <p>We have also mentioned that the default input for <code>stdin</code> is what you type at the keyboard, so we can use that to create some text in a file.</p>
 <p>We can use the command <code>cat</code> for this.</p>
 <p>If you type <code>cat</code> at the prompt:</p>
-<p><code>bash %berlin cat</code></p>
+<p><code>%berlin cat</code></p>
 <p>then what you type after that will be read into <code>cat</code> and sent to <code>stdout</code>.</p>
 <p>Try that now.</p>
 <p>To end the input (end the file) we type a <code>^D</code> character (the <code>control</code> and <code>D</code> keys together).</p>
 <p>for example, type or copy and paste some text such as:</p>
-<p><code>bash %berlin cat Gallia est omnis divisa in partes tres; unam partem incolunt Belgae, aliam Aquitani, tertiam qui ipsorum lingua Celtae, nostra Galli, appellantur. ^D</code></p>
+<p><code>%berlin cat Gallia est omnis divisa in partes tres; unam partem incolunt Belgae, aliam Aquitani, tertiam qui ipsorum lingua Celtae, nostra Galli, appellantur. ^D</code></p>
 <p>You should find that the lines you type are 'echoed' to the terminal when you hit <code>return</code> at the end of each line. This is because you are sending information to <code>cat</code> from the keyboard (visualised in the terminal so you can see what you are typing) on <code>stdin</code> and the output is also going to the terminal on <code>stdout</code>.</p>
 <p>If you wanted to type information that will go into a file, you can redirect the output of <code>cat</code> to a file:</p>
-<p><code>bash %berlin cat &gt; ~/Data/unix/gettysburg.dat The world will little note,  nor long remember what we say here,  but it can never forget what they did here. ^D</code></p>
+<p><code>%berlin cat &gt; ~/Data/unix/gettysburg.dat The world will little note,  nor long remember what we say here,  but it can never forget what they did here. ^D</code></p>
 <p>This will now be stored in the file <code>~/Data/unix/gettysburg.dat</code>.</p>
 <p>That's all very well, and often you will use this methbod to create some text in a file, but if you make a mistake, you will find that you can't easily edit it, which can be rather inconvenient.</p>
 </div>
@@ -4853,7 +5106,7 @@ ad nauseam
 </div>
 <div class="text_cell_render border-box-sizing rendered_html">
 <h5 id="vi-commands">vi commands</h5>
-<p><code>:w</code> - write<br /><code>:q</code> - quit<br /><code>:w somethingElse.dat</code> - write to file <code>somethingElse.dat</code><br /><code>:wq</code> - write and quit<br /><code>:q!</code> - force quit (without saving)<br /><code>:u</code> - undo</p>
+<p><code>:w</code> - write<br /><code>:q</code> - quit<br /><code>:w somethingElse.dat</code> - write to file <code>somethingElse.dat</code><br /><code>:wq</code> - write and quit<br /><code>:q!</code> - force quit (without saving)<br /><code>:u</code> - undo<br /><code>:100</code> - go to line 100 (etc)</p>
 <h5 id="escape-and-general-panic-button">escape (and general panic button)</h5>
 <p><code>ESC</code> - exit insert mode (escape key)</p>
 <h5 id="navigation-or-use-arrow-keys">navigation (or use arrow keys)</h5>
@@ -4869,8 +5122,8 @@ ad nauseam
 
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Use vi now to edit a file you have created, e.g.</p>
-<p><code>bash berlin% vi ~/Data/unix/gettysburg.dat</code></p>
-<p>Practice adding some more lines, changing the words etc., and save your edited file to ~/Data/unix/myGettysburg.dat</p>
+<p><code>berlin% vi ~/Data/unix/gettysburg.dat</code></p>
+<p>Practice adding some more lines, changing the words etc., and save your edited file to <code>~/Data/unix/myGettysburg.dat</code></p>
 </div>
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="3.3-Process-control">3.3 Process control<a class="anchor-link" href="#3.3-Process-control">&#182;</a></h2>
@@ -4887,7 +5140,7 @@ ad nauseam
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>When you start a process that opens another window, you may have noticed that no prompt was returned and that any subsequent typing in the parent window was ignored until you exited the command (or it finished some other way). This was because tool you started has taken over input to and output from the parent window, or more accurately, the shell running the window. In this state the program you started is said to be running in the foreground - that is no further processes can be started from that window/shell until textedit relinquishes control.</p>
 <p>As an example, try:</p>
-<p><code>bash berlin% xv ~plewis/msc/sar.jpg</code></p>
+<p><code>berlin% xv ~plewis/msc/sar.jpg</code></p>
 <p>This should open a window on your computer and display a SAR image (of Barton Bendish in Norfolk).</p>
 <div class="figure">
 <img src="images/sar.jpg" />
@@ -4907,10 +5160,10 @@ ad nauseam
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Sometimes then, we want to run a job in the <em>background</em>. This effectively means that the process will run independently of the shell, which means that the shell prompt will be freed up for further commands.</p>
 <p>We do this by putting an ampersand (<code>&amp;</code>) at the end of the command:</p>
-<p><code>bash berlin% ~plewis/msc/sar.jpg &amp; berlin%</code></p>
+<p><code>berlin% ~plewis/msc/sar.jpg &amp; berlin%</code></p>
 <p>And now you should see the command line prompt appear again (so you can nbow type <code>ls</code> if thats what you wanted to do).</p>
 <p>You should also have notices something else appearing which would be something like:</p>
-<p><code>bash [1] 3568</code></p>
+<p><code>[1] 3568</code></p>
 <p>The [n] indicates this is the nth job to be started in this shell, and n is the unique job number by which the process may be referenced within that shell (window). The second number on the line (3568) is known as the process ID (PID) of the program. This is the number by which the central processor of the workstation refers to the job. This number is unique to the program you have started, and may be used in any window to refer to this process, as will be see.</p>
 </div>
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -4942,20 +5195,21 @@ ad nauseam
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Within its parent window, a job may be referred to in certain commands a <code>%n</code>, where <code>n</code> is the number that was given in square brackets when the process was started.</p>
 <p>The job may be brought back into the foreground using:</p>
-<p><code>bash berlin% fg %n</code></p>
+<p><code>berlin% fg %n</code></p>
 <p>no prompt will be returned until either the job finishes or is placed back into the background.</p>
 </div>
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>kill</p>
+<h4 id="kill">kill<a class="anchor-link" href="#kill">&#182;</a></h4>
 </div>
+
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The job may be killled using:</p>
-<p><code>bash berlin% kill %n</code></p>
+<p><code>berlin% kill %n</code></p>
 <p>or</p>
-<p><code>bash berlin% kill -9 %n</code></p>
+<p><code>berlin% kill -9 %n</code></p>
 <p>if it refuses to die the first time.</p>
 <p>The priority of the job may be changed to let other people share the workstation:</p>
-<p><code>bash berlin% renice +19 %n 0: old priority 0, new priority 19</code></p>
+<p><code>berlin% renice +19 %n 0: old priority 0, new priority 19</code></p>
 </div>
 <div class="text_cell_render border-box-sizing rendered_html">
 <h4 id="jobs">jobs<a class="anchor-link" href="#jobs">&#182;</a></h4>
@@ -4972,7 +5226,7 @@ ad nauseam
 
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>If you made a note of the <code>PID</code> of each process when it started, then <code>kill</code> and <code>renice</code> can be used as before, but using the <code>PID</code> instead of job number:</p>
-<p><code>bash berlin% renice +19 3568 3568 : old priority 0, new priority 19 berlin% kill 3568</code></p>
+<p><code>berlin% renice +19 3568 3568 : old priority 0, new priority 19 berlin% kill 3568</code></p>
 <p>If you didn’t note the PID, there are two ways to find it:</p>
 <ul>
 <li>run the <code>top</code> command in another window and look at the process in the display</li>
@@ -4985,12 +5239,16 @@ ad nauseam
 
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><code>top</code> is a program used to display the processes currently using the most CPU (processing capacity) on a workstation. Typing <code>top</code> in a shelltool should result in a display similar to:</p>
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>```bash last pid : 3609; load averages : 0.00, 0.00, 0.00 03:47:19</p>
 <p>49 processes : 48 sleeping, 1 running</p>
 <p>Cpu states : % user, % nice, % system, % idle</p>
 <p>Memory : 11984K available, 11812K in use, 172K free, 2572K locked</p>
 <p>PID Username PRI NICE SIZE RES STATE TIME WCPU CPU COMMAND</p>
 <p>3598 plewis 15 19 125K 99K run 9:20 12:49% 0.95% xv 3609 plewis 26 0 225K 472K run 10:29 7.69% 0.22% textedit<br />3607 plewis 36 0 422K 432K sleep 0.00 3.23% 0.12% csh```</p>
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Look for your program in the far right column, and get its PID from the far left column (in this format). Typing <code>i</code> may reveal more processes if yours is not shown. Typing <code>u</code> and then your username will show only your jobs. Jobs can be killed (<code>k</code>) and reniced (<code>r</code>) from inside <code>top</code> - see <code>?</code>? for more details.</p>
 </div>
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -4999,7 +5257,7 @@ ad nauseam
 
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><code>ps</code> is similar to <code>top</code>, but just lists the processes rather than providing a continuously updated display:</p>
-<p><code>bash berlin% ps auxww | less USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND root         1  0.0  0.0  10368   696 ?        Ss   Sep13   0:04 init [5]   rpcuser   4034  0.0  0.0  10180   796 ?        Ss   Sep13   0:00 rpc.statd</code></p>
+<p><code>berlin% ps auxww | less USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND root         1  0.0  0.0  10368   696 ?        Ss   Sep13   0:04 init [5]   rpcuser   4034  0.0  0.0  10180   796 ?        Ss   Sep13   0:00 rpc.statd</code></p>
 </div>
 <div class="text_cell_render border-box-sizing rendered_html">
 <h4 id="nice">nice<a class="anchor-link" href="#nice">&#182;</a></h4>
@@ -5007,8 +5265,7 @@ ad nauseam
 
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Whenever a job that will either use a lot of the machines processing power (such as an image processing command) or take a long time to run is started, it must be ‘nice’d up’. That is, the priority of the job must be set so that other users can make use of the workstation whilst your job is running. This is achieved using either the <code>renice</code> command, as above, or preferably by using the <code>nice</code> command as the job is started:</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">berlin%</span> nice +19 xv ~plewis/msc/sar.jpg <span class="kw">&amp;</span>
-[<span class="kw">2</span>] 3610</code></pre>
+<p><code>berlin% nice +19 xv ~plewis/msc/sar.jpg &amp; [2] 3610</code></p>
 <p>This starts <code>xv</code> in the background, and sets its priority to allow fair use of the machine by other people. In fact, xv is not a process that would normally need to be niced, as, unless image processing operations are being performed it usually takes virtually no processing power. It is used here simply as an example.</p>
 </div>
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -5021,15 +5278,15 @@ ad nauseam
 
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><code>ping</code> sends some test packets to a remote computer and reports on what is returned. Normally, e.g. to check the status of a machine called <code>socrates.ucl.ac.uk</code> you just type:</p>
-<p><code>bash berlin% ping socrates.ucl.ac.uk</code></p>
+<p><code>berlin% ping socrates.ucl.ac.uk</code></p>
 <p>which will report e.g.:</p>
-<p>```bash PING socrates.ucl.ac.uk (144.82.110.1) 56(84) bytes of data. 64 bytes from socrates.ucl.ac.uk (144.82.110.1): icmp_seq=1 ttl=252 time=0.527 ms 64 bytes from socrates.ucl.ac.uk (144.82.110.1): icmp_seq=2 ttl=252 time=0.342 ms 64 bytes from socrates.ucl.ac.uk (144.82.110.1): icmp_seq=3 ttl=252 time=0.355 ms</p>
+<p>```PING socrates.ucl.ac.uk (144.82.110.1) 56(84) bytes of data. 64 bytes from socrates.ucl.ac.uk (144.82.110.1): icmp_seq=1 ttl=252 time=0.527 ms 64 bytes from socrates.ucl.ac.uk (144.82.110.1): icmp_seq=2 ttl=252 time=0.342 ms 64 bytes from socrates.ucl.ac.uk (144.82.110.1): icmp_seq=3 ttl=252 time=0.355 ms</p>
 <p>--- socrates.ucl.ac.uk ping statistics --- 3 packets transmitted, 3 received, 0% packet loss, time 2001ms rtt min/avg/max/mdev = 0.342/0.408/0.527/0.084 ms```</p>
 <p>Use <code>^C</code> to quit <code>ping</code>.</p>
 <p>If nothing happens for some time, the machine is probably not available (because it is down or the network in unreachable). You can wait for a timeout, or use <code>^C</code> (<code>Control</code> and <code>C</code>) at the same time) to quit the command. To limit the call to a certain number of attempts, use:</p>
-<p><code>bash berlin% ping -c 10 socrates.ucl.ac.uk</code></p>
+<p><code>berlin% ping -c 10 socrates.ucl.ac.uk</code></p>
 <p>If the response is:</p>
-<p><code>bash --- socrates.ucl.ac.uk ping statistics --- 10 packets transmitted, 0 packets received, 100.0% packet loss</code></p>
+<p><code>--- socrates.ucl.ac.uk ping statistics --- 10 packets transmitted, 0 packets received, 100.0% packet loss</code></p>
 <p>Then you can’t currently access the machine.</p>
 </div>
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -5038,11 +5295,11 @@ ad nauseam
 
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Secure file transfer using <code>ssh</code> protocols. If working from a terminal (shell) and you want to transfer files from your local machine to a machine e.g. <code>shankly.geog.ucl.ac.uk</code>, <code>cd</code> to where the files are on the local machine, then type:</p>
-<p><code>bash berlin% sftp shankly.geog.ucl.ac.uk</code></p>
+<p><code>berlin% sftp shankly.geog.ucl.ac.uk</code></p>
 <p>at which point you will normally be prompted for a password. If the username on the local and remote machines are different, you should use:</p>
-<p><code>bash berlin% sftp plewis@shankly.geog.ucl.ac.uk</code></p>
+<p><code>berlin% sftp plewis@shankly.geog.ucl.ac.uk</code></p>
 <p>You can then use the <a href="http://kb.iu.edu/data/akqg.html">limited command set</a> within <code>sftp</code> to change directory etc. and copy the files to or from the remote machine. A typical session then would be something along the lines of:</p>
-<p><code>bash sftp&gt; cd whereIWantToPutTheData  sftp&gt; put theFileIWantToTransfer.dat</code></p>
+<p><code>sftp&gt; cd whereIWantToPutTheData  sftp&gt; put theFileIWantToTransfer.dat</code></p>
 <p>to copy the local file <code>theFileIWantToTransfer.dat</code> into the directory <code>whereIWantToPutTheData</code> on the remote machine. Similarly to pull a file from the remote machine, use <code>get</code> rather than <code>put</code>.</p>
 <p>Use <code>exit</code> to exit the <code>sftp</code> session.</p>
 </div>
@@ -5052,7 +5309,7 @@ ad nauseam
 
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Sometimes, it is convenient to use <code>scp</code>, a secure copy command that you can use over digfferent machines on the network when they do not have common disk access. The syntax is of the form:</p>
-<p><code>bash scp plewis@shankly.geog.ucl.ac.uk:///home/plewis/msc/hello.dat ~/Data/helloLewis.dat</code></p>
+<p><code>scp plewis@shankly.geog.ucl.ac.uk:///home/plewis/msc/hello.dat ~/Data/helloLewis.dat</code></p>
 </div>
 <div class="text_cell_render border-box-sizing rendered_html">
 <h4 id="ssh">ssh<a class="anchor-link" href="#ssh">&#182;</a></h4>
@@ -5060,12 +5317,12 @@ ad nauseam
 
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Securely connect (‘log in’) to a shell on a remote computer. To set up an interactive session, from a terminal or <code>ssh</code> client type:</p>
-<p><code>bash home% ssh plewis@shankly.geog.ucl.ac.uk</code></p>
+<p><code>home% ssh plewis@shankly.geog.ucl.ac.uk</code></p>
 <p>and respond to any confirmation request (the first time you connect two machines) and the request for your password.</p>
 <p>If you wish to run a session that uses X11, you need to set X11 tunneling:</p>
-<p><code>bash home% ssh -X plewis@shankly.geog.ucl.ac.uk</code></p>
+<p><code>home% ssh -X plewis@shankly.geog.ucl.ac.uk</code></p>
 <p>on most unix/linux machines, or:</p>
-<p><code>bash home% ssh -Y ucfaabc@shankly.geog.ucl.ac.uk</code></p>
+<p><code>home% ssh -Y ucfaabc@shankly.geog.ucl.ac.uk</code></p>
 <p>from OS X.</p>
 <p>From a Windows machine, you should be able to connect using a client such as <code>putty</code>, but this does not directly allow <code>X11</code> sessions. To do that, you need some <code>X11</code> software (on the Windows machine) such as <code>exceed</code>. You can purchase that software, or at no cost, use a WTS session (see above) to start up <a href="http://faq.rutgers.edu/?q=node/836">exceed</a> and then use e.g. <code>putty</code> (or tools in exceed) with <code>X11</code> forwarding.</p>
 <p>There are several alternatives to this from a Windows machine, one of which is to set up a unix environment within windows using <code>cygwin</code> but that might be too complex for novice users.</p>
@@ -5079,10 +5336,10 @@ ad nauseam
 <p>Once you (think you have) established a remote session with X11, you should test it out, trying to open a simple application such as <code>xclock</code> or <code>xv</code> or <code>xeyes</code> from the remote machine onto your local machine.</p>
 <p>If you are sure you are on a secure machine, you can set things up so that you don’t have to keep typing the password when you connect (see here) but remember that anybody else will be able to connect those machines without a password.</p>
 <p>Finally, if what you want to do with <code>ssh</code> is not to run an interactive session, but to run a process on the remote machine (e.g. for some parallel processing), then you would normally use <code>ssh -f</code> for this, with the option <code>-X</code> (or <code>-Y</code> for OS X) if the processing requires <code>X11</code>. A simple example would be, get a listing of your home directory:</p>
-<p><code>bash home% ssh -f ucfaabc@shankly.geog.ucl.ac.uk &quot;ls -l /home/plewis&quot;</code></p>
+<p><code>home% ssh -f ucfaabc@shankly.geog.ucl.ac.uk &quot;ls -l /home/plewis&quot;</code></p>
 <p>This will execute the sequence of commands in quotes on the remote machine, then, when completed, terminate the session (that is what the <code>-f</code> flag does). If you want to ssh from that machine onto another (to run a process) that is a little more involved.</p>
 <p>One way to do this would be e.g.:</p>
-<p><code>bash home% ssh -f shankly.geog.ucl.ac.uk 'ssh -f berlin.geog.ucl.ac.uk &quot;uname -a;pwd; cd /home/plewis ; ls -l&quot;'</code></p>
+<p><code>home% ssh -f shankly.geog.ucl.ac.uk 'ssh -f berlin.geog.ucl.ac.uk &quot;uname -a;pwd; cd /home/plewis ; ls -l&quot;'</code></p>
 <p>which will <code>ssh</code> onto <code>shankly.geog.ucl.ac.uk</code> and from there run an <code>ssh</code> process onto <code>berlin</code> and then run the requested sequence of commands. Note that in this case you will have needed to previously ssh'd from <code>shankly</code> to <code>berlin</code> to have responded to the authentification request. This is a littler convoluted, especially the use of quotes here but is it feasible and sometimes useful to do this. You are much more likely to make use of this sort of command directly from within the UCL Geography system, in which case you do not need multiple levels of <code>ssh</code> calls to get through the firewall.</p>
 </div>
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -5090,9 +5347,16 @@ ad nauseam
 </div>
 
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>In this section, you should have learned how to deal with copying, moving files and directories and related issues such as file permissions. You should also have gained some understanding of how to control what is going on in the unix environment a little more.</p>
+<p>In this section, you should have learned a wider set of commands to control what is going on in the unix environment a little more. You may not remember all of these to start with, but can use this page as a reference as you explore what you can do with the operating system.</p>
 <h4 id="commands-in-this-section">Commands in this section</h4>
-<p>[<a href="#chmod"><code>chmod</code></a>] : change mode</p>
+<p>[<a href="#awk"><code>awk</code></a>] : pattern scanning and interpretation language<br />[<a href="#appending"><code>&gt;&gt;</code></a>] : appending to file<br />[<a href="#background"><code>bg</code></a>] : background process<br />[<a href="#cat"><code>cat</code></a>] : concatenate<br />[<a href="#date"><code>date</code></a>] : date<br />[<a href="#echo"><code>echo</code></a>] : echo<br />[<a href="#fg"><code>fg</code></a>] : foreground<br />[<a href="#grep"><code>grep</code></a>] : globally search a regular expression and print<br />[<a href="#jobs"><code>jobs</code></a>] : process jobs<br />[<a href="#kill"><code>kill</code></a>] : kill a process<br />[<a href="#less"><code>less</code></a>] : less<br />[<a href="#more"><code>more</code></a>] : more<br />[<a href="#nice"><code>nice</code></a>] : nice a process<br />[<a href="#ping"><code>ping</code></a>] : ping<br />[<a href="#pipe"><code>|</code></a>] : pipe<br />[<a href="#ps"><code>ps</code></a>] : process show<br />[<a href="#sed"><code>sed</code></a>] : stream editor<br />[<a href="#sfscptp"><code>scp</code></a>] : secure copy<br />[<a href="#sftp"><code>sftp</code></a>] : secure file transfer protocol<br />[<a href="#ssh"><code>ssh</code></a>] : secure shell<br />[<a href="#stderr"><code>&gt;&amp;</code></a>] : standard error <code>&gt;&amp;</code> or <code>2&gt;</code><br />[<a href="#stdin"><code>&lt;</code></a>] : standard input <code>&lt;</code><br />[<a href="#stdout"><code>&gt;</code></a>] : standard output <code>&gt;</code><br />[<a href="#streams"><code>streams</code></a>] : streams<br />[<a href="#top"><code>top</code></a>] : top processes<br />[<a href="#vi"><code>vi</code></a>] : vi editor<br />[<a href="#wc"><code>wc</code></a>] : wc</p>
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="4.-Summary-of-all-commands">4. Summary of all commands<a class="anchor-link" href="#4.-Summary-of-all-commands">&#182;</a></h1>
+</div>
+
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>[<a href="#awk"><code>awk</code></a>] : pattern scanning and interpretation language<br />[<a href="#appending"><code>&gt;&gt;</code></a>] : appending to file<br />[<a href="#background"><code>bg</code></a>] : background process<br />[<a href="#cat"><code>cat</code></a>] : concatenate<br />[<a href="#cd"><code>cd</code></a>] : change directory<br />[<a href="#chmod"><code>chmod</code></a>] : change mode<br />[<a href="#cp"><code>cp</code></a>] : copy<br />[<a href="#date"><code>date</code></a>] : date<br />[<a href="#df"><code>df</code></a>] : disk free<br />[<a href="#du"><code>du</code></a>] : disk usage<br />[<a href="#dot"><code>.</code></a>]: dot (current level)<br />[<a href="#dotdot"><code>..</code></a>] : dot dot (up one level) [<a href="#echo"><code>echo</code></a>] : echo<br />[<a href="#fg"><code>fg</code></a>] : foreground<br />[<a href="#grep"><code>grep</code></a>] : globally search a regular expression and print<br />[<a href="#jobs"><code>jobs</code></a>] : process jobs<br />[<a href="#kill"><code>kill</code></a>] : kill a process<br />[<a href="#less"><code>less</code></a>] : less<br />[<a href="#passwd"><code>ls</code></a>] : list<br />[<a href="#ls--l"><code>ls -l</code></a>] : long listing<br />[<a href="#more"><code>more</code></a>] : more<br />[<a href="#mkdir"><code>mkdir</code></a>] : make directory<br />[<a href="#mv"><code>mv</code></a>] : move<br />[<a href="#nice"><code>nice</code></a>] : nice a process<br />[<a href="#ls"><code>passwd</code></a>] : change password<br />[<a href="#ping"><code>ping</code></a>] : ping<br />[<a href="#pipe"><code>|</code></a>] : pipe<br />[<a href="#ps"><code>ps</code></a>] : process show<br />[<a href="#pwd"><code>pwd</code></a>]: print working directory<br />[<a href="#quota"><code>quota</code></a>] : personal disk quota<br />[<a href="#rm"><code>rm</code></a>] : remove<br />[<a href="#rmdir"><code>rmdir</code></a>] : remove (empty) directory<br />[<a href="#sed"><code>sed</code></a>] : stream editor<br />[<a href="#sfscptp"><code>scp</code></a>] : secure copy<br />[<a href="#sftp"><code>sftp</code></a>] : secure file transfer protocol<br />[<a href="#ssh"><code>ssh</code></a>] : secure shell<br />[<a href="#stderr"><code>&gt;&amp;</code></a>] : standard error <code>&gt;&amp;</code> or <code>2&gt;</code><br />[<a href="#stdin"><code>&lt;</code></a>] : standard input <code>&lt;</code><br />[<a href="#stdout"><code>&gt;</code></a>] : standard output <code>&gt;</code><br />[<a href="#streams"><code>streams</code></a>] : streams<br />[<a href="#top"><code>top</code></a>] : top processes<br />[<a href="#twiddle"><code>~</code></a>]: tilde (twiddle) - home<br />[<a href="#vi"><code>vi</code></a>] : vi editor<br />[<a href="#wc"><code>wc</code></a>] : wc<br />[<a href="#Wildcards"><code>*?</code></a>] : wildcards</p>
 </div>
 </body>
 </html>
