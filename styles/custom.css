@@ -3,6 +3,20 @@
         font-family: "Computer Modern";
         src: url('http://mirrors.ctan.org/fonts/cm-unicode/fonts/otf/cmunss.otf');
     }
+    #headline1 { 
+      background-image: url(images/logo.png); 
+      background-repeat: no-repeat; 
+      background-position: left top; 
+      padding-top:68px; 
+      margin-bottom:50px; 
+    } 
+    #headline2 { 
+      background-image: url(images/logo.png); 
+      background-repeat: 
+      no-repeat; 
+      background-position: left top; 
+      padding-top:68px; 
+    }
     div.cell{
         width:800px;
         margin-left:16% !important;
