@@ -3910,7 +3910,15 @@ cp: /Users/plewis/Data/foo/foobar/hello.dat: Permission denied
 
 </div>
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="2.5-Summary">2.5 Summary<a class="anchor-link" href="#2.5-Summary">&#182;</a></h2>
+<h2 id="2.5-Exercise">2.5 Exercise<a class="anchor-link" href="#2.5-Exercise">&#182;</a></h2>
+</div>
+
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Go through the notes above, making sure you understand how to create and remove files and directories and how to move around the file system. That is the <em>minimum</em> you will need to start with. When you are doing this, <strong>don't</strong> just blindly type the commands given above, vary the file and directory names and make sure you appreciate what each command you type is doing (otherwise you won't learn this, I'm afraid).</p>
+<p>You should pay some attention to the notes on <code>quota</code> and related disk space/usage commands, as it is really quite likely that you will hit such problems at some time in the year, and you really ought to be able to fix such problems yourself. Remember, if you can't log on, the most likely reasons are: (i) you typed something wrong (so, check carefully); (ii) if you can't get in at the desktop, then probably you have gone over your quota. The most likely reason for going over quota is that you have put too many large files in your home area, instead of putting them in your <em>Data</em> area as you are supposed to. To fix that, log in as given above and delete the files from your home area until you are below quota, <em>or</em> (better) move them into the <em>Data</em> area (or better still, put them in the <em>Data</em> area in the first place and avoid this problem).</p>
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="2.6-Summary">2.6 Summary<a class="anchor-link" href="#2.6-Summary">&#182;</a></h2>
 </div>
 
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -5343,7 +5351,18 @@ ad nauseam
 <p>which will <code>ssh</code> onto <code>shankly.geog.ucl.ac.uk</code> and from there run an <code>ssh</code> process onto <code>berlin</code> and then run the requested sequence of commands. Note that in this case you will have needed to previously ssh'd from <code>shankly</code> to <code>berlin</code> to have responded to the authentification request. This is a littler convoluted, especially the use of quotes here but is it feasible and sometimes useful to do this. You are much more likely to make use of this sort of command directly from within the UCL Geography system, in which case you do not need multiple levels of <code>ssh</code> calls to get through the firewall.</p>
 </div>
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="3.6-Summary">3.6 Summary<a class="anchor-link" href="#3.6-Summary">&#182;</a></h2>
+<h2 id="3.6-Exercise">3.6 Exercise<a class="anchor-link" href="#3.6-Exercise">&#182;</a></h2>
+</div>
+
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This final section covers a bit more than the basics of unix, and in that sense, is a bit more than what we consider <em>critical</em> for you in this class. If you <em>do</em> learn these few other commands though, you should (hopefully) feel empowered to do more with your computers and get some real control over whats going on (rather than just clicking a button or sliding a slider).</p>
+<p>As a follow up to this section, you could try to see if you can access the unix system from outside of the lab and copy files to and from another computer.</p>
+<p>You might also like to look at further command line options for some of these commands. Mostly, there is a <code>--help</code> option (e.g. <code>ls --help</code>) that you can use. You can also access manual pages (type: <code>man ls</code>) or on some systems info pages (type: <code>info ls</code>). This will give you more depth to your understanding of what you can do with these commands.</p>
+<p>Getting to 'guru' status in unix will take you some time, but the more you explore and try things on the operating system, the more you will learn. If you are worried about breaking things, or just want to explore more, buy a cheap computer such as a <a href="http://www.raspberrypi.org/">raspberry pi</a> (around £25), install a free version of linux on it, and play!</p>
+<p>Finally, one other skill you might like to develop is to learn to write some shell programs (e.g. in bash). This can be a very useful thing to be able to do as you essentially make your own unix program by combining others. We will learn such skills using python in subsequent sessions, but there is value to at least learning the basics in a lower level shell language (e.g. <a href="http://www.tldp.org/LDP/Bash-Beginners-Guide/html/">bash</a> or <a href="http://www-cs.canisius.edu/ONLINESTUFF/UNIX/shellprogramming.html">csh</a>.</p>
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="3.7-Summary">3.7 Summary<a class="anchor-link" href="#3.7-Summary">&#182;</a></h2>
 </div>
 
 <div class="text_cell_render border-box-sizing rendered_html">
