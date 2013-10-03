@@ -1,0 +1,24 @@
+{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+                                                                                
+"features": [
+{ "type": "Feature", "properties": { "name": "Dartmoor national park" }, "geometry": { "type": "Point", "coordinates": [ -3.904, 50.58 ] } },
+{ "type": "Feature", "properties": { "name": "New forest national park" }, "geometry": { "type": "Point", "coordinates": [ -1.595, 50.86 ] } },
+{ "type": "Feature", "properties": { "name": "Exmoor national park" }, "geometry": { "type": "Point", "coordinates": [ -3.651, 51.14 ] } },
+{ "type": "Feature", "properties": { "name": "Pembrokeshire coast national park" }, "geometry": { "type": "Point", "coordinates": [ -4.694, 51.64 ] } },
+{ "type": "Feature", "properties": { "name": "Brecon beacons national park" }, "geometry": { "type": "Point", "coordinates": [ -3.432, 51.88 ] } },
+{ "type": "Feature", "properties": { "name": "Pembrokeshire coast national park" }, "geometry": { "type": "Point", "coordinates": [ -4.79, 51.99 ] } },
+{ "type": "Feature", "properties": { "name": "Norfolk and suffolk broads" }, "geometry": { "type": "Point", "coordinates": [ 1.569, 52.62 ] } },
+{ "type": "Feature", "properties": { "name": "Snowdonia national park" }, "geometry": { "type": "Point", "coordinates": [ -3.898, 52.9 ] } },
+{ "type": "Feature", "properties": { "name": "Peak district national park" }, "geometry": { "type": "Point", "coordinates": [ -1.802, 53.3 ] } },
+{ "type": "Feature", "properties": { "name": "Yorkshire dales national park" }, "geometry": { "type": "Point", "coordinates": [ -2.157, 54.23 ] } },
+{ "type": "Feature", "properties": { "name": "North yorkshire moors national park" }, "geometry": { "type": "Point", "coordinates": [ -0.8855, 54.37 ] } },
+{ "type": "Feature", "properties": { "name": "Lake district national park" }, "geometry": { "type": "Point", "coordinates": [ -3.084, 54.47 ] } },
+{ "type": "Feature", "properties": { "name": "Galloway forest park" }, "geometry": { "type": "Point", "coordinates": [ -4.171, 54.87 ] } },
+{ "type": "Feature", "properties": { "name": "Northumberland national park" }, "geometry": { "type": "Point", "coordinates": [ -2.228, 55.28 ] } },
+{ "type": "Feature", "properties": { "name": "Loch lomond and the trossachs national park" }, "geometry": { "type": "Point", "coordinates": [ -4.593, 56.24 ] } },
+{ "type": "Feature", "properties": { "name": "Tay forest park" }, "geometry": { "type": "Point", "coordinates": [ -4.025, 56.59 ] } },
+{ "type": "Feature", "properties": { "name": "Cairngorms national park" }, "geometry": { "type": "Point", "coordinates": [ -3.545, 57.08 ] } }
+]
+}
