@@ -8,10 +8,11 @@
 
 [Prof P. Lewis](http://www.geog.ucl.ac.uk/~plewis)
 
-### Course Staff
-[Prof P. Lewis] (http://www.geog.ucl.ac.uk/~plewis)  
+### Course and Contributing Staff
+[Prof Philip Lewis] (http://www.geog.ucl.ac.uk/~plewis)  
 [Dr. Qingling Wu] (http://www.geog.ucl.ac.uk/about-the-department/people/academic-staff/qingling-wu)  
-        
+[Dr. Jose Gomez-Dans](http://www.geog.ucl.ac.uk/about-the-department/people/research-staff/research-staff/jose-gomez-dans/)
+
 
 ### Useful links
 
