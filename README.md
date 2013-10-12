@@ -35,3 +35,20 @@
   [Advanced](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter2_Python_intro/advanced.ipynb)  
   [Advanced Answers](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter2_Python_intro/advanced_answers.ipynb)  
  
+ 
+ **3.0 Plotting and Numerical Python**
+      
+  In this session, we will introduce and use some packages that you will commonly use in scientific programming.
+      
+  These are: 
+      
+  [numpy](http://www.numpy.org/): NumPy is the fundamental package for scientific computing with Python   
+  [matplotlib](http://matplotlib.org/): Python 2D plotting library   
+    
+  We will also introduce some additional programming concepts, and set an exercise that you can do and get feedback on.   
+      
+  [Course Notes](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter3_Scientific_Numerical_Python/Scientific_Numerical_Python.ipynb)  
+  [Answers](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter3_Scientific_Numerical_Python/answers.ipynb)  
+  [Advanced](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter3_Scientific_Numerical_Python/advanced.ipynb)  
+      
+    
