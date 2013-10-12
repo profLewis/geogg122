@@ -1440,7 +1440,8 @@ input.engine_num_input{height:20px;margin-bottom:2px;padding-top:0;padding-botto
 .ansibgpurple{background-color:magenta;}
 .ansibgcyan{background-color:cyan;}
 .ansibggray{background-color:gray;}
-div.cell{border:1px solid transparent;display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;width:100%;padding:5px 5px 5px 0px;margin:2px 0px 2px 7px;outline:none;}div.cell.selected{border-radius:4px;border:thin #ababab solid;}
+.cell{border:1px solid transparent;display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;width:100%;}.cell.selected{border-radius:4px;border:thin #ababab solid;}
+div.cell{width:100%;padding:5px 5px 5px 0px;margin:2px 0px 2px 7px;outline:none;}
 div.prompt{width:11ex;padding:0.4em;margin:0px;font-family:monospace;text-align:right;line-height:1.231em;}
 .celltoolbar{border:thin solid #CFCFCF;border-bottom:none;background:#EEE;border-top-right-radius:3px;border-top-left-radius:3px;width:100%;-webkit-box-pack:end;height:22px;}
 .no_input_radius{border-top-right-radius:0px;border-top-left-radius:0px;}
@@ -1693,105 +1694,6 @@ init_mathjax();
 </head>
 <body>
 
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[21]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="c"># style sheet</span>
-<span class="kn">from</span> <span class="nn">IPython.core.display</span> <span class="kn">import</span> <span class="n">HTML</span>
-<span class="k">def</span> <span class="nf">css_styling</span><span class="p">():</span>
-    <span class="n">styles</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;../styles/custom.css&quot;</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">HTML</span><span class="p">(</span><span class="n">styles</span><span class="p">)</span>
-<span class="n">css_styling</span><span class="p">()</span>
-</pre></div>
-
-</div>
-</div>
-
-<div class="vbox output_wrapper">
-<div class="output vbox">
-
-
-<div class="hbox output_area"><div class="prompt output_prompt">
-    Out[21]:</div>
-<div class="box-flex1 output_subarea output_pyout">
-
-<div class="output_html rendered_html">
-<style>
-    @font-face {
-        font-family: "Computer Modern";
-        src: url('http://mirrors.ctan.org/fonts/cm-unicode/fonts/otf/cmunss.otf');
-    }
-    div#ipython-main-app {
-      background: url('images/logo.png') no-repeat top left;
-    }
-    div.cell{
-        width:800px;
-        margin-left:16% !important;
-        margin-right:auto;
-    }
-    h1 {
-        font-family: Helvetica, serif;
-    }
-    h4{
-        margin-top:12px;
-        margin-bottom: 3px;
-       }
-    div.text_cell_render{
-        font-family: Computer Modern, "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
-        line-height: 145%;
-        font-size: 130%;
-        width:800px;
-        margin-left:auto;
-        margin-right:auto;
-    }
-    .CodeMirror{
-            font-family: "Source Code Pro", source-code-pro,Consolas, monospace;
-    }
-    .prompt{
-        display: None;
-    }
-    .text_cell_render h5 {
-        font-weight: 300;
-        font-size: 22pt;
-        color: #4057A1;
-        font-style: italic;
-        margin-bottom: .5em;
-        margin-top: 0.5em;
-        display: block;
-    }
-    
-    .warning{
-        color: rgb( 240, 20, 20 )
-        }  
-</style>
-<script>
-    MathJax.Hub.Config({
-                        TeX: {
-                           extensions: ["AMSmath.js"]
-                           },
-                tex2jax: {
-                    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-                    displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
-                },
-                displayAlign: 'center', // Change this to 'center' to center equations.
-                "HTML-CSS": {
-                    styles: {'.MathJax_Display': {"margin": 4}}
-                }
-        });
-</script>
-
-</div>
-
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="welcome-to-geogg122-scientific-computing-univeristy-college-london">Welcome to GeogG122: Scientific Computing (Univeristy College London)</h1>
 <h2 id="course-information">Course information</h2>
@@ -1802,10 +1704,24 @@ In&nbsp;[21]:
 <h3 id="useful-links">Useful links</h3>
 <p><a href="http://moodle.ucl.ac.uk/course/view.php?id=13891">Course Moodle page</a></p>
 <p><a href="http://www.ee.surrey.ac.uk/Teaching/Unix/books-uk.html">A useful reading list for basic and advanced Unix.</a></p>
-<ol style="list-style-type: decimal">
-<li>Introduction<br /> 1.1 Introductory notes<br /> <a href="http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter0_Introduction/f1_index.ipynb">notebook</a><br /> <a href="http://htmlpreview.github.io/?https://github.com/profLewis/geogg122/blob/master/Chapter0_Introduction/f1_index.html">html</a><br /></li>
-<li>Unix<br /> 2.1 Unix notes<br /> <a href="http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter1_Unix/f3_1_unix_intro.ipynb">notebook</a><br /> <a href="http://htmlpreview.github.io/?https://raw.github.com/profLewis/geogg122/master/Chapter1_Unix/f3_1_unix_intro.html">html</a><br /> 2.2 Unix exercises<br /> <a href="http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter1_Unix/f3_1a_unix_intro_answers.ipynb">notebook</a><br /> <a href="http://htmlpreview.github.io/?https://raw.github.com/profLewis/geogg122/master/Chapter1_Unix/f3_1a_unix_intro_answers.html">html</a></li>
-</ol>
+<ul>
+<li><p><strong>0.0 Introduction </strong><br /> <a href="http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter0_Introduction/f1_index.ipynb">Introductory notes</a></p></li>
+<li><p><strong>1.0 Unix</strong><br /> <a href="http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter1_Unix/f3_1_unix_intro.ipynb">Unix notes</a><br /> <a href="http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter1_Unix/f3_1a_unix_intro_answers.ipynb">Unix exercises</a></p></li>
+<li><p><strong>2.0 Python 101</strong></p></li>
+</ul>
+<p>The aim of this Chapter is to introduce you to some of the fundamental concepts in Python. Mainly, this is based around fundamental data types in Python (<code>int</code>, <code>float</code>, <code>str</code>, <code>bool</code> etc.) and ways to group them (<code>tuple</code>, <code>list</code> and <code>dict</code>). We then learn about how to loop over groups of things, which gives us control to iterate some process. We need to spend a little time on strings, as you will likely to quite a bit of string processing in Scientific Computing (e.g. reading/writing data to/from ASCII text files). Although some of the examples we use are very simple to explain a concept, the more developed ones should be directly applicable to the sort of programming you are likely to need to do. A set of exercises is developed throughout the chapter, with worked answers available to you once you have had a go yourself. In addition, a more advanced section of the chapter is available, that goes into some more detail and complications. This too has a set of exercises with worked examples.</p>
+<pre><code>[Course Notes](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter2_Python_intro/python101.ipynb)  
+[Answers](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter2_Python_intro/main_answers.ipynb)  
+[Advanced](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter2_Python_intro/advanced.ipynb)  
+[Advanced Answers](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter2_Python_intro/advanced_answers.ipynb)  </code></pre>
+<ul>
+<li><p><strong>3.0 Plotting and Numerical Python</strong></p>
+<p>In this session, we will introduce and use some packages that you will commonly use in scientific programming.</p>
+<p>These are:</p>
+<p><a href="http://www.numpy.org/">numpy</a>: NumPy is the fundamental package for scientific computing with Python<br /><a href="http://matplotlib.org/">matplotlib</a>: Python 2D plotting library</p>
+<p>We will also introduce some additional programming concepts, and set an exercise that you can do and get feedback on.</p>
+<p><a href="http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter3_Scientific_Numerical_Python/Scientific_Numerical_Python.ipynb">Course Notes</a><br /><a href="http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter3_Scientific_Numerical_Python/answers.ipynb">Answers</a><br /><a href="http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter3_Scientific_Numerical_Python/advanced.ipynb">Advanced</a></p></li>
+</ul>
 </div>
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="purpose-of-this-course">Purpose of this course</h2>
@@ -1840,9 +1756,9 @@ In&nbsp;[21]:
 <h2 id="structure-of-the-course">Structure of the Course</h2>
 <ul>
 <li>06 3 Oct 09:00-13:00 4 hrs Introduction to Unix 110 PL</li>
-<li>07 10 Oct 09:00-13:00 4 hrs Introduction to Python 110 PL</li>
-<li>08 17 Oct 10:00-13:00 3 hrs Python coding 110 QW</li>
-<li>09 24 Oct 10:00-13:00 3 hrs Python coding 110 QW</li>
+<li>07 10 Oct 09:00-13:00 4 hrs Python 101 110 PL</li>
+<li>08 17 Oct 10:00-13:00 4 hrs Plotting and Numerical Python 110 QW</li>
+<li>09 24 Oct 10:00-13:00 3 hrs Raster and vector data 110 PL</li>
 <li>10 31 Oct 10:00-13:00 3 hrs Raster and vector data 110 PL</li>
 <li>11 READING WEEK (ENVI)<br /></li>
 <li>12 14 Nov 10:00-13:00 3 hrs Raster and vector data 110 PL</li>
@@ -1939,13 +1855,6 @@ In&nbsp;[21]:
 <p>From OS X, you use:</p>
 <p><code>ssh -Y username@shankly.geog.ucl.ac.uk</code></p>
 <p>but then the usual <code>-X</code> option once you get on to shankly. An alternative gateway, if <code>shankly</code> is down or busy is <code>lyon.geog.ucl.ac.uk</code>.</p>
-</div>
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Formatting">Formatting<a class="anchor-link" href="#Formatting">&#182;</a></h3>
-</div>
-
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>If you want to modify the formating of the notebooks, there are various <a href="http://nbviewer.ipython.org/urls/raw.github.com/Carreau/posts/master/Blog1.ipynb">useful posts on the matter</a></p>
 </div>
 </body>
 </html>
