@@ -1,12 +1,16 @@
 #!/bin/csh -f
 
-ipython nbconvert f1_index.ipynb
+foreach i (*.ipynb)
+ipython nbconvert $i
+end
+
 foreach i (*html)
   sed < $i 's/ipynb/html/g' > x ; mv x $i
   sed < $i 's/http:\/\/nbviewer.ipython.org\/urls\/raw.github.com\/profLewis\/geogg122\/master/../g' > x;mv x $i
 end
 
+set here = `pwd`
 git add *
-git commit -m 'fixed html links again Ch3'
+git commit -m "fixed html links again $here:t"
 git push origin master
 
