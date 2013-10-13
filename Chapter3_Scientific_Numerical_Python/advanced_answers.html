@@ -2197,7 +2197,11 @@ In&nbsp;[*]:
 <div class="highlight"><pre><span class="c"># warning: this will take some time (hours) to run</span>
 <span class="c"># and would be a good candidate for parallelisation</span>
 <span class="c"># so you should probably save the file afterwards and load</span>
-<span class="c"># it to demonstrate running</span>
+<span class="c"># it to demonstrate running.</span>
+<span class="c"># Also, we would expect the variation with latitude to vary only slowly</span>
+<span class="c"># (in the model used in the main notes, it doesn&#39;t vary at all with</span>
+<span class="c"># longitude) so this would be much more efficient if it were</span>
+<span class="c"># only calculated every N points and then interpolated</span>
 <span class="c"># here, we try to load a saved file before bothering</span>
 <span class="c"># to run</span>
 <span class="k">try</span><span class="p">:</span>
@@ -2268,6 +2272,19 @@ In&nbsp;[*]:
 </div>
 </div>
 
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This code is very slow.</p>
+<p>You should look it over and see how you might make it more efficient.</p>
+<p>Some ideas:</p>
+<ul>
+<li>interpolate the radiation field (over longitude for sure) and possibly ovewr latitude</li>
+<li>when calculating daily integrals, don;t start the calculations until the sun is above the horizon (and the same for sunset).</li>
+</ul>
+<p>The exercise asks you to perform summations over latitude. This should be simple enough, being of the form:</p>
+<pre><code>absorbed.sum(axis=(0,2))</code></pre>
+<p>which will sum over axes 0 (month) and 2 (longitude).</p>
+<p>Total absorbed involves working out the area for each sample pixel and including that in teh calculation. That is left as an exercise here.</p>
 </div>
 </body>
 </html>
