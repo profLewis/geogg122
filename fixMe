@@ -1,0 +1,19 @@
+#!/bin/csh -f
+foreach f (Ch*)
+  cd $f
+  foreach i (*.ipynb)
+    ipython nbconvert $i
+  end
+
+  foreach i (*html)
+    sed < $i 's/ipynb/html/g' > x ; mv x $i
+    sed < $i 's/http:\/\/nbviewer.ipython.org\/urls\/raw.github.com\/profLewis\/geogg122\/master/../g' > x;mv x $i
+  end
+  cd ..
+end
+
+set here = `pwd`
+git add *
+git commit -m "fixed html links again $here:t"
+git push origin master
+
