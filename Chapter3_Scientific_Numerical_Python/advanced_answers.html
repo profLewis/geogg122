@@ -2121,10 +2121,10 @@ In&nbsp;[56]:
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[68]:
+In&nbsp;[70]:
 </div>
 <div class="input_area box-flex1">
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">absorbed_power_density</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">minute_step</span><span class="o">=</span><span class="mi">60</span><span class="p">):</span>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">absorbed_power_density</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">minute_step</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span><span class="n">sub</span><span class="o">=</span><span class="mi">8</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Function to calculate the monthly total absorbed solar radiation</span>
 <span class="sd">        power density in MJ / m^2 for a given year</span>
 <span class="sd">        given an input dataset albedo and associated lat and lon</span>
@@ -2140,6 +2140,7 @@ In&nbsp;[68]:
 <span class="sd">        </span>
 <span class="sd">        minute_step : integer: resolution of steps in minutes. Must be</span>
 <span class="sd">                      a divisor of 60 (e.g. 10, 15, 30, 60)</span>
+<span class="sd">        sub          : sub sampling</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">data</span> <span class="o">=</span> <span class="n">masked</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;lat&#39;</span><span class="p">,</span><span class="s">&#39;lon&#39;</span><span class="p">,</span><span class="s">&#39;BHR_SW&#39;</span><span class="p">],</span><span class="n">year</span><span class="o">=</span><span class="n">year</span><span class="p">)</span>
@@ -2156,31 +2157,26 @@ In&nbsp;[68]:
     <span class="n">power_density</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">albedo</span><span class="p">),</span><span class="n">mask</span><span class="o">=</span><span class="n">albedo</span><span class="o">.</span><span class="n">mask</span><span class="p">)</span>
     <span class="c"># </span>
     
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">lat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">lat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">sub</span><span class="p">):</span>
         <span class="k">print</span> <span class="s">&#39;lat&#39;</span><span class="p">,</span><span class="n">lat</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">lat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
-            <span class="c"># only process if there is albedo</span>
-            <span class="c"># as this is going to be slow enough anyway</span>
-            <span class="k">if</span> <span class="n">albedo</span><span class="p">[:,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">():</span>
-                <span class="c">#print i,j</span>
-                <span class="n">pd</span> <span class="o">=</span> <span class="p">[]</span>
-                <span class="c"># loop over month</span>
-                <span class="k">for</span> <span class="n">month</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">12</span><span class="p">):</span>
-                    <span class="n">pd_month</span> <span class="o">=</span> <span class="p">[]</span>
-                    <span class="n">ndays</span> <span class="o">=</span> <span class="n">days_in_month</span><span class="p">(</span><span class="n">month</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">year</span><span class="o">=</span><span class="n">year</span><span class="p">)</span>
-                    <span class="c"># loop over days</span>
-                    <span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">ndays</span><span class="p">):</span>
-                        <span class="c"># solar radiation for that day</span>
-                        <span class="n">rad</span> <span class="o">=</span> <span class="n">radiation</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">day</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> \
-                                        <span class="n">lat</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">],</span> <span class="n">lon</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">],</span><span class="n">minute_step</span><span class="o">=</span><span class="n">minute_step</span><span class="p">)</span>
-                        <span class="n">pd_month</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">rad</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="n">minute_step</span><span class="p">])</span>
-                    <span class="n">pd_month</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pd_month</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
-                    <span class="n">pd</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">pd_month</span><span class="o">.</span><span class="n">sum</span><span class="p">()])</span>
-                <span class="n">pd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pd</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
-                <span class="c"># pd is the power density for each month</span>
-                
-                <span class="n">absorbed</span><span class="p">[:,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">albedo</span><span class="p">[:,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">])</span> <span class="o">/</span> <span class="mi">10</span><span class="o">**</span> <span class="mi">6</span> <span class="c"># MJ per m2</span>
-                <span class="n">power_density</span><span class="p">[:,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">lat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">sub</span><span class="p">):</span>
+            <span class="n">pd</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="c"># loop over month</span>
+            <span class="k">for</span> <span class="n">month</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">12</span><span class="p">):</span>
+                <span class="n">pd_month</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">ndays</span> <span class="o">=</span> <span class="n">days_in_month</span><span class="p">(</span><span class="n">month</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">year</span><span class="o">=</span><span class="n">year</span><span class="p">)</span>
+                <span class="c"># loop over days</span>
+                <span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">ndays</span><span class="p">):</span>
+                    <span class="c"># solar radiation for that day</span>
+                    <span class="n">rad</span> <span class="o">=</span> <span class="n">radiation</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">day</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> \
+                                    <span class="n">lat</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">],</span> <span class="n">lon</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">],</span><span class="n">minute_step</span><span class="o">=</span><span class="n">minute_step</span><span class="p">)</span>
+                    <span class="n">pd_month</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">rad</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="n">minute_step</span><span class="p">])</span>
+                <span class="n">pd_month</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pd_month</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+                <span class="n">pd</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">pd_month</span><span class="o">.</span><span class="n">sum</span><span class="p">()])</span>
+            <span class="n">pd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pd</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+            <span class="c"># pd is the power density for each month</span>
+            <span class="n">power_density</span><span class="p">[:,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span>
+    <span class="n">absorbed</span> <span class="o">=</span> <span class="n">pd</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">albedo</span><span class="p">)</span> <span class="o">/</span> <span class="mi">10</span><span class="o">**</span> <span class="mi">6</span> <span class="c"># MJ per m2</span>
     <span class="k">return</span> <span class="n">absorbed</span><span class="p">,</span><span class="n">power_density</span>
 </pre></div>
 
@@ -2214,32 +2210,11 @@ In&nbsp;[*]:
 </div>
 </div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
-
-
-<div class="hbox output_area"><div class="prompt"></div>
-<div class="box-flex1 output_subarea output_stream output_stdout">
-<pre>
-lat 89.6957
-lat 89.196
-lat 88.6963
-lat 88.1966
-lat 87.6969
-lat 87.1972
-lat
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[*]:
+In&nbsp;[]:
 </div>
 <div class="input_area box-flex1">
 <div class="highlight"><pre><span class="c"># this is how you can save a numpy array</span>
@@ -2253,7 +2228,7 @@ In&nbsp;[*]:
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[*]:
+In&nbsp;[]:
 </div>
 <div class="input_area box-flex1">
 <div class="highlight"><pre><span class="kn">import</span> <span class="nn">pylab</span> <span class="kn">as</span> <span class="nn">plt</span>
