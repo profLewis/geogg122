@@ -2,9 +2,8 @@ from netCDF4 import Dataset
 import numpy as np
 import numpy.ma as ma
 
-def masked(dataset='BHR_SW'):
+def masked(dataset='BHR_SW',year=2009):
   root = 'files/data/'
-  year = 2009
 
   # which months?
   months = xrange(1,13)

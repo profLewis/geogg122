@@ -24727,7 +24727,9 @@ TkSuQmCC
 </div>
 
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Using the material above and the global albedo datasets from the main class material, <strong>calculate an improved estimate of the total absorbed power per unit area per month (MJ per m^2 per month) for the Earth land surface</strong></p>
+<p>Using the material above and the global albedo datasets from the main class material, <strong>calculate an improved estimate of the total absorbed power per unit area per month (MJ per m^2 per month) for the Earth land surface</strong>.</p>
+<p>You should do this with a function that will take as input the 1-D numpy arrays <code>lat</code> and <code>lon</code> that in this case will be of shape <code>(360)</code> and <code>(720)</code>, and the albedo array <code>albedo</code> that in this case will be shape <code>(12,360,720)</code> (though obviously, your function should work with any sized 3-D and associated 1-D arrays). It will also need to know the year.</p>
+<p>You might have an optional argument <code>minute_step</code> to control the resolution of the calculation as above.</p>
 <p>You could then use this to derive latitudinal variations in annual and latitudinal total absorbed power per unit area.</p>
 </div>
 </body>
