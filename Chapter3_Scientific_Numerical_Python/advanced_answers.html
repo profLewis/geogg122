@@ -2121,7 +2121,7 @@ In&nbsp;[56]:
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[70]:
+In&nbsp;[76]:
 </div>
 <div class="input_area box-flex1">
 <div class="highlight"><pre><span class="k">def</span> <span class="nf">absorbed_power_density</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">minute_step</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span><span class="n">sub</span><span class="o">=</span><span class="mi">8</span><span class="p">):</span>
@@ -2157,9 +2157,9 @@ In&nbsp;[70]:
     <span class="n">power_density</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">albedo</span><span class="p">),</span><span class="n">mask</span><span class="o">=</span><span class="n">albedo</span><span class="o">.</span><span class="n">mask</span><span class="p">)</span>
     <span class="c"># </span>
     
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">lat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">sub</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">lat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
         <span class="k">print</span> <span class="s">&#39;lat&#39;</span><span class="p">,</span><span class="n">lat</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">lat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">sub</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">lat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">lat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">5</span><span class="p">):</span>
             <span class="n">pd</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="c"># loop over month</span>
             <span class="k">for</span> <span class="n">month</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">12</span><span class="p">):</span>
@@ -2187,7 +2187,7 @@ In&nbsp;[70]:
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[*]:
+In&nbsp;[75]:
 </div>
 <div class="input_area box-flex1">
 <div class="highlight"><pre><span class="c"># warning: this will take some time (hours) to run</span>
@@ -2206,6 +2206,88 @@ In&nbsp;[*]:
 <span class="k">except</span><span class="p">:</span>
     <span class="n">absorbed</span><span class="p">,</span><span class="n">power_density</span> <span class="o">=</span> <span class="n">absorbed_power_density</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">minute_step</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
 </pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre>
+lat 89.6957
+lat 85.6981
+lat
+</pre>
+</div>
+</div>
+
+<div class="hbox output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_pyerr">
+<pre>
+<span class="ansired">---------------------------------------------------------------------------</span>
+<span class="ansired">KeyboardInterrupt</span>                         Traceback (most recent call last)
+<span class="ansigreen">&lt;ipython-input-75-efa543d39458&gt;</span> in <span class="ansicyan">&lt;module&gt;</span><span class="ansiblue">()</span>
+<span class="ansigreen">     13</span>     absorbed<span class="ansiblue">,</span>power_density <span class="ansiblue">=</span> f<span class="ansiblue">[</span><span class="ansiblue">&apos;absorbed&apos;</span><span class="ansiblue">]</span><span class="ansiblue">,</span>f<span class="ansiblue">[</span><span class="ansiblue">&apos;power_density&apos;</span><span class="ansiblue">]</span><span class="ansiblue"></span>
+<span class="ansigreen">     14</span> <span class="ansigreen">except</span><span class="ansiblue">:</span><span class="ansiblue"></span>
+<span class="ansigreen">---&gt; 15</span><span class="ansired">     </span>absorbed<span class="ansiblue">,</span>power_density <span class="ansiblue">=</span> absorbed_power_density<span class="ansiblue">(</span>year<span class="ansiblue">,</span>minute_step<span class="ansiblue">=</span><span class="ansicyan">60</span><span class="ansiblue">)</span><span class="ansiblue"></span>
+
+<span class="ansigreen">&lt;ipython-input-74-56e0c7793eac&gt;</span> in <span class="ansicyan">absorbed_power_density</span><span class="ansiblue">(year, minute_step, sub)</span>
+<span class="ansigreen">     43</span>                 <span class="ansigreen">for</span> day <span class="ansigreen">in</span> xrange<span class="ansiblue">(</span>ndays<span class="ansiblue">)</span><span class="ansiblue">:</span><span class="ansiblue"></span>
+<span class="ansigreen">     44</span>                     <span class="ansired"># solar radiation for that day</span><span class="ansiblue"></span><span class="ansiblue"></span>
+<span class="ansigreen">---&gt; 45</span><span class="ansired">                     </span>rad <span class="ansiblue">=</span> radiation<span class="ansiblue">(</span>year<span class="ansiblue">,</span> month<span class="ansiblue">+</span><span class="ansicyan">1</span><span class="ansiblue">,</span> day<span class="ansiblue">+</span><span class="ansicyan">1</span><span class="ansiblue">,</span>                                     lat<span class="ansiblue">[</span>i<span class="ansiblue">,</span>j<span class="ansiblue">]</span><span class="ansiblue">,</span> lon<span class="ansiblue">[</span>i<span class="ansiblue">,</span>j<span class="ansiblue">]</span><span class="ansiblue">,</span>minute_step<span class="ansiblue">=</span>minute_step<span class="ansiblue">)</span><span class="ansiblue"></span>
+<span class="ansigreen">     46</span>                     pd_month<span class="ansiblue">.</span>append<span class="ansiblue">(</span><span class="ansiblue">[</span>rad<span class="ansiblue">[</span><span class="ansicyan">2</span><span class="ansiblue">]</span><span class="ansiblue">.</span>sum<span class="ansiblue">(</span><span class="ansiblue">)</span> <span class="ansiblue">*</span> <span class="ansicyan">60</span> <span class="ansiblue">*</span> minute_step<span class="ansiblue">]</span><span class="ansiblue">)</span><span class="ansiblue"></span>
+<span class="ansigreen">     47</span>                 pd_month <span class="ansiblue">=</span> np<span class="ansiblue">.</span>array<span class="ansiblue">(</span>pd_month<span class="ansiblue">)</span><span class="ansiblue">.</span>T<span class="ansiblue"></span>
+
+<span class="ansigreen">&lt;ipython-input-51-4fe849ab3823&gt;</span> in <span class="ansicyan">radiation</span><span class="ansiblue">(year, month, day, lat, lon, minute_step)</span>
+<span class="ansigreen">     28</span>             thr <span class="ansiblue">=</span> hour <span class="ansiblue">+</span> minute<span class="ansiblue">/</span><span class="ansicyan">60.</span><span class="ansiblue"></span>
+<span class="ansigreen">     29</span>             <span class="ansired"># append data line as tuple</span><span class="ansiblue"></span><span class="ansiblue"></span>
+<span class="ansigreen">---&gt; 30</span><span class="ansired">             </span>rad<span class="ansiblue">.</span>append<span class="ansiblue">(</span><span class="ansiblue">(</span>thr<span class="ansiblue">,</span><span class="ansiblue">)</span> <span class="ansiblue">+</span>                      solar<span class="ansiblue">(</span>year<span class="ansiblue">,</span> month<span class="ansiblue">,</span> day<span class="ansiblue">,</span> hour<span class="ansiblue">,</span> lat<span class="ansiblue">,</span> lon<span class="ansiblue">,</span> minute<span class="ansiblue">=</span>minute<span class="ansiblue">)</span> <span class="ansiblue">+</span>                     <span class="ansiblue">(</span>month<span class="ansiblue">,</span> day<span class="ansiblue">,</span> lat<span class="ansiblue">,</span> lon<span class="ansiblue">)</span><span class="ansiblue">)</span><span class="ansiblue"></span>
+<span class="ansigreen">     31</span>     <span class="ansired"># convert to numpy array</span><span class="ansiblue"></span><span class="ansiblue"></span>
+<span class="ansigreen">     32</span>     <span class="ansired"># transpose so access eg zenith as</span><span class="ansiblue"></span><span class="ansiblue"></span>
+
+<span class="ansigreen">&lt;ipython-input-51-4fe849ab3823&gt;</span> in <span class="ansicyan">solar</span><span class="ansiblue">(year, month, day, hour, lat_deg, lon_deg, minute, second)</span>
+<span class="ansigreen">     17</span> <span class="ansiblue"></span>
+<span class="ansigreen">     18</span>     d <span class="ansiblue">=</span> datetime<span class="ansiblue">(</span>year<span class="ansiblue">,</span> month<span class="ansiblue">,</span> day<span class="ansiblue">,</span> hour<span class="ansiblue">,</span> minute<span class="ansiblue">,</span> second<span class="ansiblue">)</span><span class="ansiblue"></span>
+<span class="ansigreen">---&gt; 19</span><span class="ansired">     </span>altitude_deg <span class="ansiblue">=</span> Pysolar<span class="ansiblue">.</span>GetAltitude<span class="ansiblue">(</span>lat_deg<span class="ansiblue">,</span> lon_deg<span class="ansiblue">,</span> d<span class="ansiblue">)</span><span class="ansiblue"></span>
+<span class="ansigreen">     20</span>     <span class="ansired"># W m^-2</span><span class="ansiblue"></span><span class="ansiblue"></span>
+<span class="ansigreen">     21</span>     solar_rad <span class="ansiblue">=</span> Pysolar<span class="ansiblue">.</span>solar<span class="ansiblue">.</span>radiation<span class="ansiblue">.</span>GetRadiationDirect<span class="ansiblue">(</span>d<span class="ansiblue">,</span> altitude_deg<span class="ansiblue">)</span><span class="ansiblue"></span>
+
+<span class="ansigreen">/Users/plewis/.local/lib/python2.7/site-packages/Pysolar-0.5-py2.7.egg/Pysolar/solar.pyc</span> in <span class="ansicyan">GetAltitude</span><span class="ansiblue">(latitude_deg, longitude_deg, utc_datetime, elevation, temperature_celsius, pressure_millibars)</span>
+<span class="ansigreen">     67</span>         aberration_correction <span class="ansiblue">=</span> GetAberrationCorrection<span class="ansiblue">(</span>radius_vector<span class="ansiblue">)</span><span class="ansiblue"></span>
+<span class="ansigreen">     68</span>         equatorial_horizontal_parallax <span class="ansiblue">=</span> GetEquatorialHorizontalParallax<span class="ansiblue">(</span>radius_vector<span class="ansiblue">)</span><span class="ansiblue"></span>
+<span class="ansigreen">---&gt; 69</span><span class="ansired">         </span>nutation <span class="ansiblue">=</span> GetNutation<span class="ansiblue">(</span>jde<span class="ansiblue">)</span><span class="ansiblue"></span>
+<span class="ansigreen">     70</span>         apparent_sidereal_time <span class="ansiblue">=</span> GetApparentSiderealTime<span class="ansiblue">(</span>jd<span class="ansiblue">,</span> jme<span class="ansiblue">,</span> nutation<span class="ansiblue">)</span><span class="ansiblue"></span>
+<span class="ansigreen">     71</span>         true_ecliptic_obliquity <span class="ansiblue">=</span> GetTrueEclipticObliquity<span class="ansiblue">(</span>jme<span class="ansiblue">,</span> nutation<span class="ansiblue">)</span><span class="ansiblue"></span>
+
+<span class="ansigreen">/Users/plewis/.local/lib/python2.7/site-packages/Pysolar-0.5-py2.7.egg/Pysolar/solar.pyc</span> in <span class="ansicyan">GetNutation</span><span class="ansiblue">(jde)</span>
+<span class="ansigreen">    252</span> <span class="ansiblue"></span>
+<span class="ansigreen">    253</span>         <span class="ansigreen">for</span> i <span class="ansigreen">in</span> range<span class="ansiblue">(</span>len<span class="ansiblue">(</span>abcd<span class="ansiblue">)</span><span class="ansiblue">)</span><span class="ansiblue">:</span><span class="ansiblue"></span>
+<span class="ansigreen">--&gt; 254</span><span class="ansired">                 </span>sigmaxy <span class="ansiblue">=</span> GetNutationAberrationXY<span class="ansiblue">(</span>jce<span class="ansiblue">,</span> i<span class="ansiblue">,</span> x<span class="ansiblue">)</span><span class="ansiblue"></span>
+<span class="ansigreen">    255</span>                 nutation_long<span class="ansiblue">.</span>append<span class="ansiblue">(</span><span class="ansiblue">(</span>abcd<span class="ansiblue">[</span>i<span class="ansiblue">]</span><span class="ansiblue">[</span><span class="ansicyan">0</span><span class="ansiblue">]</span> <span class="ansiblue">+</span> <span class="ansiblue">(</span>abcd<span class="ansiblue">[</span>i<span class="ansiblue">]</span><span class="ansiblue">[</span><span class="ansicyan">1</span><span class="ansiblue">]</span> <span class="ansiblue">*</span> jce<span class="ansiblue">)</span><span class="ansiblue">)</span> <span class="ansiblue">*</span> math<span class="ansiblue">.</span>sin<span class="ansiblue">(</span>math<span class="ansiblue">.</span>radians<span class="ansiblue">(</span>sigmaxy<span class="ansiblue">)</span><span class="ansiblue">)</span><span class="ansiblue">)</span><span class="ansiblue"></span>
+<span class="ansigreen">    256</span>                 nutation_oblique<span class="ansiblue">.</span>append<span class="ansiblue">(</span><span class="ansiblue">(</span>abcd<span class="ansiblue">[</span>i<span class="ansiblue">]</span><span class="ansiblue">[</span><span class="ansicyan">2</span><span class="ansiblue">]</span> <span class="ansiblue">+</span> <span class="ansiblue">(</span>abcd<span class="ansiblue">[</span>i<span class="ansiblue">]</span><span class="ansiblue">[</span><span class="ansicyan">3</span><span class="ansiblue">]</span> <span class="ansiblue">*</span> jce<span class="ansiblue">)</span><span class="ansiblue">)</span> <span class="ansiblue">*</span> math<span class="ansiblue">.</span>cos<span class="ansiblue">(</span>math<span class="ansiblue">.</span>radians<span class="ansiblue">(</span>sigmaxy<span class="ansiblue">)</span><span class="ansiblue">)</span><span class="ansiblue">)</span><span class="ansiblue"></span>
+
+<span class="ansigreen">/Users/plewis/.local/lib/python2.7/site-packages/Pysolar-0.5-py2.7.egg/Pysolar/solar.pyc</span> in <span class="ansicyan">GetNutationAberrationXY</span><span class="ansiblue">(jce, i, x)</span>
+<span class="ansigreen">    238</span> <span class="ansiblue"></span>
+<span class="ansigreen">    239</span> <span class="ansigreen">def</span> GetNutationAberrationXY<span class="ansiblue">(</span>jce<span class="ansiblue">,</span> i<span class="ansiblue">,</span> x<span class="ansiblue">)</span><span class="ansiblue">:</span><span class="ansiblue"></span>
+<span class="ansigreen">--&gt; 240</span><span class="ansired">         </span>y <span class="ansiblue">=</span> constants<span class="ansiblue">.</span>aberration_sin_terms<span class="ansiblue"></span>
+<span class="ansigreen">    241</span>         sigmaxy <span class="ansiblue">=</span> <span class="ansicyan">0.0</span><span class="ansiblue"></span>
+<span class="ansigreen">    242</span>         <span class="ansigreen">for</span> j <span class="ansigreen">in</span> range<span class="ansiblue">(</span>len<span class="ansiblue">(</span>x<span class="ansiblue">)</span><span class="ansiblue">)</span><span class="ansiblue">:</span><span class="ansiblue"></span>
+
+<span class="ansired">KeyboardInterrupt</span>: </pre>
+</div>
+</div>
+
+<div class="hbox output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre>
+ 33.7296
+
+</pre>
+</div>
+</div>
 
 </div>
 </div>
