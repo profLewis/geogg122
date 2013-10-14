@@ -1700,7 +1700,7 @@ init_mathjax();
 
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Using the material above and the global albedo datasets from the main class material, <strong>calculate an improved estimate of the total absorbed power per unit area per month (MJ per m^2 per month) for the Earth land surface</strong>.</p>
-<p>You should do this with a function that will take as input the 1-D numpy arrays <code>lat</code> and <code>lon</code> that in this case will be of shape <code>(360)</code> and <code>(720)</code>, and the albedo array <code>albedo</code> that in this case will be shape <code>(12,360,720)</code> (though obviously, your function should work with any sized 3-D and associated 1-D arrays). It will also need to know the year.</p>
+<p>You should do this with a function that will take as input the year and returns the monthly total absorbed power density (MJ m^-2 per month) and the monthly total power density (MJ m^-2 per month).</p>
 <p>You might have an optional argument <code>minute_step</code> to control the resolution of the calculation as above.</p>
 <p>You could then use this to derive latitudinal variations in annual and latitudinal total absorbed power per unit area.</p>
 </div>
@@ -1717,7 +1717,7 @@ init_mathjax();
 In&nbsp;[1]:
 </div>
 <div class="input_area box-flex1">
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">absorbed_power_density</span><span class="p">(</span><span class="n">lat</span><span class="p">,</span><span class="n">lon</span><span class="p">,</span><span class="n">albedo</span><span class="p">,</span><span class="n">year</span><span class="p">,</span><span class="n">minute_step</span><span class="o">=</span><span class="mi">30</span><span class="p">):</span>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">absorbed_power_density</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">minute_step</span><span class="o">=</span><span class="mi">60</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Function to calculate the monthly total absorbed solar radiation</span>
 <span class="sd">        power density in MJ / m^2 for a given year</span>
 <span class="sd">        given an input dataset albedo and associated lat and lon</span>
@@ -1727,19 +1727,14 @@ In&nbsp;[1]:
 <span class="sd">        </span>
 <span class="sd">        Aguments:</span>
 <span class="sd">        </span>
-<span class="sd">        lat   : numpy array of shape (nlat) with the latitude</span>
-<span class="sd">                in degrees.</span>
-<span class="sd">        lon   : numpy array of shape (nlon) with the longitude </span>
-<span class="sd">                in degrees</span>
-<span class="sd">        albedo: albedo dataset with shape (12,nlat,nlon)</span>
 <span class="sd">        year  : integer of the year</span>
 <span class="sd">        </span>
 <span class="sd">        Options:</span>
 <span class="sd">        </span>
 <span class="sd">        minute_step : integer: resolution of steps in minutes. Must be</span>
 <span class="sd">                      a divisor of 60 (e.g. 10, 15, 30, 60)</span>
+
 <span class="sd">    &#39;&#39;&#39;</span>
-    
 </pre></div>
 
 </div>
@@ -1753,7 +1748,7 @@ In&nbsp;[1]:
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[27]:
+In&nbsp;[2]:
 </div>
 <div class="input_area box-flex1">
 <div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
@@ -1774,7 +1769,7 @@ In&nbsp;[27]:
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[28]:
+In&nbsp;[3]:
 </div>
 <div class="input_area box-flex1">
 <div class="highlight"><pre><span class="c"># take the first lat and lon only as they are all the same</span>
@@ -1808,13 +1803,13 @@ In&nbsp;[28]:
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[29]:
+In&nbsp;[4]:
 </div>
 <div class="input_area box-flex1">
 <div class="highlight"><pre><span class="c"># pad out the lat and lon arrays</span>
 <span class="c"># this is a bit tricky so test this in parts</span>
 <span class="c"># we dont need this repeated for each month though</span>
-<span class="n">lat2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span> <span class="p">[</span><span class="n">lat</span><span class="p">]</span> <span class="o">*</span><span class="n">s</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+<span class="n">lat2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">lat</span><span class="p">]</span> <span class="o">*</span> <span class="n">s</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
 <span class="n">lon2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">lon</span><span class="p">]</span> <span class="o">*</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 
@@ -1825,7 +1820,7 @@ In&nbsp;[29]:
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[30]:
+In&nbsp;[5]:
 </div>
 <div class="input_area box-flex1">
 <div class="highlight"><pre><span class="k">print</span> <span class="n">lat2</span><span class="o">.</span><span class="n">shape</span>
@@ -1859,7 +1854,7 @@ In&nbsp;[30]:
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[33]:
+In&nbsp;[6]:
 </div>
 <div class="input_area box-flex1">
 <div class="highlight"><pre><span class="kn">import</span> <span class="nn">Pysolar</span>
@@ -1906,7 +1901,7 @@ In&nbsp;[33]:
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[34]:
+In&nbsp;[7]:
 </div>
 <div class="input_area box-flex1">
 <div class="highlight"><pre><span class="c"># UCL lat/lon</span>
@@ -1955,7 +1950,7 @@ In&nbsp;[34]:
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[51]:
+In&nbsp;[8]:
 </div>
 <div class="input_area box-flex1">
 <div class="highlight"><pre><span class="c"># functions so far</span>
@@ -2006,14 +2001,19 @@ In&nbsp;[51]:
 </div>
 
 </div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Before proceeding, let us examine the variation in total monthly power density with latitude.</p>
+<p>With the model developed in the main notes, we would expect no varition with longitude (it was a function of latitude only).</p>
+<p>In this more precise model, we would expect only small variation, but we should examine this:</p>
+</div>
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[52]:
+In&nbsp;[9]:
 </div>
 <div class="input_area box-flex1">
 <div class="highlight"><pre><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Processing -- test for one lat/long</span>
+<span class="sd">Processing -- test for several lat/long</span>
 <span class="sd">&#39;&#39;&#39;</span>
 
 <span class="n">year</span> <span class="o">=</span> <span class="mi">2010</span>
@@ -2036,29 +2036,34 @@ In&nbsp;[52]:
 <span class="c">#for i in xrange(lat.shape[0]):</span>
 <span class="c">#    for j in xrange(lat.shape[1]):</span>
 
-<span class="c"># try it out for one sample only</span>
-<span class="n">ww</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">albedo</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">i</span><span class="p">,</span><span class="n">j</span> <span class="o">=</span> <span class="n">ww</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">ww</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-<span class="k">print</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span>
+<span class="c"># try it out for 6 samples in longitude, including first and last</span>
+<span class="n">lons</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">lon</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">lon</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">5</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="n">lon</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
-<span class="n">pd</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="c"># loop over month</span>
-<span class="k">for</span> <span class="n">month</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">12</span><span class="p">):</span>
-    <span class="n">pd_month</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">ndays</span> <span class="o">=</span> <span class="n">days_in_month</span><span class="p">(</span><span class="n">month</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">year</span><span class="o">=</span><span class="n">year</span><span class="p">)</span>
-    <span class="k">print</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">month</span><span class="p">,</span><span class="n">ndays</span>
-    <span class="c"># loop over days</span>
-    <span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">ndays</span><span class="p">):</span>
-        <span class="c"># solar radiation for that day</span>
-        <span class="n">rad</span> <span class="o">=</span> <span class="n">radiation</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">day</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> \
-                        <span class="n">lat</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">],</span> <span class="n">lon</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">],</span><span class="n">minute_step</span><span class="o">=</span><span class="n">minute_step</span><span class="p">)</span>
-        <span class="n">pd_month</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">rad</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="n">minute_step</span><span class="p">])</span>
-    <span class="n">pd_month</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pd_month</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
-    <span class="n">pd</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">pd_month</span><span class="o">.</span><span class="n">sum</span><span class="p">()])</span>
-<span class="n">pd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pd</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
-<span class="c"># pd is the power density for each month</span>
+<span class="c"># an array to hold the sample pd for the sample</span>
+<span class="c"># longitudes</span>
+<span class="n">all_pd</span> <span class="o">=</span> <span class="p">[]</span>
 
-<span class="n">absorbed</span><span class="p">[:,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">albedo</span><span class="p">[:,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">])</span> <span class="o">/</span> <span class="mi">10</span><span class="o">**</span> <span class="mi">6</span> <span class="c"># Mj per m2</span>
+<span class="n">i</span> <span class="o">=</span> <span class="n">lon</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">lons</span><span class="p">:</span>
+    <span class="n">pd</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c"># loop over month</span>
+    <span class="k">for</span> <span class="n">month</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">12</span><span class="p">):</span>
+        <span class="n">pd_month</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">ndays</span> <span class="o">=</span> <span class="n">days_in_month</span><span class="p">(</span><span class="n">month</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">year</span><span class="o">=</span><span class="n">year</span><span class="p">)</span>
+        <span class="k">print</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">month</span><span class="p">,</span><span class="n">ndays</span>
+        <span class="c"># loop over days</span>
+        <span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">ndays</span><span class="p">):</span>
+            <span class="c"># solar radiation for that day</span>
+            <span class="n">rad</span> <span class="o">=</span> <span class="n">radiation</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">day</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> \
+                            <span class="n">lat</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">],</span> <span class="n">lon</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">],</span><span class="n">minute_step</span><span class="o">=</span><span class="n">minute_step</span><span class="p">)</span>
+            <span class="n">pd_month</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">rad</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="n">minute_step</span><span class="p">])</span>
+        <span class="n">pd_month</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pd_month</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">pd_month</span><span class="o">.</span><span class="n">sum</span><span class="p">()])</span>
+    <span class="c"># pd is the power density for each month</span>
+    <span class="n">all_pd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pd</span><span class="p">)</span>
+    
+<span class="c"># MJ per m2</span>
+<span class="n">all_pd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">all_pd</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -2071,10 +2076,9 @@ In&nbsp;[52]:
 <div class="hbox output_area"><div class="prompt"></div>
 <div class="box-flex1 output_subarea output_stream output_stdout">
 <pre>
-13 274
-13 274 0 31
-13 274 1 28
-13
+180 0 0 31
+180 0 1 28
+180
 </pre>
 </div>
 </div>
@@ -2086,10 +2090,14 @@ In&nbsp;[52]:
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[56]:
+In&nbsp;[10]:
 </div>
 <div class="input_area box-flex1">
-<div class="highlight"><pre><span class="k">print</span> <span class="n">absorbed</span><span class="p">[:,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">pylab</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lon</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">lons</span><span class="p">],</span><span class="n">all_pd</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">180.</span><span class="p">,</span><span class="mf">180.</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;latitude&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;power density total per month&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -2099,15 +2107,336 @@ In&nbsp;[56]:
 <div class="output vbox">
 
 
-<div class="hbox output_area"><div class="prompt"></div>
-<div class="box-flex1 output_subarea output_stream output_stdout">
-<pre>
-[0.0 0.0 77.39283752441406 435.597900390625 721.2518310546875 749.658203125
- 739.9719848632812 673.8375244140625 198.09326171875 1.3788892030715942 0.0
- 0.0]
-0
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[10]:</div>
+<div class="box-flex1 output_subarea output_pyout">
 
+
+<pre>
+&lt;matplotlib.text.Text at 0x15533ed0&gt;
 </pre>
+
+</div>
+</div>
+
+<div class="hbox output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_display_data">
+
+
+<img src="data:image/png;base64,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
+RU5ErkJggg==
+">
+
 </div>
 </div>
 
@@ -2116,15 +2445,18 @@ In&nbsp;[56]:
 
 </div>
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>So, with this in mind, let's just take a single value per latitude as otherwise the processing cost will be rather high.</p>
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Putting this into a function (in this case, reading the albedo, lat and long internally):</p>
 </div>
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[76]:
+In&nbsp;[13]:
 </div>
 <div class="input_area box-flex1">
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">absorbed_power_density</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">minute_step</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span><span class="n">sub</span><span class="o">=</span><span class="mi">8</span><span class="p">):</span>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">absorbed_power_density</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">minute_step</span><span class="o">=</span><span class="mi">60</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Function to calculate the monthly total absorbed solar radiation</span>
 <span class="sd">        power density in MJ / m^2 for a given year</span>
 <span class="sd">        given an input dataset albedo and associated lat and lon</span>
@@ -2140,7 +2472,7 @@ In&nbsp;[76]:
 <span class="sd">        </span>
 <span class="sd">        minute_step : integer: resolution of steps in minutes. Must be</span>
 <span class="sd">                      a divisor of 60 (e.g. 10, 15, 30, 60)</span>
-<span class="sd">        sub          : sub sampling</span>
+
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">data</span> <span class="o">=</span> <span class="n">masked</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;lat&#39;</span><span class="p">,</span><span class="s">&#39;lon&#39;</span><span class="p">,</span><span class="s">&#39;BHR_SW&#39;</span><span class="p">],</span><span class="n">year</span><span class="o">=</span><span class="n">year</span><span class="p">)</span>
@@ -2159,7 +2491,8 @@ In&nbsp;[76]:
     
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">lat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
         <span class="k">print</span> <span class="s">&#39;lat&#39;</span><span class="p">,</span><span class="n">lat</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">lat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">lat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">5</span><span class="p">):</span>
+        <span class="c"># single longitude</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="p">[</span><span class="n">lat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">]:</span>
             <span class="n">pd</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="c"># loop over month</span>
             <span class="k">for</span> <span class="n">month</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">12</span><span class="p">):</span>
@@ -2173,10 +2506,14 @@ In&nbsp;[76]:
                     <span class="n">pd_month</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">rad</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="n">minute_step</span><span class="p">])</span>
                 <span class="n">pd_month</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pd_month</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
                 <span class="n">pd</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">pd_month</span><span class="o">.</span><span class="n">sum</span><span class="p">()])</span>
-            <span class="n">pd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pd</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+            <span class="n">pd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pd</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+            
             <span class="c"># pd is the power density for each month</span>
-            <span class="n">power_density</span><span class="p">[:,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span>
-    <span class="n">absorbed</span> <span class="o">=</span> <span class="n">pd</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">albedo</span><span class="p">)</span> <span class="o">/</span> <span class="mi">10</span><span class="o">**</span> <span class="mi">6</span> <span class="c"># MJ per m2</span>
+            <span class="c"># load this into all longitudes</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">power_density</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+                <span class="n">power_density</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">pd</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+    <span class="n">power_density</span> <span class="o">/=</span> <span class="mf">10.</span><span class="o">**</span><span class="mi">6</span> <span class="c"># MJ per m2</span>
+    <span class="n">absorbed</span> <span class="o">=</span> <span class="n">power_density</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">albedo</span><span class="p">)</span> 
     <span class="k">return</span> <span class="n">absorbed</span><span class="p">,</span><span class="n">power_density</span>
 </pre></div>
 
@@ -2187,22 +2524,44 @@ In&nbsp;[76]:
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[75]:
+In&nbsp;[*]:
 </div>
 <div class="input_area box-flex1">
-<div class="highlight"><pre><span class="c"># warning: this will take some time (hours) to run</span>
-<span class="c"># and would be a good candidate for parallelisation</span>
-<span class="c"># so you should probably save the file afterwards and load</span>
-<span class="c"># it to demonstrate running.</span>
-<span class="c"># Also, we would expect the variation with latitude to vary only slowly</span>
-<span class="c"># (in the model used in the main notes, it doesn&#39;t vary at all with</span>
-<span class="c"># longitude) so this would be much more efficient if it were</span>
-<span class="c"># only calculated every N points and then interpolated</span>
-<span class="c"># here, we try to load a saved file before bothering</span>
-<span class="c"># to run</span>
+<div class="highlight"><pre><span class="c"># this will still take some minutes to calculate</span>
+<span class="n">absorbed</span><span class="p">,</span><span class="n">power_density</span> <span class="o">=</span> <span class="n">absorbed_power_density</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">minute_step</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[*]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="c"># this is how you can save a numpy array</span>
+<span class="n">np</span><span class="o">.</span><span class="n">savez</span><span class="p">(</span><span class="s">&#39;files/data/absorbed.npz&#39;</span><span class="p">,</span><span class="n">absorbed</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">absorbed</span><span class="p">),</span>\
+         <span class="n">power_density</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">power_density</span><span class="p">),</span><span class="n">mask</span><span class="o">=</span><span class="n">absorbed</span><span class="o">.</span><span class="n">mask</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[*]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="c"># now next time we should be able to load it</span>
 <span class="k">try</span><span class="p">:</span>
     <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;files/data/absorbed.npz&#39;</span><span class="p">)</span>
-    <span class="n">absorbed</span><span class="p">,</span><span class="n">power_density</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="s">&#39;absorbed&#39;</span><span class="p">],</span><span class="n">f</span><span class="p">[</span><span class="s">&#39;power_density&#39;</span><span class="p">]</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="s">&#39;mask&#39;</span><span class="p">]</span>
+    <span class="n">absorbed</span><span class="p">,</span><span class="n">power_density</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="s">&#39;absorbed&#39;</span><span class="p">],</span><span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">),</span>\
+                             <span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="s">&#39;power_density&#39;</span><span class="p">],</span><span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">)</span>
 <span class="k">except</span><span class="p">:</span>
     <span class="n">absorbed</span><span class="p">,</span><span class="n">power_density</span> <span class="o">=</span> <span class="n">absorbed_power_density</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">minute_step</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
 </pre></div>
@@ -2210,107 +2569,11 @@ In&nbsp;[75]:
 </div>
 </div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
-
-
-<div class="hbox output_area"><div class="prompt"></div>
-<div class="box-flex1 output_subarea output_stream output_stdout">
-<pre>
-lat 89.6957
-lat 85.6981
-lat
-</pre>
-</div>
-</div>
-
-<div class="hbox output_area"><div class="prompt"></div>
-<div class="box-flex1 output_subarea output_pyerr">
-<pre>
-<span class="ansired">---------------------------------------------------------------------------</span>
-<span class="ansired">KeyboardInterrupt</span>                         Traceback (most recent call last)
-<span class="ansigreen">&lt;ipython-input-75-efa543d39458&gt;</span> in <span class="ansicyan">&lt;module&gt;</span><span class="ansiblue">()</span>
-<span class="ansigreen">     13</span>     absorbed<span class="ansiblue">,</span>power_density <span class="ansiblue">=</span> f<span class="ansiblue">[</span><span class="ansiblue">&apos;absorbed&apos;</span><span class="ansiblue">]</span><span class="ansiblue">,</span>f<span class="ansiblue">[</span><span class="ansiblue">&apos;power_density&apos;</span><span class="ansiblue">]</span><span class="ansiblue"></span>
-<span class="ansigreen">     14</span> <span class="ansigreen">except</span><span class="ansiblue">:</span><span class="ansiblue"></span>
-<span class="ansigreen">---&gt; 15</span><span class="ansired">     </span>absorbed<span class="ansiblue">,</span>power_density <span class="ansiblue">=</span> absorbed_power_density<span class="ansiblue">(</span>year<span class="ansiblue">,</span>minute_step<span class="ansiblue">=</span><span class="ansicyan">60</span><span class="ansiblue">)</span><span class="ansiblue"></span>
-
-<span class="ansigreen">&lt;ipython-input-74-56e0c7793eac&gt;</span> in <span class="ansicyan">absorbed_power_density</span><span class="ansiblue">(year, minute_step, sub)</span>
-<span class="ansigreen">     43</span>                 <span class="ansigreen">for</span> day <span class="ansigreen">in</span> xrange<span class="ansiblue">(</span>ndays<span class="ansiblue">)</span><span class="ansiblue">:</span><span class="ansiblue"></span>
-<span class="ansigreen">     44</span>                     <span class="ansired"># solar radiation for that day</span><span class="ansiblue"></span><span class="ansiblue"></span>
-<span class="ansigreen">---&gt; 45</span><span class="ansired">                     </span>rad <span class="ansiblue">=</span> radiation<span class="ansiblue">(</span>year<span class="ansiblue">,</span> month<span class="ansiblue">+</span><span class="ansicyan">1</span><span class="ansiblue">,</span> day<span class="ansiblue">+</span><span class="ansicyan">1</span><span class="ansiblue">,</span>                                     lat<span class="ansiblue">[</span>i<span class="ansiblue">,</span>j<span class="ansiblue">]</span><span class="ansiblue">,</span> lon<span class="ansiblue">[</span>i<span class="ansiblue">,</span>j<span class="ansiblue">]</span><span class="ansiblue">,</span>minute_step<span class="ansiblue">=</span>minute_step<span class="ansiblue">)</span><span class="ansiblue"></span>
-<span class="ansigreen">     46</span>                     pd_month<span class="ansiblue">.</span>append<span class="ansiblue">(</span><span class="ansiblue">[</span>rad<span class="ansiblue">[</span><span class="ansicyan">2</span><span class="ansiblue">]</span><span class="ansiblue">.</span>sum<span class="ansiblue">(</span><span class="ansiblue">)</span> <span class="ansiblue">*</span> <span class="ansicyan">60</span> <span class="ansiblue">*</span> minute_step<span class="ansiblue">]</span><span class="ansiblue">)</span><span class="ansiblue"></span>
-<span class="ansigreen">     47</span>                 pd_month <span class="ansiblue">=</span> np<span class="ansiblue">.</span>array<span class="ansiblue">(</span>pd_month<span class="ansiblue">)</span><span class="ansiblue">.</span>T<span class="ansiblue"></span>
-
-<span class="ansigreen">&lt;ipython-input-51-4fe849ab3823&gt;</span> in <span class="ansicyan">radiation</span><span class="ansiblue">(year, month, day, lat, lon, minute_step)</span>
-<span class="ansigreen">     28</span>             thr <span class="ansiblue">=</span> hour <span class="ansiblue">+</span> minute<span class="ansiblue">/</span><span class="ansicyan">60.</span><span class="ansiblue"></span>
-<span class="ansigreen">     29</span>             <span class="ansired"># append data line as tuple</span><span class="ansiblue"></span><span class="ansiblue"></span>
-<span class="ansigreen">---&gt; 30</span><span class="ansired">             </span>rad<span class="ansiblue">.</span>append<span class="ansiblue">(</span><span class="ansiblue">(</span>thr<span class="ansiblue">,</span><span class="ansiblue">)</span> <span class="ansiblue">+</span>                      solar<span class="ansiblue">(</span>year<span class="ansiblue">,</span> month<span class="ansiblue">,</span> day<span class="ansiblue">,</span> hour<span class="ansiblue">,</span> lat<span class="ansiblue">,</span> lon<span class="ansiblue">,</span> minute<span class="ansiblue">=</span>minute<span class="ansiblue">)</span> <span class="ansiblue">+</span>                     <span class="ansiblue">(</span>month<span class="ansiblue">,</span> day<span class="ansiblue">,</span> lat<span class="ansiblue">,</span> lon<span class="ansiblue">)</span><span class="ansiblue">)</span><span class="ansiblue"></span>
-<span class="ansigreen">     31</span>     <span class="ansired"># convert to numpy array</span><span class="ansiblue"></span><span class="ansiblue"></span>
-<span class="ansigreen">     32</span>     <span class="ansired"># transpose so access eg zenith as</span><span class="ansiblue"></span><span class="ansiblue"></span>
-
-<span class="ansigreen">&lt;ipython-input-51-4fe849ab3823&gt;</span> in <span class="ansicyan">solar</span><span class="ansiblue">(year, month, day, hour, lat_deg, lon_deg, minute, second)</span>
-<span class="ansigreen">     17</span> <span class="ansiblue"></span>
-<span class="ansigreen">     18</span>     d <span class="ansiblue">=</span> datetime<span class="ansiblue">(</span>year<span class="ansiblue">,</span> month<span class="ansiblue">,</span> day<span class="ansiblue">,</span> hour<span class="ansiblue">,</span> minute<span class="ansiblue">,</span> second<span class="ansiblue">)</span><span class="ansiblue"></span>
-<span class="ansigreen">---&gt; 19</span><span class="ansired">     </span>altitude_deg <span class="ansiblue">=</span> Pysolar<span class="ansiblue">.</span>GetAltitude<span class="ansiblue">(</span>lat_deg<span class="ansiblue">,</span> lon_deg<span class="ansiblue">,</span> d<span class="ansiblue">)</span><span class="ansiblue"></span>
-<span class="ansigreen">     20</span>     <span class="ansired"># W m^-2</span><span class="ansiblue"></span><span class="ansiblue"></span>
-<span class="ansigreen">     21</span>     solar_rad <span class="ansiblue">=</span> Pysolar<span class="ansiblue">.</span>solar<span class="ansiblue">.</span>radiation<span class="ansiblue">.</span>GetRadiationDirect<span class="ansiblue">(</span>d<span class="ansiblue">,</span> altitude_deg<span class="ansiblue">)</span><span class="ansiblue"></span>
-
-<span class="ansigreen">/Users/plewis/.local/lib/python2.7/site-packages/Pysolar-0.5-py2.7.egg/Pysolar/solar.pyc</span> in <span class="ansicyan">GetAltitude</span><span class="ansiblue">(latitude_deg, longitude_deg, utc_datetime, elevation, temperature_celsius, pressure_millibars)</span>
-<span class="ansigreen">     67</span>         aberration_correction <span class="ansiblue">=</span> GetAberrationCorrection<span class="ansiblue">(</span>radius_vector<span class="ansiblue">)</span><span class="ansiblue"></span>
-<span class="ansigreen">     68</span>         equatorial_horizontal_parallax <span class="ansiblue">=</span> GetEquatorialHorizontalParallax<span class="ansiblue">(</span>radius_vector<span class="ansiblue">)</span><span class="ansiblue"></span>
-<span class="ansigreen">---&gt; 69</span><span class="ansired">         </span>nutation <span class="ansiblue">=</span> GetNutation<span class="ansiblue">(</span>jde<span class="ansiblue">)</span><span class="ansiblue"></span>
-<span class="ansigreen">     70</span>         apparent_sidereal_time <span class="ansiblue">=</span> GetApparentSiderealTime<span class="ansiblue">(</span>jd<span class="ansiblue">,</span> jme<span class="ansiblue">,</span> nutation<span class="ansiblue">)</span><span class="ansiblue"></span>
-<span class="ansigreen">     71</span>         true_ecliptic_obliquity <span class="ansiblue">=</span> GetTrueEclipticObliquity<span class="ansiblue">(</span>jme<span class="ansiblue">,</span> nutation<span class="ansiblue">)</span><span class="ansiblue"></span>
-
-<span class="ansigreen">/Users/plewis/.local/lib/python2.7/site-packages/Pysolar-0.5-py2.7.egg/Pysolar/solar.pyc</span> in <span class="ansicyan">GetNutation</span><span class="ansiblue">(jde)</span>
-<span class="ansigreen">    252</span> <span class="ansiblue"></span>
-<span class="ansigreen">    253</span>         <span class="ansigreen">for</span> i <span class="ansigreen">in</span> range<span class="ansiblue">(</span>len<span class="ansiblue">(</span>abcd<span class="ansiblue">)</span><span class="ansiblue">)</span><span class="ansiblue">:</span><span class="ansiblue"></span>
-<span class="ansigreen">--&gt; 254</span><span class="ansired">                 </span>sigmaxy <span class="ansiblue">=</span> GetNutationAberrationXY<span class="ansiblue">(</span>jce<span class="ansiblue">,</span> i<span class="ansiblue">,</span> x<span class="ansiblue">)</span><span class="ansiblue"></span>
-<span class="ansigreen">    255</span>                 nutation_long<span class="ansiblue">.</span>append<span class="ansiblue">(</span><span class="ansiblue">(</span>abcd<span class="ansiblue">[</span>i<span class="ansiblue">]</span><span class="ansiblue">[</span><span class="ansicyan">0</span><span class="ansiblue">]</span> <span class="ansiblue">+</span> <span class="ansiblue">(</span>abcd<span class="ansiblue">[</span>i<span class="ansiblue">]</span><span class="ansiblue">[</span><span class="ansicyan">1</span><span class="ansiblue">]</span> <span class="ansiblue">*</span> jce<span class="ansiblue">)</span><span class="ansiblue">)</span> <span class="ansiblue">*</span> math<span class="ansiblue">.</span>sin<span class="ansiblue">(</span>math<span class="ansiblue">.</span>radians<span class="ansiblue">(</span>sigmaxy<span class="ansiblue">)</span><span class="ansiblue">)</span><span class="ansiblue">)</span><span class="ansiblue"></span>
-<span class="ansigreen">    256</span>                 nutation_oblique<span class="ansiblue">.</span>append<span class="ansiblue">(</span><span class="ansiblue">(</span>abcd<span class="ansiblue">[</span>i<span class="ansiblue">]</span><span class="ansiblue">[</span><span class="ansicyan">2</span><span class="ansiblue">]</span> <span class="ansiblue">+</span> <span class="ansiblue">(</span>abcd<span class="ansiblue">[</span>i<span class="ansiblue">]</span><span class="ansiblue">[</span><span class="ansicyan">3</span><span class="ansiblue">]</span> <span class="ansiblue">*</span> jce<span class="ansiblue">)</span><span class="ansiblue">)</span> <span class="ansiblue">*</span> math<span class="ansiblue">.</span>cos<span class="ansiblue">(</span>math<span class="ansiblue">.</span>radians<span class="ansiblue">(</span>sigmaxy<span class="ansiblue">)</span><span class="ansiblue">)</span><span class="ansiblue">)</span><span class="ansiblue"></span>
-
-<span class="ansigreen">/Users/plewis/.local/lib/python2.7/site-packages/Pysolar-0.5-py2.7.egg/Pysolar/solar.pyc</span> in <span class="ansicyan">GetNutationAberrationXY</span><span class="ansiblue">(jce, i, x)</span>
-<span class="ansigreen">    238</span> <span class="ansiblue"></span>
-<span class="ansigreen">    239</span> <span class="ansigreen">def</span> GetNutationAberrationXY<span class="ansiblue">(</span>jce<span class="ansiblue">,</span> i<span class="ansiblue">,</span> x<span class="ansiblue">)</span><span class="ansiblue">:</span><span class="ansiblue"></span>
-<span class="ansigreen">--&gt; 240</span><span class="ansired">         </span>y <span class="ansiblue">=</span> constants<span class="ansiblue">.</span>aberration_sin_terms<span class="ansiblue"></span>
-<span class="ansigreen">    241</span>         sigmaxy <span class="ansiblue">=</span> <span class="ansicyan">0.0</span><span class="ansiblue"></span>
-<span class="ansigreen">    242</span>         <span class="ansigreen">for</span> j <span class="ansigreen">in</span> range<span class="ansiblue">(</span>len<span class="ansiblue">(</span>x<span class="ansiblue">)</span><span class="ansiblue">)</span><span class="ansiblue">:</span><span class="ansiblue"></span>
-
-<span class="ansired">KeyboardInterrupt</span>: </pre>
-</div>
-</div>
-
-<div class="hbox output_area"><div class="prompt"></div>
-<div class="box-flex1 output_subarea output_stream output_stdout">
-<pre>
- 33.7296
-
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="c"># this is how you can save a numpy array</span>
-<span class="n">np</span><span class="o">.</span><span class="n">savez</span><span class="p">(</span><span class="s">&#39;files/data/absorbed.npz&#39;</span><span class="p">,</span><span class="n">absorbed</span><span class="o">=</span><span class="n">absorbed</span><span class="p">,</span><span class="n">power_density</span><span class="o">=</span><span class="n">power_density</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[]:
+In&nbsp;[*]:
 </div>
 <div class="input_area box-flex1">
 <div class="highlight"><pre><span class="kn">import</span> <span class="nn">pylab</span> <span class="kn">as</span> <span class="nn">plt</span>
@@ -2331,12 +2594,12 @@ In&nbsp;[]:
 
 </div>
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This code is very slow.</p>
+<p>This code is still quite slow (even for a single longitude).</p>
 <p>You should look it over and see how you might make it more efficient.</p>
 <p>Some ideas:</p>
 <ul>
-<li>interpolate the radiation field (over longitude for sure) and possibly ovewr latitude</li>
-<li>when calculating daily integrals, don;t start the calculations until the sun is above the horizon (and the same for sunset).</li>
+<li>interpolate the radiation field (over latitude?) and possibly improve by sub sampling over longitude and interpolating that as well</li>
+<li>when calculating daily integrals, don't start the calculations until the sun is above the horizon (and the same for sunset).</li>
 </ul>
 <p>The exercise asks you to perform summations over latitude. This should be simple enough, being of the form:</p>
 <pre><code>absorbed.sum(axis=(0,2))</code></pre>
