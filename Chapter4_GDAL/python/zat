@@ -16,18 +16,15 @@ cd /tmp
 mkdir -p robot_files
 cd robot_files
 
-foreach f (MOLA MOLT MOTA)
-  if ( ! -e $f ) wget http://e4ftl01.cr.usgs.gov/MODIS_Composites/$f
-  set products = `grep 'alt=' < $f | grep -v blank | awk -Fhref=\" '{print $2}'|awk -F/\" '{print $1}'`
+foreach f (MOTA)
+  wget http://e4ftl01.cr.usgs.gov/MODIS_Composites/$f
+  set products = `grep 'alt=' < $f | grep -v blank | awk -Fhref=\" '{print $2}'|awk -F/\" '{print $1}'|grep 15A2`
   foreach p ($products)
-    if ( ! -e $p ) wget http://e4ftl01.cr.usgs.gov/MODIS_Composites/$f/$p
+    wget http://e4ftl01.cr.usgs.gov/MODIS_Composites/$f/$p
     set dates = `grep 'alt=' < $p | grep -v blank | awk -Fhref=\" '{print $2}'|awk -F/\" '{print $1}'`
     foreach d ($dates)
-      if ( ! -e $p.$d ) wget -O $p.$d http://e4ftl01.cr.usgs.gov/MODIS_Composites/$f/$p/$d
-      set files = (`grep hdf < $p.$d | grep -v xml | awk -Fhref=\" '{print $2}'|awk -F\"\> '{print $1}'`)
-      foreach fi ($files)
-        echo "http://e4ftl01.cr.usgs.gov/MODIS_Composites/$f/$p/$d/$fi" >> robot.txt
-      end
+      wget -O $p.$d http://e4ftl01.cr.usgs.gov/MODIS_Composites/$f/$p/$d
+      grep hdf < $p.$d | grep -v xml | awk -Fhref=\" '{print $2}'|awk -F\"\> '{print w $1}' w="http://e4ftl01.cr.usgs.gov/MODIS_Composites/$f/$p/$d/"  >> robot.txt
     end
   end
 end

@@ -21,18 +21,15 @@ cd $tmdir
 
 foreach f (MOSA MOST)
   if ( ! -e $f ) wget -O $f $server/SAN/$f/
-  set products = `grep 'href=' < $f | grep -v DPRecentInserts| awk -Fhref=\" '{print $2}'|awk -F/\" '{print $1}'`
+  set products = `grep 'href=' < $f | grep -v DPRecentInserts| awk -Fhref=\" '{print $2}'|awk -F/\" '{print $1}'i | grep 10A1`
   foreach p ($products)
     set pp = $p:t
-    if ( ! -e $pp ) wget -O $pp $p/
+    wget -O $pp $p/
     set dates = `grep 'href=' < $pp | grep -v DPRecentInserts|  awk -Fhref=\" '{print $2}'|awk -F\"\> '{print $1}'`
     foreach d ($dates)
       set dd = $d:t
-      if ( ! -e $pp.$dd ) wget -O $pp.$dd $d/
-      set files = (`grep hdf < $pp.$dd | grep -v DPRecentInserts| grep -v xml | awk -Fhref=\" '{print $2}'|awk -F\"\> '{print $1}'`)
-      foreach fi ($files)
-        echo $fi >> robot.txt
-      end
+      wget -O $pp.$dd $d/
+      grep hdf < $pp.$dd | grep -v DPRecentInserts| grep -v xml | awk -Fhref=\" '{print $2}'|awk -F\"\> '{print $1}' >> robot.txt
     end
   end
 end
