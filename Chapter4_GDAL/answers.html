@@ -1695,512 +1695,79 @@ init_mathjax();
 <body>
 
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="A1.-Getting-MODIS-URLs">A1. Getting MODIS URLs<a class="anchor-link" href="#A1.-Getting-MODIS-URLs">&#182;</a></h1>
+<h1 id="Exercise-4.1">Exercise 4.1<a class="anchor-link" href="#Exercise-4.1">&#182;</a></h1>
 </div>
 
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Access to MODIS data is now through <code>http</code>, which means that previous methods using <code>ftp</code> no longer operate.</p>
-<p>In some ways, this complicates automatic download (also, download seems now to be throttled, which means it takes longer to access the data).</p>
-<p>That said, you can of course still easily order data through NASA tools such as <a href="http://reverb.echo.nasa.gov">reverb</a>.</p>
-<p>Some tools have been developed to allow automated access to MODIS products from Python, such as <a href="https://github.com/jgomezdans/get_modis">get_modis</a>, but here, we will demonstrate how you can do it yourself, semi-automatically.</p>
-<p>We will see that a large part of the overhead and complexity is negotiating the directory structure.</p>
-<p>We have provided a shell programme <a href="python/zat"><code>zat</code></a> that will produce a list of urls of the MODIS products on the USGS server (use <code>zat &gt;</code> <a href="data/robot.txt"><code>urls.txt</code></a>), which you would probably find more convenient than this section.</p>
-<p>So, only go through section A1 if you are particularly intererested in trawling directories with http ...</p>
-<p>Once we have a full list of the urls of the hdf files that we want, life is much simpler. Such a list of urls is <em>exactly</em> what <a href="http://reverb.echo.nasa.gov">reverb</a> supplies you with.</p>
+<p>You are given the MODIS LAI data files for the year 2012 in the directory <code>files/data</code> for the UK (MODIS tile .</p>
+<p>Read the LAI datasets into a masked array, using QA bit 0 to mask the data (i.e. good quality data only) and generate a movie of LAI.</p>
 </div>
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="A1.1-Identify-the-server-and-directory-structure">A1.1 Identify the server and directory structure<a class="anchor-link" href="#A1.1-Identify-the-server-and-directory-structure">&#182;</a></h2>
+<h2 id="Answer-4.1">Answer 4.1<a class="anchor-link" href="#Answer-4.1">&#182;</a></h2>
 </div>
 
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>First, you need to identify which datasets you want. You should explore the data products e.g. through <a href="http://reverb.echo.nasa.gov">reverb</a> to do this.</p>
-<p>If you go through the ordering system for one tile of these products, you can get the information you need for further data download. When you come to order the data, it will give you a download file.</p>
-<p>As an example:</p>
-<ul>
-<li>MODIS LAI/fAPAR for Trerra and Aqua 8 day composite for 17 Jan 2013 for tile h18v03</li>
-</ul>
-</div>
-http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2013.01.17/MCD15A2.A2013017.h18v03.005.2013026065052.hdf
-http://e4ftl01.cr.usgs.gov/WORKING/BRWS/Browse.001/2013.01.26/BROWSE.MCD15A2.A2013017.h18v03.005.2013026065052.1.jpg
-http://e4ftl01.cr.usgs.gov/WORKING/BRWS/Browse.001/2013.01.26/BROWSE.MCD15A2.A2013017.h18v03.005.2013026065052.2.jpg
-http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2013.01.17/MCD15A2.A2013017.h18v03.005.2013026065052.hdf.xml
-
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="A1.2-Identify-the-available-dates">A1.2 Identify the available dates<a class="anchor-link" href="#A1.2-Identify-the-available-dates">&#182;</a></h2>
-</div>
-
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>From this, we see that the server is <code>e4ftl01.cr.usgs.gov</code>, that the <code>hdf</code> data (the spatial dataset we want) for the product <code>MCD15A2</code> version <code>005</code> is in the directory <code>MODIS_Composites/MOTA/MCD15A2.005</code>.</p>
-<p>Below that, we have the date and then the filename.</p>
-<p>Let's use <code>urllib2</code> to explore this:</p>
+<p>You ought be gettiong familiar with this sort of problem, as it is very common.</p>
+<p>Since we have the code in the main notes to read a single data dataset:</p>
 </div>
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[]:
+In&nbsp;[4]:
 </div>
 <div class="input_area box-flex1">
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">urllib2</span>
-<span class="n">url_base</span> <span class="o">=</span> <span class="s">&#39;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005&#39;</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url_base</span><span class="p">)</span>
-<span class="n">html</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-</pre></div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="c"># print the first 30 lines</span>
-<span class="n">html</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)[:</span><span class="mi">30</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-
-</div>
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>This is an html directory listing. We can identify the directories as lines that contain <code>[DIR]</code>.</p>
-<p>We can use <code>find</code> to identify lines that have this field:</p>
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="n">dirs</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">html</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;[DIRS]&#39;</span><span class="p">):</span>
-        <span class="n">dirs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="c"># or more succinctly</span>
-<span class="n">dirs</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">html</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;[DIR]&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="n">dirs</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-
-</div>
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>We notice that the first such line is the directory listing information, so, what we really want is:</p>
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="n">dirs</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">html</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;[DIR]&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span>
-</pre></div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="n">dirs</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-
-</div>
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>The subdirectory name is jusr after the field <code>href=&quot;</code>:</p>
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="k">print</span> <span class="n">dirs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="k">print</span> <span class="n">dirs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;href=&quot;&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="k">print</span> <span class="n">dirs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;href=&quot;&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&quot;&gt;&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-
-</div>
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>So, in this case, we can get the subdirectory names with:</p>
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="n">dirs</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;href=&quot;&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&quot;&gt;&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">html</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;[DIR]&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span>
-</pre></div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="c"># print the first 10</span>
-<span class="n">dirs</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-
-</div>
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>The pattern is <code>YYYY.MM.DD</code>. So we could split these as we go along. It would be convenient to have this as a numpy array:</p>
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="n">dirs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;href=&quot;&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&quot;&gt;&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">)</span> \
-                 <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">html</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;[DIR]&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">:])</span>
-</pre></div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="n">dirs</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="n">all_years</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">dirs</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]))</span>
-<span class="n">all_months</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">dirs</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]))</span>
-<span class="n">all_doys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">dirs</span><span class="p">[:,</span><span class="mi">2</span><span class="p">]))</span>
-</pre></div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="n">years</span><span class="p">,</span><span class="n">months</span><span class="p">,</span><span class="n">doys</span>
-</pre></div>
-
-</div>
-</div>
-
-</div>
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="A1.3-Identify-the-datasets">A1.3 Identify the datasets<a class="anchor-link" href="#A1.3-Identify-the-datasets">&#182;</a></h2>
-</div>
-
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>We know the full url is of the form:</p>
-<p><code>http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2013.01.17/MCD15A2.A2013017.h18v03.005.2013026065052.hdf</code></p>
-<p>Simplifying what we did above:</p>
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">urllib2</span>
-<span class="n">url_base</span> <span class="o">=</span> <span class="s">&#39;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005&#39;</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url_base</span><span class="p">)</span>
-<span class="n">dirs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;href=&quot;&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&quot;&gt;&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">html</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;[DIR]&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">:])</span>
-</pre></div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="n">years</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">])</span>
-<span class="c"># year mask</span>
-<span class="n">year</span> <span class="o">=</span> <span class="s">&#39;2012&#39;</span>
-<span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">year</span> <span class="o">==</span> <span class="n">years</span><span class="p">)</span>
-<span class="n">sub_dirs</span> <span class="o">=</span> <span class="n">dirs</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
-<span class="k">print</span> <span class="n">sub_dirs</span>
-</pre></div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="c"># test with first one</span>
-<span class="n">this_date</span> <span class="o">=</span> <span class="n">sub_dirs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-
-<span class="n">url_date</span> <span class="o">=</span> <span class="n">url_base</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">this_date</span>
-<span class="k">print</span> <span class="n">url_date</span>
-<span class="n">response1</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url_date</span><span class="p">)</span>
-<span class="n">html1</span> <span class="o">=</span> <span class="n">response1</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-</pre></div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="c"># print the first 21 lines</span>
-<span class="n">html1</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)[:</span><span class="mi">21</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-
-</div>
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>We note that the directory contains data for all tiles.</p>
-<p>Lets filter only lines that have the tile we want in:</p>
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="n">tile</span> <span class="o">=</span> <span class="s">&#39;h18v03&#39;</span>
-<span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">html1</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">tile</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="n">lines</span>
-</pre></div>
-
-</div>
-</div>
-
-</div>
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>We want the <code>.hdf</code> file, so refine the filter:</p>
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="n">tile</span> <span class="o">=</span> <span class="s">&#39;h18v03&#39;</span>
-<span class="n">hdf_lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">html1</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span> \
-                         <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">tile</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;.hdf&quot;&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="n">hdf_lines</span>
-</pre></div>
-
-</div>
-</div>
-
-</div>
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Now split this to get the filename we want:</p>
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="n">hdf_lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;&lt;a href=&quot;&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="n">hdf_lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;&lt;a href=&quot;&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;&quot;&gt;&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-
-</div>
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>So, putting all of that together:</p>
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="n">tile</span> <span class="o">=</span> <span class="s">&#39;h18v03&#39;</span>
-<span class="n">hdf_lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">html1</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span> \
-                         <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">tile</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;.hdf&quot;&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">hdf_file</span> <span class="o">=</span> <span class="n">hdf_lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;&lt;a href=&quot;&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;&quot;&gt;&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-
-</div>
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="A1.4-Some-code-for-MODIS-LAI-filenames-for-a-year">A1.4 Some code for MODIS LAI filenames for a year<a class="anchor-link" href="#A1.4-Some-code-for-MODIS-LAI-filenames-for-a-year">&#182;</a></h2>
-</div>
-
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>The http access is quite slow, so this may take some minutes to run.</p>
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[2]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="n">year</span> <span class="o">=</span> <span class="s">&#39;2012&#39;</span>
-<span class="n">tile</span> <span class="o">=</span> <span class="s">&#39;h17v03&#39;</span>
-
-
-<span class="n">hdf_files</span> <span class="o">=</span> <span class="p">[]</span>
-
-<span class="kn">import</span> <span class="nn">urllib2</span>
-
-<span class="c"># base URL for the product</span>
-<span class="n">url_base</span> <span class="o">=</span> <span class="s">&#39;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005&#39;</span>
-
-<span class="n">response</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url_base</span><span class="p">)</span>
-<span class="n">html</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-
-<span class="n">dirs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;href=&quot;&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&quot;&gt;&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">html</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;[DIR]&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">:])</span>
-
-<span class="c"># identify years</span>
-<span class="n">years</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">])</span>
-<span class="c"># year mask</span>
-<span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">year</span> <span class="o">==</span> <span class="n">years</span><span class="p">)</span>
-<span class="n">sub_dirs</span> <span class="o">=</span> <span class="n">dirs</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
-
-<span class="k">for</span> <span class="n">this_date</span> <span class="ow">in</span> <span class="n">sub_dirs</span><span class="p">:</span>
-    <span class="n">url_date</span> <span class="o">=</span> <span class="n">url_base</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">this_date</span>
-    <span class="k">print</span> <span class="n">url_date</span>
-    <span class="n">response1</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url_date</span><span class="p">)</span>
-    <span class="n">html1</span> <span class="o">=</span> <span class="n">response1</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-    <span class="n">hdf_lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">html1</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span> \
-                             <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">tile</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;.hdf&quot;&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">hdf_file</span> <span class="o">=</span> <span class="n">url_date</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">hdf_lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;&lt;a href=&quot;&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;&quot;&gt;&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">hdf_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hdf_file</span><span class="o">+</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">gdal</span> <span class="c"># Import GDAL library bindings</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="c"># The file that we shall be using</span>
+<span class="c"># Needs to be on current directory</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf&#39;</span>
+
+<span class="n">product</span> <span class="o">=</span> <span class="s">&#39;MOD15A2&#39;</span>
+
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="c"># g should now be a GDAL dataset, but if the file isn&#39;t found</span>
+<span class="c"># g will be none. Let&#39;s test this:</span>
+<span class="k">if</span> <span class="n">g</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;Problem opening file </span><span class="si">%s</span><span class="s">!&quot;</span> <span class="o">%</span> <span class="n">filename</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;File </span><span class="si">%s</span><span class="s"> opened fine&quot;</span> <span class="o">%</span> <span class="n">filename</span>
     
+    
+<span class="n">subdatasets</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">GetSubDatasets</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">fname</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">subdatasets</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">name</span>
+    <span class="k">print</span> <span class="s">&quot;</span><span class="se">\t</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">fname</span>
+
+<span class="c"># Let&#39;s create a list with the selected layer names</span>
+<span class="n">selected_layers</span> <span class="o">=</span> <span class="p">[</span>  <span class="s">&quot;Lai_1km&quot;</span><span class="p">,</span> <span class="s">&quot;FparLai_QC&quot;</span> <span class="p">]</span>
+<span class="c"># We will store the data in a dictionary</span>
+<span class="c"># Initialise an empty dictionary</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="c"># for convenience, we will use string substitution to create a </span>
+<span class="c"># template for GDAL filenames, which we&#39;ll substitute on the fly:</span>
+<span class="n">file_template</span> <span class="o">=</span> <span class="s">&#39;HDF4_EOS:EOS_GRID:&quot;</span><span class="si">%s</span><span class="s">&quot;:MOD_Grid_</span><span class="si">%s</span><span class="s">:</span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="k">product</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">layer</span> <span class="ow">in</span> <span class="nb">enumerate</span> <span class="p">(</span> <span class="n">selected_layers</span> <span class="p">):</span>
+    <span class="n">this_file</span> <span class="o">=</span> <span class="n">file_template</span> <span class="o">%</span> <span class="p">(</span> <span class="n">filename</span><span class="p">,</span> <span class="n">layer</span> <span class="p">)</span>
+    <span class="k">print</span> <span class="s">&quot;Opening Layer </span><span class="si">%d</span><span class="s">: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">this_file</span> <span class="p">)</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span> <span class="p">(</span> <span class="n">this_file</span> <span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">g</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">IOError</span>
+    <span class="n">data</span><span class="p">[</span><span class="n">layer</span><span class="p">]</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">()</span> 
+    <span class="k">print</span> <span class="s">&quot;</span><span class="se">\t</span><span class="s">&gt;&gt;&gt; Read </span><span class="si">%s</span><span class="s">!&quot;</span> <span class="o">%</span> <span class="n">layer</span>
+
+<span class="c"># scale the LAI    </span>
+<span class="n">lai</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;Lai_1km&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.1</span>
+
+<span class="c"># pull out the QC </span>
+<span class="n">qc</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;FparLai_QC&#39;</span><span class="p">]</span>
+<span class="c"># find bit 0</span>
+<span class="n">qc</span> <span class="o">=</span> <span class="n">qc</span> <span class="o">&amp;</span> <span class="mi">1</span>
+
+<span class="c"># generate the masked array</span>
+<span class="n">laim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">array</span> <span class="p">(</span> <span class="n">lai</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">qc</span> <span class="p">)</span>
 </pre></div>
 
 </div>
@@ -2211,26 +1778,84 @@ In&nbsp;[2]:
 
 
 <div class="hbox output_area"><div class="prompt"></div>
-<div class="box-flex1 output_subarea output_stream output_stdout">
+<div class="box-flex1 output_subarea output_pyerr">
 <pre>
-http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.01.01
-http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.01.09
-http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.01.17
-</pre>
+<span class="ansired">---------------------------------------------------------------------------</span>
+<span class="ansired">ImportError</span>                               Traceback (most recent call last)
+<span class="ansigreen">&lt;ipython-input-4-b4adde649c46&gt;</span> in <span class="ansicyan">&lt;module&gt;</span><span class="ansiblue">()</span>
+<span class="ansigreen">----&gt; 1</span><span class="ansired"> </span><span class="ansigreen">import</span> gdal <span class="ansired"># Import GDAL library bindings</span><span class="ansiblue"></span>
+<span class="ansigreen">      2</span> <span class="ansigreen">import</span> numpy <span class="ansigreen">as</span> np<span class="ansiblue"></span>
+<span class="ansigreen">      3</span> <span class="ansiblue"></span>
+<span class="ansigreen">      4</span> <span class="ansired"># The file that we shall be using</span><span class="ansiblue"></span><span class="ansiblue"></span>
+<span class="ansigreen">      5</span> <span class="ansired"># Needs to be on current directory</span><span class="ansiblue"></span><span class="ansiblue"></span>
+
+<span class="ansired">ImportError</span>: No module named gdal</pre>
 </div>
 </div>
 
 </div>
 </div>
 
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can use this as a function that reads a single dataset:</p>
 </div>
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[3]:
+In&nbsp;[6]:
 </div>
 <div class="input_area box-flex1">
-<div class="highlight"><pre><span class="n">hdf_files</span>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">read_modis_lai</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;  Read MODIS LAI data from filename</span>
+<span class="sd">         and return masked array</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">product</span> <span class="o">=</span> <span class="s">&#39;MOD15A2&#39;</span>
+    
+    <span class="n">g</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="c"># g should now be a GDAL dataset, but if the file isn&#39;t found</span>
+    <span class="c"># g will be none. Let&#39;s test this:</span>
+    <span class="k">if</span> <span class="n">g</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;Problem opening file </span><span class="si">%s</span><span class="s">!&quot;</span> <span class="o">%</span> <span class="n">filename</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;File </span><span class="si">%s</span><span class="s"> opened fine&quot;</span> <span class="o">%</span> <span class="n">filename</span>
+        
+        
+    <span class="n">subdatasets</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">GetSubDatasets</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">fname</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">subdatasets</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">name</span>
+        <span class="k">print</span> <span class="s">&quot;</span><span class="se">\t</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">fname</span>
+    
+    <span class="c"># Let&#39;s create a list with the selected layer names</span>
+    <span class="n">selected_layers</span> <span class="o">=</span> <span class="p">[</span>  <span class="s">&quot;Lai_1km&quot;</span><span class="p">,</span> <span class="s">&quot;FparLai_QC&quot;</span> <span class="p">]</span>
+    <span class="c"># We will store the data in a dictionary</span>
+    <span class="c"># Initialise an empty dictionary</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="c"># for convenience, we will use string substitution to create a </span>
+    <span class="c"># template for GDAL filenames, which we&#39;ll substitute on the fly:</span>
+    <span class="n">file_template</span> <span class="o">=</span> <span class="s">&#39;HDF4_EOS:EOS_GRID:&quot;</span><span class="si">%s</span><span class="s">&quot;:MOD_Grid_</span><span class="si">%s</span><span class="s">:</span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="k">product</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">layer</span> <span class="ow">in</span> <span class="nb">enumerate</span> <span class="p">(</span> <span class="n">selected_layers</span> <span class="p">):</span>
+        <span class="n">this_file</span> <span class="o">=</span> <span class="n">file_template</span> <span class="o">%</span> <span class="p">(</span> <span class="n">filename</span><span class="p">,</span> <span class="n">layer</span> <span class="p">)</span>
+        <span class="k">print</span> <span class="s">&quot;Opening Layer </span><span class="si">%d</span><span class="s">: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">this_file</span> <span class="p">)</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span> <span class="p">(</span> <span class="n">this_file</span> <span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">g</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">IOError</span>
+        <span class="n">data</span><span class="p">[</span><span class="n">layer</span><span class="p">]</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">()</span> 
+        <span class="k">print</span> <span class="s">&quot;</span><span class="se">\t</span><span class="s">&gt;&gt;&gt; Read </span><span class="si">%s</span><span class="s">!&quot;</span> <span class="o">%</span> <span class="n">layer</span>
+    
+    <span class="c"># scale the LAI    </span>
+    <span class="n">lai</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;Lai_1km&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.1</span>
+    
+    <span class="c"># pull out the QC </span>
+    <span class="n">qc</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;FparLai_QC&#39;</span><span class="p">]</span>
+    <span class="c"># find bit 0</span>
+    <span class="n">qc</span> <span class="o">=</span> <span class="n">qc</span> <span class="o">&amp;</span> <span class="mi">1</span>
+    
+    <span class="c"># generate the masked array</span>
+    <span class="n">laim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">array</span> <span class="p">(</span> <span class="n">lai</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">qc</span> <span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">laim</span>
 </pre></div>
 
 </div>
@@ -2241,57 +1866,12 @@ In&nbsp;[3]:
 
 
 <div class="hbox output_area"><div class="prompt output_prompt">
-    Out[3]:</div>
+    Out[6]:</div>
 <div class="box-flex1 output_subarea output_pyout">
 
 
 <pre>
-[&apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.01.01/MCD15A2.A2012001.h17v03.005.2012017211237.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.01.09/MCD15A2.A2012009.h17v03.005.2012019044037.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.01.17/MCD15A2.A2012017.h17v03.005.2012026072526.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.01.25/MCD15A2.A2012025.h17v03.005.2012052124839.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.02.02/MCD15A2.A2012033.h17v03.005.2012042060649.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.02.10/MCD15A2.A2012041.h17v03.005.2012050092057.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.02.18/MCD15A2.A2012049.h17v03.005.2012068144447.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.02.26/MCD15A2.A2012057.h17v03.005.2012068140544.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.03.05/MCD15A2.A2012065.h17v03.005.2012075021749.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.03.13/MCD15A2.A2012073.h17v03.005.2012083010304.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.03.21/MCD15A2.A2012081.h17v03.005.2012090131602.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.03.29/MCD15A2.A2012089.h17v03.005.2012107201245.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.04.06/MCD15A2.A2012097.h17v03.005.2012108125047.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.04.14/MCD15A2.A2012105.h17v03.005.2012116125519.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.04.22/MCD15A2.A2012113.h17v03.005.2012122072153.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.04.30/MCD15A2.A2012121.h17v03.005.2012137221611.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.05.08/MCD15A2.A2012129.h17v03.005.2012142001241.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.05.16/MCD15A2.A2012137.h17v03.005.2012153021910.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.05.24/MCD15A2.A2012145.h17v03.005.2012160130927.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.06.01/MCD15A2.A2012153.h17v03.005.2012166161748.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.06.09/MCD15A2.A2012161.h17v03.005.2012170080216.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.06.17/MCD15A2.A2012169.h17v03.005.2012181134242.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.06.25/MCD15A2.A2012177.h17v03.005.2012188150145.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.07.03/MCD15A2.A2012185.h17v03.005.2012208181105.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.07.11/MCD15A2.A2012193.h17v03.005.2012202144013.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.07.19/MCD15A2.A2012201.h17v03.005.2012215131931.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.07.27/MCD15A2.A2012209.h17v03.005.2012219144450.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.08.04/MCD15A2.A2012217.h17v03.005.2012228215213.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.08.12/MCD15A2.A2012225.h17v03.005.2012234105932.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.08.20/MCD15A2.A2012233.h17v03.005.2012242093511.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.08.28/MCD15A2.A2012241.h17v03.005.2012250182515.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.09.05/MCD15A2.A2012249.h17v03.005.2012261231425.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.09.13/MCD15A2.A2012257.h17v03.005.2012270114223.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.09.21/MCD15A2.A2012265.h17v03.005.2012276134731.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.09.29/MCD15A2.A2012273.h17v03.005.2012297134400.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.10.07/MCD15A2.A2012281.h17v03.005.2012297135831.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.10.15/MCD15A2.A2012289.h17v03.005.2012299194634.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.10.23/MCD15A2.A2012297.h17v03.005.2012306163257.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.10.31/MCD15A2.A2012305.h17v03.005.2012314140451.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.11.08/MCD15A2.A2012313.h17v03.005.2012322095802.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.11.16/MCD15A2.A2012321.h17v03.005.2012335133638.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.11.24/MCD15A2.A2012329.h17v03.005.2012340181739.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.12.02/MCD15A2.A2012337.h17v03.005.2012346165133.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.12.10/MCD15A2.A2012345.h17v03.005.2012356133200.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.12.18/MCD15A2.A2012353.h17v03.005.2012363125132.hdf\n&apos;,
- &apos;http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.12.26/MCD15A2.A2012361.h17v03.005.2013007202756.hdf\n&apos;]
+[]
 </pre>
 
 </div>
@@ -2302,31 +1882,7 @@ In&nbsp;[3]:
 
 </div>
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>In case download fails later, lets save this list <code>hdf_files</code>.</p>
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[4]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;files/data/lai_list.txt&#39;</span><span class="p">,</span><span class="s">&#39;w&#39;</span><span class="p">)</span>
-<span class="n">f</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="n">hdf_files</span><span class="p">)</span>
-<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</pre></div>
-
-</div>
-</div>
-
-</div>
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="A2-Pull-Data-from-url">A2 Pull Data from url<a class="anchor-link" href="#A2-Pull-Data-from-url">&#182;</a></h2>
-</div>
-
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>This part is actually faster than doing all of that messing around with directories.</p>
-<p>You don't really want to have to do too much of the directory exploration, so it is <em>probably</em> a good idea to just periodically scan the whole structure and store that in a local file. You can then parse the local file much more easily (that is what we do in the main part of the class).</p>
-<p>This is achieved for instance with the shell <a href="python/zat"><code>zat</code></a> (use <code>zat &gt;</code> <a href="data/robot.txt"><code>urls.txt</code></a>) if you want to do an update, or just use the existing <a href="data/robot.txt">url file</a>.</p>
+<p>and then loop:</p>
 </div>
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
@@ -2334,20 +1890,42 @@ In&nbsp;[4]:
 In&nbsp;[5]:
 </div>
 <div class="input_area box-flex1">
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">urllib2</span>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">glob</span>
 
-<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;files/data/lai_list.txt&#39;</span><span class="p">,</span><span class="s">&#39;r&#39;</span><span class="p">)</span>
-<span class="n">hdf_files</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
-<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">year</span> <span class="o">=</span> <span class="mi">2012</span>
+<span class="n">tile</span> <span class="o">=</span> <span class="s">&#39;h17v03&#39;</span>
+<span class="n">files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">&#39;files/data/MCD15A2.A</span><span class="si">%d</span><span class="s">*.</span><span class="si">%s</span><span class="s">.*.hdf&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">tile</span><span class="p">))</span>
 
-<span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">hdf_files</span><span class="p">:</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-    <span class="k">print</span> <span class="n">url</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
-    <span class="n">ofile</span> <span class="o">=</span> <span class="s">&#39;files/data/&#39;</span> <span class="o">+</span> <span class="n">url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">ofile</span><span class="p">,</span><span class="s">&#39;w&#39;</span><span class="p">)</span>
-    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
-    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">lai</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+    <span class="n">lai</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">read_modis_lai</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+    
+<span class="c"># force it to be a masked array</span>
+<span class="n">lai</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">lai</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[8]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="c"># plot the data</span>
+
+<span class="n">lai_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">lai</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">f</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">files</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">lai</span><span class="p">,</span><span class="n">interpolatiopn</span><span class="o">=</span><span class="s">&#39;none&#39;</span><span class="p">,</span><span class="n">vmin</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span><span class="n">vmax</span><span class="o">=</span><span class="n">lai_max</span><span class="p">)</span>
+    <span class="c"># remember filenames of the form</span>
+    <span class="c"># files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf&#39;</span>
+    <span class="n">file_id</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">splitf</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">5</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">file_id</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s">&#39;files/images/lai_uk_</span><span class="si">%s</span><span class="s">.jpg&#39;</span><span class="o">%</span><span class="k">file_id</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -2358,14 +1936,39 @@ In&nbsp;[5]:
 
 
 <div class="hbox output_area"><div class="prompt"></div>
-<div class="box-flex1 output_subarea output_stream output_stdout">
+<div class="box-flex1 output_subarea output_pyerr">
 <pre>
-http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.01.01/MCD15A2.A2012001.h17v03.005.2012017211237.hdf
-http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.01.09/MCD15A2.A2012009.h17v03.005.2012019044037.hdf
-http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2012.01.17/MCD15A2.A2012017.h17v03.005.2012026072526.hdf
-</pre>
+<span class="ansired">---------------------------------------------------------------------------</span>
+<span class="ansired">NameError</span>                                 Traceback (most recent call last)
+<span class="ansigreen">&lt;ipython-input-8-38d38d526294&gt;</span> in <span class="ansicyan">&lt;module&gt;</span><span class="ansiblue">()</span>
+<span class="ansigreen">      1</span> <span class="ansired"># plot the data</span><span class="ansiblue"></span><span class="ansiblue"></span>
+<span class="ansigreen">      2</span> <span class="ansiblue"></span>
+<span class="ansigreen">----&gt; 3</span><span class="ansired"> </span>lai_max <span class="ansiblue">=</span> np<span class="ansiblue">.</span>max<span class="ansiblue">(</span>lai<span class="ansiblue">)</span><span class="ansiblue"></span>
+<span class="ansigreen">      4</span> <span class="ansiblue"></span>
+<span class="ansigreen">      5</span> <span class="ansigreen">for</span> i<span class="ansiblue">,</span>f <span class="ansigreen">in</span> enumerate<span class="ansiblue">(</span>files<span class="ansiblue">)</span><span class="ansiblue">:</span><span class="ansiblue"></span>
+
+<span class="ansired">NameError</span>: name &apos;lai&apos; is not defined</pre>
 </div>
 </div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">&#39;files/images/lai_uk_*.jpg&#39;</span><span class="p">):</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="s">&#39;convert </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">f</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;jpg&#39;</span><span class="p">,</span><span class="s">&#39;gif&#39;</span><span class="p">))</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+
+<span class="n">cmd</span> <span class="o">=</span> <span class="s">&#39;convert -delay 100  -loop 0  files/images/lai_uk_*.gif files/images/lai_uk.gif&#39;</span>
+</pre></div>
 
 </div>
 </div>
