@@ -3489,7 +3489,7 @@ array([  0,   2,   8,  10,  16,  18,  32,  34,  40,  42,  48,  50,  97,
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We could try to come up with an interpretation of each of these ... or we could try to mask the qc bytes to see bit 0 only. This is quite possibly a new concept for most of you, but it is very common that when interpreting QC data in data products, you need to think about bit masking. You will find more details on this in the advanced section of Chapter 1, but we will consider the minimum we need right now.</p>
 <p>Byte data are formed of 8 bits, e.g.:</p>
-<p>101 == (1 * 2<strong>6) +<br /> (1 * 2</strong>5) +<br /> (0 * 2<strong>4) +<br /> (0 * 2</strong>3) +<br /> (1 * 2<strong>2) +<br /> (0 * 2</strong>1) +<br /> (1 * 2**0)</p>
+<p><code>101 ==  (1 * 2**6) + \         (1 * 2**5) + \         (0 * 2**4) + \         (0 * 2**3) + \         (1 * 2**2) + \         (0 * 2**1) + \         (1 * 2**0)</code></p>
 <p>So, in binary, we represent the decimal number <code>101</code> by <code>1100101</code>.</p>
 <p>The QA values are to be interpreted in this manner.</p>
 <p>If we want <em>only</em> bit 1, we can perform a <em>bitwise</em> operation with the byte data.</p>
@@ -6547,18 +6547,35 @@ iurRSQAAAABJRU5ErkJggg==
 <img src="images/lai_uk.gif" />
 </div>
 </div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre>
-</pre></div>
-
-</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Exercise-4.2-A-Different-Dataset">Exercise 4.2 A Different Dataset<a class="anchor-link" href="#Exercise-4.2-A-Different-Dataset">&#182;</a></h2>
 </div>
 
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>what to do when its a different data set ... snow data for the UK</p>
+<p>look at QA flags ...</p>
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="4.3-Vector-masking">4.3 Vector masking<a class="anchor-link" href="#4.3-Vector-masking">&#182;</a></h2>
+</div>
+
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>build a UK mask from a shape file</p>
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="4.4-Dealing-with-data-gaps">4.4 Dealing with data gaps<a class="anchor-link" href="#4.4-Dealing-with-data-gaps">&#182;</a></h2>
+</div>
+
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Some interpolation ... interpolate LAI</p>
+<p>exercise: uncertainty-weighted interpolation</p>
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Downloading-data">Downloading data<a class="anchor-link" href="#Downloading-data">&#182;</a></h2>
+</div>
+
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>wget etc</p>
 </div>
 </body>
 </html>
