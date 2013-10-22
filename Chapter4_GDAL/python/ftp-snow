@@ -1,0 +1,16 @@
+#!/bin/sh
+HOST='n4ftl01u.ecs.nasa.gov'
+USER='anonymous'
+PASSWD='yourid@ucl.ac.uk'
+FILE='files/python/snow.txt'
+
+ftp -n $HOST <<END_SCRIPT 
+quote USER $USER
+quote PASS $PASSWD
+ls MOSA/MYD10A1.005/$1.$2.??/*.hdf
+ls MOST/MOD10A1.005/$1.$2.??/*.hdf
+quit
+END_SCRIPT
+exit 0
+
+

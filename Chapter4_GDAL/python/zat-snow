@@ -10,32 +10,17 @@
 # Zat is the name of a friendly robot in a John Wyndham
 # story, The Lost Machine (Amazing Stories, April 1932).
 # 
+set here = `pwd`
 
 set server = 'ftp://n4ftl01u.ecs.nasa.gov/'
-set tmdir = robot_files_snow
-
-cd /tmp
-
-mkdir -p $tmdir
-cd $tmdir
-
-foreach f (MOSA MOST)
-  if ( ! -e $f ) wget -O $f $server/SAN/$f/
-  set products = `grep 'href=' < $f | grep -v DPRecentInserts| awk -Fhref=\" '{print $2}'|awk -F/\" '{print $1}'i | grep 10A1`
-  foreach p ($products)
-    set pp = $p:t
-    wget -O $pp $p/
-    set dates = `grep 'href=' < $pp | grep -v DPRecentInserts|  awk -Fhref=\" '{print $2}'|awk -F\"\> '{print $1}'`
-    foreach d ($dates)
-      set dd = $d:t
-      wget -O $pp.$dd $d/
-      grep hdf < $pp.$dd | grep -v DPRecentInserts| grep -v xml | awk -Fhref=\" '{print $2}'|awk -F\"\> '{print $1}' >> robot.txt
-    end
+@ y = 2000
+while ( $y <= 2013 )
+  rm -f files/data/robot_snow.$y.txt
+  foreach m (`awk 'BEGIN{for(i=1;i<=12;i++)printf("%02d ",i)}'`)
+    echo $y $m
+    $here/python/ftp-snow $y $m |  grep hdf | awk '{print w $NF}' w=$server >> files/data/robot_snow.$y.txt
   end
+  @ y++
 end
-
-cat robot.txt
-cd /tmp
-rm -rf $tmdir
 
 
