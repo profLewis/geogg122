@@ -1722,7 +1722,7 @@ init_mathjax();
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[64]:
+In&nbsp;[1]:
 </div>
 <div class="input_area box-flex1">
 <div class="highlight"><pre><span class="c"># how to find out which datasets are in the file</span>
@@ -1795,7 +1795,7 @@ File files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf opened fine
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[65]:
+In&nbsp;[2]:
 </div>
 <div class="input_area box-flex1">
 <div class="highlight"><pre><span class="c"># How to access specific datasets in gdal</span>
@@ -1857,7 +1857,7 @@ Opening Layer 3: HDF4_EOS:EOS_GRID:&quot;files/data/MCD15A2.A2011185.h09v05.005.
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[66]:
+In&nbsp;[3]:
 </div>
 <div class="input_area box-flex1">
 <div class="highlight"><pre><span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;Lai_1km&#39;</span><span class="p">])</span>
@@ -1871,7 +1871,7 @@ In&nbsp;[66]:
 
 
 <div class="hbox output_area"><div class="prompt output_prompt">
-    Out[66]:</div>
+    Out[3]:</div>
 <div class="box-flex1 output_subarea output_pyout">
 
 
@@ -1889,7 +1889,7 @@ numpy.ndarray
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[67]:
+In&nbsp;[4]:
 </div>
 <div class="input_area box-flex1">
 <div class="highlight"><pre><span class="k">print</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;Lai_1km&#39;</span><span class="p">]</span>
@@ -1927,7 +1927,7 @@ In&nbsp;[67]:
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[68]:
+In&nbsp;[5]:
 </div>
 <div class="input_area box-flex1">
 <div class="highlight"><pre><span class="n">lai</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;Lai_1km&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.1</span>
@@ -1941,7 +1941,7 @@ In&nbsp;[68]:
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[69]:
+In&nbsp;[6]:
 </div>
 <div class="input_area box-flex1">
 <div class="highlight"><pre><span class="k">print</span> <span class="s">&quot;LAI&quot;</span>
@@ -1988,7 +1988,7 @@ SD
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[82]:
+In&nbsp;[7]:
 </div>
 <div class="input_area box-flex1">
 <div class="highlight"><pre><span class="c"># plot the LAI</span>
@@ -2011,12 +2011,12 @@ In&nbsp;[82]:
 
 
 <div class="hbox output_area"><div class="prompt output_prompt">
-    Out[82]:</div>
+    Out[7]:</div>
 <div class="box-flex1 output_subarea output_pyout">
 
 
 <pre>
-&lt;matplotlib.colorbar.Colorbar instance at 0x2ad0a3f70a70&gt;
+&lt;matplotlib.colorbar.Colorbar instance at 0x2adc680e1830&gt;
 </pre>
 
 </div>
@@ -3595,7 +3595,7 @@ OvwmURfc6lCHOvwmURfc6lCHOvwmURfc6lCHOvwm8X8jS9+dvndu8AAAAABJRU5ErkJggg==
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[83]:
+In&nbsp;[8]:
 </div>
 <div class="input_area box-flex1">
 <div class="highlight"><pre><span class="c"># plot the LAI std</span>
@@ -3619,12 +3619,12 @@ In&nbsp;[83]:
 
 
 <div class="hbox output_area"><div class="prompt output_prompt">
-    Out[83]:</div>
+    Out[8]:</div>
 <div class="box-flex1 output_subarea output_pyout">
 
 
 <pre>
-&lt;matplotlib.colorbar.Colorbar instance at 0x27e46d40&gt;
+&lt;matplotlib.colorbar.Colorbar instance at 0x2adc6954c098&gt;
 </pre>
 
 </div>
@@ -5185,11 +5185,11 @@ Pixel not produced at all value coudn’t be retrieved (possible reasons: bad L1
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[73]:
+In&nbsp;[33]:
 </div>
 <div class="input_area box-flex1">
-<div class="highlight"><pre><span class="n">qc</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;FparLai_QC&#39;</span><span class="p">]</span> <span class="c"># Get the QC data</span>
-<span class="k">print</span> <span class="n">qc</span> 
+<div class="highlight"><pre><span class="n">qc</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;FparLai_QC&#39;</span><span class="p">]</span> <span class="c"># Get the QC data which is an unsigned 8 bit byte</span>
+<span class="k">print</span> <span class="n">qc</span> <span class="p">,</span> <span class="n">qc</span><span class="o">.</span><span class="n">dtype</span>
 </pre></div>
 
 </div>
@@ -5202,13 +5202,13 @@ In&nbsp;[73]:
 <div class="hbox output_area"><div class="prompt"></div>
 <div class="box-flex1 output_subarea output_stream output_stdout">
 <pre>
-[[2 2 0 ..., 0 2 2]
+ [[2 2 0 ..., 0 2 2]
  [2 2 0 ..., 2 0 2]
  [0 2 0 ..., 0 0 0]
  ..., 
  [0 0 2 ..., 0 8 0]
  [0 0 0 ..., 0 0 2]
- [0 2 0 ..., 2 2 2]]
+ [0 2 0 ..., 2 2 2]] uint8
 
 </pre>
 </div>
@@ -5224,7 +5224,7 @@ In&nbsp;[73]:
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[74]:
+In&nbsp;[10]:
 </div>
 <div class="input_area box-flex1">
 <div class="highlight"><pre><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">qc</span><span class="p">)</span>
@@ -5238,7 +5238,7 @@ In&nbsp;[74]:
 
 
 <div class="hbox output_area"><div class="prompt output_prompt">
-    Out[74]:</div>
+    Out[10]:</div>
 <div class="box-flex1 output_subarea output_pyout">
 
 
@@ -5254,11 +5254,60 @@ array([  0,   2,   8,  10,  16,  18,  32,  34,  40,  42,  48,  50,  97,
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[15]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="c"># translated into binary using bin()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">qc</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">i</span><span class="p">,</span><span class="nb">bin</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre>
+0 0b0
+2 0b10
+8 0b1000
+10 0b1010
+16 0b10000
+18 0b10010
+32 0b100000
+34 0b100010
+40 0b101000
+42 0b101010
+48 0b110000
+50 0b110010
+97 0b1100001
+99 0b1100011
+105 0b1101001
+107 0b1101011
+113 0b1110001
+115 0b1110011
+157 0b10011101
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We could try to come up with an interpretation of each of these ... or we could try to mask the qc bytes to see bit 0 only. This is quite possibly a new concept for most of you, but it is very common that when interpreting QC data in data products, you need to think about bit masking. You will find more details on this in the advanced section of Chapter 1, but we will consider the minimum we need right now.</p>
+<p>We could try to come up with an interpretation of each of these ... or we could try to mask the qc bytes to see bit 0 only if that's what we are interested in. This is quite possibly a new concept for most of you, but it is very common that when interpreting QC data in data products, you need to think about bit masking. You will find more details on this in the advanced section of Chapter 1, but we will consider the minimum we need right now.</p>
 <p>Byte data are formed of 8 bits, e.g.:</p>
-<p><code>101 ==  (1 * 2**6) +          (1 * 2**5) +          (0 * 2**4) +          (0 * 2**3) +          (1 * 2**2) +          (0 * 2**1) +          (1 * 2**0)</code></p>
-<p>So, in binary, we represent the decimal number <code>101</code> by <code>1100101</code>.</p>
+<p><code>105 ==  (1 * 2**6) +          (1 * 2**5) +          (0 * 2**4) +          (1 * 2**3) +          (0 * 2**2) +          (0 * 2**1) +          (1 * 2**0)</code></p>
+<p>So, in binary, we represent the decimal number <code>105</code> by <code>1101001</code> as we saw above.</p>
 <p>The QC values are to be interpreted in this manner.</p>
 <p>If we want <em>only</em> bit 1, we can perform a <em>bitwise</em> operation with the byte data.</p>
 <p>In this case, it would be an 'and' operation (<code>&amp;</code>) with the value <code>1</code>:</p>
@@ -5266,15 +5315,15 @@ array([  0,   2,   8,  10,  16,  18,  32,  34,  40,  42,  48,  50,  97,
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[75]:
+In&nbsp;[25]:
 </div>
 <div class="input_area box-flex1">
-<div class="highlight"><pre><span class="c"># suppose we consider the value 101</span>
+<div class="highlight"><pre><span class="c"># suppose we consider the value 105</span>
 <span class="c"># which from above, we know to have </span>
-<span class="c"># bit 1 set as 1</span>
-<span class="n">test</span> <span class="o">=</span> <span class="mi">101</span>
-<span class="n">bit_one</span> <span class="o">=</span> <span class="n">test</span> <span class="o">&amp;</span> <span class="mi">1</span>
-<span class="k">print</span> <span class="n">bit_one</span>
+<span class="c"># bit 0 set as 1</span>
+<span class="n">test</span> <span class="o">=</span> <span class="mi">105</span>
+<span class="n">bit_zero</span> <span class="o">=</span> <span class="n">test</span> <span class="o">&amp;</span> <span class="mi">1</span>
+<span class="k">print</span> <span class="n">bit_zero</span>
 </pre></div>
 
 </div>
@@ -5300,14 +5349,14 @@ In&nbsp;[75]:
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[76]:
+In&nbsp;[16]:
 </div>
 <div class="input_area box-flex1">
-<div class="highlight"><pre><span class="c"># suppose we consider the value 102</span>
+<div class="highlight"><pre><span class="c"># suppose we consider the value 104</span>
 <span class="c"># which we could work out has bit 1 as 0</span>
-<span class="n">test</span> <span class="o">=</span> <span class="mi">102</span>
-<span class="n">bit_one</span> <span class="o">=</span> <span class="n">test</span> <span class="o">&amp;</span> <span class="mi">1</span>
-<span class="k">print</span> <span class="n">bit_one</span>
+<span class="n">test</span> <span class="o">=</span> <span class="mi">104</span>
+<span class="n">bit_zero</span> <span class="o">=</span> <span class="n">test</span> <span class="o">&amp;</span> <span class="mi">1</span>
+<span class="k">print</span> <span class="n">bit_zero</span>
 </pre></div>
 
 </div>
@@ -5333,7 +5382,71 @@ In&nbsp;[76]:
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[77]:
+In&nbsp;[52]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="c"># other bit fields are a &#39;little&#39; more complicated</span>
+<span class="n">tests</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">qc</span><span class="p">)</span>
+
+
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tests</span><span class="p">:</span>
+    <span class="c"># if we want bit field 5-7</span>
+    <span class="c"># we form a binary mask</span>
+    <span class="n">mask57</span> <span class="o">=</span> <span class="mi">0</span><span class="n">b11100000</span>
+    <span class="c"># but 0</span>
+    <span class="n">mask0</span> <span class="o">=</span>  <span class="mi">0</span><span class="n">b00000001</span>
+    <span class="c"># and use &amp; as before and right shift 5 (&gt;&gt; 5)</span>
+    <span class="n">qa57</span> <span class="o">=</span> <span class="p">(</span><span class="n">t</span> <span class="o">&amp;</span> <span class="n">mask57</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">5</span>
+    <span class="n">qa0</span>  <span class="o">=</span> <span class="p">(</span><span class="n">t</span> <span class="o">&amp;</span> <span class="n">mask0</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">0</span>
+    <span class="k">print</span> <span class="n">t</span><span class="p">,</span><span class="n">qa57</span><span class="p">,</span><span class="n">qa0</span><span class="p">,</span><span class="nb">bin</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre>
+0 0 0 0b0
+2 0 0 0b10
+8 0 0 0b1000
+10 0 0 0b1010
+16 0 0 0b10000
+18 0 0 0b10010
+32 1 0 0b100000
+34 1 0 0b100010
+40 1 0 0b101000
+42 1 0 0b101010
+48 1 0 0b110000
+50 1 0 0b110010
+97 3 1 0b1100001
+99 3 1 0b1100011
+105 3 1 0b1101001
+107 3 1 0b1101011
+113 3 1 0b1110001
+115 3 1 0b1110011
+157 4 1 0b10011101
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So, for example (examining the table above) <code>105</code> is interpreted at <code>0b011</code> in fields 5 to 7 (which is 3 in decimal). This indicates that 'Main (RT) method failed due to problems other than geometry empirical algorithm used'. Here, bit zero is set to <code>1</code>, so this is a 'bad' pixel.</p>
+<p>In this case, we are only interested in bit 0, which is an easier task than inmterpreting all of the bits.</p>
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[53]:
 </div>
 <div class="input_area box-flex1">
 <div class="highlight"><pre><span class="c"># the good data are where qc bit 1 is 0</span>
@@ -5355,12 +5468,12 @@ In&nbsp;[77]:
 
 
 <div class="hbox output_area"><div class="prompt output_prompt">
-    Out[77]:</div>
+    Out[53]:</div>
 <div class="box-flex1 output_subarea output_pyout">
 
 
 <pre>
-&lt;matplotlib.colorbar.Colorbar instance at 0x2ad0a2c92758&gt;
+&lt;matplotlib.colorbar.Colorbar instance at 0xc6b71b8&gt;
 </pre>
 
 </div>
@@ -5884,7 +5997,7 @@ bgYGBi0Sw7kZGBi0SAznZmBg0CL5fyn4TrrhsL/VAAAAAElFTkSuQmCC
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[86]:
+In&nbsp;[54]:
 </div>
 <div class="input_area box-flex1">
 <div class="highlight"><pre><span class="c"># colormap</span>
@@ -5908,12 +6021,12 @@ In&nbsp;[86]:
 
 
 <div class="hbox output_area"><div class="prompt output_prompt">
-    Out[86]:</div>
+    Out[54]:</div>
 <div class="box-flex1 output_subarea output_pyout">
 
 
 <pre>
-&lt;matplotlib.colorbar.Colorbar instance at 0x2ad0aea4f7a0&gt;
+&lt;matplotlib.colorbar.Colorbar instance at 0x2adc6b8dd5a8&gt;
 </pre>
 
 </div>
@@ -7445,7 +7558,7 @@ AElFTkSuQmCC
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[87]:
+In&nbsp;[55]:
 </div>
 <div class="input_area box-flex1">
 <div class="highlight"><pre><span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">spectral</span>
@@ -7463,12 +7576,12 @@ In&nbsp;[87]:
 
 
 <div class="hbox output_area"><div class="prompt output_prompt">
-    Out[87]:</div>
+    Out[55]:</div>
 <div class="box-flex1 output_subarea output_pyout">
 
 
 <pre>
-&lt;matplotlib.colorbar.Colorbar instance at 0x2c00aa70&gt;
+&lt;matplotlib.colorbar.Colorbar instance at 0x2adc70725878&gt;
 </pre>
 
 </div>
@@ -8735,7 +8848,7 @@ cE3h/wE6Js30TggmgQAAAABJRU5ErkJggg==
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[94]:
+In&nbsp;[1]:
 </div>
 <div class="input_area box-flex1">
 <div class="highlight"><pre><span class="kn">import</span> <span class="nn">gdal</span>
@@ -8788,7 +8901,7 @@ In&nbsp;[94]:
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[95]:
+In&nbsp;[57]:
 </div>
 <div class="input_area box-flex1">
 <div class="highlight"><pre><span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf&#39;</span>
@@ -8813,12 +8926,12 @@ In&nbsp;[95]:
 
 
 <div class="hbox output_area"><div class="prompt output_prompt">
-    Out[95]:</div>
+    Out[57]:</div>
 <div class="box-flex1 output_subarea output_pyout">
 
 
 <pre>
-&lt;matplotlib.colorbar.Colorbar instance at 0x2e8eb7e8&gt;
+&lt;matplotlib.colorbar.Colorbar instance at 0x2adc709ffe18&gt;
 </pre>
 
 </div>
@@ -10252,10 +10365,10 @@ a7M2a7P/SGtzbm3WZm32H2n/D/En7SqNqopYAAAAAElFTkSuQmCC
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[102]:
+In&nbsp;[59]:
 </div>
 <div class="input_area box-flex1">
-<div class="highlight"><pre><span class="o">!</span>head -10 &lt; files/data/snow_list.txt
+<div class="highlight"><pre><span class="o">!</span>head -10 &lt; files/data/robot_snow.2012.txt
 </pre></div>
 
 </div>
@@ -10268,16 +10381,16 @@ In&nbsp;[102]:
 <div class="hbox output_area"><div class="prompt"></div>
 <div class="box-flex1 output_subarea output_stream output_stdout">
 <pre>
-ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2000.02.24/MOD10A1.A2000055.h00v08.005.2007163001414.hdf
-ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2000.02.24/MOD10A1.A2000055.h00v09.005.2007163002626.hdf
-ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2000.02.24/MOD10A1.A2000055.h00v10.005.2007163002628.hdf
-ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2000.02.24/MOD10A1.A2000055.h01v08.005.2007163002632.hdf
-ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2000.02.24/MOD10A1.A2000055.h01v09.005.2007163002633.hdf
-ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2000.02.24/MOD10A1.A2000055.h01v10.005.2007163002630.hdf
-ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2000.02.24/MOD10A1.A2000055.h01v11.005.2007163001437.hdf
-ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2000.02.24/MOD10A1.A2000055.h02v06.005.2007163001408.hdf
-ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2000.02.24/MOD10A1.A2000055.h02v08.005.2007163002637.hdf
-ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2000.02.24/MOD10A1.A2000055.h02v09.005.2007163002631.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2012.01.01/MYD10A1.A2012001.h00v08.005.2012006235251.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2012.01.01/MYD10A1.A2012001.h00v09.005.2012006235244.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2012.01.01/MYD10A1.A2012001.h00v10.005.2012006234603.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2012.01.01/MYD10A1.A2012001.h01v08.005.2012006234607.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2012.01.01/MYD10A1.A2012001.h01v09.005.2012006234607.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2012.01.01/MYD10A1.A2012001.h01v10.005.2012006235245.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2012.01.01/MYD10A1.A2012001.h01v11.005.2012006234656.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2012.01.01/MYD10A1.A2012001.h02v06.005.2012006235323.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2012.01.01/MYD10A1.A2012001.h02v08.005.2012006234419.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2012.01.01/MYD10A1.A2012001.h02v09.005.2012006234416.hdf
 
 </pre>
 </div>
@@ -10288,13 +10401,57 @@ ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2000.02.24/MOD10A1.A2000055.h02v09.
 
 </div>
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This is a file containing the filenames of <em>all</em> <code>MOD10A1</code> (daily snow cover) files pulled from the ftp server. It is possible to do this in Python (see advanced section), but actually must easier and faster with an ftp script <a href="python/zat-snow"><code>files/python/zat-snow &gt; files/data/snow_list.txt</code></a>. You don't need to run this, as it has already been run for you.</p>
-<p>We can do similar things for http, but that is a little more complicated (again, see advanced notes or <a href="zat"><code>files/zat &gt; files/data/robot.txt</code></a>.</p>
+<p>This is a file containing the filenames of <em>all</em> <code>MOD10A1</code> (daily snow cover) files for a given year, pulled from the ftp server. It is possible to do this in Python (see advanced section), but actually must easier and faster with an ftp script <a href="python/zat-snow">`files/python/zat-snow</a>. You don't need to run this, as it has already been run for you and the results put in the files:</p>
 </div>
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[104]:
+In&nbsp;[63]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="n">ls</span> <span class="o">-</span><span class="n">l</span> <span class="n">files</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">robot_snow</span><span class="o">*</span><span class="n">txt</span>
+</pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre>
+-rw-rw-r-- 1 plewis plewis  9034752 Oct 22 09:25 files/data/robot_snow.2000.txt
+-rw-rw-r-- 1 plewis plewis 10820568 Oct 22 09:25 files/data/robot_snow.2001.txt
+-rw-rw-r-- 1 plewis plewis 16321938 Oct 22 09:25 files/data/robot_snow.2002.txt
+-rw-rw-r-- 1 plewis plewis 22423068 Oct 22 09:25 files/data/robot_snow.2003.txt
+-rw-rw-r-- 1 plewis plewis  7633374 Oct 22 09:25 files/data/robot_snow.2004.txt
+-rw-rw-r-- 1 plewis plewis 18872448 Oct 22 09:25 files/data/robot_snow.2005.txt
+-rw-rw-r-- 1 plewis plewis 11433078 Oct 22 09:25 files/data/robot_snow.2006.txt
+-rw-rw-r-- 1 plewis plewis 22663686 Oct 22 09:25 files/data/robot_snow.2007.txt
+-rw-rw-r-- 1 plewis plewis 22668990 Oct 22 09:25 files/data/robot_snow.2008.txt
+-rw-rw-r-- 1 plewis plewis 22705317 Oct 22 09:25 files/data/robot_snow.2009.txt
+-rw-rw-r-- 1 plewis plewis 22712370 Oct 22 09:25 files/data/robot_snow.2010.txt
+-rw-rw-r-- 1 plewis plewis 17129166 Oct 22 09:25 files/data/robot_snow.2011.txt
+-rw-rw-r-- 1 plewis plewis 22756824 Oct 22 09:25 files/data/robot_snow.2012.txt
+-rw-rw-r-- 1 plewis plewis 18104898 Oct 22 09:25 files/data/robot_snow.2013.txt
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can do similar things for http, but that is a little more complicated (again, see advanced notes or <a href="zat"><code>files/zat &gt; files/data/robot.txt</code></a> for the MODIS LAI product.</p>
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[65]:
 </div>
 <div class="input_area box-flex1">
 <div class="highlight"><pre><span class="o">!</span>head -10 &lt; files/data/robot.txt
@@ -10330,23 +10487,23 @@ http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2002.07.04/MCD15A2.
 
 </div>
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The file <code>files/data/snow_list.txt</code> contains the names for all tiles and all files.</p>
-<p>So if we want just e.g. tile <code>h17v03</code> and a particular year (e.g. 2010) and sensor (<code>MOST</code>), we can most easily filter this in unix:</p>
+<p>The file <code>files/data/robot_snow.2012.txt</code> contains the names for all tiles and all files.</p>
+<p>So if we want just e.g. tile <code>h17v03</code> and sensor (<code>MOST</code>), we can most easily filter this in unix:</p>
 </div>
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[124]:
+In&nbsp;[71]:
 </div>
 <div class="input_area box-flex1">
 <div class="highlight"><pre><span class="o">%%</span><span class="k">bash</span>
 <span class="n">tile</span><span class="o">=</span><span class="n">h17v03</span>
-<span class="n">year</span><span class="o">=</span><span class="mi">2003</span>
+<span class="n">year</span><span class="o">=</span><span class="mi">2012</span>
 <span class="nb">type</span><span class="o">=</span><span class="n">MOST</span>
 
-<span class="nb">file</span><span class="o">=</span><span class="n">files</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">snow_list_</span><span class="err">$</span><span class="p">{</span><span class="n">tile</span><span class="p">}</span><span class="n">_</span><span class="err">$</span><span class="p">{</span><span class="n">year</span><span class="p">}</span><span class="n">_</span><span class="err">$</span><span class="p">{</span><span class="nb">type</span><span class="p">}</span><span class="o">.</span><span class="n">txt</span>
+<span class="nb">file</span><span class="o">=</span><span class="n">files</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">robot_snow</span><span class="o">.</span><span class="err">$</span><span class="p">{</span><span class="n">year</span><span class="p">}</span><span class="n">_</span><span class="err">$</span><span class="p">{</span><span class="nb">type</span><span class="p">}</span><span class="n">_</span><span class="err">$</span><span class="p">{</span><span class="n">tile</span><span class="p">}</span><span class="o">.</span><span class="n">txt</span>
 
-<span class="n">grep</span> <span class="err">$</span><span class="n">tile</span> <span class="o">&lt;</span> <span class="n">files</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">snow_list</span><span class="o">.</span><span class="n">txt</span> <span class="o">|</span> <span class="n">grep</span> <span class="s">&quot;005/$year&quot;</span> <span class="o">|</span> <span class="n">grep</span> <span class="err">$</span><span class="nb">type</span> <span class="o">&gt;</span> <span class="err">$</span><span class="nb">file</span>
+<span class="n">grep</span> <span class="err">$</span><span class="n">tile</span> <span class="o">&lt;</span> <span class="n">files</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">robot_snow</span><span class="o">.</span><span class="err">$</span><span class="n">year</span><span class="o">.</span><span class="n">txt</span> <span class="o">|</span> <span class="n">grep</span> <span class="err">$</span><span class="nb">type</span> <span class="o">&gt;</span> <span class="err">$</span><span class="nb">file</span>
 
 <span class="c"># how many files?</span>
 <span class="n">wc</span> <span class="o">-</span><span class="n">l</span> <span class="o">&lt;</span> <span class="err">$</span><span class="nb">file</span>
@@ -10365,17 +10522,17 @@ In&nbsp;[124]:
 <div class="hbox output_area"><div class="prompt"></div>
 <div class="box-flex1 output_subarea output_stream output_stdout">
 <pre>
-356
-ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2003.01.01/MOD10A1.A2003001.h17v03.005.2008256225311.hdf
-ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2003.01.02/MOD10A1.A2003002.h17v03.005.2008257120315.hdf
-ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2003.01.03/MOD10A1.A2003003.h17v03.005.2008257074302.hdf
-ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2003.01.04/MOD10A1.A2003004.h17v03.005.2007253162108.hdf
-ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2003.01.05/MOD10A1.A2003005.h17v03.005.2007253215645.hdf
-ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2003.01.06/MOD10A1.A2003006.h17v03.005.2007254142247.hdf
-ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2003.01.07/MOD10A1.A2003007.h17v03.005.2007255090430.hdf
-ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2003.01.08/MOD10A1.A2003008.h17v03.005.2007256024333.hdf
-ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2003.01.09/MOD10A1.A2003009.h17v03.005.2007256082112.hdf
-ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2003.01.10/MOD10A1.A2003010.h17v03.005.2007256194420.hdf
+366
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.01/MOD10A1.A2012001.h17v03.005.2012003054416.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.02/MOD10A1.A2012002.h17v03.005.2012004061011.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.03/MOD10A1.A2012003.h17v03.005.2012005061244.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.04/MOD10A1.A2012004.h17v03.005.2012006054639.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.05/MOD10A1.A2012005.h17v03.005.2012007052708.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.06/MOD10A1.A2012006.h17v03.005.2012008070328.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.07/MOD10A1.A2012007.h17v03.005.2012011144012.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.08/MOD10A1.A2012008.h17v03.005.2012011154609.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.09/MOD10A1.A2012009.h17v03.005.2012011222125.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.10/MOD10A1.A2012010.h17v03.005.2012012062821.hdf
 
 </pre>
 </div>
@@ -10388,19 +10545,100 @@ ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2003.01.10/MOD10A1.A2003010.h17v03.
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>With a more sensible set of urls now (only a few hundred), we can consider how to download them.</p>
 <p>We can (of course) do this in Python (see advanced notes), but we can also use unix tools such as <code>curl</code> or <code>wget</code>, which may be easier.</p>
+<p>For example, in <code>bash</code>:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">tile=</span>h17v03
+<span class="ot">year=</span>2012
+<span class="ot">type=</span>MOST
+
+<span class="ot">file=</span>snow_list_<span class="ot">${tile}</span>_<span class="ot">${year}</span>_<span class="ot">${type}</span>.txt
+
+<span class="co"># cd temporarily to the local directory</span>
+<span class="kw">pushd</span> files/data
+<span class="co"># -nc : no clobber : dont download if its there already</span>
+<span class="co"># -nH --cut-dirs=3 : ignore the directories</span>
+<span class="kw">wget</span> -nc -i <span class="ot">$file</span> -nH --cut-dirs=3</code></pre>
+<p>or in <code>tcsh</code>:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">set</span> <span class="ot">tile=</span>h17v03
+<span class="kw">set</span> <span class="ot">year=</span>2012
+<span class="kw">set</span> <span class="ot">type=</span>MOST
+
+<span class="ot">file=</span>snow_list_<span class="ot">${tile}</span>_<span class="ot">${year}</span>_<span class="ot">${type}</span>.txt
+
+<span class="co"># cd temporarily to the local directory</span>
+<span class="kw">pushd</span> files/data
+<span class="co"># -nc : no clobber : dont download if its there already</span>
+<span class="co"># -nH --cut-dirs=3 : ignore the directories</span>
+<span class="kw">wget</span> -nc -i <span class="ot">$file</span> -nH --cut-dirs=3</code></pre>
+<p>For the moment, let's just pull only some of these by filtering the month as well:</p>
 </div>
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
-In&nbsp;[122]:
+In&nbsp;[6]:
 </div>
 <div class="input_area box-flex1">
 <div class="highlight"><pre><span class="o">%%</span><span class="k">bash</span>
 <span class="n">tile</span><span class="o">=</span><span class="n">h17v03</span>
-<span class="n">year</span><span class="o">=</span><span class="mi">2003</span>
+<span class="n">year</span><span class="o">=</span><span class="mi">2012</span>
 <span class="nb">type</span><span class="o">=</span><span class="n">MOST</span>
+<span class="n">month</span><span class="o">=</span><span class="mo">01</span>
 
-<span class="nb">file</span><span class="o">=</span><span class="n">snow_list_</span><span class="err">$</span><span class="p">{</span><span class="n">tile</span><span class="p">}</span><span class="n">_</span><span class="err">$</span><span class="p">{</span><span class="n">year</span><span class="p">}</span><span class="n">_</span><span class="err">$</span><span class="p">{</span><span class="nb">type</span><span class="p">}</span><span class="o">.</span><span class="n">txt</span>
+<span class="nb">file</span><span class="o">=</span><span class="n">files</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">robot_snow</span><span class="o">.</span><span class="err">$</span><span class="p">{</span><span class="n">year</span><span class="p">}</span><span class="n">_</span><span class="err">$</span><span class="p">{</span><span class="nb">type</span><span class="p">}</span><span class="n">_</span><span class="err">$</span><span class="p">{</span><span class="n">tile</span><span class="p">}</span><span class="n">_</span><span class="err">$</span><span class="p">{</span><span class="n">month</span><span class="p">}</span><span class="o">.</span><span class="n">txt</span>
+
+<span class="c"># the dot in the year / month grep need to be escaped</span>
+<span class="c"># because dot means something special to grep</span>
+<span class="n">grep</span> <span class="err">$</span><span class="n">tile</span> <span class="o">&lt;</span> <span class="n">files</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">robot_snow</span><span class="o">.</span><span class="err">$</span><span class="n">year</span><span class="o">.</span><span class="n">txt</span> <span class="o">|</span> <span class="n">grep</span> <span class="err">$</span><span class="nb">type</span> <span class="o">|</span> <span class="n">grep</span> <span class="s">&quot;${year}\.${month}&quot;</span> <span class="o">&gt;</span> <span class="err">$</span><span class="nb">file</span>
+
+<span class="c"># how many files?</span>
+<span class="n">wc</span> <span class="o">-</span><span class="n">l</span> <span class="o">&lt;</span> <span class="err">$</span><span class="nb">file</span>
+
+<span class="c"># look at the first 10 ...</span>
+<span class="n">head</span> <span class="o">-</span><span class="mi">10</span> <span class="o">&lt;</span> <span class="err">$</span><span class="nb">file</span>
+</pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre>
+31
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.01/MOD10A1.A2012001.h17v03.005.2012003054416.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.02/MOD10A1.A2012002.h17v03.005.2012004061011.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.03/MOD10A1.A2012003.h17v03.005.2012005061244.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.04/MOD10A1.A2012004.h17v03.005.2012006054639.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.05/MOD10A1.A2012005.h17v03.005.2012007052708.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.06/MOD10A1.A2012006.h17v03.005.2012008070328.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.07/MOD10A1.A2012007.h17v03.005.2012011144012.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.08/MOD10A1.A2012008.h17v03.005.2012011154609.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.09/MOD10A1.A2012009.h17v03.005.2012011222125.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.10/MOD10A1.A2012010.h17v03.005.2012012062821.hdf
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[75]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="o">%%</span><span class="k">bash</span>
+<span class="n">tile</span><span class="o">=</span><span class="n">h17v03</span>
+<span class="n">year</span><span class="o">=</span><span class="mi">2012</span>
+<span class="nb">type</span><span class="o">=</span><span class="n">MOST</span>
+<span class="n">month</span><span class="o">=</span><span class="mo">01</span>
+
+<span class="nb">file</span><span class="o">=</span><span class="n">robot_snow</span><span class="o">.</span><span class="err">$</span><span class="p">{</span><span class="n">year</span><span class="p">}</span><span class="n">_</span><span class="err">$</span><span class="p">{</span><span class="nb">type</span><span class="p">}</span><span class="n">_</span><span class="err">$</span><span class="p">{</span><span class="n">tile</span><span class="p">}</span><span class="n">_</span><span class="err">$</span><span class="p">{</span><span class="n">month</span><span class="p">}</span><span class="o">.</span><span class="n">txt</span>
 
 <span class="c"># cd temporarily to the local directory</span>
 <span class="n">pushd</span> <span class="n">files</span><span class="o">/</span><span class="n">data</span>
@@ -10438,17 +10676,659 @@ Process is terminated.
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We have now dowloaded a different dataset, the <a href="http://www.icess.ucsb.edu/modis/SnowUsrGuide/usrguide_1dtil.html">MOD10A product</a>, which is the 500 m MODIS daily snow cover product, over the UK.</p>
 <p>This is a good opportunity to see if you can apply what was learned above about interpreting QC information and using <code>gdal</code> to examine a dataset.</p>
-<p>If you examine the <a href="http://www.icess.ucsb.edu/modis/SnowUsrGuide/usrguide_1dtil.html">data description page</a>, you will see that the data are in HDF EOS format (the same as the LAI product).</p>
-<p>The main dataset layer is <code>Day_Tile_Snow_Cover</code>, which can be one of:</p>
-<p><code>254=non-production mask 200=snow 100=lakeice 50=cloud 39=ocean 37=inlandwater 25=land 11=night 1=no_decision</code></p>
-<p>If we were only interested in snow and lake ice over land, we would interpret only data that has values <code>200 (snow)</code> or <code>100 (lake ice)</code> as snow. If the pixel is set to <code>50, 245, 1</code> then this is 'unknown', and if it is <code>25</code> it is clear of snow.</p>
+<p>If you examine the <a href="http://nsidc.org/data/docs/daac/modis_v5/mod10a1_modis_terra_snow_daily_global_500m_grid.gd.html">data description page</a>, you will see that the data are in HDF EOS format (the same as the LAI product).</p>
+<h3 id="e4.2.1-download">E4.2.1 Download</h3>
+<p>Download the MODIS Terra daily snow product for the UK for the year 2012 for the month of February using the urls in <a href="data/robot_snow.2012.txt">files/data/robot_snow.2012.txt</a> and put them in the directory <code>files/data</code>.</p>
+<h3 id="e4.2.1-explore">E4.2.1 Explore</h3>
+<p>Show all of the subset data layers in this dataset.</p>
+<h3 id="e4.3.3-read-a-dataset">E4.3.3 Read a dataset</h3>
+<p>Suppose we are interested in the dataset <code>Fractional_Snow_Cover</code> over the land surface.</p>
+<p>Read this dataset for one of the files into a numpy array and show a plot of the dataset.</p>
+<h3 id="e4.3.4-water-mask">E4.3.4 Water mask</h3>
+<p>The <a href="http://nsidc.org/data/docs/daac/modis_v5/mod10a1_modis_terra_snow_daily_global_500m_grid.gd.html">data description page</a> tells us that values of <code>239</code> will indicate whether the data is ocean. You can use this information to build the water mask.</p>
+<p>Demonstrate how to build a water mask from one of these files, setting the mask <code>False</code> for land and <code>True</code> for water.</p>
+<p>Produce a plot of this.</p>
+<h3 id="e3.4.5-valid-pixel-mask">E3.4.5 Valid pixel mask</h3>
+<p>As well as having a land/water mask, we should generate a mask for valid pixels. For the snow dataset, values between 0 and 100 (inclusive) represent valid snow cover data values. Other values are not valid for some reason. Set the mask to <code>False</code> for valid pixels and <code>True</code> for others. Produce a plot of the mask.</p>
+<h3 id="e4.3.6-3d-dataset">E4.3.6 3D dataset</h3>
+<p>Generate a 3D masked numpy array using the valid pixel mask for masking, of <code>Fractional_Snow_Cover</code> for each day of February 2012.</p>
+<p>You might like to produce a movie of the result.</p>
+<p>Hint: you will need a list of filenames for this. You can either use <code>glob</code> as in previous exercises, or you might notice that you have the file <code>files/data/robot_snow.2012_MOST_h17v03_02.txt</code> with the urls, from which you should be able to derive the file names. However you get your list of filenames, you should probably apply a <code>sort()</code> to the result to make sure they are in the correct order.</p>
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+
 </div>
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="4.3-Vector-masking">4.3 Vector masking<a class="anchor-link" href="#4.3-Vector-masking">&#182;</a></h2>
 </div>
 
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>build a UK mask from a shape file</p>
+<p>In this section, we will use a pre-defined function to generate a mask from some vector boundary data.</p>
+<p>In this case, we will generate a mask for Ireland, projected into the coordinate system of the MODIS LAI dataset, and use that to generate a new LAI data only for Ireland.</p>
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Sometimes, geospatial data is acquired and recorded for particular geometric objects such as polygons or lines. An example is a road layout, where each road is represented as a geometric object (a line, with points given in a geographical projection), with a number of added <em>features</em> associated with it, such as the road name, whether it is a toll road, or whether it is dual-carriageway, etc. This data is quite different to a raster, where the entire scene is tessellated into pixels, and each pixel holds a value (or an array of value in the case of multiband rasterfiles).</p>
+<p>If you are familiar with databases, vector files are effectively a database, where one of the fields is a geometry object (a line in our previous road example, or a polygon if you consider a cadastral system). We can thus select different records by writing queries on the features. Some of these queries might be spatial (e.g. check whether a point is inside a particular country polygon).</p>
+<p>The most common format for vector data is the <strong>ESRI Shapfile</strong>, which is a multifile format (i.e., several files are needed in order to access the data). We'll start by getting hold of a shapefile that contains the countries of the world as polygons, together with information on country name, capital name, population, etc. The file is available <a href="http://aprsworld.net/gisdata/world/world.zip">here</a>.</p>
+<div class="figure">
+<img src="http://aprsworld.net/gisdata/world/political-world-aprs-small.png" alt="World" /><p class="caption">World</p>
+</div>
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We will download the file with wget (or curl if you want to), and uncompress it using unzip in the shell:</p>
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[7]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="c"># Downloads the data using wget</span>
+<span class="o">!</span>wget -nc http://aprsworld.net/gisdata/world/world.zip -O files/data/world.zip
+<span class="c"># or if you want to use curl...</span>
+<span class="c">#! curl http://aprsworld.net/gisdata/world/world.zip -o world.zip</span>
+<span class="o">!</span><span class="nb">pushd </span>files/data;unzip -o -x world.zip;popd
+</pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre>
+--2013-10-22 15:32:06--  http://aprsworld.net/gisdata/world/world.zip
+Resolving aprsworld.net... 72.251.203.219
+Connecting to aprsworld.net|72.251.203.219|:80... 
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We need to import <code>ogr</code>, and then open the file. As with GDAL, we get a handler to the file, (<code>g</code> in this case). OGR files can have different layers, although Shapefiles only have one. We need to select the layer using <code>GetLayer(0)</code> (selecting the first layer).</p>
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[9]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">osgeo</span> <span class="kn">import</span> <span class="n">ogr</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">ogr</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span> <span class="s">&quot;files/data/world.shp&quot;</span> <span class="p">)</span>
+<span class="n">layer</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">GetLayer</span><span class="p">(</span> <span class="mi">0</span> <span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In order to see a field (the field <code>NAME</code>) we can loop over the features in the layer, and use the <code>GetField('NAME')</code> method. We'll only do ten features here:</p>
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[10]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="n">n_feat</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="n">layer</span><span class="p">:</span>
+    
+    <span class="k">print</span> <span class="n">feat</span><span class="o">.</span><span class="n">GetField</span><span class="p">(</span><span class="s">&#39;NAME&#39;</span><span class="p">)</span>
+    
+    <span class="n">n_feat</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">n_feat</span> <span class="o">==</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="k">break</span>
+</pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre>
+GUATEMALA
+BOLIVIA
+PARAGUAY
+URUGUAY
+SURINAME
+FRENCH GUIANA
+WESTERN SAHARA
+GAMBIA
+MOROCCO
+MALI
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If you wanted to see the different layers, we could do this using:</p>
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[11]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="n">layerDefinition</span> <span class="o">=</span> <span class="n">layer</span><span class="o">.</span><span class="n">GetLayerDefn</span><span class="p">()</span>
+
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">layerDefinition</span><span class="o">.</span><span class="n">GetFieldCount</span><span class="p">()):</span>
+    <span class="k">print</span> <span class="s">&quot;Field </span><span class="si">%d</span><span class="s">: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">layerDefinition</span><span class="o">.</span><span class="n">GetFieldDefn</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">GetName</span><span class="p">()</span> <span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre>
+Field 1: NAME
+Field 2: CAPITAL
+Field 3: APPROX
+Field 4: AREA
+Field 5: SOURCETHM
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>There is much more information on using <code>ogr</code> on the associated <a href="OGR_Python.html">notebook OGR_Python</a> that you should explore at some point.</p>
+<p>One thing we may often wish to dowith such vector datsets is produce a mask, e.g. for national boundaries. One of the complexities of this is changing the projection that the vector data come in to that of the raster dataset.</p>
+<p>This is too involved to go over in this session, so we will simply present you with a function to achieve this.</p>
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This is available as <a href="python/raster_mask.py">files/python/raster_mask.py</a>.</p>
+<p>Most of the code below should be familiar from above (we make use of the <code>getLAI()</code> function we developed).</p>
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[1]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="s">&#39;files/python&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">raster_mask</span> <span class="kn">import</span> <span class="n">raster_mask</span><span class="p">,</span><span class="n">getLAI</span>
+
+<span class="c"># test this on an LAI file</span>
+
+<span class="c"># the data file name</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;files/data/MCD15A2.A2012273.h17v03.005.2012297134400.hdf&#39;</span>
+
+<span class="c"># a layer (doesn&#39;t matter so much which: use for geometry info)</span>
+<span class="n">layer</span> <span class="o">=</span> <span class="s">&#39;Lai_1km&#39;</span>
+<span class="c"># the full dataset specification</span>
+<span class="n">file_template</span> <span class="o">=</span> <span class="s">&#39;HDF4_EOS:EOS_GRID:&quot;</span><span class="si">%s</span><span class="s">&quot;:MOD_Grid_MOD15A2:</span><span class="si">%s</span><span class="s">&#39;</span>
+<span class="n">file_spec</span> <span class="o">=</span> <span class="n">file_template</span><span class="o">%</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="n">layer</span><span class="p">)</span>
+
+<span class="c"># make a raster mask</span>
+<span class="c"># from the layer IRELAND in world.shp</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">raster_mask</span><span class="p">(</span><span class="n">file_spec</span><span class="p">,</span>\
+                   <span class="n">target_vector_file</span> <span class="o">=</span> <span class="s">&quot;files/data/world.shp&quot;</span><span class="p">,</span>\
+                   <span class="n">attribute_filter</span> <span class="o">=</span> <span class="s">&quot;NAME = &#39;IRELAND&#39;&quot;</span><span class="p">)</span>
+
+<span class="c"># get the LAI data</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">getLAI</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+<span class="c"># reset the data mask</span>
+<span class="c"># &#39;mask&#39; is True for Ireland</span>
+<span class="c"># so take the opposite </span>
+<span class="n">data</span><span class="p">[</span><span class="s">&#39;Lai_1km&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;Lai_1km&#39;</span><span class="p">],</span><span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">)</span>
+<span class="n">data</span><span class="p">[</span><span class="s">&#39;LaiStdDev_1km&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;Lai_1km&#39;</span><span class="p">],</span><span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&#39;LAI for Eire: 2012273&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;Lai_1km&#39;</span><span class="p">],</span><span class="n">vmax</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[1]:</div>
+<div class="box-flex1 output_subarea output_pyout">
+
+
+<pre>
+&lt;matplotlib.colorbar.Colorbar instance at 0x7153878&gt;
+</pre>
+
+</div>
+</div>
+
+<div class="hbox output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_display_data">
+
+
+<img src="data:image/png;base64,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
+">
+
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Exercise-4.3">Exercise 4.3<a class="anchor-link" href="#Exercise-4.3">&#182;</a></h2>
+</div>
+
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="d-data-array">4.3.1 3D data array</h3>
+<p>Generate a 3D array of LAI for Eire for the year 2012, in a masked array called <code>lai</code>.</p>
+<p>You might also wish to generate a movie.</p>
+<h3 id="analysis">analysis</h3>
+<p>Plot the minimum, maximum and median LAI for Eire over the year 2012</p>
 </div>
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="4.4-Dealing-with-data-gaps">4.4 Dealing with data gaps<a class="anchor-link" href="#4.4-Dealing-with-data-gaps">&#182;</a></h2>
