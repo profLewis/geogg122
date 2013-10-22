@@ -36,7 +36,7 @@
   [Advanced Answers](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter2_Python_intro/advanced_answers.ipynb)  
  
  
- **3.0 Plotting and Numerical Python**
+- 3.0 Plotting and Numerical Python
       
   In this session, we will introduce and use some packages that you will commonly use in scientific programming.
       
@@ -50,5 +50,9 @@
   [Course Notes](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter3_Scientific_Numerical_Python/Scientific_Numerical_Python.ipynb)  
   [Answers](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter3_Scientific_Numerical_Python/answers.ipynb)  
   [Advanced](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter3_Scientific_Numerical_Python/advanced.ipynb)  
+
       
-    
+- 4.0 Geospatial data
+
+  In this session, we will learn to use some geospatial tools using GDAL in Python. A good set of working notes on how to use GDAL has been developed that you will find useful for background reading.
+  
