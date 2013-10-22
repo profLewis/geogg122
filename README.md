@@ -54,5 +54,26 @@
       
 - 4.0 Geospatial data
 
-  In this session, we will learn to use some geospatial tools using GDAL in Python. A good set of working notes on how to use GDAL has been developed that you will find useful for background reading.
-  
+  In this session, we will introduced the gdal geospatial module which can read a wide range of scientific data formats. You will find that using it to read data is quite similar to the work we did last week on netCDF datasets.
+
+  The main challenges are also much the same: very often, you need to be able to read data from a 'stack' of image files and generate a useful 3D (space and time) dataset from these. Once you have the data in such a form, there are many things we can do with it, and very many of these are convenient to do using array-based expressions such as in numpy (consider the simplicity of the expression absorbed = rad * (1 - albedo) from last week's exercise).
+
+  That said, it can sometimes be quite an effort to prepare datasets in this form. Last week, we developed a 'valid data' mask from the GlobAlbedo dataset, as invalid data were stored as nan. Very often though, scientific datasets have more complex 'Quality Control' (QC) information, that gives per-pixel information describing the quality of the product at that location (e.g. it was very cloudy so the results are not so good).
+
+  To explore this, we will first consider the MODIS Leaf Area Index (LAI) product taht is mapped at 1 km resolution, every 8 days from the year 2000.
+
+  We will learn how to read in these data (in hdf format) using gdal, and how to interpret the QC information in such products to produce valid data masks. As an exercise, you will wrap some code around that to form a 3D masked array of the dataset.
+
+  Next, we will consider how to download such data. This should be a reinforcement of material from last week, but it is useful to know how to conveniently access NASA data products. A challenge in the exercise then is to download a different dataset (MODIS snow cover) for the UK, and form a masked 3D dataset from this.
+
+  Finally, we will introduce vector datasets and show you python tools that allow you (among many other things) to build a mask in the projection and sampling of your spatial dataset (MODIS LAI in this case).
+
+  There are many features and as many complexities to the Python tools we will deal with today, but in this material, we cover some very typical tasks you will want to do. They all revolve around generating masked 3D datasets from NASA MODIS datasets, which is a very useful form of global biophysical information over the last decade+. We also provide much material for further reading and use when you are more confident in your programming.
+
+  A final point here is that the material we cover today is very closely related to what you will need to do in the first section of your assessed practical that we will introduce next week, so you really need to get to grips with this now.
+
+  There is not as much 'new' material as in previous weeks now, but we assume that you have understood, and can make use of, material from those lectures.
+    
+  [Course Notes](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter4_GDAL/GDAL_HDF.ipynb)  
+  [Answers](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter4_GDAL/answers.ipynb)  
+  [Advanced](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter4_GDAL/advanced.ipynb)  
