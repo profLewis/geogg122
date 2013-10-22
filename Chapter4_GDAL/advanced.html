@@ -2455,18 +2455,18 @@ Input file size is 2152, 1323
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>where <code>MCD15A2.A2011185.h09v05.005.2011213154534.hdf</code> is the name of the input HDF file, <code>MOD_Grid_MOD15A2:Lai_1km</code> is the data product we want, and the rather menacing string <code>+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=clrk66 +units=m +no_defs</code> specifies the projection in Proj4 format. You can typically find the projection you want on <a href="http://spatialreference.org">spatialreference.org</a>, and just copy and paste the contents of <a href="http://spatialreference.org/ref/sr-org/7271/proj4/">Proj4 definition</a> (remember to surround it by quotes). The option <code>-tr xres yres</code> specifies the desired resolution of the output dataset (1000 by 1000 m in the case above). <code>-of GTiff</code> specifies the GeoTiff format to be used as as output.</p>
 </div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre>
-</pre></div>
-
-</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="A4.3-Further-Geospatial-Notes">A4.3 Further Geospatial Notes<a class="anchor-link" href="#A4.3-Further-Geospatial-Notes">&#182;</a></h1>
 </div>
 
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>There are additonal notes that go into the details of <code>gdal</code> and vectors processing tools.</p>
+<p>Follow these on:</p>
+<ul>
+<li><a href="GDAL_Python_bindings.html">gdal</a></li>
+<li><a href="OGR_Python">ogr</a></li>
+</ul>
+<p>There are no explicit advanced exercises this week. Instead, you should eplore these notes and see if you can apply the concepts to your own datasets.</p>
 </div>
 </body>
 </html>

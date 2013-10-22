@@ -1699,10 +1699,21 @@ init_mathjax();
 </div>
 
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>In this session, we will learn to use some geospatial tools using GDAL in Python. A good set of <a href="http://jgomezdans.github.io/gdal_notes/">working notes on how to use GDAL</a> has been developed that you will find useful for background reading.</p>
+<p>In this session, we will introduced the <code>gdal</code> geospatial module which can read a wide range of scientific data formats. You will find that using it to read data is quite similar to the work we did last week on netCDF datasets.</p>
+<p>The main challenges are also much the same: very often, you need to be able to read data from a 'stack' of image files and generate a useful 3D (space and time) dataset from these. Once you have the data in such a form, there are <em>many</em> things we can do with it, and very many of these are convenient to do using array-based expressions such as in numpy (consider the simplicity of the expression <code>absorbed = rad * (1 - albedo)</code> from last week's exercise).</p>
+<p>That said, it can sometimes be quite an effort to prepare datasets in this form. Last week, we developed a 'valid data' mask from the GlobAlbedo dataset, as invalid data were stored as <code>nan</code>. Very often though, scientific datasets have more complex 'Quality Control' (QC) information, that gives per-pixel information describing the quality of the product at that location (e.g. it was very cloudy so the results are not so good).</p>
+<p>To explore this, we will first consider the <a href="http://modis.gsfc.nasa.gov/data/dataprod/dataproducts.php?MOD_NUMBER=15">MODIS Leaf Area Index (LAI)</a> product taht is mapped at 1 km resolution, every 8 days from the year 2000.</p>
+<p>We will learn how to read in these data (in <code>hdf</code> format) using <code>gdal</code>, and how to interpret the QC information in such products to produce valid data masks. As an exercise, you will wrap some code around that to form a 3D masked array of the dataset.</p>
+<p>Next, we will consider how to download such data. This should be a reinforcement of material from last week, but it is useful to know how to conveniently access NASA data products. A challenge in the exercise then is to download a different dataset (MODIS snow cover) for the UK, and form a masked 3D dataset from this.</p>
+<p>Finally, we will introduce vector datasets and show you python tools that allow you (among many other things) to build a mask in the projection and sampling of your spatial dataset (MODIS LAI in this case).</p>
+<p>There are many features and as many complexities to the Python tools we will deal with today, but in this material, we cover some very typical tasks you will want to do. They all revolve around generating masked 3D datasets from NASA MODIS datasets, which is a very useful form of global biophysical information over the last decade+. We also provide much material for further reading and use when you are more confident in your programming.</p>
+<p>A final point here is that the material we cover today is very closely related to what you will need to do in the first section of your assessed practical that we will introduce next week, so you really need to get to grips with this now.</p>
+<p>There is not as much 'new' material as in previous weeks now, but we assume that you have understood, and can make use of, material from those lectures.</p>
 <p>First, we will examine data from a NASA MODIS product on Leaf Area Index (LAI).</p>
 <ul>
-<li><a href="#4.1-MODIS-LAI-product">MODIS LAI product</a></li>
+<li>4.1 <a href="#4.1-MODIS-LAI-product">MODIS LAI product</a></li>
+<li>4.2 <a href="#4.2-Downloading-data">Downloading data</a><br /></li>
+<li>4.3 <a href="#4.3-Vector-masking">Vector masking</a></li>
 </ul>
 </div>
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -10331,7 +10342,7 @@ a7M2a7P/SGtzbm3WZm32H2n/D/En7SqNqopYAAAAAElFTkSuQmCC
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>You should end up with something like:</p>
 <div class="figure">
-<img src="images/lai_uk2.gif" />
+<img src="images/lai_uk02.gif" />
 </div>
 </div>
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -10556,7 +10567,8 @@ ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.10/MOD10A1.A2012010.h17v03.
 <span class="kw">pushd</span> files/data
 <span class="co"># -nc : no clobber : dont download if its there already</span>
 <span class="co"># -nH --cut-dirs=3 : ignore the directories</span>
-<span class="kw">wget</span> -nc -i <span class="ot">$file</span> -nH --cut-dirs=3</code></pre>
+<span class="kw">wget</span> -nc -i <span class="ot">$file</span> -nH --cut-dirs=3
+<span class="kw">popd</span></code></pre>
 <p>or in <code>tcsh</code>:</p>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">set</span> <span class="ot">tile=</span>h17v03
 <span class="kw">set</span> <span class="ot">year=</span>2012
@@ -10568,7 +10580,8 @@ ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.10/MOD10A1.A2012010.h17v03.
 <span class="kw">pushd</span> files/data
 <span class="co"># -nc : no clobber : dont download if its there already</span>
 <span class="co"># -nH --cut-dirs=3 : ignore the directories</span>
-<span class="kw">wget</span> -nc -i <span class="ot">$file</span> -nH --cut-dirs=3</code></pre>
+<span class="kw">wget</span> -nc -i <span class="ot">$file</span> -nH --cut-dirs=3
+<span class="kw">popd</span></code></pre>
 <p>For the moment, let's just pull only some of these by filtering the month as well:</p>
 </div>
 <div class="cell border-box-sizing code_cell vbox">
@@ -11324,19 +11337,18 @@ SSq5KYpSJankpihKlaSSm6IoVZJKboqiVEkquSmKUiX9P512ZRfBSpqVAAAAAElFTkSuQmCC
 </div>
 
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="d-data-array">4.3.1 3D data array</h3>
-<p>Generate a 3D array of LAI for Eire for the year 2012, in a masked array called <code>lai</code>.</p>
-<p>You might also wish to generate a movie.</p>
-<h3 id="analysis">analysis</h3>
-<p>Plot the minimum, maximum and median LAI for Eire over the year 2012</p>
+<p>Apply the concepts above to generate a 3D masked numpy data array of LAI and std LAI for Eire for the year 2012.</p>
+<p>Plot your results and make a move of LAI.</p>
+<p>Plot average LAI for Eire as a function of day of year for 2012.</p>
 </div>
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="4.4-Dealing-with-data-gaps">4.4 Dealing with data gaps<a class="anchor-link" href="#4.4-Dealing-with-data-gaps">&#182;</a></h2>
+<h1 id="Summary">Summary<a class="anchor-link" href="#Summary">&#182;</a></h1>
 </div>
 
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Some interpolation ... interpolate LAI</p>
-<p>exercise: uncertainty-weighted interpolation</p>
+<p>In this session, we have learned to use some geospatial tools using GDAL in Python. A good set of <a href="http://jgomezdans.github.io/gdal_notes/">working notes on how to use GDAL</a> has been developed that you will find useful for further reading, as well as looking at the <a href="advanced.html">advanced</a> section.</p>
+<p>We have also very briefly introduced dealing with vector datasets in <code>ogr</code>, but this was mainly through the use of a pre-defined function that will take an ESRI shapefile (vector dataset), warp this to the projection of a raster dataset, and produce a mask for a given layer in the vector file.</p>
+<p>If there is time in the class, we will develop some exercises to examine the datasets we have generated and/or to explore some different datasets or different locations.</p>
 </div>
 </body>
 </html>

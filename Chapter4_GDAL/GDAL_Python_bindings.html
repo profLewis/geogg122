@@ -1695,54 +1695,6 @@ init_mathjax();
 <body>
 
 <div class="text_cell_render border-box-sizing rendered_html">
-<table border="" width=100% cellpadding=0><tr>
-<td bgcolor="#232323" border="">
-<img src="https://raw.github.com/profLewis/geogg122/master/images/logo.png">
-</td>
-</tr>
-<td bgcolor="#9ABAE2" border="">
-</td>
-</table>
-
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[15]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">matplotlib</span>
-<span class="n">fp</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;../bmh_matplotlibrc.json&quot;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span> <span class="p">)</span>
-<span class="n">s</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span> <span class="p">(</span> <span class="n">fp</span> <span class="p">)</span>
-<span class="n">fp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-<span class="n">matplotlib</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
-<span class="o">%</span><span class="k">pylab</span> <span class="n">inline</span>
-<span class="o">%</span><span class="k">config</span> <span class="n">InlineBackend</span><span class="o">.</span><span class="n">figure_format</span> <span class="o">=</span> <span class="s">&#39;svg&#39;</span>
-<span class="n">figsize</span><span class="p">(</span> <span class="mi">7</span><span class="p">,</span><span class="mi">7</span> <span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-
-<div class="vbox output_wrapper">
-<div class="output vbox">
-
-
-<div class="hbox output_area"><div class="prompt"></div>
-<div class="box-flex1 output_subarea output_stream output_stdout">
-<pre>
-Populating the interactive namespace from numpy and matplotlib
-
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="GDAL-and-OGR-libraries">GDAL and OGR libraries<a class="anchor-link" href="#GDAL-and-OGR-libraries">&#182;</a></h1>
 </div>
 
@@ -3738,10 +3690,6 @@ In&nbsp;[28]:
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The function returns a GDAL in-memory file object, where you can <code>ReadAsArray</code> etc. As it stands, <code>reproject_dataset</code> does not write to disk. However, we can save the in-memory raster to any format supported by GDAL very conveniently by making a copy of the dataset. This takes a few lines of code:</p>
 </div>
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="We-need-a-LATLONG-dataset!!!-show-gdalwarp-usage-for-this">We need a LATLONG dataset!!! show gdalwarp usage for this<a class="anchor-link" href="#We-need-a-LATLONG-dataset!!!-show-gdalwarp-usage-for-this">&#182;</a></h1>
-</div>
-
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
 <div class="prompt input_prompt">
@@ -5363,36 +5311,6 @@ z
 
 </div>
 </div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">css_styling</span><span class="p">():</span>
-    <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span>
-    <span class="n">styles</span> <span class="o">=</span> <span class="s">&quot;https://github.com/CamDavidsonPilon/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers/raw/master/styles/custom.css&quot;</span>
-    <span class="c">#return HTML(styles)</span>
-<span class="n">css_styling</span><span class="p">()</span>
-</pre></div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre>
-</pre></div>
 
 </div>
 </div>
