@@ -12,8 +12,3 @@ foreach f (Ch*)
   cd ..
 end
 
-set here = `pwd`
-git add --all *
-git commit -m "fixed html links again $here:t"
-git push origin master
-
