@@ -35,7 +35,6 @@
   [Advanced](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter2_Python_intro/advanced.ipynb)  
   [Advanced Answers](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter2_Python_intro/advanced_answers.ipynb)  
  
- 
 - 3.0 Plotting and Numerical Python
       
   In this session, we will introduce and use some packages that you will commonly use in scientific programming.
@@ -77,3 +76,15 @@
   [Course Notes](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter4_GDAL/GDAL_HDF.ipynb)  
   [Answers](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter4_GDAL/answers.ipynb)  
   [Advanced](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter4_GDAL/advanced.ipynb)  
+
+
+- 5.0 Function fitting and Interpolation
+
+  In today's session, we will be using some of the LAI datasets we examined last week (masked by national boundaries) and doing some analysis on them.
+
+  First, we will examine how to improve our data reading function by extracting only the area we are interested in. This involves querying the 'country' mask to find its limits and passing this information through to the reader.
+    Then we will look at methods to interpolate and smooth over gaps in datasets using various methods.
+    Finally, we will look at fitting models to datasets, in this case a model describing LAI phenology.
+    
+  [Course Notes](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter5_Interpolation/Interpolation.ipynb)  
+  
