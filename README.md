@@ -1,4 +1,4 @@
-![](https://raw.github.com/profLewis/geogg122/master/ucl_logo.png)
+![](https://raw.github.com/profLewis/geogg122/master/images/ucl_logo.png)
 
 # Welcome to GeogG122: Scientific Computing
 
