@@ -88,3 +88,9 @@
     
   [Course Notes](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter5_Interpolation/Interpolation.ipynb)  
   
+- 6.0 ENVI
+- 
+  In today's practical, you will gain experience of using the ENVI software package.
+
+  [Course Notes](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter6_ENVI/envi.ipynb)
+  
