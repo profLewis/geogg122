@@ -94,3 +94,10 @@
 
   [Course Notes](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter6_ENVI/envi.ipynb)
   
+
+- 6.A Coursework
+
+  These notes explain about the coursework to be submitted.
+
+  [Course Notes](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter6a_Practical/Practical.ipynb)
+  
