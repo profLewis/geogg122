@@ -1,0 +1,1072 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<metadata>
+	<idinfo>
+		<citation>
+			<citeinfo>
+				<origin>John Watermolen, U.S. Geological Survey</origin>
+				<pubdate>200506</pubdate>
+				<title>1:2,000,000-Scale Hydrologic Unit Boundaries</title>
+				<edition>Version 2.4</edition>
+				<geoform>Map</geoform>
+				<pubinfo>
+					<pubplace>Reston, VA</pubplace>
+					<publish>National Atlas of the United States</publish>
+				</pubinfo>
+				<onlink>&lt;http://nationalatlas.gov/atlasftp.html?openChapters=chpwater#chpwater&gt;</onlink>
+				<ftname Sync="TRUE">HUC_Lines</ftname></citeinfo>
+		</citation>
+		<descript>
+			<abstract>
+This map layer contains hydrologic unit boundaries and codes for the
+United States, Puerto Rico, and the U.S. Virgin Islands.  It was revised
+for inclusion in the National Atlas of the United States of America, and
+updated to match the streams file created by the USGS National Mapping
+Division (NMD) for the National Atlas of the United States of America.
+This is a revised version of the November 2002 map layer.
+</abstract>
+			<purpose>
+These data are intended for geographic display and analysis at the
+national level, and for large regional areas.  The data should be
+displayed and analyzed at scales appropriate for 1:2,000,000-scale data.
+No responsibility is assumed by the U.S. Geological Survey or the National
+Atlas of the United States in the use of these data.
+</purpose>
+			<supplinf>
+Any use of trade, product, or firm names is for descriptive purposes only
+and does not imply endorsement by the U.S. Government.
+
+Although this Federal Geographic Data Committee-compliant metadata file is
+intended to document the map layer in nonproprietary form, as well as in
+ArcInfo format, this metadata file may include some ArcInfo-specific
+terminology.
+
+Hydrologic Unit Code (HUC) areas in this file do not necessarily match
+those published in Water-Supply Paper 2294 (Seaber et al).  The file has
+finer resolution than the maps used to determine areas published in the
+Water-Supply Paper.
+
+The ArcInfo version of this file contains two additional annotation
+layers.  One layer is called anno.maplabel1, and contains the first six
+digits for each accounting unit.  The labels for Accounting Regions 1
+though 9 have a "0" in front of the number.  The second layer is called
+anno.catnum, and contains the last two digits for each cataloging unit.
+All numbers were checked manually against a 1:2,000,000-scale plot of the
+data.
+</supplinf>
+			<langdata Sync="TRUE">en</langdata></descript>
+		<timeperd>
+			<timeinfo>
+				<sngdate>
+					<caldate>200505</caldate>
+				</sngdate>
+			</timeinfo>
+			<current>ground condition</current>
+		</timeperd>
+		<status>
+			<progress>Complete</progress>
+			<update>As needed</update>
+		</status>
+		<spdom>
+			<bounding>
+				<westbc>170.87</westbc>
+				<eastbc>-66.88</eastbc>
+				<northbc>71.77</northbc>
+				<southbc>17.68</southbc>
+			</bounding>
+			<lboundng><leftbc Sync="TRUE">-1207861.193700</leftbc><rightbc Sync="TRUE">-115932.919500</rightbc><bottombc Sync="TRUE">-1295788.385400</bottombc><topbc Sync="TRUE">152769.254400</topbc></lboundng></spdom>
+		<keywords>
+			<theme>
+				<themekt>ISO 19115 Topic Category</themekt>
+				<themekey>Inland waters</themekey>
+			</theme>
+			<theme>
+				<themekt>None</themekt>
+				<themekey>Hydrologic Unit Boundaries</themekey>
+				<themekey>Hydrologic Unit Codes</themekey>
+				<themekey>Drainage Basins</themekey>
+				<themekey>Cataloging Units</themekey>
+				<themekey>Hydrologic Units</themekey>
+				<themekey>Watersheds</themekey>
+			</theme>
+			<place>
+				<placekt>None</placekt>
+				<placekey>United States</placekey>
+				<placekey>Alabama</placekey>
+				<placekey>Alaska</placekey>
+				<placekey>Arizona</placekey>
+				<placekey>Arkansas</placekey>
+				<placekey>California</placekey>
+				<placekey>Colorado</placekey>
+				<placekey>Connecticut</placekey>
+				<placekey>Delaware</placekey>
+				<placekey>District of Columbia</placekey>
+				<placekey>Florida</placekey>
+				<placekey>Georgia</placekey>
+				<placekey>Hawaii</placekey>
+				<placekey>Idaho</placekey>
+				<placekey>Illinois</placekey>
+				<placekey>Indiana</placekey>
+				<placekey>Iowa</placekey>
+				<placekey>Kansas</placekey>
+				<placekey>Kentucky</placekey>
+				<placekey>Louisiana</placekey>
+				<placekey>Maine</placekey>
+				<placekey>Maryland</placekey>
+				<placekey>Massachusetts</placekey>
+				<placekey>Michigan</placekey>
+				<placekey>Minnesota</placekey>
+				<placekey>Mississippi</placekey>
+				<placekey>Missouri</placekey>
+				<placekey>Montana</placekey>
+				<placekey>Nebraska</placekey>
+				<placekey>Nevada</placekey>
+				<placekey>New Hampshire</placekey>
+				<placekey>New Jersey</placekey>
+				<placekey>New Mexico</placekey>
+				<placekey>New York</placekey>
+				<placekey>North Carolina</placekey>
+				<placekey>North Dakota</placekey>
+				<placekey>Ohio</placekey>
+				<placekey>Oklahoma</placekey>
+				<placekey>Oregon</placekey>
+				<placekey>Pennsylvania</placekey>
+				<placekey>Rhode Island</placekey>
+				<placekey>South Carolina</placekey>
+				<placekey>South Dakota</placekey>
+				<placekey>Tennessee</placekey>
+				<placekey>Texas</placekey>
+				<placekey>Utah</placekey>
+				<placekey>Vermont</placekey>
+				<placekey>Virginia</placekey>
+				<placekey>Washington</placekey>
+				<placekey>West Virginia</placekey>
+				<placekey>Wisconsin</placekey>
+				<placekey>Wyoming</placekey>
+				<placekey>Puerto Rico</placekey>
+				<placekey>Virgin Islands</placekey>
+				<placekey>U.S. Virgin Islands</placekey>
+			</place>
+		</keywords>
+		<accconst>None</accconst>
+		<useconst>None.  Acknowledgment of the National Atlas of the United States of America
+and (or) the U.S. Geological Survey would be appreciated in products derived
+from these data.
+
+The extent of the data has been reduced from national datasets to cover the Rio Grande Basin.  This data is provided as a part of the Rio Grande Data Project, a cooperative effort between the U.S. Geological Survey Texas Water Science Center (USGS TWSC) and the U.S. Army Corps of Engineers (USACE).  See the last added process steps for specific alterations.  The only items USGS TWSC added to the original metadata were a process step and this use constraint.</useconst>
+		<ptcontac>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>U.S. Geological Survey</cntorg>
+				</cntorgp>
+				<cntpos>CAPP Chief</cntpos>
+				<cntaddr>
+					<addrtype>Mailing and physical address</addrtype>
+					<address>505 Science Dr.</address>
+					<city>Madison</city>
+					<state>WI</state>
+					<postal>53711-1061</postal>
+					<country>USA</country>
+				</cntaddr>
+				<cntvoice>608-238-9333</cntvoice>
+				<cntfax>608-238-9334</cntfax>
+				<cntemail>atlasmail@usgs.gov</cntemail>
+			</cntinfo>
+		</ptcontac>
+		<datacred>
+Others who have helped with this map layer and the metadata include Steve
+Denowski, Greg Allord, Curtis Price, Ken Lanfear and David Lorenz, in
+addition to other colleagues within the U.S. Geological Survey.
+</datacred>
+		<native>
+The file is stored in Windows NT 4.0 Intel, ArcInfo version 7.1.1.
+</native>
+		<crossref>
+			<citeinfo>
+				<origin>U.S. Geological Survey</origin>
+				<pubdate>1974-1987</pubdate>
+				<title>State Hydrologic Unit Map (for each State)</title>
+				<geoform>Map</geoform>
+				<pubinfo>
+					<pubplace>Reston, VA</pubplace>
+					<publish>U.S. Geological Survey</publish>
+				</pubinfo>
+				<onlink>&lt;http://water.usgs.gov/GIS/huc.html&gt;</onlink>
+			</citeinfo>
+		</crossref>
+		<natvform Sync="TRUE">Shapefile</natvform></idinfo>
+	<dataqual>
+		<attracc>
+			<attraccr>
+The arc attributes were manually checked by assigning unique line weights
+and colors to the values, and then plotting the data.  The plots were then
+compared to the source.
+
+The polygon attributes were checked by comparing a 1:2,000,000-scale plot
+to the source.  The attribute accuracy is estimated at 99%.
+</attraccr>
+		</attracc>
+		<logic>
+Polygon and chain-node topology are present.  All polygons are labeled and
+were tested by using the ArcInfo command labelerrors.  All polygons were
+checked for closure and intersections by using the ArcInfo intersecterr
+command.  The file is clean.
+</logic>
+		<complete>
+This file contains hydrologic unit boundaries and codes for all 50 States,
+Puerto Rico, and the U.S. Virgin Islands.  Boundaries and codes are included
+for regions, subregions, accounting units, and cataloging units.
+</complete>
+		<posacc>
+			<horizpa>
+				<horizpar>
+The accuracy of the original map layer was checked by comparing the
+digital files to several data sources.  First, both the line work and
+the polygon labels were checked against the source compilation.  No
+digitization errors were found during this phase.
+
+Next, the hydrologic unit boundaries were compared to the 1970
+1:2,000,000-scale DLG stream file and the 1:500,000-scale Hydrologic
+Unit Maps.  Plots containing both the streams and the hydrologic unit
+boundaries were made at a scale of 1:2,000,000.  Hydrologic unit
+boundary intersections were checked, as well as problem areas such as
+points where streams crossed hydrologic unit boundaries on the plot but
+not on the hydrologic unit map.  More than 400 errors were found.  All
+errors that could be corrected were corrected.  The remaining errors
+could not be corrected because the streams were in error rather than the
+hydrologic unit boundaries.
+
+Finally, the hydrologic unit boundaries were plotted at 1:2,000,000
+scale and compared to the NMD 1998 1:2,000,000-scale hydrologic data
+set.  Any discrepancies were addressed by reference to either the
+1:500,000-scale or the 1:100,000-scale maps.  The exceptions to this
+were the hydrologic unit boundaries for Alaska, Hawaii, Puerto Rico, and
+the U.S. Virgin Islands.  The Alaska boundaries were checked on a
+1:2,500,000-scale plot but not modified, because the boundaries cross
+glaciers, and it is difficult to distinguish flow from the glaciers.
+The Hawaii hydrologic unit boundaries were not reviewed because each
+island represents a cataloging unit.  The Puerto Rico and U.S. Virgin
+Islands boundaries were not plotted but were reviewed on-screen using a
+1:1,000,000 hydrologic map layer created for the 1991 National Water
+Summary.
+
+The horizontal positional accuracy of the data matches the positional
+accuracy of the original compilation.
+</horizpar>
+			</horizpa>
+		</posacc>
+		<lineage>
+			<srcinfo>
+				<srccite>
+					<citeinfo>
+						<origin>U.S. Geological Survey</origin>
+						<pubdate>1974-1987</pubdate>
+						<title>State Hydrologic Unit Maps (for each State)</title>
+						<geoform>Map</geoform>
+						<pubinfo>
+							<pubplace>Reston, VA</pubplace>
+							<publish>U.S. Geological Survey, Office of Water Data Coordination</publish>
+						</pubinfo>
+						<onlink>&lt;http://water.usgs.gov/GIS/huc.html&gt;</onlink>
+					</citeinfo>
+				</srccite>
+				<srcscale>500,000</srcscale>
+				<typesrc>Mylar separate</typesrc>
+				<srctime>
+					<timeinfo>
+						<rngdates>
+							<begdate>1974</begdate>
+							<enddate>1987</enddate>
+						</rngdates>
+					</timeinfo>
+					<srccurr>publication date</srccurr>
+				</srctime>
+				<srccitea>HUCmaps</srccitea>
+				<srccontr>Linework for the map layer.</srccontr>
+			</srcinfo>
+			<srcinfo>
+				<srccite>
+					<citeinfo>
+						<origin>Seaber, Paul R.</origin>
+						<origin>Kapinos, F. Paul</origin>
+						<origin>Knapp, George L.</origin>
+						<pubdate>1987</pubdate>
+						<title>Hydrologic Unit Maps</title>
+						<serinfo>
+							<sername>Water-Supply Paper</sername>
+							<issue>2294</issue>
+						</serinfo>
+						<pubinfo>
+							<pubplace>Reston, VA</pubplace>
+							<publish>U.S. Geological Survey</publish>
+						</pubinfo>
+						<onlink>&lt;http://water.usgs.gov/GIS/huc.html&gt;</onlink>
+					</citeinfo>
+				</srccite>
+				<typesrc>Paper map</typesrc>
+				<srctime>
+					<timeinfo>
+						<sngdate>
+							<caldate>1987</caldate>
+						</sngdate>
+					</timeinfo>
+					<srccurr>Publication date</srccurr>
+				</srctime>
+				<srccitea>Seaber</srccitea>
+				<srccontr>Cataloging unit names for all States except Alaska.</srccontr>
+			</srcinfo>
+			<srcinfo>
+				<srccite>
+					<citeinfo>
+						<origin>U.S. Geological Survey</origin>
+						<pubdate>1987</pubdate>
+						<title>Alaska State Hydrologic Unit Map</title>
+						<geoform>Map</geoform>
+						<pubinfo>
+							<pubplace>Reston, VA</pubplace>
+							<publish>U.S. Geological Survey</publish>
+						</pubinfo>
+						<onlink>&lt;http://water.usgs.gov/GIS/huc.html&gt;</onlink>
+					</citeinfo>
+				</srccite>
+				<srcscale>2,500,000</srcscale>
+				<typesrc>Mylar separate</typesrc>
+				<srctime>
+					<timeinfo>
+						<sngdate>
+							<caldate>1987</caldate>
+						</sngdate>
+					</timeinfo>
+					<srccurr>Publication date</srccurr>
+				</srctime>
+				<srccitea>HUCAKmap</srccitea>
+				<srccontr>
+The source contributed line work and names for hydrologic units in
+Alaska.
+</srccontr>
+			</srcinfo>
+			<srcinfo>
+				<srccite>
+					<citeinfo>
+						<origin>U.S. Geological Survey</origin>
+						<pubdate>1972-1980</pubdate>
+						<title>1:2,000,000 DLG Hydrography</title>
+						<pubinfo>
+							<pubplace>Reston, VA</pubplace>
+							<publish>U.S. Geological Survey</publish>
+						</pubinfo>
+					</citeinfo>
+				</srccite>
+				<srcscale>2,000,000</srcscale>
+				<typesrc>Digital file</typesrc>
+				<srctime>
+					<timeinfo>
+						<rngdates>
+							<begdate>1972</begdate>
+							<enddate>1980</enddate>
+						</rngdates>
+					</timeinfo>
+					<srccurr>Publication date</srccurr>
+				</srctime>
+				<srccitea>DLGHY</srccitea>
+				<srccontr>Location of streams for accuracy testing.</srccontr>
+			</srcinfo>
+			<srcinfo>
+				<srccite>
+					<citeinfo>
+						<origin>U.S. Geological Survey</origin>
+						<pubdate>1986</pubdate>
+						<title>Hydrologic Unit Codes map</title>
+						<edition>Version 1.0</edition>
+						<geoform>Map</geoform>
+						<pubinfo>
+							<pubplace>Reston, VA</pubplace>
+							<publish>U.S. Geological Survey</publish>
+						</pubinfo>
+					</citeinfo>
+				</srccite>
+				<srcscale>2,000,000</srcscale>
+				<typesrc>Digital file</typesrc>
+				<srctime>
+					<timeinfo>
+						<sngdate>
+							<caldate>1986</caldate>
+						</sngdate>
+					</timeinfo>
+					<srccurr>Publication date</srccurr>
+				</srctime>
+				<srccitea>HUCS10</srccitea>
+				<srccontr>Intermediate digital file.</srccontr>
+			</srcinfo>
+			<srcinfo>
+				<srccite>
+					<citeinfo>
+						<origin>U.S. Geological Survey</origin>
+						<pubdate>1992</pubdate>
+						<title>Hydrologic Unit Codes map</title>
+						<edition>Version 1.1</edition>
+						<geoform>Map</geoform>
+						<pubinfo>
+							<pubplace>Reston, VA</pubplace>
+							<publish>U.S. Geological Survey</publish>
+						</pubinfo>
+					</citeinfo>
+				</srccite>
+				<srcscale>2,000,000</srcscale>
+				<typesrc>Digital file</typesrc>
+				<srctime>
+					<timeinfo>
+						<sngdate>
+							<caldate>1992</caldate>
+						</sngdate>
+					</timeinfo>
+					<srccurr>Publication date</srccurr>
+				</srctime>
+				<srccitea>HUCS11</srccitea>
+				<srccontr>Intermediate digital file.</srccontr>
+			</srcinfo>
+			<srcinfo>
+				<srccite>
+					<citeinfo>
+						<origin>U.S. Geological Survey</origin>
+						<pubdate>1994</pubdate>
+						<title>Hydrologic Unit Codes map</title>
+						<edition>Version 1.1.1</edition>
+						<geoform>Map</geoform>
+						<pubinfo>
+							<pubplace>Reston, VA</pubplace>
+							<publish>U.S. Geological Survey</publish>
+						</pubinfo>
+					</citeinfo>
+				</srccite>
+				<srcscale>2,000,000</srcscale>
+				<typesrc>Digital file</typesrc>
+				<srctime>
+					<timeinfo>
+						<sngdate>
+							<caldate>1994</caldate>
+						</sngdate>
+					</timeinfo>
+					<srccurr>Publication date</srccurr>
+				</srctime>
+				<srccitea>HUCS111</srccitea>
+				<srccontr>Intermediate digital file.</srccontr>
+			</srcinfo>
+			<srcinfo>
+				<srccite>
+					<citeinfo>
+						<origin>U.S. Geological Survey</origin>
+						<pubdate>1989</pubdate>
+						<title>1:2,000,000 County Boundaries</title>
+						<geoform>Map</geoform>
+						<pubinfo>
+							<pubplace>Reston, VA</pubplace>
+							<publish>U.S. Geological Survey</publish>
+						</pubinfo>
+					</citeinfo>
+				</srccite>
+				<srcscale>2,000,000</srcscale>
+				<typesrc>Digital file</typesrc>
+				<srctime>
+					<timeinfo>
+						<sngdate>
+							<caldate>1989</caldate>
+						</sngdate>
+					</timeinfo>
+					<srccurr>Publication date</srccurr>
+				</srctime>
+				<srccitea>DLGCO</srccitea>
+				<srccontr>
+Determination of boundaries for identification of offshore and onshore
+areas.
+</srccontr>
+			</srcinfo>
+			<srcinfo>
+				<srccite>
+					<citeinfo>
+						<origin>U.S. Environmental Protection Agency</origin>
+						<pubdate>1975</pubdate>
+						<title>Reach File Version 1.0 Alpha</title>
+						<geoform>Map</geoform>
+						<pubinfo>
+							<pubplace>Washington, DC</pubplace>
+							<publish>U.S. Environmental Protection Agency</publish>
+						</pubinfo>
+					</citeinfo>
+				</srccite>
+				<typesrc>Digital file</typesrc>
+				<srctime>
+					<timeinfo>
+						<sngdate>
+							<caldate>1975</caldate>
+						</sngdate>
+					</timeinfo>
+					<srccurr>Publication date</srccurr>
+				</srctime>
+				<srccitea>RF1</srccitea>
+				<srccontr>Information on flow between cataloging units.</srccontr>
+			</srcinfo>
+			<srcinfo>
+				<srccite>
+					<citeinfo>
+						<origin>U.S. Geological Survey</origin>
+						<pubdate>1998</pubdate>
+						<title>State Boundaries of the United States</title>
+						<geoform>Map</geoform>
+						<pubinfo>
+							<pubplace>Reston, VA</pubplace>
+							<publish>U.S. Geological Survey</publish>
+						</pubinfo>
+					</citeinfo>
+				</srccite>
+				<srcscale>2,000,000</srcscale>
+				<typesrc>Digital file</typesrc>
+				<srctime>
+					<timeinfo>
+						<rngdates>
+							<begdate>1972</begdate>
+							<enddate>1998</enddate>
+						</rngdates>
+					</timeinfo>
+					<srccurr>Ground condition</srccurr>
+				</srctime>
+				<srccitea>NAStates</srccitea>
+				<srccontr>Coastline information</srccontr>
+			</srcinfo>
+			<srcinfo>
+				<srccite>
+					<citeinfo>
+						<origin>U.S. Geological Survey</origin>
+						<pubdate>1998</pubdate>
+						<title>Hydrography Features of the United States (linear)</title>
+						<geoform>Map</geoform>
+						<pubinfo>
+							<pubplace>Reston, VA</pubplace>
+							<publish>U.S. Geological Survey</publish>
+						</pubinfo>
+					</citeinfo>
+				</srccite>
+				<srcscale>2,000,000</srcscale>
+				<typesrc>Digital file</typesrc>
+				<srctime>
+					<timeinfo>
+						<rngdates>
+							<begdate>1985</begdate>
+							<enddate>1998</enddate>
+						</rngdates>
+					</timeinfo>
+					<srccurr>Ground condition</srccurr>
+				</srctime>
+				<srccitea>NAHydro</srccitea>
+				<srccontr>Coastline information</srccontr>
+			</srcinfo>
+			<srcinfo>
+				<srccite>
+					<citeinfo>
+						<origin>U.S. Geological Survey</origin>
+						<pubdate>19990401</pubdate>
+						<title>1:2,000,000-Scale Hydrologic Unit Boundaries</title>
+						<edition>Version 2.0</edition>
+						<geoform>Map</geoform>
+						<pubinfo>
+							<pubplace>Reston, VA</pubplace>
+							<publish>U.S. Geological Survey</publish>
+						</pubinfo>
+					</citeinfo>
+				</srccite>
+				<srcscale>2,000,000</srcscale>
+				<typesrc>Digital file</typesrc>
+				<srctime>
+					<timeinfo>
+						<sngdate>
+							<caldate>19981001</caldate>
+						</sngdate>
+					</timeinfo>
+					<srccurr>Ground condition</srccurr>
+				</srctime>
+				<srccitea>HUCS20</srccitea>
+				<srccontr>Spatial and attribute information.</srccontr>
+			</srcinfo>
+			<srcinfo>
+				<srccite>
+					<citeinfo>
+						<origin>U.S. Geological Survey</origin>
+						<pubdate>200104</pubdate>
+						<title>1:2,000,000-Scale Hydrologic Unit Boundaries</title>
+						<edition>Version 2.1</edition>
+						<geoform>Map</geoform>
+						<pubinfo>
+							<pubplace>Reston, VA</pubplace>
+							<publish>U.S. Geological Survey</publish>
+						</pubinfo>
+					</citeinfo>
+				</srccite>
+				<srcscale>2,000,000</srcscale>
+				<typesrc>Digital file</typesrc>
+				<srctime>
+					<timeinfo>
+						<sngdate>
+							<caldate>19981001</caldate>
+						</sngdate>
+					</timeinfo>
+					<srccurr>Ground condition</srccurr>
+				</srctime>
+				<srccitea>HUCS21</srccitea>
+				<srccontr>Spatial and attribute information.</srccontr>
+			</srcinfo>
+			<srcinfo>
+				<srccite>
+					<citeinfo>
+						<origin>U.S. Geological Survey</origin>
+						<pubdate>200201</pubdate>
+						<title>1:2,000,000-Scale Hydrologic Unit Boundaries</title>
+						<edition>Version 2.2</edition>
+						<geoform>Map</geoform>
+						<pubinfo>
+							<pubplace>Reston, VA</pubplace>
+							<publish>U.S. Geological Survey</publish>
+						</pubinfo>
+					</citeinfo>
+				</srccite>
+				<srcscale>2,000,000</srcscale>
+				<typesrc>Digital file</typesrc>
+				<srctime>
+					<timeinfo>
+						<sngdate>
+							<caldate>19981001</caldate>
+						</sngdate>
+					</timeinfo>
+					<srccurr>Ground condition</srccurr>
+				</srctime>
+				<srccitea>HUCS22</srccitea>
+				<srccontr>Spatial and attribute information.</srccontr>
+			</srcinfo>
+			<srcinfo>
+				<srccite>
+					<citeinfo>
+						<origin>U.S. Geological Survey</origin>
+						<pubdate>200211</pubdate>
+						<title>1:2,000,000-Scale Hydrologic Unit Boundaries</title>
+						<edition>Version 2.3</edition>
+						<geoform>Map</geoform>
+						<pubinfo>
+							<pubplace>Reston, VA</pubplace>
+							<publish>U.S. Geological Survey</publish>
+						</pubinfo>
+					</citeinfo>
+				</srccite>
+				<srcscale>2,000,000</srcscale>
+				<typesrc>Digital file</typesrc>
+				<srctime>
+					<timeinfo>
+						<sngdate>
+							<caldate>19981001</caldate>
+						</sngdate>
+					</timeinfo>
+					<srccurr>Ground condition</srccurr>
+				</srctime>
+				<srccitea>HUCS23</srccitea>
+				<srccontr>Spatial and attribute information.</srccontr>
+			</srcinfo>
+			<procstep>
+				<procdesc>
+The original hydrologic unit boundaries file (HUCS10) was created
+through the following steps:
+&gt;a) 1:2,000,000-scale stable-base map plots of drainage (streams) and
+&gt;the latitude/longitude grid were obtained from the USGS National
+&gt;Mapping Division (NMD).  These plots were in the Lambert Conformal
+&gt;Conic projection, and used 1:500,000-scale State base map projection
+&gt;parameters.  Fifteen sections were plotted using 1970 National Atlas
+&gt;1:2,000,000-scale sectional boundaries.
+&gt;
+&gt;b) Individual State 1:500,000-scale hydrologic unit maps in the Lambert
+&gt;Conformal Conic projection were photoreduced to 1:2,000,000.
+&gt;
+&gt;c) Hydrologic unit boundaries were compiled and the edges were matched
+&gt;on scale-stable 1:2,000,000 plots.  The boundaries were combined with
+&gt;the streams plots for digitizing.
+&gt;
+&gt;d) The hydrologic unit boundaries were digitized by Automated Datatron,
+&gt;Hyattsville, MD, which digitizes materials on contract for NMD.
+&gt;
+&gt;e) Digital data from Automated Datatron was converted to an ArcInfo
+&gt;coverage, then checked and corrected.
+&gt;
+&gt;f) A detailed, annotated list was compiled, listing locations where
+&gt;hydrologic unit boundaries and streams were coincident, or where
+&gt;1:2,000,000-scale DLG streams were in error.  Wherever possible,
+&gt;conflicts and errors were resolved.
+</procdesc>
+				<srcused>HUCmaps</srcused>
+				<srcused>DLGHY</srcused>
+				<procdate>1985-1992</procdate>
+				<srcprod>HUCS10</srcprod>
+			</procstep>
+			<procstep>
+				<procdesc>
+HUCS11 was created by modifying and correcting the HUCS10 file in
+ArcInfo, and combining it with a 1:2,000,000-scale U.S. counties file
+to identify onshore and offshore areas.  Other county attributes were
+excluded.  This process was done in ArcInfo, and used a fuzzy tolerance
+of 2 meters.  A small part of the original map, which laid on top of
+part of the Canadian Great Lakes, was deleted.  The attributes were
+renamed and expanded.
+</procdesc>
+				<srcused>HUCS10</srcused>
+				<srcused>DLGCO</srcused>
+				<procdate>1992</procdate>
+				<srcprod>HUCS11</srcprod>
+			</procstep>
+			<procstep>
+				<procdesc>
+A HUCs_2M.TRACE file was created from the River Reach 1 (rf1) coverage,
+which includes a pointer to the next downstream segment of each reach.
+The resulting file was added to INFO, along with an index created using
+the INDEX_HUC.AML.  These files are included in HUCS111 only and are not
+in the distributed version of the Hydrologic Unit Boundaries map layer.
+</procdesc>
+				<srcused>HUCS11</srcused>
+				<srcused>RF1</srcused>
+				<procdate>1994</procdate>
+				<srcprod>HUCS111</srcprod>
+			</procstep>
+			<procstep>
+				<procdesc>
+Using ArcInfo, HUCS111 was compared with the most recent 1:2,000,000-
+scale streams file created by the USGS National Mapping Division (NMD)
+for inclusion in the National Atlas of the United States of America.
+Where a stream crossed a hydrologic unit boundary, the boundary was
+compared to the 1:500,000-scale State hydrologic unit map (Seaber).  If
+a stream and hydrologic unit boundary intersection could not be resolved
+by this comparison, the USGS 1:100,000-scale topographic quadrangles
+were used.  All corrected hydrologic unit boundaries were given a value
+of 5 for the Error_type attribute.  The boundaries were changed by
+moving vertices to include the stream in the appropriate hydrologic
+unit.  All editing was done on-screen.  This step happened May 22, 1998
+and November 10, 1998.
+
+The Region, Subregion, Accounting unit, and Cataloging unit names from
+Seaber were added to the map layer and spot-checked.  Cataloging unit
+names for Alaska were added from the Alaska Hydrologic Unit Map
+(HUCAKmap).
+
+Values for BNDTYPE were determined from the bounding polygons using
+INDEX_HUC.AML.  The attributes Error_type, Reg_name, Map_label,
+Cat_Name, and Cat_num were added to the file.
+
+Two annotation layers were also added to the coverage.  One layer is
+called anno.maplabel1, which shows the first six digits for each
+accounting unit.  The labels for accounting Regions 1 though 9 have the
+"0" in front of the number.  The second annotation layer is anno.catnum,
+and this layer has the last 2 digit codes for each cataloging unit.  All
+numbers were checked manually on a 1:2,000,000-scale plot of the data
+set.  The cataloging unit names were spot-checked.  The file was
+modified to agree with the official National Atlas coastline (NAStates)
+
+The ArcInfo coverage was exported to create the shapefiles and SDTS
+files.
+</procdesc>
+				<srcused>HUCS111</srcused>
+				<srcused>Seaber</srcused>
+				<srcused>HUCAKmap</srcused>
+				<srcused>NAStates</srcused>
+				<srcused>NAHydro</srcused>
+				<procdate>1998</procdate>
+				<srcprod>HUCS20</srcprod>
+			</procstep>
+			<procstep>
+				<procdesc>
+The HUCS20 file was modified and corrected in ArcInfo.  Two Hydrologic
+unit codes were corrected.  The first error was in western Illinois,
+Region 07, Subregion 08, Accounting unit 01, where cataloging unit 04
+was incorrectly tagged 07.  The second error was in northeastern
+Missouri, Region 07, Subregion 11, Accounting unit 00, Cataloging unit
+01, where the subregion was incorrectly tagged 10.
+
+Misspelled names in sub_name, acc_name, and cat_name were corrected.
+The file was exported to create new shapefiles and SDTS files.
+</procdesc>
+				<srcused>HUCS20</srcused>
+				<procdate>2001</procdate>
+				<srcprod>HUCS21</srcprod>
+			</procstep>
+			<procstep>
+				<procdesc>
+The HUCS21 file was modified and corrected in ArcGIS.  One Hydrologic
+Unit code was corrected in Oregon.  Region 17, Subregion 07, Accounting
+unit 03, Cataloging unit 01 had all user-defined attribute items
+incorrectly valued as Region 17, Subregion 09, Accounting unit 00,
+Cataloging unit 05.
+</procdesc>
+				<srcused>HUCS21</srcused>
+				<procdate>200201</procdate>
+				<srcprod>HUCS22</srcprod>
+			</procstep>
+			<procstep>
+				<procdesc>
+The HUCS22 file was modified and corrected in ArcGIS.  One cataloging
+unit name was corrected in Oregon.  Region 17, Subregion 10, Accounting
+unit 02, Cataloging unit 03 had the attribute CAT_NAME incorrectly
+valued as Wilson-Trusk-Nestuccu, Oregon. It was corrected to
+Wilson-Trask-Nestucca, Oregon.
+</procdesc>
+				<srcused>HUCS22</srcused>
+				<procdate>200211</procdate>
+				<srcprod>HUCS23</srcprod>
+			</procstep>
+			<procstep>
+				<procdesc>
+The HUCS23 file was modified and corrected in ArcGIS.  Cataloging unit
+03050201 had the attribute CAT_NAME incorrectly valued as Copper, South
+Carolina.  It was corrected to Cooper, South Carolina.  HUC 1103
+Sub_name was incorrectly valued as Middel Arkansas.  It was corrected to
+Middle Arkansas.  The codes and all attributes in the following basins
+were corrected: Cataloging unit 9030006 corrected from 9030004,
+Cataloging unit 12100204 corrected from 12100303, and Cataloging unit
+17060206 corrected from 17060203.
+</procdesc>
+				<srcused>HUCS23</srcused>
+				<procdate>200505</procdate>
+			</procstep>
+			<procstep><procdesc>All drainage lines that make up region 13 were selected out of the national dataset and imported into a geodatabase to create continuous hydrologic unit coverage of the Rio Grande Basin</procdesc><procdate>200812</procdate><proccont><cntinfo><cntperp><cntper>Sophia Hurtado</cntper><cntorg>USGS Texas Water Science Center</cntorg></cntperp><cntpos>Geographer</cntpos><cntemail>slhurtad@usgs.gov</cntemail></cntinfo></proccont></procstep></lineage>
+	</dataqual>
+	<spdoinfo>
+		<direct>Vector</direct>
+		<ptvctinf>
+			<sdtsterm Name="HUC_Lines">
+				<sdtstype>Area point</sdtstype>
+				<ptvctcnt>5348</ptvctcnt>
+			</sdtsterm>
+			<sdtsterm>
+				<sdtstype>Complete chain</sdtstype>
+				<ptvctcnt>11576</ptvctcnt>
+			</sdtsterm>
+			<sdtsterm>
+				<sdtstype>GT-polygon composed of chains</sdtstype>
+				<ptvctcnt>5348</ptvctcnt>
+			</sdtsterm>
+			<esriterm Name="HUC_Lines"><efeatyp Sync="TRUE">Simple</efeatyp><efeageom Sync="TRUE">Polyline</efeageom><esritopo Sync="TRUE">FALSE</esritopo><efeacnt Sync="TRUE">0</efeacnt><spindex Sync="TRUE">FALSE</spindex><linrefer Sync="TRUE">FALSE</linrefer></esriterm></ptvctinf>
+	</spdoinfo>
+	<spref>
+		<horizsys>
+			<geodetic>
+				<horizdn>North American Datum of 1983</horizdn>
+				<ellips>GRS1980</ellips>
+				<semiaxis>6378137.0</semiaxis>
+				<denflat>298.257222</denflat>
+			</geodetic>
+			<cordsysn><geogcsn Sync="TRUE">GCS_North_American_1983</geogcsn><projcsn Sync="TRUE">USA_Contiguous_Albers_Equal_Area_Conic</projcsn></cordsysn><planar><planci><plance Sync="TRUE">coordinate pair</plance><plandu Sync="TRUE">meters</plandu><coordrep><absres Sync="TRUE">0.000000</absres><ordres Sync="TRUE">0.000000</ordres></coordrep></planci><mapproj><mapprojn Sync="TRUE">Albers Conical Equal Area</mapprojn><albers><stdparll Sync="TRUE">29.500000</stdparll><stdparll Sync="TRUE">45.500000</stdparll><longcm Sync="TRUE">-96.000000</longcm><latprjo Sync="TRUE">37.500000</latprjo><feast Sync="TRUE">0.000000</feast><fnorth Sync="TRUE">0.000000</fnorth></albers></mapproj></planar></horizsys>
+		<vertdef><altsys><altenc Sync="TRUE">Explicit elevation coordinate included with horizontal coordinates</altenc><altres Sync="TRUE">0.000100</altres></altsys></vertdef></spref>
+	<eainfo>
+		<detailed Name="HUC_Lines">
+			<enttyp>
+				<enttypl>Hydrologic Unit Boundary </enttypl>
+				<enttypd>A boundary between hydrologic units.</enttypd>
+				<enttypds>National Atlas of the United States</enttypds>
+				<enttypt Sync="TRUE">Feature Class</enttypt><enttypc Sync="TRUE">0</enttypc></enttyp>
+			<attr><attrlabl Sync="TRUE">FID</attrlabl><attalias Sync="TRUE">FID</attalias><attrtype Sync="TRUE">OID</attrtype><attwidth Sync="TRUE">4</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale><attrdef Sync="TRUE">Internal feature number.</attrdef><attrdefs Sync="TRUE">ESRI</attrdefs><attrdomv><udom Sync="TRUE">Sequential unique whole numbers that are automatically generated.</udom></attrdomv></attr><attr>
+				<attrlabl>Shape</attrlabl>
+				<attrdef>The representation of the entity in the data.</attrdef>
+				<attrdefs>National Atlas of the United States</attrdefs>
+				<attrdomv>
+					<edom>
+						<edomv>Polyline</edomv>
+						<edomvd>1-dimensional element that surrounds a 2-dimensional element.</edomvd>
+						<edomvds>ESRI GIS software</edomvds>
+					</edom>
+					<udom Sync="TRUE">Coordinates defining the features.</udom></attrdomv>
+				<attalias Sync="TRUE">Shape</attalias><attrtype Sync="TRUE">Geometry</attrtype><attwidth Sync="TRUE">0</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr>
+				<attrlabl>Bndtype</attrlabl>
+				<attrdef>
+The code number describing the location or type of the hydrologic unit
+boundary.  Boundaries occur between hydrologic units and between onshore
+and offshore parts of the same hydrologic unit.
+</attrdef>
+				<attrdefs>National Atlas of the United States</attrdefs>
+				<attrdomv>
+					<edom>
+						<edomv>0</edomv>
+						<edomvd>
+Coastline or International Boundary separating offshore and onshore
+parts of the same hydrologic unit.
+</edomvd>
+						<edomvds>U.S. Geological Survey</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>2</edomv>
+						<edomvd>
+Land and occasionally water boundary between two Water Resource
+Regions.
+</edomvd>
+						<edomvds>U.S. Geological Survey</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>4</edomv>
+						<edomvd>Land and occasionally water boundary between two Subregions.</edomvd>
+						<edomvds>U.S. Geological Survey</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>6</edomv>
+						<edomvd>Land and occasionally water boundary between two Accounting Units.</edomvd>
+						<edomvds>U.S. Geological Survey</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>8</edomv>
+						<edomvd>Land and occasionally water boundary between two Cataloging Units.</edomvd>
+						<edomvds>U.S. Geological Survey</edomvds>
+					</edom>
+				</attrdomv>
+				<attalias Sync="TRUE">BNDTYPE</attalias><attrtype Sync="TRUE">SmallInteger</attrtype><attwidth Sync="TRUE">4</attwidth><atprecis Sync="TRUE">4</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr>
+				<attrlabl>Error_type</attrlabl>
+				<attrdef>
+A code indicating the type of conflict between the streams file and the
+hydrologic unit boundary.
+</attrdef>
+				<attrdefs>National Atlas of the United States</attrdefs>
+				<attrdomv>
+					<edom>
+						<edomv>0</edomv>
+						<edomvd>No conflict exists.</edomvd>
+						<edomvds>U.S. Geological Survey</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>4</edomv>
+						<edomvd>
+There was an error in the streams file.  The hydrologic unit
+Boundary was not changed.
+</edomvd>
+						<edomvds>U.S. Geological Survey</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>5</edomv>
+						<edomvd>
+There was a conflict between the NMD streams data and the
+1:500,000-scale Hydrologic Unit Boundaries map.  The hydrologic unit
+boundary was changed to agree with the streams.
+</edomvd>
+						<edomvds>U.S. Geological Survey</edomvds>
+					</edom>
+				</attrdomv>
+				<attalias Sync="TRUE">ERROR_TYPE</attalias><attrtype Sync="TRUE">SmallInteger</attrtype><attwidth Sync="TRUE">4</attwidth><atprecis Sync="TRUE">4</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr><attrlabl Sync="TRUE">Shape_Leng</attrlabl><attalias Sync="TRUE">Shape_Leng</attalias><attrtype Sync="TRUE">Float</attrtype><attwidth Sync="TRUE">19</attwidth><atnumdec Sync="TRUE">11</atnumdec></attr></detailed>
+	</eainfo>
+	<distinfo>
+		<distrib>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>Earth Science Information Center, U.S. Geological Survey</cntorg>
+				</cntorgp>
+				<cntaddr>
+					<addrtype>Mailing address</addrtype>
+					<address>507 National Center</address>
+					<city>Reston</city>
+					<state>VA</state>
+					<postal>20192</postal>
+					<country>USA</country>
+				</cntaddr>
+				<cntvoice>1-888-ASK-USGS (1-888-275-8747)</cntvoice>
+				<cntvoice>703-648-5920</cntvoice>
+				<cntinst>
+In addition to the address above there are other ESIC offices throughout
+the country.  A full list of these offices is at
+&lt;http://ask.usgs.gov/esic_index.html&gt;.
+</cntinst>
+			</cntinfo>
+		</distrib>
+		<distliab>
+Although these data have been processed successfully on a computer system at
+the U.S. Geological Survey, no warranty expressed or implied is made by the
+U.S. Geological Survey regarding the utility of the data on any other
+system, nor shall the act of distribution constitute any such warranty.
+</distliab>
+		<stdorder>
+			<digform>
+				<digtinfo>
+					<formname>ARCE</formname>
+					<transize Sync="TRUE">0.000</transize><dssize Sync="TRUE">0.000</dssize></digtinfo>
+				<digtopt>
+					<onlinopt>
+						<computer>
+							<networka>
+								<networkr>&lt;http://nationalatlas.gov/atlasftp.html?openChapters=chpwater#chpwater&gt;</networkr>
+							</networka>
+						</computer>
+					</onlinopt>
+				</digtopt>
+			</digform>
+			<digform>
+				<digtinfo>
+					<formname>ESRI Shapefile</formname>
+					<transize Sync="TRUE">0.000</transize><dssize Sync="TRUE">0.000</dssize></digtinfo>
+				<digtopt>
+					<onlinopt>
+						<computer>
+							<networka>
+								<networkr>&lt;http://nationalatlas.gov/atlasftp.html?openChapters=chpwater#chpwater&gt;</networkr>
+							</networka>
+						</computer>
+					</onlinopt>
+				</digtopt>
+			</digform>
+			<digform>
+				<digtinfo>
+					<formname>SDTS</formname>
+					<transize Sync="TRUE">0.000</transize><dssize Sync="TRUE">0.000</dssize></digtinfo>
+				<digtopt>
+					<onlinopt>
+						<computer>
+							<networka>
+								<networkr>&lt;http://nationalatlas.gov/atlasftp.html?openChapters=chpwater#chpwater&gt;</networkr>
+							</networka>
+						</computer>
+					</onlinopt>
+				</digtopt>
+			</digform>
+			<fees>
+There is no charge for the map layer.
+</fees>
+		</stdorder>
+		<resdesc Sync="TRUE">Downloadable Data</resdesc></distinfo>
+	<metainfo>
+		<metd>20060324</metd>
+		<metc>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>U.S. Geological Survey</cntorg>
+					<cntper>REQUIRED: The person responsible for the metadata information.</cntper></cntorgp>
+				<cntpos>CAPP Chief</cntpos>
+				<cntaddr>
+					<addrtype>Mailing and physical address</addrtype>
+					<address>505 Science Dr.</address>
+					<city>Madison</city>
+					<state>WI</state>
+					<postal>53711-1061</postal>
+					<country>USA</country>
+				</cntaddr>
+				<cntvoice>608-238-9333</cntvoice>
+				<cntfax>608-238-9334</cntfax>
+				<cntemail>atlasmail@usgs.gov</cntemail>
+			</cntinfo>
+		</metc>
+		<metstdn>FGDC Content Standards for Digital Geospatial Metadata</metstdn>
+		<metstdv>FGDC-STD-001-1998</metstdv>
+		<metsi>
+			<metscs>None</metscs>
+			<metsc>Unclassified</metsc>
+			<metshd>None</metshd>
+		</metsi>
+		<langmeta Sync="TRUE">en</langmeta><mettc Sync="TRUE">local time</mettc><metextns><onlink Sync="TRUE">http://www.esri.com/metadata/esriprof80.html</onlink><metprof Sync="TRUE">ESRI Metadata Profile</metprof></metextns></metainfo>
+	<Esri><MetaID>{9C43CE8A-C1C3-4E7E-9E1A-BB795DA97B11}</MetaID><CreaDate>20090129</CreaDate><CreaTime>09372900</CreaTime><SyncOnce>FALSE</SyncOnce><SyncDate>20090817</SyncDate><SyncTime>13345500</SyncTime><ModDate>20090817</ModDate><ModTime>13345500</ModTime><DataProperties><lineage><Process ToolSource="C:\ArcGIS\ArcToolbox\Toolboxes\Data Management Tools.tbx\CopyFeatures" Date="20090817" Time="133456">CopyFeatures \\Igskiacwgsnas\gis_proj\b8653_dnn\Prelim_Datasets\Rio_Grande_Geodatabase_Library\Water_Resources.mdb\Hydrologic_Units\HUC_Lines \\Igskiacwgsnas\gis_proj\b8653_dnn\Web_Mapping_Applications\Data_for_Download\Water_Resources\Hydrologic_Units\HUC_Lines.shp # 0 0 0</Process></lineage></DataProperties></Esri><dataIdInfo><envirDesc Sync="TRUE">Microsoft Windows XP Version 5.1 (Build 2600) Service Pack 3; ESRI ArcCatalog 9.3.1.1850</envirDesc><dataLang><languageCode Sync="TRUE" value="en"></languageCode></dataLang><idCitation><resTitle Sync="TRUE">HUC_Lines</resTitle><presForm><PresFormCd Sync="TRUE" value="005"></PresFormCd></presForm></idCitation><spatRpType><SpatRepTypCd Sync="TRUE" value="001"></SpatRepTypCd></spatRpType><dataExt><geoEle><GeoBndBox esriExtentType="native"><westBL Sync="TRUE">-1207861.1937</westBL><eastBL Sync="TRUE">-115932.9195</eastBL><northBL Sync="TRUE">152769.2544</northBL><southBL Sync="TRUE">-1295788.3854</southBL><exTypeCode Sync="TRUE">1</exTypeCode></GeoBndBox></geoEle></dataExt><geoBox esriExtentType="decdegrees"><westBL Sync="TRUE">-109.949807</westBL><eastBL Sync="TRUE">-97.145458</eastBL><northBL Sync="TRUE">38.855669</northBL><southBL Sync="TRUE">25.158321</southBL><exTypeCode Sync="TRUE">1</exTypeCode></geoBox></dataIdInfo><mdLang><languageCode Sync="TRUE" value="en"></languageCode></mdLang><mdStanName Sync="TRUE">ISO 19115 Geographic Information - Metadata</mdStanName><mdStanVer Sync="TRUE">DIS_ESRI1.0</mdStanVer><mdChar><CharSetCd Sync="TRUE" value="004"></CharSetCd></mdChar><mdHrLv><ScopeCd Sync="TRUE" value="005"></ScopeCd></mdHrLv><mdHrLvName Sync="TRUE">dataset</mdHrLvName><distInfo><distributor><distorTran><onLineSrc><orDesc Sync="TRUE">002</orDesc><linkage Sync="TRUE">file://\\Igskiacwgsnas\gis_proj\b8653_dnn\Web_Mapping_Applications\Data_for_Download\Water_Resources\Hydrologic_Units\HUC_Lines.shp</linkage><protocol Sync="TRUE">Local Area Network</protocol></onLineSrc><transSize Sync="TRUE">0.000</transSize></distorTran><distorFormat><formatName Sync="TRUE">Shapefile</formatName></distorFormat></distributor></distInfo><refSysInfo><RefSystem><refSysID><identCode Sync="TRUE">USA_Contiguous_Albers_Equal_Area_Conic</identCode></refSysID></RefSystem></refSysInfo><spatRepInfo><VectSpatRep><topLvl><TopoLevCd Sync="TRUE" value="001"></TopoLevCd></topLvl><geometObjs Name="HUC_Lines"><geoObjTyp><GeoObjTypCd Sync="TRUE" value="001"></GeoObjTypCd></geoObjTyp><geoObjCnt Sync="TRUE">0</geoObjCnt></geometObjs></VectSpatRep></spatRepInfo><mdDateSt Sync="TRUE">20090817</mdDateSt></metadata>

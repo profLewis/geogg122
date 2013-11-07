@@ -1,9 +1,0 @@
-#!/bin/csh -f
-
-ipython nbconvert f1_index.ipynb
-sed < f1_index.html 's/ipynb/html/g' > x ; mv x f1_index.html
-sed < f1_index.html 's/http:\/\/nbviewer.ipython.org\/urls\/raw.github.com\/profLewis\/geogg122\/master/../g' > x;mv x f1_index.html
-git add *
-git commit -m 'fixed html links again'
-git push origin master
-
