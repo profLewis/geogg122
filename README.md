@@ -101,3 +101,10 @@
 
   [Course Notes](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter6a_Practical/Practical.ipynb)
   
+
+- 7.0 ENSO
+
+  Using monthly fire count data from MODIS Terra, develop and test a predictive model for the number of fires per unit area per year driven by Sea Surface Temperature anomaly data.
+  
+  [Course Notes]((http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter7_ENSO/ENSO.ipynb)
+  
