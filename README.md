@@ -108,3 +108,8 @@
   
   [Course Notes](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter7_ENSO/ENSO.ipynb)
   
+- 8.0 P Theory
+
+  Using hyperspectral image data over an agricultural area, use photon recollision theory to produce a map of Leaf Area Index.
+    
+  [Course Notes](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter8_ptheory/Ptheory.ipynb)
