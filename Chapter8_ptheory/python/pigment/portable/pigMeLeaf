@@ -1,0 +1,38 @@
+#!/bin/csh -f
+
+set name = $0
+set WHENCE = $name:h
+if ( $WHENCE == $name ) then
+    set WHENCE = "."
+endif
+
+if (! $?TMP )set TMP = /tmp
+
+# pigment variation 
+# results go into directory pig
+
+mkdir -p pig
+set Cdm = (0.001 0.002 0.004 0.008)
+set Cab = (10 20 30 40 50 60 70 80 90 110 130)
+set Cs = (0.0 0.1 0.2 0.3 0.4 0.5 1.0)
+
+# this is soil brightess
+set soil = (0)
+
+# the wavebands to simulate
+
+foreach c ($soil)
+foreach a ($Cdm)
+foreach b ($Cab)
+foreach d ($Cs)
+echo $a $b $c $d
+if ( ! -e pig/sim_${a}_${b}_${c}_${d}.dat ) then
+    $WHENCE/pigMeForward $a $b $c $d   > pig/sim_${a}_${b}_${c}_${d}.dat 
+endif
+
+end # d
+end # a
+end # b
+end # c
+
+

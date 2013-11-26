@@ -1,0 +1,53 @@
+#!/bin/csh -f
+
+# fwd modelling of spectrum
+
+# c: soil parameter
+# a: dry matter
+# b: chlorophyll
+# d: senescence
+
+set name = $0
+set WHENCE = $name:h
+if ( $WHENCE == $name ) then
+    set WHENCE = "."
+endif
+
+if (! $?TMP )set TMP = /tmp
+
+set a = $1
+set b = $2
+set c = $3 
+set d = $4
+set B = (`cat wavebands.dat`)
+
+if ( $c > 0 ) then
+    # pull out the default soil spectrum
+    gawk < $WHENCE/fullspectrum.dat '{print $1,$2,$3*'$c'}' > $TMP/tmp2.$$
+    
+    # linear interpolation for each required waveband
+    @ j = 1
+    \rm -f $TMP/soil.dat.$$
+    while ( $j <= $#B)
+	gawk < $TMP/tmp2.$$ '{w[NR]=$1;r2[NR]=$3;} END{rb=r2[1];for(i=1;i<NR;i++)if(b>=w[i]&&b<=w[i+1]){d=(b-w[i])/(w[i+1]-w[1]);rb=d*(r2[i+1]-r2[i])+r2[i];}print rb*1}'  b=$B[$j]  >> $TMP/soil.dat.$$
+	@ j++
+    end
+endif
+
+# fwd model using 'pigment'
+gawk < $WHENCE/defaults.dat '{if($1=="Cdm"){print $1,$2,'$a',$4,$5}else if($1=="Cs"){print $1,$2,'$d',$4,$5}else if($1=="Cab"){print $1,$2,'$b',$4,$5}else print}' | pigment | gawk '{print $1,$3+$2}' > $TMP/tmp1.$$
+
+# linear interpolation of pigment output
+\rm -f $TMP/sim.dat.$$
+@ j = 1
+\rm -f $TMP/sim.dat.$$
+while ( $j <= $#B)
+gawk < $TMP/tmp1.$$ '{w[NR]=$1;r1[NR]=$2;r2[NR]=$3;} END{ra=r1[1];rb=r2[1];for(i=1;i<NR;i++)if(b>=w[i]&&b<=w[i+1]){d=(b-w[i])/(w[i+1]-w[1]);ra=d*(r1[i+1]-r1[i])+r1[i];rb=d*(r2[i+1]-r2[i])+r2[i];}print b,ra*1,rb*1}'  b=$B[$j]  >> $TMP/sim.dat.$$
+@ j++
+end
+if ( $c > 0 ) then
+    paste $TMP/soil.dat.$$ $TMP/sim.dat.$$ | gawk '{print $2,$3,$1}'
+else
+   cat $TMP/sim.dat.$$
+endif
+\rm -f $TMP/*.$$
