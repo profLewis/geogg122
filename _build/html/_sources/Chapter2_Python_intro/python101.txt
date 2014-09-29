@@ -134,7 +134,7 @@ Alternatively, just run ``ipython``:
 
 ::
 
-    berlin% cd ~/Data/geogg122/Chapter2_Python_intro
+    berlin% cd ~/DATA/geogg122/Chapter2_Python_intro
     berlin% ipython --pylab=inline
 
 and type your own commands in at the prompt, following the class or the
