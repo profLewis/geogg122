@@ -12,6 +12,40 @@
 [Prof Philip Lewis] (http://www.geog.ucl.ac.uk/~plewis)  
 [Dr. Jose Gomez-Dans](http://www.geog.ucl.ac.uk/about-the-department/people/research-staff/research-staff/jose-gomez-dans/)
 
+### Purpose of this course
+
+This course, GeogG122 Scientific Computing, is a term 1 MSc module worth 15 credits (25% of the term 1 credits) that aims to:
+
+    impart an understanding of scientific computing
+    give students a grounding in the basic principles of algorithm development and program construction
+    to introduce principles of computer-based image analysis and model development
+
+It is open to students from a number of MSc courses run by the Department of Geography UCL, but the material should be of wider value to others wishing to make use of scientific computing.
+
+The module will cover:
+
+    Introduction to programming 
+    Introduction to linux environment 
+    Computing for image analysis
+    Computing in Python
+    Computing for environmental modelling
+    Data visualisation for scientific applications
+
+### Learning Outcomes
+
+At the end of the module, students should:
+
+    have a working knowledge of linux / unix operating systems and have the knowledge and confidence to obtain, compile and install commonly available scientific software packages
+    have an understanding of algorithm development and be able to use widely used scientific computing software to manipulate datasets and accomplish analytical tasks
+    have an understanding of the technical issues specific to image-based analysis, model implementation and scientific visualisation
+
+### Timetable
+
+The course takes place over 10 weeks in term 1, on Wednesdays usually from 10:00 to 13:00 (09:00-13:00 in t5he first two sessions) in the Geography Department Unix Computing Lab (PB110) in the [Pearson Building](http://www.ucl.ac.uk/estates/roombooking/building-location/?id=003), UCL. Classes take place from the second week of term to the final week of term, other than Reading week. See UCL [term dates](http://www.ucl.ac.uk/staff/term-dates) for further information.
+
+### Assessment
+
+Assessment is through one piece of coursework that is submitted in both paper form and electronically via Moodle. See the [Moodle page](https://moodle.ucl.ac.uk/course/view.php?id=13891) for more details.
 
 ### Useful links
 
@@ -19,7 +53,21 @@
 
 [A useful reading list for basic and advanced Unix.] (http://www.ee.surrey.ac.uk/Teaching/Unix/books-uk.html)  
 
-[Access to the course notes](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/access.ipynb)
+### Structure of the Course
+
+    06 1 Oct 09:00-13:00 4 hrs Introduction to Unix 110 
+    07 10 Oct 09:00-13:00 4 hrs Python 101 110 
+    08 17 Oct 10:00-13:00 4 hrs Plotting and Numerical Python 110 
+    09 24 Oct 10:00-13:00 3 hrs Raster and vector data 110 
+    10 31 Oct 10:00-13:00 3 hrs Raster and vector data 110 
+    11 READING WEEK (ENVI)
+    12 14 Nov 10:00-13:00 3 hrs Raster and vector data 110 
+    13 21 Nov 10:00-13:00 3 hrs Building and calibrating a model 110 
+    14 28 Nov 10:00-13:00 3 hrs Building and calibrating a model 110 
+    15 5 Dec 10:00-13:00 3 hrs Group practical 110 
+    16 12 Dec 10:00-13:00 3 hrs Group practical 110 
+
+
 
 -  0.0 Introduction  
 In this session, we will outline the purpose of the course and any assumptions made.
