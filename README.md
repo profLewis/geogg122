@@ -19,8 +19,13 @@
 
 [A useful reading list for basic and advanced Unix.] (http://www.ee.surrey.ac.uk/Teaching/Unix/books-uk.html)  
 
--  Introduction  
+[Access to the course notes](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/access.ipynb)
+
+-  0.0 Introduction  
+In this session, we will outline the purpose of the course and any assumptions made.
+
   [Introductory notes](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter0_Introduction/f1_index.ipynb)  
+
 
 -  1.0 Unix  
   [Unix Notes](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter1_Unix/f3_1_unix_intro.ipynb)  
