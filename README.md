@@ -24,24 +24,23 @@ It is open to students from a number of MSc courses run by the Department of Geo
 
 The module will cover:
 
-    Introduction to programming 
-    Introduction to linux environment 
-    Computing for image analysis
-    Computing in Python
-    Computing for environmental modelling
-    Data visualisation for scientific applications
+* Introduction to linux environment 
+* Computing in Python
+* Computing for image analysis
+* Computing for environmental modelling
+* Data visualisation for scientific applications
 
 ### Learning Outcomes
 
 At the end of the module, students should:
 
-    have a working knowledge of linux / unix operating systems and have the knowledge and confidence to obtain, compile and install commonly available scientific software packages
-    have an understanding of algorithm development and be able to use widely used scientific computing software to manipulate datasets and accomplish analytical tasks
-    have an understanding of the technical issues specific to image-based analysis, model implementation and scientific visualisation
+* have a working knowledge of linux / unix operating systems and have the knowledge and confidence to obtain, compile and install commonly available scientific software packages
+* have an understanding of algorithm development and be able to use widely used scientific computing software to manipulate datasets and accomplish analytical tasks
+* have an understanding of the technical issues specific to image-based analysis, model implementation and scientific visualisation
 
 ### Timetable
 
-The course takes place over 10 weeks in term 1, on Wednesdays usually from 10:00 to 13:00 (09:00-13:00 in t5he first two sessions) in the Geography Department Unix Computing Lab (PB110) in the [Pearson Building](http://www.ucl.ac.uk/estates/roombooking/building-location/?id=003), UCL. Classes take place from the second week of term to the final week of term, other than Reading week. See UCL [term dates](http://www.ucl.ac.uk/staff/term-dates) for further information.
+The course takes place over 10 weeks in term 1, on Wednesdays usually from 10:00 to 13:00 (09:00-13:00 in the first two sessions) in the Geography Department Unix Computing Lab (PB110) in the [Pearson Building](http://www.ucl.ac.uk/estates/roombooking/building-location/?id=003), UCL. Classes take place from the second week of term to the final week of term, other than Reading week. See UCL [term dates](http://www.ucl.ac.uk/staff/term-dates) for further information.
 
 ### Assessment
 
@@ -55,22 +54,22 @@ Assessment is through one piece of coursework that is submitted in both paper fo
 
 ### Structure of the Course
 
-    06 1 Oct 09:00-13:00 4 hrs Introduction to Unix 110 
-    07 10 Oct 09:00-13:00 4 hrs Python 101 110 
-    08 17 Oct 10:00-13:00 4 hrs Plotting and Numerical Python 110 
-    09 24 Oct 10:00-13:00 3 hrs Raster and vector data 110 
-    10 31 Oct 10:00-13:00 3 hrs Raster and vector data 110 
-    11 READING WEEK (ENVI)
-    12 14 Nov 10:00-13:00 3 hrs Raster and vector data 110 
-    13 21 Nov 10:00-13:00 3 hrs Building and calibrating a model 110 
-    14 28 Nov 10:00-13:00 3 hrs Building and calibrating a model 110 
-    15 5 Dec 10:00-13:00 3 hrs Group practical 110 
-    16 12 Dec 10:00-13:00 3 hrs Group practical 110 
+    #1 1 Oct 09:00-13:00 4 hrs Introduction to Unix 110 
+    #2 8 Oct 09:00-13:00 4 hrs Python 101 110 
+    #3 15 Oct 10:00-13:00 4 hrs Plotting and Numerical Python 110 
+    #4 22 Oct 10:00-13:00 3 hrs Raster and vector data 110 
+    #5 29 Oct 10:00-13:00 3 hrs Raster and vector data 110 
+    #5a READING WEEK (ENVI)
+    #6 12 Nov 10:00-13:00 3 hrs Raster and vector data 110 
+    #7 19 Nov 10:00-13:00 3 hrs Building and calibrating a model 110 
+    #8 26 Nov 10:00-13:00 3 hrs Building and calibrating a model 110 
+    #9 3 Dec 10:00-13:00 3 hrs Group practical 110 
+    #10 10 Dec 10:00-13:00 3 hrs Group practical 110 
 
 
 
 -  0.0 Introduction  
-In this session, we will outline the purpose of the course and any assumptions made.
+In this session, we will outline the purpose and structure of the course.
 
   [Introductory notes](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter0_Introduction/f1_index.ipynb)  
 
