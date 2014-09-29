@@ -20,7 +20,7 @@ This course, GeogG122 Scientific Computing, is a term 1 MSc module worth 15 cred
     give students a grounding in the basic principles of algorithm development and program construction
     to introduce principles of computer-based image analysis and model development
 
-It is open to students from a number of MSc courses run by the Department of Geography UCL, but the material should be of wider value to others wishing to make use of scientific computing.
+It is open to students from a number of MSc courses run by the Department of Geography UCL, but the material should be of wider value to others wishing to make use of scientific computing. 
 
 The module will cover:
 
