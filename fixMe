@@ -1,14 +1,21 @@
 #!/bin/csh -f
 foreach f (Ch*)
   cd $f
+  rm -f files
   foreach i (*.ipynb)
-    ipython nbconvert $i
+    ipython nbconvert  --to rst  $i
+    ipython nbconvert  --to html $i
+  end
+
+  foreach i (*.rst)
+    grep -v %%bash < $i > x;mv x $i
   end
 
   foreach i (*html)
     sed < $i 's/ipynb/html/g' > x ; mv x $i
     sed < $i 's/http:\/\/nbviewer.ipython.org\/urls\/raw.github.com\/profLewis\/geogg122\/master/../g' > x;mv x $i
   end
+  ln -s `pwd` files
   cd ..
 end
 

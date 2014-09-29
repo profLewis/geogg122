@@ -1,0 +1,2437 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1. A Brief Introduction to Unix &mdash; GeogG122: Scientific Computing v&lt;release&gt; documentation</title>
+    
+    <link rel="stylesheet" href="../_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../_static/cloud.js"></script>
+    <link rel="top" title="GeogG122: Scientific Computing v&lt;release&gt; documentation" href="../index.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div class="relbar-top">
+        
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+    <li><a href="../index.html">geogg122</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="a-brief-introduction-to-unix">
+<h1>1. A Brief Introduction to Unix<a class="headerlink" href="#a-brief-introduction-to-unix" title="Permalink to this headline">¶</a></h1>
+<div class="line-block">
+<div class="line"><a class="reference external" href="#1.-A-Brief-Introduction-to-Unix">1. A Brief Introduction to Unix</a></div>
+<div class="line"><a href="#id1"><span class="problematic" id="id2">`</span></a>2. Making and breaking things in</div>
+</div>
+<p>Unix &lt;#2.-Making-and-breaking-things-in-Unix&gt;`__
+| <a class="reference external" href="#3.-Some-more-Unix-and-associated-tools">3. Some more Unix and associated
+tools</a>
+| <a class="reference external" href="#4.-Summary-of-all-commands">4. Summary of all commands</a></p>
+<div class="section" id="in-this-section">
+<h2>1.1 In this section<a class="headerlink" href="#in-this-section" title="Permalink to this headline">¶</a></h2>
+<p>In this section, you will be introduced to python notebooks and the unix
+operating system.</p>
+<p>You should have an understanding of:</p>
+<ol class="arabic simple">
+<li>Unix as an operating system</li>
+<li>How to change your password (<tt class="docutils literal"><span class="pre">passwd</span></tt>).</li>
+<li>Directory structures in unix</li>
+<li>Relative and absolute pathnames</li>
+<li>The role and meaning of the characters <tt class="docutils literal"><span class="pre">~</span></tt> <tt class="docutils literal"><span class="pre">.</span></tt> and <tt class="docutils literal"><span class="pre">..</span></tt>
+(<em>twiddle</em>, <em>dot</em> and <em>dot-dot</em>)</li>
+<li>The unix commands <tt class="docutils literal"><span class="pre">pwd</span></tt>, <tt class="docutils literal"><span class="pre">cd</span></tt>, and <tt class="docutils literal"><span class="pre">ls</span></tt></li>
+</ol>
+<div class="section" id="commands-in-this-section">
+<h3>Commands in this section<a class="headerlink" href="#commands-in-this-section" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">[<tt class="docutils literal"><span class="pre">`cd</span></tt> &lt;#cd&gt;`__] : change directory</div>
+<div class="line">[<tt class="docutils literal"><span class="pre">`.</span></tt> &lt;#dot&gt;`__]: dot (current level)</div>
+<div class="line">[<tt class="docutils literal"><span class="pre">`..</span></tt> &lt;#dotdot&gt;`__] : dot dot (up one level)</div>
+<div class="line">[<tt class="docutils literal"><span class="pre">`ls</span></tt> &lt;#passwd&gt;`__] : change password</div>
+<div class="line">[<tt class="docutils literal"><span class="pre">`passwd</span></tt> &lt;#ls&gt;`__] : list</div>
+<div class="line">[<tt class="docutils literal"><span class="pre">`pwd</span></tt> &lt;#pwd&gt;`__]: print working directory</div>
+<div class="line">[<tt class="docutils literal"><span class="pre">`~</span></tt> &lt;#twiddle&gt;`__]: tilde (twiddle) - home</div>
+</div>
+</div>
+</div>
+<div class="section" id="unix">
+<h2>1.2 Unix<a class="headerlink" href="#unix" title="Permalink to this headline">¶</a></h2>
+<p>This course will be taught mainly under a Unix operating system. The
+operating system allows you access to the running of the computer (and
+associated devices on the network), and enables you to be able to
+control what you want the computer to do.</p>
+<p>There is some overhead to learning this (like learning a new language),
+but we will introduce you to the basic operations you will need in this
+session.</p>
+<p>There are many online tutorials on unix. A good place to start backup
+material and some more features for the material we will cover today is
+<a class="reference external" href="http://software-carpentry.org/v3/shell01.html">software-carpentry.org</a></p>
+<p>The interface for these notes is done using something called <em>ipython
+notebooks</em>, that we will return more to later.</p>
+<p>Not surprisingly, this is mainly aimed at running commands in the python
+programming language.</p>
+<p>In this section of the notes, we will be using <em>unix</em> commands, where we
+are working directly with the operating system (rather than in the
+python language and environment that is on top of the underlying
+system).</p>
+<p>One really convenient feature of ipython notebooks is that you, the
+student, can simply download then (using the <tt class="docutils literal"><span class="pre">Download</span> <span class="pre">notebook</span></tt>
+button in the corner of the browser display) and then run them on your
+local computer. When you have downloaded a notebook, you can use it by
+typing:</p>
+<p><tt class="docutils literal"><span class="pre">berlin%</span> <span class="pre">ipython</span> <span class="pre">notebook</span></tt></p>
+<p>which will open a web browser with an interface tou your notebooks.</p>
+<p>You <em>can</em> execute (&#8216;run&#8217;) each block of code by selecting the code block
+(click on it) and simply hitting the return key. This conveniently works
+with basic unix commands as well as python commands.</p>
+<p>As an example of some commands we will use later</p>
+<div class="code python highlight-python"><div class="highlight"><pre>cd ~
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>/Users/plewis
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">pwd</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="s">u&#39;/Users/plewis&#39;</span>
+</pre></div>
+</div>
+<p>These two commands (<tt class="docutils literal"><span class="pre">cd</span> <span class="pre">~</span></tt> and <tt class="docutils literal"><span class="pre">pwd</span></tt>) are <em>unix</em> commands (that we
+happen to have run here through the ipython interpreter). You can, as we
+have suggested, simply download the notebook and hit <tt class="docutils literal"><span class="pre">&lt;return&gt;</span></tt> to run
+these, but to get used to using the underlying operatoring system, you
+will want to open a <em>terminal</em> or <em>shell tool</em> (or <tt class="docutils literal"><span class="pre">xterm</span></tt> in some
+cases). This is a &#8216;window&#8217; which has a <em>command line prompt</em> at which
+you can type and execute unix commands.</p>
+<p>It will look something like this:</p>
+<div class="figure">
+<img alt="" src="Chapter1_Unix/files/images/terminal.png" />
+</div>
+<p>where, in this case the command line prompt is <tt class="docutils literal"><span class="pre">pallas%</span></tt>, where
+<tt class="docutils literal"><span class="pre">pallas</span></tt> happens to be the name of one of the computers we might use.</p>
+<p>You type the commands at the prompt, then hit <tt class="docutils literal"><span class="pre">&lt;return&gt;</span></tt> (i.e. the
+return key) to execute (run) the command.</p>
+<p>When you open a new &#8216;terminal&#8217;, you will usually be <em>located</em> in your
+<em>home directory</em>. We will discuss this further below.</p>
+<p>Let&#8217;s check that now, and introduce the command <tt class="docutils literal"><span class="pre">pwd</span></tt> (print working
+directory) that will print (in the terminal) where we currently are
+working.</p>
+<div class="figure">
+<img alt="" src="Chapter1_Unix/files/images/terminal1.png" />
+</div>
+<p>So, whilst you <em>can</em> simply hit <tt class="docutils literal"><span class="pre">&lt;enter&gt;</span></tt> in the code blocks here, we
+will want you to run the unix commands in todays session in a terminal.</p>
+<p><strong>Open a terminal now, and run the command ``pwd`` to get used to
+this.</strong></p>
+</div>
+<div class="section" id="what-is-unix">
+<h2>1.3 What is Unix?<a class="headerlink" href="#what-is-unix" title="Permalink to this headline">¶</a></h2>
+<p>UNIX is a multi-user operating system: that is, a suite of programs
+which run on a computer and allows interface to the hardware and
+software available. It allows many users to share a powerful machine and
+all the available resources, each user running their own processes
+simultaneously. This true multi-tasking aspect of UNIX allows a far
+greater flexibility than is possible with other operating systems, even
+more recent multi-tasking versions of popular PC operating systems (note
+that the linux is simply a ‘flavour’ of UNIX &amp; that the Mac operating
+system OS-X has a good deal of UNIX system within it). The advantages of
+a truly flexible multi-tasking operating system has been demonstrated
+with the popularity of UNIX in the scientific, engineering and financial
+communities, along with the rise of Linux and OS-X.</p>
+<p>X11 is the windowing system that you will generally use to interface
+with the operating system. A key aspect of this has always been the idea
+of remote graphical user interfaces via X11, which allows a user to run
+and visualise processes on different Unix machines. You are not limited
+to accessing the computer you are sat in front of, but can easily make
+wider use of local or external resources. You will find this useful as
+you can log on to the UCL Geography Unix computers from outside UCL
+(from pretty well any other operating system) and (with appropriate X11
+software such as cygwin or exceed, if you are working from a Windows
+computer, or directly from any Unix/linux computer os OS-X machine) run
+windowing sessions the same as if you were physically at the UCL
+computer (given sufficient bandwidth).</p>
+<p>Workstations that run UNIX are not like the way most people use PCs
+running Windows... At any time of the day or night a UNIX machine is
+running literally hundreds of processes simultaneously: Some are
+long-term user processes (such as research experiments) placed at low
+priority to avoid affecting other users, which may run for weeks, but
+most are concerned with the second by second activities of maintaining
+the network.</p>
+<p>Physically, the network consists of &#8216;wires&#8217; (ethernet cables, phone
+lines, fibre-optic cables etc.) or wireless connections (locally and
+externally) running between computers both at local and remote sites. At
+the local level (within a University Dept. for example) the wires
+literally connect every machine to every other, either in a loop, or in
+a star-like arrangement with machines linked around central
+communications hubs. Such arrangements of connections, machines and
+attached peripheral devices is known as a Local Area Network or LAN.
+Larger arrangements of connections, for instance between departments in
+a university rather than individual computers, are known as Wide Area
+Networks or WANs.</p>
+<p>It is through this ability to transparently network computers together
+that UNIX really gains its power. Very often the data a user processes
+on one computer is actually stored on another (a paradigm that has
+(indirectly) led to the development of the Internet and World Wide Web).
+Similarly it is commonplace to process data on one machine whilst
+physically sitting in quite a different location (even on a different
+continent!). The limiting idea of the machine that you are sitting in
+front of being the machine you are using for processing (as in the
+PC-based computing environment) is very much obsolete in the case of
+UNIX computing. Using the network, it is also possible to break large
+processes into a number of smaller jobs and distribute them across
+multiple machines simultaneously, thereby reducing execution times
+dramatically. In a properly set-up UNIX LAN network, the storage of a
+users data on a remote machine, or their working on a remote machine
+should be a relatively transparent operation. Such concepts of
+networking are not confined to UNIX machines, although UNIX (in all its
+varieties) is far and away the most common from of operating system used
+for wide area networking.</p>
+<p>Because a UNIX machine never stops processing, the are <strong>never switched
+off</strong> by anyone other than the system manager or a relevant member of
+staff. Simply switching off as you might with a PC can cause irreparable
+damage to a UNIX machine and/or the data stored on it - remember, your
+data/project could be on the disk you just killed, so don’t do it! If
+you think that there is something wrong with a machine, do not attempt
+to fix it yourself: call or email the system manager or ask a
+knowledgeable person for advice. Under no circumstances should you
+attempt to reboot a workstation yourself, as unless shut down properly
+damage to data, both yours and that of others is likely to result.</p>
+<p>Many workstations you will come across have a simple power-saving
+device: the screen turns itself off if the keyboard hasn’t been used for
+a few minutes. To turn the screen back on, simply press a key on the
+keyboard such as shift, ctrl or the space bar. Often the monitor will
+have been turned off by the last user to save power (and to stop the lab
+heating up!) - in most cases, the monitors have a switch or button
+located on the lower right front of the monitor. If the monitor is on, a
+small green LED will light up. This is the only switch you should ever
+touch on the workstations. If it’s not on the front of the monitor,
+please leave it alone.</p>
+<div class="section" id="passwd">
+<h3>passwd<a class="headerlink" href="#passwd" title="Permalink to this headline">¶</a></h3>
+<p>The UNIX prompt is a sequence of characters that the part of the
+operating system (OS) that you interact with, known as the <em>shell</em>,
+places at the start of each line when it is expecting you to enter a
+command. Often this prompt will be formed by the name of the machine to
+which you are logged in, followed by a <tt class="docutils literal"><span class="pre">%</span></tt> sign. For instance:</p>
+<blockquote>
+<div>berlin%</div></blockquote>
+<p>which will indicate that you are logged on through a window (which you
+might call a terminal or a shell though these are subtly different
+things).</p>
+<p>The nature of the prompt will vary from system to system, but the
+Geography machines have a prompt as above. When you become experienced
+you can customise the prompt to your own liking. The cursor (a small
+solid rectangle or underscore symbol) placed after the prompt tells you
+where your current typing position is (clicking in the window with the
+mouse doesn’t mover the cursor - it always remians at the end of the
+current line you’re on). The current line with the prompt is therefore
+known as the command line. Depending on the particular shell you are
+using and the sort of keyboard you have, you may be able to use up and
+down arrows to quickly go back through commands that you have typed at
+that prompt (in that shell session) (i.e. your history).</p>
+<p>The first time you log in, you will be given a default password (this is
+the same for all students).</p>
+<p>You should make sure that you change your password as soon as possible,
+but this needs to be something you will remember (as with all passwords)
+and secure enough that it can&#8217;t easily be guessed. You could possibkly
+use the same password that you have for your ucl system account (or a
+variant of it). UCL will force you to change it every 3-6 months, so
+make sure youy also change your password on the system here. If you
+forget your password, you will need to see or email the system manager
+to get them to reset it (it is encrypted so they can&#8217;t know what it is,
+but they can reset it).</p>
+<p>To change your password, type <tt class="docutils literal"><span class="pre">passwd</span></tt> at the command prompt and
+follow the instructions:</p>
+<blockquote>
+<div>berlin% passwd</div></blockquote>
+<div class="section" id="logging-out">
+<h4>1.3.3 Logging out<a class="headerlink" href="#logging-out" title="Permalink to this headline">¶</a></h4>
+<p>When you have finished your session at the computer, you must log off.
+To achieve this from a remote PC/Mac connection, simply type logout or
+exit at the prompt. From within a windowing session at the machine
+itself, select the logout option from your root menu (see the section on
+the windowing system for more details), and then confirm the logout by
+clicking on yes. If you leave yourself logged on then other people may
+come along and use your account, access your email etc. Whilst in a
+University environment this is not necessarily a problem - the next user
+will probably come along and log you out so that they can log on
+themselves it is important to log out so that other people don’t waste
+time wondering whether you have finished, or have just popped out for a
+few minutes. Don’t lock your workstation - this is anti-social behaviour
+as it prevents anyone else using it, and if we see it we’ll log you out
+anyway, and probably take all your pocket money away. If you leave for
+more than a few minutes, log yourself out. One of the advantages of a
+UNIX system is that you can leave a job running in the ‘background’
+(don’t worry, we’ll get to that later) which means it’ll keep running
+for as long as you want even after you log out.</p>
+</div>
+</div>
+</div>
+<div class="section" id="the-unix-file-system">
+<h2>1.4 The UNIX file system<a class="headerlink" href="#the-unix-file-system" title="Permalink to this headline">¶</a></h2>
+<p>All information in UNIX, whether it is a program, data or text, is
+stored in files. These files are maintained by the operating system on
+hard disks (usually), and read into the computer’s memory when required.
+Files may be grouped together in directories (equivalent to folders),
+and these directories may themselves contain other directories and/or
+files. In fact, directories are really a special kind of file, but the
+user perceives the whole structure as forming a hierarchy of files and
+directories. This hierarchy is known as the filesystem. When UNIX
+computers are networked, the filesystem is not contained within one
+single machine, but spans the entire network. Each file and directory
+within the network filesystem is addressable via its own unique name -
+its filename, or directory name, and to the user the fact that the
+filesystem straddles multiple machines and hard disks goes largely
+unnoticed.</p>
+<p>The filesystem may be visualised as the roots of a tree. At the very top
+level of the filesystem on each individual machine resides the root
+directory, denoted / (slash).</p>
+<p>Beneath this directory lie the other directories containing files and
+further directories, including data and references to data stored
+elsewhere on the network.</p>
+<div class="figure">
+<img alt="" src="https://raw.github.com/profLewis/geogg122/master/diagramSystem1.png" />
+</div>
+<div class="section" id="dotdot">
+<h3>dotdot<a class="headerlink" href="#dotdot" title="Permalink to this headline">¶</a></h3>
+<p>We have already mentioned that every file or directory in the filesystem
+is uniquely addressable by its filename or directory name. In fact a
+file’s full name is a description of the path from the root of the file
+system to the file itself. For instance, the directory <tt class="docutils literal"><span class="pre">plewis</span></tt> under
+the <tt class="docutils literal"><span class="pre">home</span></tt> directory has the full name:</p>
+<blockquote>
+<div>/home/plewis</div></blockquote>
+<p>Note that as well as being the root of the filesystem, <tt class="docutils literal"><span class="pre">/</span></tt> is also
+used as a directory separator for full filenames and paths (note that is
+the opposite of the Windows/DOS directory separator <tt class="docutils literal"><span class="pre">\</span></tt>). Here the
+directory <tt class="docutils literal"><span class="pre">plewis</span></tt> is reached by starting at the root of the system,
+<tt class="docutils literal"><span class="pre">/</span></tt>, going into the <tt class="docutils literal"><span class="pre">home</span></tt> directory. A directory contained within
+another directory is known as a sub-directory of its parent, or
+container, directory. The <tt class="docutils literal"><span class="pre">/home/</span></tt> section of the full filename is
+known as the absolute path(name) to the file - absolute because it
+starts at the root of the system. With this nomenclature we are able to
+move around the filesystem.</p>
+<p>Similarly, relative pathnames are permissible, describing the route to
+another path or directory from the current directory: the file
+<tt class="docutils literal"><span class="pre">country.dat</span></tt> in the directory <tt class="docutils literal"><span class="pre">/home/plewis</span></tt> may be addressed
+either absolutely as:</p>
+<blockquote>
+<div>/home/plewis/country.dat</div></blockquote>
+<p>or relative to e.g. the directory <tt class="docutils literal"><span class="pre">/home/mdisney</span></tt> as:</p>
+<blockquote>
+<div>../plewis/country.dat</div></blockquote>
+<p>where <tt class="docutils literal"><span class="pre">..</span></tt> is a special symbol meaning ‘up one directory level’. An
+analogy is the address of your next door neighbour’s house. If you
+wanted to tell a friend what next door’s address is, you could give them
+the house number, the street, the city, the post code, and even the
+country. That’s the absolute path name to your neighbour’s house. Of
+course it’s much easier to specify “one house up from mine” or “number
+18” etc. This is the relative path (relative to yours).</p>
+</div>
+<div class="section" id="dot">
+<h3>dot<a class="headerlink" href="#dot" title="Permalink to this headline">¶</a></h3>
+<p>Since <tt class="docutils literal"><span class="pre">..</span></tt> (dot-dot) means &#8216;up one level&#8217; in unix, we can also note at
+this point that the symbol <tt class="docutils literal"><span class="pre">.</span></tt> (dot) means &#8216;the current directory&#8217;,
+so:</p>
+<blockquote>
+<div>./country.dat</div></blockquote>
+<p>would refer to a file called <tt class="docutils literal"><span class="pre">country.dat</span></tt> that is in the current
+directory.</p>
+</div>
+</div>
+<div class="section" id="negotiating-the-file-system">
+<h2>1.5 Negotiating the file system<a class="headerlink" href="#negotiating-the-file-system" title="Permalink to this headline">¶</a></h2>
+<p>Each user in a UNIX network system has specific area of the filesystem
+belonging to them known as their home directory in which they are
+initially placed when they log on. Armed with a basic knowledge of the
+structure of the filesystem, each user is free to explore and visit
+almost any area of the system unless it has been specifically protected
+by its owner.</p>
+<div class="section" id="pwd">
+<h3>pwd<a class="headerlink" href="#pwd" title="Permalink to this headline">¶</a></h3>
+<p>A good place to start is to be aware of <em>where you are</em> in the current
+shell.</p>
+<p>When you opened your shell, you should normally be in your <em>home</em>
+directory, which will be something like <tt class="docutils literal"><span class="pre">/home/fbloggs</span></tt> on our system
+(if your username were fbloggs) (or on a mac, under OS X, it might be
+<tt class="docutils literal"><span class="pre">/Users/fbloggs</span></tt>).</p>
+<p>The command to tell you where you are (in this shell) on the system is
+<tt class="docutils literal"><span class="pre">pwd</span></tt> (print working directory).</p>
+<p>Try this for yourself now <strong>in a shell</strong> and confirm that this is the
+case. Make sure to hit the <tt class="docutils literal"><span class="pre">return</span></tt> key to execute the command.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">pwd</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="s">u&#39;/Users/plewis&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="twiddle">
+<h3>twiddle<a class="headerlink" href="#twiddle" title="Permalink to this headline">¶</a></h3>
+<p>The home directory is a special place ... it&#8217;s the part of the system
+that you &#8216;own&#8217; and have control over.</p>
+<p>There is a special symbol in unix (formally, the <em>tilde</em> symbol <tt class="docutils literal"><span class="pre">~</span></tt>,
+though we often call it <em>twiddle</em>). In &#8216;<em>unix speak</em>&#8216; then we might
+refer to the home directory of the user <tt class="docutils literal"><span class="pre">plewis</span></tt> and &#8216;<em>twiddle
+plewis</em>&#8216;, which we would write as <tt class="docutils literal"><span class="pre">~plewis</span></tt>.</p>
+<p>If you want to refer to your <em>own</em> home directory, you can shortcut this
+to just &#8216;<em>twiddle</em>&#8216;, i.e. <tt class="docutils literal"><span class="pre">~</span></tt>.</p>
+</div>
+<div class="section" id="cd">
+<h3>cd<a class="headerlink" href="#cd" title="Permalink to this headline">¶</a></h3>
+<p>So, we know how to find out where we are. How do we get somewhere else
+on the system?</p>
+<p>To change your working directory to somewhere else, use the command
+<tt class="docutils literal"><span class="pre">cd</span></tt> (change directory).</p>
+<p><em>Let&#8217;s use that now (in a shell) to change our working directory to the
+root of the file system.</em></p>
+<div class="code python highlight-python"><div class="highlight"><pre>cd /
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>/
+</pre></div>
+</div>
+<p>which will (once you hit the return key to execute the command) change
+your location, your ‘working directory’ to the root directory <tt class="docutils literal"><span class="pre">/</span></tt>.</p>
+<p>A few things to pay attention to when first coming across this:</p>
+<ul class="simple">
+<li>first, there is space (‘white space’ as we call it) between the
+command cd and the ‘argument’ <tt class="docutils literal"><span class="pre">/</span></tt>. This is one or more spaces or
+tab characters so that the shell can understand that you want to run
+the command cd and give it some extra information (where to change
+directory to in this case), rather than, for example typing <tt class="docutils literal"><span class="pre">cd/</span></tt>
+in which case the shell will interpret <tt class="docutils literal"><span class="pre">cd/</span></tt> as the command you are
+trying to run;</li>
+<li>second, if you think about what you want to achieve with the command,
+(change directory to somewhere) it should be quite apparent that
+apart from the command, you also need to give the shell an indication
+of where you want to go (<tt class="docutils literal"><span class="pre">/</span></tt> here) so you (normally) will have to
+type cd somewhere where somewhere is where you want to go. When you
+are first using these commands, pausing and thinking about what you
+want to achive is particularly important. Later, it will generally
+become second nature (as when you learn any new language).</li>
+</ul>
+<p>Now, if you type e.g.:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>cd usr/bin
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>/usr/bin
+</pre></div>
+</div>
+<p>You will change directory to the subdirectory <tt class="docutils literal"><span class="pre">bin</span></tt> of the
+subdirectory <tt class="docutils literal"><span class="pre">usr</span></tt> of <tt class="docutils literal"><span class="pre">/</span></tt>, which is the same as doing (using an
+absolute pathname):</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>/usr/bin
+</pre></div>
+</div>
+<p>These look similar at first glance, but the second importantly has a
+<tt class="docutils literal"><span class="pre">/</span></tt> at the front of the directory name, and so is an absolute
+pathname, whereas the first does not, so it is a relative pathname.</p>
+<p>The idea should be simple and intuitive once you get the idea of / being
+a separator and / being the top of the directory tree (the root
+directory).</p>
+<p>We can also practice using the symbol <tt class="docutils literal"><span class="pre">.</span></tt> (dot) at this point ... what
+does the following command do? (hint: check which directory you are in,
+run the command below, then chack again to see where you are).</p>
+<div class="code python highlight-python"><div class="highlight"><pre>cd .
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>/usr/bin
+</pre></div>
+</div>
+</div>
+<div class="section" id="ls">
+<h3>ls<a class="headerlink" href="#ls" title="Permalink to this headline">¶</a></h3>
+<p>The unix command to give a listing of files or directories is <tt class="docutils literal"><span class="pre">ls</span></tt>
+(list). e.g.:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>/usr/local
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">ls</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>[35mCUDA-4.0[m[m@     [34mcuda[m[m/         [34minclude[m[m/      [34mlib[m[m/          [34mshare[m[m/
+[34mbin[m[m/          [34metc[m[m/          [34minfo[m[m/         [34mlibexec[m[m/      [34mtexlive[m[m/
+[34mboost_1_53_0[m[m/ [34mgit[m[m/          [35mitt[m[m@          [34mman[m[m/
+</pre></div>
+</div>
+<p>This tells us that in the system directory <tt class="docutils literal"><span class="pre">/usr/local/</span></tt> there are (on
+this particular computer) a set of directories called <tt class="docutils literal"><span class="pre">bin</span></tt>, <tt class="docutils literal"><span class="pre">etc</span></tt>
+and so on.</p>
+<p>We could have a look to see what is in those direcories e.g.:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">ls</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">share</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>[34mdoc[m[m/         [34mgcc-4.8.0[m[m/   [34mghostscript[m[m/ [34mgraphviz[m[m/    [34mlocale[m[m/      [34mmplayer[m[m/
+[34memacs[m[m/       [34mgdal[m[m/        [34mgnuplot[m[m/     [34minfo[m[m/        [34mman[m[m/
+</pre></div>
+</div>
+<p>so we find some more sub-directories.</p>
+<p>Note that just typing:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">ls</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>[35mCUDA-4.0[m[m@     [34mcuda[m[m/         [34minclude[m[m/      [34mlib[m[m/          [34mshare[m[m/
+[34mbin[m[m/          [34metc[m[m/          [34minfo[m[m/         [34mlibexec[m[m/      [34mtexlive[m[m/
+[34mboost_1_53_0[m[m/ [34mgit[m[m/          [35mitt[m[m@          [34mman[m[m/
+</pre></div>
+</div>
+<p>has the same effect as typing:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>ls .
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>[35mCUDA-4.0[m[m@     [34mcuda[m[m/         [34minclude[m[m/      [34mlib[m[m/          [34mshare[m[m/
+[34mbin[m[m/          [34metc[m[m/          [34minfo[m[m/         [34mlibexec[m[m/      [34mtexlive[m[m/
+[34mboost_1_53_0[m[m/ [34mgit[m[m/          [35mitt[m[m@          [34mman[m[m/
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="exercise-unix-1">
+<h2>1.6 Exercise Unix-1<a class="headerlink" href="#exercise-unix-1" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Change directory back to your home. Check where you are when you get
+there.</li>
+<li>Use an appropriate unix command to find out which files and
+directories you have in your home.</li>
+<li>Change directory to your neighbour&#8217;s home (you will need to ask them
+their username). Check where you are when you get there, and see what
+files they have.</li>
+<li>Repeat these two exercises, (a) using <tt class="docutils literal"><span class="pre">~</span></tt>; (b) using absolute
+pathnames; (c) using relative path names, perhaps throwing in the
+symbol <tt class="docutils literal"><span class="pre">.</span></tt> to make sure you understand that.</li>
+</ol>
+</div>
+<div class="section" id="summary">
+<h2>1.7 Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>In this section, you have been introduced to the unix file system and
+some basic unix commands for navigation around the system.</p>
+<div class="section" id="id3">
+<h3>commands in this section<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">[<tt class="docutils literal"><span class="pre">`cd</span></tt> &lt;#cd&gt;`__] : change directory</div>
+<div class="line">[<tt class="docutils literal"><span class="pre">`.</span></tt> &lt;#dot&gt;`__]: dot (current level)</div>
+<div class="line">[<tt class="docutils literal"><span class="pre">`..</span></tt> &lt;#dotdot&gt;`__] : dot dot (up one level)</div>
+<div class="line">[<tt class="docutils literal"><span class="pre">`ls</span></tt> &lt;#passwd&gt;`__] : change password</div>
+<div class="line">[<tt class="docutils literal"><span class="pre">`passwd</span></tt> &lt;#ls&gt;`__] : list</div>
+<div class="line">[<tt class="docutils literal"><span class="pre">`pwd</span></tt> &lt;#pwd&gt;`__]: print working directory</div>
+<div class="line">[<tt class="docutils literal"><span class="pre">`~</span></tt> &lt;#twiddle&gt;`__]: tilde (twiddle) - home</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="making-and-breaking-things-in-unix">
+<h1>2. Making and breaking things in Unix<a class="headerlink" href="#making-and-breaking-things-in-unix" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id4">
+<h2>2.0 In this section<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>In this section, you will be introduced to some new unix commands to
+create, copy, move and remove directories and files, as well as some
+concepts to start to give you more control of your environment.</p>
+<div class="line-block">
+<div class="line">[<tt class="docutils literal"><span class="pre">`chmod</span></tt> &lt;#chmod&gt;`__] : change mode</div>
+<div class="line">[<tt class="docutils literal"><span class="pre">`cp</span></tt> &lt;#cp&gt;`__] : copy</div>
+<div class="line">[<tt class="docutils literal"><span class="pre">`df</span></tt> &lt;#df&gt;`__] : disk free</div>
+<div class="line">[<tt class="docutils literal"><span class="pre">`du</span></tt> &lt;#du&gt;`__] : disk usage</div>
+<div class="line">[<tt class="docutils literal"><span class="pre">`ls</span> <span class="pre">-l</span></tt> &lt;#ls&#8211;l&gt;`__] : long listing</div>
+<div class="line">[<tt class="docutils literal"><span class="pre">`mkdir</span></tt> &lt;#mkdir&gt;`__] : make directory</div>
+<div class="line">[<tt class="docutils literal"><span class="pre">`mv</span></tt> &lt;#mv&gt;`__] : move</div>
+<div class="line">[<tt class="docutils literal"><span class="pre">`quota</span></tt> &lt;#quota&gt;`__] : personal disk quota</div>
+<div class="line">[<tt class="docutils literal"><span class="pre">`rm</span></tt> &lt;#rm&gt;`__] : remove</div>
+<div class="line">[<tt class="docutils literal"><span class="pre">`rmdir</span></tt> &lt;#rmdir&gt;`__] : remove (empty) directory</div>
+<div class="line">[<tt class="docutils literal"><span class="pre">`ssh</span></tt> &lt;#ssh&gt;`__] : secure shell</div>
+<div class="line">[<tt class="docutils literal"><span class="pre">`*?</span></tt> &lt;#Wildcards&gt;`__] : wildcards</div>
+</div>
+<p>If you run through this exercise multiple times, you will probably want
+to delete the directories <tt class="docutils literal"><span class="pre">~/Data/bar</span></tt>, <tt class="docutils literal"><span class="pre">~/Data/foo</span></tt> and
+<tt class="docutils literal"><span class="pre">~/Data/testCp</span></tt> and their contents before starting:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>rm -rf ~/Data/foo
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre>rm -rf ~/Data/testCp
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre>rm -rf ~/Data/bar
+</pre></div>
+</div>
+</div>
+<div class="section" id="making-and-removing-directories">
+<h2>2.1 Making and removing directories<a class="headerlink" href="#making-and-removing-directories" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="mkdir">
+<h3>mkdir<a class="headerlink" href="#mkdir" title="Permalink to this headline">¶</a></h3>
+<p>The command <tt class="docutils literal"><span class="pre">mkdir</span></tt> (make directory) is used to create (&#8216;make&#8217;) a
+directory. You will want to do this to organise your files (e.g. put all
+of the files for a practical in one place).</p>
+<p>In the unix system you have here, there is (should be) a data directory
+(called <tt class="docutils literal"><span class="pre">Data</span></tt> or <tt class="docutils literal"><span class="pre">DATA</span></tt>). This is a large storage disk that you can
+use to put large exercises and data. Note that this disk is not so
+regularly backed up as your home directory, but it is much larger (and
+does not have a quota, as your home area does).</p>
+<p>Lets first move to the data directory:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>cd ~/Data
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>/Users/plewis/Data
+</pre></div>
+</div>
+<p>and check where we are:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">pwd</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="s">u&#39;/Users/plewis/Data&#39;</span>
+</pre></div>
+</div>
+<p>Now let&#8217;s create a directory that we might call foo, and move (i.e.
+change directory) into it:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>mkdir foo
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre>cd foo
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>/Users/plewis/Data/foo
+</pre></div>
+</div>
+<p>or alternatively, to go straight there:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>cd ~/Data/foo
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>/Users/plewis/Data/foo
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">ls</span>
+</pre></div>
+</div>
+<p>There should be no files in this new directory, so ls will tell us that.</p>
+<p>It is instructive to see what happens if we try to create a directory
+that already exists:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>mkdir ~/Data/foo
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>mkdir: /Users/plewis/Data/foo: File exists
+</pre></div>
+</div>
+<p>So, the command <em>complains</em> that the file already exists.</p>
+<p>If we want to avoid this behaviour and create it is it doesn&#8217;t exist or
+just leave it if it already does, we can use the <em>command line option</em>
+<tt class="docutils literal"><span class="pre">-p</span></tt> for <tt class="docutils literal"><span class="pre">mkdir</span></tt>:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>mkdir -p ~/Data/foo
+</pre></div>
+</div>
+<p>Command line options (that are normally preceeded by a <tt class="docutils literal"><span class="pre">-</span></tt> character
+or <tt class="docutils literal"><span class="pre">--</span></tt> in some cases) change the behaviour of a command.</p>
+</div>
+<div class="section" id="rmdir">
+<h3>rmdir<a class="headerlink" href="#rmdir" title="Permalink to this headline">¶</a></h3>
+<p>Now suppose we don&#8217;t want the directory any more.</p>
+<p>To remove an <em>empty</em> directory, we use the command <tt class="docutils literal"><span class="pre">rmdir</span></tt> (remove
+directory).</p>
+<p>Its not a good idea to try to remove the directory we are in, so let&#8217;s
+<tt class="docutils literal"><span class="pre">cd</span></tt> home first:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>cd ~
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>/Users/plewis
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre>rmdir ~/Data/foo
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre>ls ~/Data/
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>brdf_WW_1_A_1.kernelFiltered.dat  [34moutput[m[m/
+[34mmeris[m[m/                            [34mplots[m[m/
+[34mmsc[m[m/                              [34munix[m[m/
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">Using the command <tt class="docutils literal"><span class="pre">ls</span></tt> we should be able to confirm that the</div>
+</div>
+<p>directory has gone.
+| Again, it is instructive to see what happens if things &#8216;go wrong&#8217;, so
+let&#8217;s create a directory that is not empty, and try to use rmdir to
+delete it:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>mkdir -p ~/Data/foo/bar
+</pre></div>
+</div>
+<p>We can see that another use of the <tt class="docutils literal"><span class="pre">-p</span></tt> option in <tt class="docutils literal"><span class="pre">mkdir</span></tt> is to
+allow us to create a hierarchy of directories at one shot, so now, in
+the directory <tt class="docutils literal"><span class="pre">~/Data/foo</span></tt> we have a sub-directory `~/Data/foo/bar&#8217;:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>ls ~/Data/foo
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>[34mbar[m[m/
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre>rmdir ~/Data/foo
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>rmdir: /Users/plewis/Data/foo: Directory not empty
+</pre></div>
+</div>
+<p>So, <tt class="docutils literal"><span class="pre">rmdir</span></tt> complains that the directory is not empty, and so doesn&#8217;t
+delete it. We will see below that we use another command in this case.</p>
+</div>
+</div>
+<div class="section" id="wildcards">
+<h2>2.2 Wildcards<a class="headerlink" href="#wildcards" title="Permalink to this headline">¶</a></h2>
+<p>Very often, we don&#8217;t want to have to refer to the <em>full</em> file or
+directory name. Equally, we might often want to refer to multiple
+filenames or directories.</p>
+<p>To do this in unix, we use <em>wildcards</em>. The wildcard symbols are: <tt class="docutils literal"><span class="pre">*</span></tt>
+and <tt class="docutils literal"><span class="pre">?</span></tt>.</p>
+<p><tt class="docutils literal"><span class="pre">*</span></tt> is interpreted as <em>zero or more characters</em> <tt class="docutils literal"><span class="pre">?</span></tt> is a single
+(wildcard) character</p>
+<p>We use these to form <em>patterns</em> of filenames.</p>
+<p>So, if we wanted to get a listing of all of the files in the directory
+<tt class="docutils literal"><span class="pre">~plewis/msc</span></tt> that end with the suffix <tt class="docutils literal"><span class="pre">.dat</span></tt> we would type:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>ls ~plewis/msc/*.dat
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>/Users/plewis/msc/atm.dat         /Users/plewis/msc/helloWorld.dat
+/Users/plewis/msc/country.dat     /Users/plewis/msc/landsat.dat
+/Users/plewis/msc/dem.dat         /Users/plewis/msc/listing.dat
+/Users/plewis/msc/forest.dat      /Users/plewis/msc/max.dat
+/Users/plewis/msc/head.dat        /Users/plewis/msc/points.dat
+/Users/plewis/msc/header.dat      /Users/plewis/msc/popden.dat
+/Users/plewis/msc/hello.dat
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre>ls ~plewis/*/l*.dat
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>/Users/plewis/msc/landsat.dat  /Users/plewis/msc/listing.dat
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre>ls ~plewis/m??/l*n?.dat
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>/Users/plewis/msc/listing.dat
+</pre></div>
+</div>
+</div>
+<div class="section" id="copying-moving-and-deleting-files">
+<h2>2.3 Copying, moving and deleting files<a class="headerlink" href="#copying-moving-and-deleting-files" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="cp">
+<h3>cp<a class="headerlink" href="#cp" title="Permalink to this headline">¶</a></h3>
+<p>The command for copying a file is <tt class="docutils literal"><span class="pre">cp</span></tt> (copy), e.g.:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>mkdir -p ~/Data/foo
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre>cp -n ~plewis/msc/hello.dat ~/Data/foo
+</pre></div>
+</div>
+<p>First, we created the directory ~/Data/foo, then we used the command cp
+to copy a file from ~plewis/msc/hello.dat to the directory ~/Data/foo.</p>
+<p>Usually you will be able to simply type:</p>
+<p>cp ~plewis/msc/hello.dat ~/Data/foo</p>
+<p>i.e. without the -n option we have put here, but on some systems /
+setups you will find that cp might complain if one or more of the files
+you are trying to copy to already exist (this is a safety mechanism to
+stop you overwriting something you might not have meant to!).</p>
+<p>The -n option makes cp copy the files, but not overwrite an existing
+file.</p>
+<p>Note that if cp detects an attempt to copy a file to itself, the copy
+will fail.</p>
+<p><strong>Check that the file has been correctly copied using an appropriate
+command.</strong></p>
+<p>Note the <em>whitespace</em> between the command <tt class="docutils literal"><span class="pre">cp</span></tt> and the two <em>arguments</em>
+<tt class="docutils literal"><span class="pre">~plewis/msc/hello.dat</span></tt> and <tt class="docutils literal"><span class="pre">~/Data/foo</span></tt>, as well as the use of the
+<tt class="docutils literal"><span class="pre">-n</span></tt> option here.</p>
+<p>A common mistake people make when first using this command is not giving
+two (actually, two or more) arguments, but if you think about what
+information you would need to give to the computer to copy a file from
+somewhere to somewhere else, you will soon learn that you need at least
+two arguments.</p>
+<p>We can copy more than one file at a time using wildcard characters.</p>
+<p>To explore this, lets get a listing of all of the files that end with
+<tt class="docutils literal"><span class="pre">.dat</span></tt> but start with <tt class="docutils literal"><span class="pre">h</span></tt> in the directory <tt class="docutils literal"><span class="pre">~plewis/msc</span></tt>:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>ls ~plewis/msc/h*.dat
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>/Users/plewis/msc/head.dat        /Users/plewis/msc/hello.dat
+/Users/plewis/msc/header.dat      /Users/plewis/msc/helloWorld.dat
+</pre></div>
+</div>
+<p>To copy multiple files to the same place then, we could simply list the
+names:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>cp -n ~plewis/msc/hello.dat ~plewis/msc/helloWorld.dat ~/Data/foo
+</pre></div>
+</div>
+<p>In this case, the command has three arguments. The final argument
+(<tt class="docutils literal"><span class="pre">~/Data/foo</span></tt>) is interpreted as the place we want to copy the files
+<em>to</em>, and everything before that is a list of files we want to copy
+there</p>
+<p>If we knew we&#8217;d want all of the files <tt class="docutils literal"><span class="pre">h*.dat</span></tt>, then we can more
+simply type:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>cp -n ~plewis/msc/h*.dat ~/Data/foo
+</pre></div>
+</div>
+<p>Again, after you have done this, check to see what files are in the
+directory <tt class="docutils literal"><span class="pre">~/Data/foo</span></tt>.</p>
+<div class="code python highlight-python"><div class="highlight"><pre>ls ~/Data/foo
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>[34mbar[m[m/            head.dat        header.dat      hello.dat       helloWorld.dat
+</pre></div>
+</div>
+<p>You can use the option -R to do a recursive copy, i.e. copy a directory
+and everything below it, e.g.:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>mkdir -p ~/Data/testCp
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre>cp -Rf ~plewis/msc ~/Data/testCp
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre>ls ~/Data/testCp
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>[34mmsc[m[m/
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre>ls ~/Data/testCp/msc
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>atm.dat         forest.dat      hello.dat       listing.dat     popden.dat
+country.dat     head.dat        helloWorld.dat  max.dat
+dem.dat         header.dat      landsat.dat     points.dat
+</pre></div>
+</div>
+</div>
+<div class="section" id="rm">
+<h3>rm<a class="headerlink" href="#rm" title="Permalink to this headline">¶</a></h3>
+<p>The command <tt class="docutils literal"><span class="pre">rm</span></tt> (remove) is used to remove (delete) a file. For new
+users, we normally set the default behaviour of this (through something
+called an <em>alias</em>) to <tt class="docutils literal"><span class="pre">rm</span> <span class="pre">-i</span></tt> which then prompts the user about
+whether they <em>really</em> wanted to delete that file.</p>
+<p>The opposite of this (i.e. force a delete) is <tt class="docutils literal"><span class="pre">rm</span> <span class="pre">-f</span></tt> that we will
+illustrate here.</p>
+<div class="code python highlight-python"><div class="highlight"><pre>rm -f ~/Data/foo/header.dat
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre>ls ~/Data/foo
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>[34mbar[m[m/            head.dat        hello.dat       helloWorld.dat
+</pre></div>
+</div>
+<p>so we see the file has gone from that directory.</p>
+<p><em>Normally</em>, especially when you are just starting to use unix, you
+should probably avoid using the <tt class="docutils literal"><span class="pre">-f</span></tt> option to <tt class="docutils literal"><span class="pre">rm</span></tt>.</p>
+<p>As an exercise, use <tt class="docutils literal"><span class="pre">rm</span></tt> and wildcards to delete all of the files in
+<tt class="docutils literal"><span class="pre">~/Data/foo</span></tt> that start with <tt class="docutils literal"><span class="pre">hel</span></tt> and end in <tt class="docutils literal"><span class="pre">.dat</span></tt>, and confirm
+that what you wanted to happen actually has.</p>
+<div class="code python highlight-python"><div class="highlight"><pre>rm -f ~/Data/foo/hel*.dat
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre>ls ~/Data/foo
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>[34mbar[m[m/      head.dat
+</pre></div>
+</div>
+<p>You can use the option <tt class="docutils literal"><span class="pre">-R</span></tt> to make <tt class="docutils literal"><span class="pre">rm</span></tt> do a hierarchical
+(&#8216;recursive&#8217;) deletion, e.g. delete everything from some directory
+downwards.</p>
+<p>This can be rather a dangerous command to use, as you might (if you are
+not careful) delete everything on your system, but of course it is of
+great practical use.</p>
+<p>But we will use it here to delete the directory <tt class="docutils literal"><span class="pre">~/Data/foo</span></tt> and all
+of its contents.</p>
+<div class="code python highlight-python"><div class="highlight"><pre>rm -Rf ~/Data/foo
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre>ls  ~/Data/
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>brdf_WW_1_A_1.kernelFiltered.dat  [34mplots[m[m/
+[34mmeris[m[m/                            [34mtestCp[m[m/
+[34mmsc[m[m/                              [34munix[m[m/
+[34moutput[m[m/
+</pre></div>
+</div>
+<p>so now its gone.</p>
+</div>
+<div class="section" id="mv">
+<h3>mv<a class="headerlink" href="#mv" title="Permalink to this headline">¶</a></h3>
+<p>If we want to <em>move</em> files or directories or <em>rename</em> them, then you
+should use the <tt class="docutils literal"><span class="pre">mv</span></tt> (move) command.</p>
+<p>Let&#8217;s make a new directories <tt class="docutils literal"><span class="pre">~/Data/bar</span></tt>, <tt class="docutils literal"><span class="pre">~/Data/foo</span></tt> and copy
+some files into <tt class="docutils literal"><span class="pre">~/Data/bar</span></tt>:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>mkdir -p ~/Data/bar ~/Data/foo
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre>cp -n ~plewis/msc/h*dat ~/Data/bar
+</pre></div>
+</div>
+<p>You should check that the files you expect to see in <tt class="docutils literal"><span class="pre">~/Data/bar</span></tt> are
+there:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>ls ~/Data/bar
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>head.dat        header.dat      hello.dat       helloWorld.dat
+</pre></div>
+</div>
+<p>Now, let&#8217;s move the files <tt class="docutils literal"><span class="pre">hello.dat</span></tt> and <tt class="docutils literal"><span class="pre">helloWorld.dat</span></tt> into a
+directory <tt class="docutils literal"><span class="pre">~/Data/foo</span></tt> (using wildcards):</p>
+<div class="code python highlight-python"><div class="highlight"><pre>mv -n ~/Data/bar/hello*dat ~/Data/foo
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre>ls ~/Data/bar ~/Data/foo
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>/Users/plewis/Data/bar:
+head.dat    header.dat
+
+/Users/plewis/Data/foo:
+hello.dat       helloWorld.dat
+</pre></div>
+</div>
+<p>To use <tt class="docutils literal"><span class="pre">mv</span></tt> to rename a file is in effect the same as moving it to a
+file of a different name:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>mv ~/Data/bar/head.dat ~/Data/bar/tail.dat
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre>ls ~/Data/bar
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>header.dat  tail.dat
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="getting-more-control">
+<h2>2.4 Getting more control<a class="headerlink" href="#getting-more-control" title="Permalink to this headline">¶</a></h2>
+<p>You should now have some understanding of the main unix commands for
+dealing with directories and files.</p>
+<p>We will now introduce a few concepts that give you more control over
+what you are doing on the system.</p>
+<p><strong>NOTE</strong>: Although in the examples above, we have been able to type some
+basic system commands into the python, we can&#8217;t do this for some of the
+commands we will use below. A more general interface to unix (shell)
+commands from a python prompt involves putting an exclamation mark
+(<tt class="docutils literal"><span class="pre">!</span></tt>, known as <em>&#8216;bang&#8217;</em>) in front of the command. In these notes then,
+where you see <em>bang</em> (<tt class="docutils literal"><span class="pre">!</span></tt>) in front of a command, you leave that out
+when using the command at the unix prompt. e.g.:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>!ls ~/Data/foo
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>hello.dat      helloWorld.dat
+</pre></div>
+</div>
+<p>You can also run shell commands by invoking the <tt class="docutils literal"><span class="pre">bash</span></tt> shell:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>ls ~/Data/foo
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">hello</span><span class="o">.</span><span class="n">dat</span>
+<span class="n">helloWorld</span><span class="o">.</span><span class="n">dat</span>
+</pre></div>
+</div>
+<div class="section" id="quota">
+<h3>quota<a class="headerlink" href="#quota" title="Permalink to this headline">¶</a></h3>
+<p>We mentioned above that your home directories have a quota associated
+with them. This means that when you try to go over that quota, you will
+no longer be able to write to your home area.</p>
+<p>This can be a cause of confusion with new students, in particular
+because when you log into to a windowing session on the unix computers,
+several files tend to be written to your user area on startup. So, if
+you are over your quota, you will find that your attempt to login fails.
+This can be confusing because you may just imagine that the system is
+&#8216;broken&#8217;, or perhaps you have typed the wrong password. These are things
+that <em>can</em> happen of course, but by far the most common reason for your
+being unable to log in to a windowing session (and probably somethiong
+that will happen to most of you at some point over the year) is that you
+have gone over your quota.</p>
+<p>The unix command to check your quota is, helpfully, <tt class="docutils literal"><span class="pre">quota</span></tt>, though
+you would usually use the <tt class="docutils literal"><span class="pre">-v</span></tt> option:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">quota</span> <span class="o">-</span><span class="n">v</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>Disk quotas for user plewis (uid 501): none
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>dyld: DYLD_ environment variables being ignored because main executable (/usr/bin/quota) is setuid or setgid
+</pre></div>
+</div>
+<p>If you happen to be on a system where no quota is set (e.g. your own
+computer), this command will tell you that.</p>
+</div>
+<div class="section" id="ssh">
+<h3>ssh<a class="headerlink" href="#ssh" title="Permalink to this headline">¶</a></h3>
+<p>That&#8217;s all very well to be able to find out if you are over your quota,
+but how can you do that if you can&#8217;t log in?</p>
+<p>Well, in that case, you need to find another terminal somewhere (e.g.
+&#8216;borrow&#8217; a window on another user&#8217;s display, with their permission) and
+you can check it from there.</p>
+<p>One way to do this is to use the command <tt class="docutils literal"><span class="pre">ssh</span></tt> which you can use to
+spawn a process on a remote machine.</p>
+<p>For example, you have tried to log in to a computer called
+<tt class="docutils literal"><span class="pre">berlin.geog.ucl.ac.uk</span></tt> but the login fails. You then go to a friend
+who is logged in to another computer and ask if you can check your quota
+from there. You open a new terminal, and use <tt class="docutils literal"><span class="pre">ssh</span></tt> (secure shell):</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>ssh plewis@berlin.geog.ucl.ac.uk &quot;quota -v&quot;
+</pre></div>
+</div>
+<p>which will then prompt you for your password and return the result of
+running the command <tt class="docutils literal"><span class="pre">quota</span> <span class="pre">-v</span></tt> on the computer
+<tt class="docutils literal"><span class="pre">berlin.geog.ucl.ac.uk</span></tt> as the user <tt class="docutils literal"><span class="pre">plewis</span></tt> (obviously, you replace
+<tt class="docutils literal"><span class="pre">plewis</span></tt> by your user name).</p>
+<p>Alternatively, if you just type:</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>ssh plewis@berlin.geog.ucl.ac.uk
+</pre></div>
+</div>
+<p>Then this will start an interactive session as the user <tt class="docutils literal"><span class="pre">plewis</span></tt> (or
+rather, your username) on that computer and you should then be able to
+check your quota and fix any issues you have.</p>
+<p>We will see some further use of <tt class="docutils literal"><span class="pre">ssh</span></tt> later on, but knowing that you
+can use it to run a remote process is very useful.</p>
+</div>
+<div class="section" id="df">
+<h3>df<a class="headerlink" href="#df" title="Permalink to this headline">¶</a></h3>
+<p>If you are using large datasets (that you may easily be doing in remote
+sensing), then you should have some awareness of how much space there is
+on the disk. If a disk gets full or nearly full, and you attempt to
+write to it, you may get unexpected results. You may also waste a lot of
+time.</p>
+<p>The command <tt class="docutils literal"><span class="pre">df</span></tt> (disk free) will also tell you how much disk space
+there is, and how much is used. It is generally of value to use the
+<tt class="docutils literal"><span class="pre">-h</span></tt> option that gives the results in &#8216;human readable&#8217; form e.g.:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>df -h ~/Data
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>Filesystem     Size   Used  Avail Capacity   iused    ifree %iused  Mounted on
+/dev/disk0s2  931Gi  847Gi   83Gi    92% 222117307 21863435   91%   /
+</pre></div>
+</div>
+<p>The output of this command is also of value to you if you need to know
+the actual device name of some disk area. For example, what you see on
+the file system as e.g. <tt class="docutils literal"><span class="pre">~/Data</span></tt> may be physically on a device called
+<tt class="docutils literal"><span class="pre">/dev/disk0s2</span></tt>. Mostly, you won&#8217;t need to know that level of detail
+about the system, but occasionally, and as you become more expert in
+using unix, you will so it is good to have these things at the back of
+your mind.</p>
+</div>
+<div class="section" id="du">
+<h3>du<a class="headerlink" href="#du" title="Permalink to this headline">¶</a></h3>
+<p>To check how much disk space <em>you are using</em>, use the command <tt class="docutils literal"><span class="pre">du</span></tt>
+(disk usage). Often, you would use this with the option <tt class="docutils literal"><span class="pre">-s</span></tt> which
+produces a summary. Again, it is often of value to use the <tt class="docutils literal"><span class="pre">-h</span></tt> option
+that gives the results in &#8216;human readable&#8217; form e.g.:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>du -sh ~/Data
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>4.7M        /Users/plewis/Data
+</pre></div>
+</div>
+<p>This summary disk usage information tells us (here in human readbale
+form) how much disk space is used in the directory <tt class="docutils literal"><span class="pre">~/Data</span></tt> and its
+subdirectories.</p>
+</div>
+<div class="section" id="ls-l">
+<h3>ls -l<a class="headerlink" href="#ls-l" title="Permalink to this headline">¶</a></h3>
+<p>We have come across the command <tt class="docutils literal"><span class="pre">ls</span></tt> earlier as the command to give a
+listing of directory contents.</p>
+<p>A useful option for the command <tt class="docutils literal"><span class="pre">ls</span></tt> that gives you a <em>long</em> (verbose)
+listing of files or directories is <tt class="docutils literal"><span class="pre">ls</span> <span class="pre">-l</span></tt> (long listing).</p>
+<p>We will first make move the directory <tt class="docutils literal"><span class="pre">~/Data/bar</span></tt> into the directory
+<tt class="docutils literal"><span class="pre">~/Data/foo</span></tt>, then look at a long listing of what there is in
+<tt class="docutils literal"><span class="pre">~/Data/foo</span></tt>:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>mv ~/Data/bar ~/Data/foo
+ls -l ~/Data/foo
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>total 16
+drwxr-xr-x  4 plewis  staff  136  1 Oct 14:53 bar
+-rw-r--r--  1 plewis  staff   14  1 Oct 14:53 hello.dat
+-rw-r--r--  1 plewis  staff   13  1 Oct 14:53 helloWorld.dat
+</pre></div>
+</div>
+<p>The long listing displays information on the owner of a file (<tt class="docutils literal"><span class="pre">plewis</span></tt>
+here), the size of the file (e.g. ~/Data/foo/hello.dat is 14 bytes), and
+when it was last modified (26 Sep 17:05). The first field that you see
+(e.g. <tt class="docutils literal"><span class="pre">drwxr-xr-x</span></tt>) is a series of codes that tells you about what
+type of file it is (d in the first element means that it is a directory)
+then there are three sets of three elements that may be set to <tt class="docutils literal"><span class="pre">rwx</span></tt>
+or unset as in <tt class="docutils literal"><span class="pre">---</span></tt>. These refer to read <tt class="docutils literal"><span class="pre">r</span></tt>, write <tt class="docutils literal"><span class="pre">w</span></tt> and
+execute <tt class="docutils literal"><span class="pre">x</span></tt> permissions for this file (or directory), so that if you
+see e.g. <tt class="docutils literal"><span class="pre">rw-</span></tt> that means that read and write permission are set but
+not execute. Note that directories have the <tt class="docutils literal"><span class="pre">x</span></tt> bit set if you are to
+be able to see into that directory, but you will not generally alter
+that.</p>
+<p>The three groupings refer to <em>user</em> <tt class="docutils literal"><span class="pre">u</span></tt>, <em>group</em> <tt class="docutils literal"><span class="pre">g</span></tt> and <em>other</em>
+<tt class="docutils literal"><span class="pre">o</span></tt>.</p>
+<p>A useful additional option to <tt class="docutils literal"><span class="pre">ls</span></tt> is the <tt class="docutils literal"><span class="pre">-h</span></tt> option, that gives
+file sizes in &#8216;human readable&#8217; format (i.e. something easier to
+understand):</p>
+<div class="code python highlight-python"><div class="highlight"><pre>ls -lh ~/Data/foo
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>total 16
+drwxr-xr-x  4 plewis  staff   136B  1 Oct 14:53 bar
+-rw-r--r--  1 plewis  staff    14B  1 Oct 14:53 hello.dat
+-rw-r--r--  1 plewis  staff    13B  1 Oct 14:53 helloWorld.dat
+</pre></div>
+</div>
+<p>where the <tt class="docutils literal"><span class="pre">B</span></tt> at the end of the size field tells us the size is in
+bytes (or <tt class="docutils literal"><span class="pre">K</span></tt> for Kilobytes, <tt class="docutils literal"><span class="pre">M</span></tt> for Megabytes, <tt class="docutils literal"><span class="pre">G</span></tt> for Gigabytes
+etc).</p>
+</div>
+<div class="section" id="chmod">
+<h3>chmod<a class="headerlink" href="#chmod" title="Permalink to this headline">¶</a></h3>
+<p>So, using <tt class="docutils literal"><span class="pre">ls</span> <span class="pre">-l</span></tt> give us information on what the file (/directory)
+permissions are. By default this will tend to be a sensible but open
+<tt class="docutils literal"><span class="pre">-rw-r--r--</span></tt> for files, i.e. read permission for the user, groups and
+the rest of the world but only write permission for the user themselves.
+For directories, the default is generally similar, but the <tt class="docutils literal"><span class="pre">x</span></tt> bit is
+set as well.</p>
+<p>We can manipulate the file permission settings, e.g. to remove read
+permission for some secure piece of work we are doing, or to open up
+write permission for other users on some shared piece of work, using the
+command <tt class="docutils literal"><span class="pre">chmod</span></tt> (change mode).</p>
+<p>If you have followed the material above, you should have a file called
+<tt class="docutils literal"><span class="pre">hello.dat</span></tt> in the directory <tt class="docutils literal"><span class="pre">~/Data/foo</span></tt> (check that this is the
+case) and we will make a new sub-directory in there called <tt class="docutils literal"><span class="pre">foobar</span></tt>
+from which we will <em>remove</em> all write permissions.</p>
+<div class="code python highlight-python"><div class="highlight"><pre>mkdir -p ~/Data/foo/foobar
+ls -l ~/Data/foo
+chmod uog-w ~/Data/foo/foobar
+ls -l ~/Data/foo
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>total 16
+drwxr-xr-x  4 plewis  staff  136  1 Oct 14:53 bar
+drwxr-xr-x  2 plewis  staff   68  1 Oct 14:53 foobar
+-rw-r--r--  1 plewis  staff   14  1 Oct 14:53 hello.dat
+-rw-r--r--  1 plewis  staff   13  1 Oct 14:53 helloWorld.dat
+total 16
+drwxr-xr-x  4 plewis  staff  136  1 Oct 14:53 bar
+dr-xr-xr-x  2 plewis  staff   68  1 Oct 14:53 foobar
+-rw-r--r--  1 plewis  staff   14  1 Oct 14:53 hello.dat
+-rw-r--r--  1 plewis  staff   13  1 Oct 14:53 helloWorld.dat
+</pre></div>
+</div>
+<p>From which we see that the <tt class="docutils literal"><span class="pre">w</span></tt> bit on the directory
+<tt class="docutils literal"><span class="pre">~/Data/foo/foobar</span></tt> has been removed (unset). The <tt class="docutils literal"><span class="pre">uog</span></tt> part refers
+to <em>user</em>, <em>group</em> and <em>other</em>. The <tt class="docutils literal"><span class="pre">-</span></tt> part means <em>remove</em> and the
+<tt class="docutils literal"><span class="pre">w</span></tt> part refers to the write bit.</p>
+<p>So, if we now try to copy or move a file into the <tt class="docutils literal"><span class="pre">bar</span></tt> directory, we
+would expect it to fail:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>cp -f ~/Data/foo/hello.dat ~/Data/foo/foobar
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>cp: /Users/plewis/Data/foo/foobar/hello.dat: Permission denied
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="exercise">
+<h2>2.5 Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h2>
+<p>Go through the notes above, making sure you understand how to create and
+remove files and directories and how to move around the file system.
+That is the <em>minimum</em> you will need to start with. When you are doing
+this, <strong>don&#8217;t</strong> just blindly type the commands given above, vary the
+file and directory names and make sure you appreciate what each command
+you type is doing (otherwise you won&#8217;t learn this, I&#8217;m afraid).</p>
+<p>You should pay some attention to the notes on <tt class="docutils literal"><span class="pre">quota</span></tt> and related disk
+space/usage commands, as it is really quite likely that you will hit
+such problems at some time in the year, and you really ought to be able
+to fix such problems yourself. Remember, if you can&#8217;t log on, the most
+likely reasons are: (i) you typed something wrong (so, check carefully);
+(ii) if you can&#8217;t get in at the desktop, then probably you have gone
+over your quota. The most likely reason for going over quota is that you
+have put too many large files in your home area, instead of putting them
+in your <em>Data</em> area as you are supposed to. To fix that, log in as given
+above and delete the files from your home area until you are below
+quota, <em>or</em> (better) move them into the <em>Data</em> area (or better still,
+put them in the <em>Data</em> area in the first place and avoid this problem).</p>
+</div>
+<div class="section" id="id5">
+<h2>2.6 Summary<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>In this section, you should have learned how to deal with copying,
+moving files and directories and related issues such as file
+permissions. You should also have gained some understanding of how to
+control what is going on in the unix environment a little more.</p>
+<div class="section" id="id6">
+<h3>Commands in this section<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">[<tt class="docutils literal"><span class="pre">`chmod</span></tt> &lt;#chmod&gt;`__] : change mode</div>
+<div class="line">[<tt class="docutils literal"><span class="pre">`cp</span></tt> &lt;#cp&gt;`__] : copy</div>
+<div class="line">[<tt class="docutils literal"><span class="pre">`df</span></tt> &lt;#df&gt;`__] : disk free</div>
+<div class="line">[<tt class="docutils literal"><span class="pre">`du</span></tt> &lt;#du&gt;`__] : disk usage</div>
+<div class="line">[<tt class="docutils literal"><span class="pre">`ls</span> <span class="pre">-l</span></tt> &lt;#ls&#8211;l&gt;`__] : long listing</div>
+<div class="line">[<tt class="docutils literal"><span class="pre">`mkdir</span></tt> &lt;#mkdir&gt;`__] : make directory</div>
+<div class="line">[<tt class="docutils literal"><span class="pre">`mv</span></tt> &lt;#mv&gt;`__] : move</div>
+<div class="line">[<tt class="docutils literal"><span class="pre">`quota</span></tt> &lt;#quota&gt;`__] : personal disk quota</div>
+<div class="line">[<tt class="docutils literal"><span class="pre">`rm</span></tt> &lt;#rm&gt;`__] : remove</div>
+<div class="line">[<tt class="docutils literal"><span class="pre">`rmdir</span></tt> &lt;#rmdir&gt;`__] : remove (empty) directory</div>
+<div class="line">[<tt class="docutils literal"><span class="pre">`ssh</span></tt> &lt;#ssh&gt;`__] : secure shell</div>
+<div class="line">[<tt class="docutils literal"><span class="pre">`*?</span></tt> &lt;#Wildcards&gt;`__] : wildcards</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="some-more-unix-and-associated-tools">
+<h1>3. Some more Unix and associated tools<a class="headerlink" href="#some-more-unix-and-associated-tools" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="unix-command-structure-data-flow-and-file-manipulation">
+<h2>3.1 UNIX Command Structure, Data Flow and File Manipulation<a class="headerlink" href="#unix-command-structure-data-flow-and-file-manipulation" title="Permalink to this headline">¶</a></h2>
+<p>The previous sections dealt with the basic tools of Unix. Now, we will
+look at a few useful tools you have access to and some slightly more
+advanced concepts that again enable you to do more with the computer.</p>
+<p>Before starting this section, let&#8217;s create a directory in your <tt class="docutils literal"><span class="pre">Data</span></tt>
+area called <tt class="docutils literal"><span class="pre">unix</span></tt>:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>mkdir -p ~/Data/unix
+</pre></div>
+</div>
+<p>Remember that commands below that start with <tt class="docutils literal"><span class="pre">!</span></tt> (bang) should not
+have this symbol when you type them at the unix prompt: it is only
+because we are going through a python interpreter in these notes.</p>
+<div class="section" id="streams">
+<h3>streams<a class="headerlink" href="#streams" title="Permalink to this headline">¶</a></h3>
+<p>Within unix all information is stored in files. Programs are &#8216;told&#8217; (by
+the operating system) to read from and write to these files either by
+redirecting their input and output, or by modifying their action through
+the use of command line arguments or options. The channels through which
+the data flows to or from are known as <em>streams</em>.</p>
+<p>In the special case where data flows directly from one program into
+another, these channels are known as <em>pipes</em>.</p>
+<p>By default, with no options or arguments to specify otherwise, most
+commands will read their input form the keyboard and write their output
+to the screen. The data channels which attach the keyboard and the
+screen to the program are known as the standard input (stdin) and the
+standard output (stdout) respectively.</p>
+<p>Stdin and stdout can be redirected to and from files rather than the
+keyboard or screen using the unix <tt class="docutils literal"><span class="pre">&lt;</span></tt> (“read from&#8221;) and <tt class="docutils literal"><span class="pre">&gt;</span></tt> (“write
+to”) symbols.</p>
+</div>
+<div class="section" id="echo">
+<h3>echo<a class="headerlink" href="#echo" title="Permalink to this headline">¶</a></h3>
+<p>The <em>shell</em> command <tt class="docutils literal"><span class="pre">echo</span></tt> will display text that you type after the
+command in the terminal (by default), e.g.:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>echo &quot;my home is $HOME and my name is $USER&quot;
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>my home is /Users/plewis and my name is plewis
+</pre></div>
+</div>
+<p>Here, <tt class="docutils literal"><span class="pre">HOME</span></tt> is an <em>environment variable</em> that is passed through to
+programs to give contextual information about a users&#8217;s environment
+(i.e. how things are set up).</p>
+<p><tt class="docutils literal"><span class="pre">USER</span></tt> is another environment variable that gives your username
+(&#8216;login&#8217; or &#8216;account&#8217; name).</p>
+<p>In unix shells, we refer to the <em>value</em> of an environment variable with
+a <tt class="docutils literal"><span class="pre">$</span></tt> symbol. Environment variables tend to be in upper case (capital
+letters) whereas another type of variable, shell variables (that refer
+only to a particular shell) are in lower case (small letters).</p>
+<p>Often, we would put quotes around the text:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>echo &quot;hello world $USER&quot;
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>hello world plewis
+</pre></div>
+</div>
+<p>This makes it a bit neater to see what we are doing, but is not strictly
+necessary in this case.</p>
+<p>There are different quotes that we use in unix. The double quote <tt class="docutils literal"><span class="pre">&quot;</span></tt>
+allows shell variables to be interpreted in the <em>string</em> enclosed by the
+quotes, but a single quote <tt class="docutils literal"><span class="pre">'</span></tt> does not.</p>
+<div class="code python highlight-python"><div class="highlight"><pre>echo &#39;hello world $USER&#39;
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>hello world $USER
+</pre></div>
+</div>
+</div>
+<div class="section" id="stdout">
+<h3>stdout<a class="headerlink" href="#stdout" title="Permalink to this headline">¶</a></h3>
+<p>So, when we use the unix command <tt class="docutils literal"><span class="pre">echo</span></tt>, the <em>result</em> of running that
+command appears in the terminal we are using.</p>
+<p>In fact, it is directed to the standard output channel <tt class="docutils literal"><span class="pre">stdout</span></tt>, which
+allows us to redirect it, e.g. to a file:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>echo &quot;hello world&quot; &gt; ~/Data/unix/hello.dat
+</pre></div>
+</div>
+<p>Now, nothing should have appeared in the terminal ... the text resulting
+from the <tt class="docutils literal"><span class="pre">echo</span></tt> command went instead to the file
+<tt class="docutils literal"><span class="pre">~/Data/unix/hello.dat</span></tt>.</p>
+<p>We can check to see how big this file is to see if that makes sense:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>ls -lh ~/Data/unix/hello.dat
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>-rw-r--r--  1 plewis  staff    12B  1 Oct 14:53 /Users/plewis/Data/unix/hello.dat
+</pre></div>
+</div>
+<p>We see that the file <em>exists</em> and is of size 12 bytes.</p>
+</div>
+<div class="section" id="wc">
+<h3>wc<a class="headerlink" href="#wc" title="Permalink to this headline">¶</a></h3>
+<p>We could count up the number of characters in <tt class="docutils literal"><span class="pre">&quot;hello</span> <span class="pre">world&quot;</span></tt> and see
+that it has 11 (including the space). We might infer from that that the
+file representation uses 1 byte per character for text, which is in fact
+the case. The <em>encoding</em> used is normally the <a class="reference external" href="http://en.wikipedia.org/wiki/ASCII">ASCII character
+set</a>.</p>
+<p>Why is the file 12 bytes though? The answer is that there is an
+additional character at the end of the file that tells the operating
+system that this is the end of the file. Not surprisingly, this is
+called the end of file marker or more properly, end of transmission
+<tt class="docutils literal"><span class="pre">EOT</span></tt>. This is represented as by the character <tt class="docutils literal"><span class="pre">^D</span></tt> (<tt class="docutils literal"><span class="pre">control</span> <span class="pre">D</span></tt>)
+in the <a class="reference external" href="http://en.wikipedia.org/wiki/ASCII">ASCII character set</a>.</p>
+<p>Sometimes it&#8217;s too much effort to count up the characters in a string or
+a file. In unix, we can use the command <tt class="docutils literal"><span class="pre">wc</span></tt> (word count):</p>
+<div class="code python highlight-python"><div class="highlight"><pre>wc &lt; ~/Data/unix/hello.dat
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>1       2      12
+</pre></div>
+</div>
+<p>By default, this displays the number of <em>lines</em> (<tt class="docutils literal"><span class="pre">1</span></tt> here), <em>words</em>
+(<tt class="docutils literal"><span class="pre">2</span></tt> here) and <em>bytes</em> (<tt class="docutils literal"><span class="pre">12</span></tt> here) in the file.</p>
+<p>Useful modifcations of behaviour are e.g.:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>wc -l &lt; ~/Data/unix/hello.dat
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">1</span>
+</pre></div>
+</div>
+<p>which reports only the number of lines (similarly <tt class="docutils literal"><span class="pre">wc</span> <span class="pre">-w</span></tt> for words or
+<tt class="docutils literal"><span class="pre">wc</span> <span class="pre">-c</span></tt> for characters).</p>
+</div>
+<div class="section" id="stdin">
+<h3>stdin<a class="headerlink" href="#stdin" title="Permalink to this headline">¶</a></h3>
+<p>You may have noticed that we used the <tt class="docutils literal"><span class="pre">stdin</span></tt> symbol <tt class="docutils literal"><span class="pre">&lt;</span></tt> here, which
+redirects the contents of the file <tt class="docutils literal"><span class="pre">~/Data/unix/hello.dat</span></tt> <em>into</em> the
+command <tt class="docutils literal"><span class="pre">wc</span></tt>.</p>
+</div>
+<div class="section" id="pipe">
+<h3>pipe<a class="headerlink" href="#pipe" title="Permalink to this headline">¶</a></h3>
+<p>One powerful concept in unix is the idea of <em>pipes</em>. This allows us to
+take the <tt class="docutils literal"><span class="pre">stdout</span></tt> resulting from one program and direct it to the
+<tt class="docutils literal"><span class="pre">stdin</span></tt> of another.</p>
+<p>This means we can e.g. avoid writing files out where all we want to do
+with the information is to pass it to another program.</p>
+<p>So, for the examples above, we could write:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>echo &quot;hello world&quot; | wc -c
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">12</span>
+</pre></div>
+</div>
+<p>where <tt class="docutils literal"><span class="pre">|</span></tt> is the <tt class="docutils literal"><span class="pre">pipe</span></tt> symbol.</p>
+</div>
+<div class="section" id="sed">
+<h3>sed<a class="headerlink" href="#sed" title="Permalink to this headline">¶</a></h3>
+<p>This sort of idea is very useful if a sequence of programs (unix
+commands) that you want to run essentially work as &#8216;filters&#8217;.</p>
+<p>The command <tt class="docutils literal"><span class="pre">sed</span></tt> (stream editor) can be very useful in this regard
+for dealing with text. The syntax of <tt class="docutils literal"><span class="pre">sed</span></tt> can be a little awkward for
+users to begin with, but we will just show a few examples here.</p>
+<div class="code python highlight-python"><div class="highlight"><pre>echo &quot;welcome $USER to using a computer&quot;
+echo &quot;welcome $USER to using a computer&quot; | sed &#39;s/a computer/unix/&#39;
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>welcome plewis to using a computer
+welcome plewis to using unix
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">s</span></tt> part of the <tt class="docutils literal"><span class="pre">sed</span></tt> command means &#8216;substitute&#8217;. It then
+changes an occurrence of the string <tt class="docutils literal"><span class="pre">a</span> <span class="pre">computer</span></tt> into the string
+<tt class="docutils literal"><span class="pre">unix</span></tt>.</p>
+<p>If you wanted to change <em>all</em> occurrences of the string, use a <tt class="docutils literal"><span class="pre">g</span></tt> at
+the end, e.g.:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>echo &quot;welcome $USER to using a computer. How do you like using a computer?&quot; | sed &#39;s/a computer/unix/&#39;
+echo &quot;welcome $USER to using a computer. How do you like using a computer?&quot; | sed &#39;s/a computer/unix/g&#39;
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>welcome plewis to using unix. How do you like using a computer?
+welcome plewis to using unix. How do you like using unix?
+</pre></div>
+</div>
+</div>
+<div class="section" id="awk">
+<h3>awk<a class="headerlink" href="#awk" title="Permalink to this headline">¶</a></h3>
+<p>You are not limited to a single pipe of course, but can pipe through
+multiple commands.</p>
+<p>To illustrate this, we introduce a new command awk that is a pattern
+scanning and interpretation language. You can use awk (or variants such
+as nawk or gawk) for many things but it is particularly useful for doing
+operations on columns of text or data that are in ASCII (i.e. text)
+format. For example:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>echo &quot;1 2 3 4 5&quot; | awk &#39;{print $1+$3}&#39;
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">4</span>
+</pre></div>
+</div>
+<p>will output the sum of numbers in columns 1 and 3. To use it below, we
+can note here that the term <tt class="docutils literal"><span class="pre">$0</span></tt> refers to the complete input string
+and that there is a reasonably rich syntax for performing operations on
+columsn of data.</p>
+<div class="code python highlight-python"><div class="highlight"><pre>echo &quot;1 2 3 4 5&quot;
+echo &quot;1 2 3 4 5&quot; | awk &#39;{for(i=1;i&lt;=NF;i++)sum+=$i} END{print &quot;the sum is&quot;,sum}&#39;
+echo &quot;1 2 3 4 5&quot; | sed &#39;s/1/one/&#39;
+echo &quot;1 2 3 4 5&quot; | sed &#39;s/1/one/&#39; | sed &#39;s/2/two/&#39; | sed &#39;s/3/three/&#39; | sed &#39;s/4/four/&#39; \
+                         | sed &#39;s/5/five/&#39; | awk &#39;{print $0 &quot;, once I caught a fish alive&quot;}&#39;
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>1 2 3 4 5
+the sum is 15
+one 2 3 4 5
+one two three four five, once I caught a fish alive
+</pre></div>
+</div>
+</div>
+<div class="section" id="cat">
+<h3>cat<a class="headerlink" href="#cat" title="Permalink to this headline">¶</a></h3>
+<p>The unix command <tt class="docutils literal"><span class="pre">cat</span></tt> (concatenate) is used for a variety of
+purposes, but normally you will use it to <em>concatenate</em> (join together)
+files.</p>
+<p>If you specify a filename as <tt class="docutils literal"><span class="pre">-</span></tt> then the information of <tt class="docutils literal"><span class="pre">stdin</span></tt> is
+used, e.g.:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>echo &quot;hello&quot; | cat -
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">hello</span>
+</pre></div>
+</div>
+<p>Let&#8217;s create some files of one line and join them together.</p>
+<div class="code python highlight-python"><div class="highlight"><pre>echo &quot;hello $USER&quot; &gt; ~/Data/unix/hello.dat
+echo &quot;welcome to the world of unix&quot; &gt; ~/Data/unix/hello2.dat
+</pre></div>
+</div>
+</div>
+<div class="section" id="date">
+<h3>date<a class="headerlink" href="#date" title="Permalink to this headline">¶</a></h3>
+<div class="code python highlight-python"><div class="highlight"><pre>date | cat - ~/Data/unix/hello.dat ~/Data/unix/hello2.dat
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>Tue  1 Oct 2013 14:53:22 BST
+hello plewis
+welcome to the world of unix
+</pre></div>
+</div>
+<p>Here, we ran the command <tt class="docutils literal"><span class="pre">date</span></tt> that prints the current date (time) to
+<tt class="docutils literal"><span class="pre">stdout</span></tt>, concatenated the files <tt class="docutils literal"><span class="pre">~/Data/unix/hello.dat</span></tt> and
+<tt class="docutils literal"><span class="pre">~/Data/unix/hello2.dat</span></tt> to the end of this and sent the result to
+<tt class="docutils literal"><span class="pre">stdout</span></tt> (the terminal).</p>
+<p>If we wanted to send this to another file, we would simply redirect the
+output:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>date | cat - ~/Data/unix/hello.dat ~/Data/unix/hello2.dat &gt; ~/Data/unix/helloWorld.dat
+</pre></div>
+</div>
+<p>We can also use the command <tt class="docutils literal"><span class="pre">cat</span></tt> to simply put the contents of its
+<tt class="docutils literal"><span class="pre">stdin</span></tt> channel to <tt class="docutils literal"><span class="pre">stdout</span></tt>, which is one way to display the
+contents of an ASCII file at the terminal.</p>
+<div class="code python highlight-python"><div class="highlight"><pre>cat &lt; ~/Data/unix/helloWorld.dat
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>Tue  1 Oct 2013 14:53:23 BST
+hello plewis
+welcome to the world of unix
+</pre></div>
+</div>
+</div>
+<div class="section" id="appending">
+<h3>appending<a class="headerlink" href="#appending" title="Permalink to this headline">¶</a></h3>
+<p>When we redirect <tt class="docutils literal"><span class="pre">stdout</span></tt> using the <tt class="docutils literal"><span class="pre">&gt;</span></tt> symbol, this will create a
+file if it doesn&#8217;t already exist, but will overwrite one if it does
+exist:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>echo &quot;Now you see me&quot; &gt; ~/Data/unix/test.dat
+cat ~/Data/unix/test.dat
+echo &quot;now you don&#39;t&quot; &gt; ~/Data/unix/test.dat
+cat ~/Data/unix/test.dat
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>Now you see me
+now you don&#39;t
+</pre></div>
+</div>
+<p>If you want to <em>append</em> to a file, rather than writing over the
+contents, you can use the <tt class="docutils literal"><span class="pre">&gt;&gt;</span></tt> symbol:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>echo &quot;Now you see me&quot; &gt; ~/Data/unix/test.dat
+echo &quot;now you still see me&quot; &gt;&gt; ~/Data/unix/test.dat
+cat ~/Data/unix/test.dat
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>Now you see me
+now you still see me
+</pre></div>
+</div>
+<p>and you can continue adding lines in this way:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>echo &quot;ad nauseam&quot; &gt;&gt; ~/Data/unix/test.dat
+cat ~/Data/unix/test.dat
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>Now you see me
+now you still see me
+ad nauseam
+</pre></div>
+</div>
+</div>
+<div class="section" id="more">
+<h3>more<a class="headerlink" href="#more" title="Permalink to this headline">¶</a></h3>
+<p>If the text file you are looking at has a lot of lines, it can scroll
+off the screen, which can be a bit frustrating.</p>
+<p>The unix command <tt class="docutils literal"><span class="pre">more</span></tt> lets you view a file one page at a time.</p>
+<p>First, let&#8217;s create a long file:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>echo &quot;this is the start of file&quot; &gt; ~/Data/unix/test2.dat
+cat ~/Data/unix/test.dat &gt;&gt; ~/Data/unix/test2.dat
+cat ~/Data/unix/test.dat &gt;&gt; ~/Data/unix/test2.dat
+cat ~/Data/unix/test.dat &gt;&gt; ~/Data/unix/test2.dat
+cat ~/Data/unix/test.dat &gt;&gt; ~/Data/unix/test2.dat
+cat ~/Data/unix/test.dat &gt;&gt; ~/Data/unix/test2.dat
+cat ~/Data/unix/test.dat &gt;&gt; ~/Data/unix/test2.dat
+cat ~/Data/unix/test.dat &gt;&gt; ~/Data/unix/test2.dat
+cat ~/Data/unix/test.dat &gt;&gt; ~/Data/unix/test2.dat
+cat ~/Data/unix/test.dat &gt;&gt; ~/Data/unix/test2.dat
+cat ~/Data/unix/test.dat &gt;&gt; ~/Data/unix/test2.dat
+cat ~/Data/unix/test.dat &gt;&gt; ~/Data/unix/test2.dat
+cat ~/Data/unix/test.dat &gt;&gt; ~/Data/unix/test2.dat
+cat ~/Data/unix/test.dat &gt;&gt; ~/Data/unix/test2.dat
+echo &quot;this is the end of file&quot; &gt;&gt; ~/Data/unix/test2.dat
+cat ~/Data/unix/test2.dat
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>this is the start of file
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+this is the end of file
+</pre></div>
+</div>
+<p>This is probably long enough to scroll off your terminal.</p>
+<p>Instead of using <tt class="docutils literal"><span class="pre">cat</span></tt> to view such a file, use <tt class="docutils literal"><span class="pre">more</span></tt>.</p>
+<p>You can use the <tt class="docutils literal"><span class="pre">space</span> <span class="pre">bar</span></tt> to go down one page at a time, or
+<tt class="docutils literal"><span class="pre">return</span></tt> for a line at a time (also <tt class="docutils literal"><span class="pre">b</span></tt> to go back, <tt class="docutils literal"><span class="pre">:3</span></tt> to go to
+line 3, <tt class="docutils literal"><span class="pre">/end</span></tt> to search for the string <tt class="docutils literal"><span class="pre">end</span></tt>, etc.)</p>
+<div class="code python highlight-python"><div class="highlight"><pre>more ~/Data/unix/test2.dat
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>this is the start of file
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+this is the end of file
+</pre></div>
+</div>
+</div>
+<div class="section" id="less">
+<h3>less<a class="headerlink" href="#less" title="Permalink to this headline">¶</a></h3>
+<p>In some ways better that <tt class="docutils literal"><span class="pre">more</span></tt> is <tt class="docutils literal"><span class="pre">less</span></tt>. Try that on the file now.</p>
+<div class="code python highlight-python"><div class="highlight"><pre>less ~/Data/unix/test2.dat
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>this is the start of file
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+this is the end of file
+</pre></div>
+</div>
+</div>
+<div class="section" id="grep">
+<h3>grep<a class="headerlink" href="#grep" title="Permalink to this headline">¶</a></h3>
+<p>Another very useful utility is grep (&#8216;globally search a regular
+expression and print&#8217;). You will commonly use this to find lines in a
+file that match some pattern. E.g.:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>grep see &lt; ~/Data/unix/test.dat
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>Now you see me
+now you still see me
+</pre></div>
+</div>
+<p>We told <tt class="docutils literal"><span class="pre">grep</span></tt> to return (i.e. put on <tt class="docutils literal"><span class="pre">stdout</span></tt>) lines of input that
+contain the string <tt class="docutils literal"><span class="pre">see</span></tt> in this case.</p>
+<p>By default, the pattern we search for is case sensitive (so, <tt class="docutils literal"><span class="pre">Now</span></tt> is
+different from <tt class="docutils literal"><span class="pre">now</span></tt>).</p>
+<p>We can use the <tt class="docutils literal"><span class="pre">-v</span></tt> option to ignore the case (i.e. whether it is
+lower case or upper case):</p>
+<div class="code python highlight-python"><div class="highlight"><pre>grep now &lt; ~/Data/unix/test.dat
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>now you still see me
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre>grep -i now &lt; ~/Data/unix/test.dat
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>Now you see me
+now you still see me
+</pre></div>
+</div>
+<p>Usefully, we can also return lines that <em>don&#8217;t</em> match the pattern using
+the <tt class="docutils literal"><span class="pre">-v</span></tt> option:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>grep -v see &lt; ~/Data/unix/test.dat
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>ad nauseam
+</pre></div>
+</div>
+</div>
+<div class="section" id="stderr">
+<h3>stderr<a class="headerlink" href="#stderr" title="Permalink to this headline">¶</a></h3>
+<p>Some commands make use of the <tt class="docutils literal"><span class="pre">stderr</span></tt> channel for reporting
+information to the shell (or e.g. a log file) whilst not interfering
+with information going to <tt class="docutils literal"><span class="pre">stdout</span></tt>.</p>
+<p>To redirect the <tt class="docutils literal"><span class="pre">stderr</span></tt> channel to a file, use <tt class="docutils literal"><span class="pre">&gt;&amp;</span></tt> in <tt class="docutils literal"><span class="pre">csh</span></tt> or
+<tt class="docutils literal"><span class="pre">tcsh</span></tt> but <tt class="docutils literal"><span class="pre">2&gt;</span></tt> in
+<tt class="docutils literal"><span class="pre">`bash</span></tt> &lt;<a class="reference external" href="http://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO-3.html">http://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO-3.html</a>&gt;`__ and
+similar shells.</p>
+</div>
+</div>
+<div class="section" id="creating-and-editing-text-files">
+<h2>3.2 Creating and editing text files<a class="headerlink" href="#creating-and-editing-text-files" title="Permalink to this headline">¶</a></h2>
+<p>A common thing you will want to do is create or edit a text file (ASCII
+text file).</p>
+<p>We have seen that you can redirect the standard output of unix commands
+to a file, so if the commands output ASCII, this is obviously one way
+you can create a file.</p>
+<p>We have also mentioned that the default input for <tt class="docutils literal"><span class="pre">stdin</span></tt> is what you
+type at the keyboard, so we can use that to create some text in a file.</p>
+<p>We can use the command <tt class="docutils literal"><span class="pre">cat</span></tt> for this.</p>
+<p>If you type <tt class="docutils literal"><span class="pre">cat</span></tt> at the prompt:</p>
+<p><tt class="docutils literal"><span class="pre">%berlin</span> <span class="pre">cat</span></tt></p>
+<p>then what you type after that will be read into <tt class="docutils literal"><span class="pre">cat</span></tt> and sent to
+<tt class="docutils literal"><span class="pre">stdout</span></tt>.</p>
+<p>Try that now.</p>
+<p>To end the input (end the file) we type a <tt class="docutils literal"><span class="pre">^D</span></tt> character (the
+<tt class="docutils literal"><span class="pre">control</span></tt> and <tt class="docutils literal"><span class="pre">D</span></tt> keys together).</p>
+<p>for example, type or copy and paste some text such as:</p>
+<p><tt class="docutils literal"><span class="pre">%berlin</span> <span class="pre">cat</span> <span class="pre">Gallia</span> <span class="pre">est</span> <span class="pre">omnis</span> <span class="pre">divisa</span> <span class="pre">in</span> <span class="pre">partes</span> <span class="pre">tres;</span> <span class="pre">unam</span> <span class="pre">partem</span> <span class="pre">incolunt</span> <span class="pre">Belgae,</span> <span class="pre">aliam</span> <span class="pre">Aquitani,</span> <span class="pre">tertiam</span> <span class="pre">qui</span> <span class="pre">ipsorum</span> <span class="pre">lingua</span> <span class="pre">Celtae,</span> <span class="pre">nostra</span> <span class="pre">Galli,</span> <span class="pre">appellantur.</span> <span class="pre">^D</span></tt></p>
+<p>You should find that the lines you type are &#8216;echoed&#8217; to the terminal
+when you hit <tt class="docutils literal"><span class="pre">return</span></tt> at the end of each line. This is because you are
+sending information to <tt class="docutils literal"><span class="pre">cat</span></tt> from the keyboard (visualised in the
+terminal so you can see what you are typing) on <tt class="docutils literal"><span class="pre">stdin</span></tt> and the output
+is also going to the terminal on <tt class="docutils literal"><span class="pre">stdout</span></tt>.</p>
+<p>If you wanted to type information that will go into a file, you can
+redirect the output of <tt class="docutils literal"><span class="pre">cat</span></tt> to a file:</p>
+<p><tt class="docutils literal"><span class="pre">%berlin</span> <span class="pre">cat</span> <span class="pre">&gt;</span> <span class="pre">~/Data/unix/gettysburg.dat</span> <span class="pre">The</span> <span class="pre">world</span> <span class="pre">will</span> <span class="pre">little</span> <span class="pre">note,</span>&nbsp; <span class="pre">nor</span> <span class="pre">long</span> <span class="pre">remember</span> <span class="pre">what</span> <span class="pre">we</span> <span class="pre">say</span> <span class="pre">here,</span>&nbsp; <span class="pre">but</span> <span class="pre">it</span> <span class="pre">can</span> <span class="pre">never</span> <span class="pre">forget</span> <span class="pre">what</span> <span class="pre">they</span> <span class="pre">did</span> <span class="pre">here.</span> <span class="pre">^D</span></tt></p>
+<p>This will now be stored in the file <tt class="docutils literal"><span class="pre">~/Data/unix/gettysburg.dat</span></tt>.</p>
+<p>That&#8217;s all very well, and often you will use this methbod to create some
+text in a file, but if you make a mistake, you will find that you can&#8217;t
+easily edit it, which can be rather inconvenient.</p>
+<p>There are many text editors available for unix, and what you use
+day-to-day will depend a lot on personal preferences.</p>
+<p>A short tutorial introducing some of these is available
+<a class="reference external" href="https://github.com/profLewis/geogg122/blob/master/Text%20processing.pdf?raw=true">here</a>.</p>
+<p>Most of these will open a new &#8216;window&#8217;, which will then have buttons and
+menus and other convenient gizmos, much like a word processor. Although
+you obviously <em>can</em> type and <tt class="docutils literal"><span class="pre">process</span></tt> <tt class="docutils literal"><span class="pre">words</span></tt> in such tools, you
+should remember that these are <em>not</em> really the same as word processors
+as the aim is to type and manipulate text represented as ASCII
+characters (i.e. not in MS word or rtf format or whatever). That said,
+some texteditors <em>can</em> store files in formats other than ASCII (e.g.
+rtf), and also some word processing formats are simply ASCII text
+representations.</p>
+<div class="section" id="vi">
+<h3>vi<a class="headerlink" href="#vi" title="Permalink to this headline">¶</a></h3>
+<p>In these notes and the associated lecture, we will introduce you to one
+of the <strong>most basic</strong> unix text editors, <tt class="docutils literal"><span class="pre">vi</span></tt> (which is similar to its
+varaint <tt class="docutils literal"><span class="pre">vim</span></tt> that you will sometimes come across).</p>
+<p>Whilst there is some learning overhead on this, two very good reasons
+for knowing the bare bones of this are:</p>
+<ol class="arabic simple">
+<li>it is available on <em>any</em> unix system</li>
+<li>you use it through a terminal, so it doesn&#8217;t require any windowing
+system</li>
+</ol>
+<p>This latter point could become important to you e.g. if you had broken
+or corrupted your unix installation or e.g. if you were working remotely
+over a connection that was slow.</p>
+<p>It is worthwhile then learning these basics,but you can also follow a
+good short tutorial on this called <a class="reference external" href="http://jerrywang.net/vi/">vi for
+smarties</a>.</p>
+<div class="line-block">
+<div class="line"><tt class="docutils literal"><span class="pre">:w</span></tt> - write</div>
+<div class="line"><tt class="docutils literal"><span class="pre">:q</span></tt> - quit</div>
+<div class="line"><tt class="docutils literal"><span class="pre">:w</span> <span class="pre">somethingElse.dat</span></tt> - write to file <tt class="docutils literal"><span class="pre">somethingElse.dat</span></tt></div>
+<div class="line"><tt class="docutils literal"><span class="pre">:wq</span></tt> - write and quit</div>
+<div class="line"><tt class="docutils literal"><span class="pre">:q!</span></tt> - force quit (without saving)</div>
+<div class="line"><tt class="docutils literal"><span class="pre">:u</span></tt> - undo</div>
+<div class="line"><tt class="docutils literal"><span class="pre">:100</span></tt> - go to line 100 (etc)</div>
+</div>
+<p><tt class="docutils literal"><span class="pre">ESC</span></tt> - exit insert mode (escape key)</p>
+<div class="line-block">
+<div class="line"><tt class="docutils literal"><span class="pre">h</span></tt> - left</div>
+<div class="line"><tt class="docutils literal"><span class="pre">j</span></tt> - down</div>
+<div class="line"><tt class="docutils literal"><span class="pre">k</span></tt> - up</div>
+<div class="line"><tt class="docutils literal"><span class="pre">l</span></tt> - right</div>
+</div>
+<div class="line-block">
+<div class="line"><tt class="docutils literal"><span class="pre">/</span></tt> - search for (regular expression), e.g. <tt class="docutils literal"><span class="pre">/here</span></tt></div>
+<div class="line"><tt class="docutils literal"><span class="pre">n</span></tt> - next (regular expression)</div>
+</div>
+<div class="line-block">
+<div class="line"><tt class="docutils literal"><span class="pre">i</span></tt> - insert (before). N.B. puts you into insert mode, until you hit</div>
+</div>
+<p><tt class="docutils literal"><span class="pre">ESC</span></tt>.
+| <tt class="docutils literal"><span class="pre">a</span></tt> - insert (after) (i.e. append) N.B. puts you into insert mode,
+until you hit <tt class="docutils literal"><span class="pre">ESC</span></tt>. <tt class="docutils literal"><span class="pre">x</span></tt> - delete current character
+| <tt class="docutils literal"><span class="pre">10x</span></tt> - delete next 10 characters (etc.)
+| <tt class="docutils literal"><span class="pre">dw</span></tt> - delete word (so, <tt class="docutils literal"><span class="pre">10dw</span></tt> etc)
+| <tt class="docutils literal"><span class="pre">dd</span></tt> - delete line (do <tt class="docutils literal"><span class="pre">10dd</span></tt> etc.)
+| <tt class="docutils literal"><span class="pre">J</span></tt> - delete end of line (so bring next line up)</p>
+<div class="section" id="id7">
+<h4>3.2.3 Exercise<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<p>Use vi now to edit a file you have created, e.g.</p>
+<p><tt class="docutils literal"><span class="pre">berlin%</span> <span class="pre">vi</span> <span class="pre">~/Data/unix/gettysburg.dat</span></tt></p>
+<p>Practice adding some more lines, changing the words etc., and save your
+edited file to <tt class="docutils literal"><span class="pre">~/Data/unix/myGettysburg.dat</span></tt></p>
+</div>
+</div>
+</div>
+<div class="section" id="process-control">
+<h2>3.3 Process control<a class="headerlink" href="#process-control" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="foreground">
+<h3>foreground<a class="headerlink" href="#foreground" title="Permalink to this headline">¶</a></h3>
+<p>When you start a process that opens another window, you may have noticed
+that no prompt was returned and that any subsequent typing in the parent
+window was ignored until you exited the command (or it finished some
+other way). This was because tool you started has taken over input to
+and output from the parent window, or more accurately, the shell running
+the window. In this state the program you started is said to be running
+in the foreground - that is no further processes can be started from
+that window/shell until textedit relinquishes control.</p>
+<p>As an example, try:</p>
+<p><tt class="docutils literal"><span class="pre">berlin%</span> <span class="pre">display</span> <span class="pre">~plewis/msc/sar.jpg</span></tt></p>
+<p>This should open a window on your computer and display a SAR image (of
+Barton Bendish in Norfolk).</p>
+<div class="figure">
+<img alt="" src="Chapter1_Unix/files/images/sar.jpg" />
+</div>
+<p>The problem you will find is that if you go back to the terminal you ran
+the command from, you will now longer be able to run any other commands.</p>
+<p>Try typing <tt class="docutils literal"><span class="pre">ls</span></tt> for example, your terminal will <em>seem</em> to be &#8216;stuck&#8217;:</p>
+<p><tt class="docutils literal"><span class="pre">berlin%</span> <span class="pre">display</span> <span class="pre">~plewis/msc/sar.jpg</span> <span class="pre">ls</span></tt></p>
+<p>The reason for this is that the terminal will not accept any further
+commands until you quit the current process (or job, we might call it),
+which is <tt class="docutils literal"><span class="pre">xv</span></tt> here.</p>
+<p>Quit <tt class="docutils literal"><span class="pre">display</span></tt> by using the menu.</p>
+<p>Now, any commands that you had stacked up will run ... which probably
+isn&#8217;t what you wanted to happen.</p>
+<p>When we run a process in this way, we say that it is in the
+<em>foreground</em>.</p>
+</div>
+<div class="section" id="background">
+<h3>background<a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h3>
+<p>Sometimes then, we want to run a job in the <em>background</em>. This
+effectively means that the process will run independently of the shell,
+which means that the shell prompt will be freed up for further commands.</p>
+<p>We do this by putting an ampersand (<tt class="docutils literal"><span class="pre">&amp;</span></tt>) at the end of the command:</p>
+<p><tt class="docutils literal"><span class="pre">berlin%</span> <span class="pre">display</span> <span class="pre">~plewis/msc/sar.jpg</span> <span class="pre">&amp;</span> <span class="pre">berlin%</span></tt></p>
+<p>And now you should see the command line prompt appear again (so you can
+nbow type <tt class="docutils literal"><span class="pre">ls</span></tt> if thats what you wanted to do).</p>
+<p>You should also have notices something else appearing which would be
+something like:</p>
+<p><tt class="docutils literal"><span class="pre">[1]</span> <span class="pre">3568</span></tt></p>
+<p>The [n] indicates this is the nth job to be started in this shell, and n
+is the unique job number by which the process may be referenced within
+that shell (window). The second number on the line (3568) is known as
+the process ID (PID) of the program. This is the number by which the
+central processor of the workstation refers to the job. This number is
+unique to the program you have started, and may be used in any window to
+refer to this process, as will be see.</p>
+</div>
+<div class="section" id="bg">
+<h3>bg<a class="headerlink" href="#bg" title="Permalink to this headline">¶</a></h3>
+<p>If the process you wish to place in the background is already running,
+it can be stopped using <tt class="docutils literal"><span class="pre">^Z</span></tt> (<tt class="docutils literal"><span class="pre">Control</span> <span class="pre">Z</span></tt>).</p>
+<p>The prompt will then return, and the job is placed in the background
+using the <tt class="docutils literal"><span class="pre">bg</span></tt> command (note: all <em>you</em> type here (after typing
+<tt class="docutils literal"><span class="pre">display</span> <span class="pre">~plewis/msc/sar.jpg</span></tt>) is <tt class="docutils literal"><span class="pre">^Z</span></tt> and <tt class="docutils literal"><span class="pre">bg</span></tt>):</p>
+<p>```bash berlin% display ~plewis/msc/sar.jpg ^Z</p>
+<div class="line-block">
+<div class="line">Suspended</div>
+<div class="line">berlin% bg</div>
+<div class="line">[1] 3568</div>
+<div class="line">berlin%```</div>
+</div>
+<p>so display is now running in the background, and the prompt should
+appear again so you can type new commands.</p>
+</div>
+</div>
+<div class="section" id="killing-a-job-running-in-the-foreground">
+<h2>3.4 Killing a job running in the foreground<a class="headerlink" href="#killing-a-job-running-in-the-foreground" title="Permalink to this headline">¶</a></h2>
+<p>Normally, you can terminate a job running in the foreground with <tt class="docutils literal"><span class="pre">^C</span></tt>
+(<tt class="docutils literal"><span class="pre">control</span></tt> and <tt class="docutils literal"><span class="pre">c</span></tt>). If that does not work, try <tt class="docutils literal"><span class="pre">^Z</span></tt> as above,
+followed by <tt class="docutils literal"><span class="pre">jobs</span></tt> to see the number of the job to be killed, then
+kill it (see below).</p>
+<div class="section" id="fg">
+<h3>fg<a class="headerlink" href="#fg" title="Permalink to this headline">¶</a></h3>
+<p>Within its parent window, a job may be referred to in certain commands a
+<tt class="docutils literal"><span class="pre">%n</span></tt>, where <tt class="docutils literal"><span class="pre">n</span></tt> is the number that was given in square brackets when
+the process was started.</p>
+<p>The job may be brought back into the foreground using:</p>
+<p><tt class="docutils literal"><span class="pre">berlin%</span> <span class="pre">fg</span> <span class="pre">%n</span></tt></p>
+<p>no prompt will be returned until either the job finishes or is placed
+back into the background.</p>
+</div>
+<div class="section" id="kill">
+<h3>kill<a class="headerlink" href="#kill" title="Permalink to this headline">¶</a></h3>
+<p>The job may be killled using:</p>
+<p><tt class="docutils literal"><span class="pre">berlin%</span> <span class="pre">kill</span> <span class="pre">%n</span></tt></p>
+<p>or</p>
+<p><tt class="docutils literal"><span class="pre">berlin%</span> <span class="pre">kill</span> <span class="pre">-9</span> <span class="pre">%n</span></tt></p>
+<p>if it refuses to die the first time.</p>
+<p>The priority of the job may be changed to let other people share the
+workstation:</p>
+<p><tt class="docutils literal"><span class="pre">berlin%</span> <span class="pre">renice</span> <span class="pre">+19</span> <span class="pre">%n</span> <span class="pre">0:</span> <span class="pre">old</span> <span class="pre">priority</span> <span class="pre">0,</span> <span class="pre">new</span> <span class="pre">priority</span> <span class="pre">19</span></tt></p>
+</div>
+<div class="section" id="jobs">
+<h3>jobs<a class="headerlink" href="#jobs" title="Permalink to this headline">¶</a></h3>
+<p>A list of jobs currently running within the shell may be obtained using
+the <tt class="docutils literal"><span class="pre">jobs</span></tt> command. On some systems, <tt class="docutils literal"><span class="pre">jobs</span> <span class="pre">-l</span></tt> will give the most
+useful information. e.g.:</p>
+<p>```bash berlin% xv ~plewis/msc/sar.jpg ^Z</p>
+<div class="line-block">
+<div class="line">Suspended</div>
+<div class="line">berlin% jobs -l</div>
+<div class="line">[1] + 9524 Suspended xv ~plewis/msc/sar.jpg```</div>
+</div>
+<div class="section" id="killing-or-changing-the-priority-of-a-job-from-outside-its-parent-shell">
+<h4>3.4.2 Killing or changing the priority of a job from outside its parent shell<a class="headerlink" href="#killing-or-changing-the-priority-of-a-job-from-outside-its-parent-shell" title="Permalink to this headline">¶</a></h4>
+<p>If you made a note of the <tt class="docutils literal"><span class="pre">PID</span></tt> of each process when it started, then
+<tt class="docutils literal"><span class="pre">kill</span></tt> and <tt class="docutils literal"><span class="pre">renice</span></tt> can be used as before, but using the <tt class="docutils literal"><span class="pre">PID</span></tt>
+instead of job number:</p>
+<p><tt class="docutils literal"><span class="pre">berlin%</span> <span class="pre">renice</span> <span class="pre">+19</span> <span class="pre">3568</span> <span class="pre">3568</span> <span class="pre">:</span> <span class="pre">old</span> <span class="pre">priority</span> <span class="pre">0,</span> <span class="pre">new</span> <span class="pre">priority</span> <span class="pre">19</span> <span class="pre">berlin%</span> <span class="pre">kill</span> <span class="pre">3568</span></tt></p>
+<p>If you didn’t note the PID, there are two ways to find it:</p>
+<ul class="simple">
+<li>run the <tt class="docutils literal"><span class="pre">top</span></tt> command in another window and look at the process in
+the display</li>
+<li>use <tt class="docutils literal"><span class="pre">ps</span></tt> (e.g. <tt class="docutils literal"><span class="pre">ps</span> <span class="pre">auxww</span></tt>)</li>
+</ul>
+</div>
+</div>
+<div class="section" id="top">
+<h3>top<a class="headerlink" href="#top" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">top</span></tt> is a program used to display the processes currently using the
+most CPU (processing capacity) on a workstation. Typing <tt class="docutils literal"><span class="pre">top</span></tt> in a
+shelltool should result in a display similar to:</p>
+<p>```bash last pid : 3609; load averages : 0.00, 0.00, 0.00 03:47:19</p>
+<p>49 processes : 48 sleeping, 1 running</p>
+<p>Cpu states : % user, % nice, % system, % idle</p>
+<p>Memory : 11984K available, 11812K in use, 172K free, 2572K locked</p>
+<p>PID Username PRI NICE SIZE RES STATE TIME WCPU CPU COMMAND</p>
+<div class="line-block">
+<div class="line">3598 plewis 15 19 125K 99K run 9:20 12:49% 0.95% xv 3609 plewis 26 0</div>
+</div>
+<p>225K 472K run 10:29 7.69% 0.22% textedit
+| 3607 plewis 36 0 422K 432K sleep 0.00 3.23% 0.12% csh```</p>
+<p>Look for your program in the far right column, and get its PID from the
+far left column (in this format). Typing <tt class="docutils literal"><span class="pre">i</span></tt> may reveal more processes
+if yours is not shown. Typing <tt class="docutils literal"><span class="pre">u</span></tt> and then your username will show
+only your jobs. Jobs can be killed (<tt class="docutils literal"><span class="pre">k</span></tt>) and reniced (<tt class="docutils literal"><span class="pre">r</span></tt>) from
+inside <tt class="docutils literal"><span class="pre">top</span></tt> - see <tt class="docutils literal"><span class="pre">?</span></tt>? for more details.</p>
+</div>
+<div class="section" id="ps">
+<h3>ps<a class="headerlink" href="#ps" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">ps</span></tt> is similar to <tt class="docutils literal"><span class="pre">top</span></tt>, but just lists the processes rather than
+providing a continuously updated display:</p>
+<p><tt class="docutils literal"><span class="pre">berlin%</span> <span class="pre">ps</span> <span class="pre">auxww</span> <span class="pre">|</span> <span class="pre">less</span> <span class="pre">USER</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="pre">PID</span> <span class="pre">%CPU</span> <span class="pre">%MEM</span>&nbsp;&nbsp;&nbsp; <span class="pre">VSZ</span>&nbsp;&nbsp; <span class="pre">RSS</span> <span class="pre">TTY</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="pre">STAT</span> <span class="pre">START</span>&nbsp;&nbsp; <span class="pre">TIME</span> <span class="pre">COMMAND</span> <span class="pre">root</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="pre">1</span>&nbsp; <span class="pre">0.0</span>&nbsp; <span class="pre">0.0</span>&nbsp; <span class="pre">10368</span>&nbsp;&nbsp; <span class="pre">696</span> <span class="pre">?</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="pre">Ss</span>&nbsp;&nbsp; <span class="pre">Sep13</span>&nbsp;&nbsp; <span class="pre">0:04</span> <span class="pre">init</span> <span class="pre">[5]</span>&nbsp;&nbsp; <span class="pre">rpcuser</span>&nbsp;&nbsp; <span class="pre">4034</span>&nbsp; <span class="pre">0.0</span>&nbsp; <span class="pre">0.0</span>&nbsp; <span class="pre">10180</span>&nbsp;&nbsp; <span class="pre">796</span> <span class="pre">?</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="pre">Ss</span>&nbsp;&nbsp; <span class="pre">Sep13</span>&nbsp;&nbsp; <span class="pre">0:00</span> <span class="pre">rpc.statd</span></tt></p>
+</div>
+<div class="section" id="nice">
+<h3>nice<a class="headerlink" href="#nice" title="Permalink to this headline">¶</a></h3>
+<p>Whenever a job that will either use a lot of the machines processing
+power (such as an image processing command) or take a long time to run
+is started, it must be ‘nice’d up’. That is, the priority of the job
+must be set so that other users can make use of the workstation whilst
+your job is running. This is achieved using either the <tt class="docutils literal"><span class="pre">renice</span></tt>
+command, as above, or preferably by using the <tt class="docutils literal"><span class="pre">nice</span></tt> command as the
+job is started:</p>
+<p><tt class="docutils literal"><span class="pre">berlin%</span> <span class="pre">nice</span> <span class="pre">+19</span> <span class="pre">xv</span> <span class="pre">~plewis/msc/sar.jpg</span> <span class="pre">&amp;</span> <span class="pre">[2]</span> <span class="pre">3610</span></tt></p>
+<p>This starts <tt class="docutils literal"><span class="pre">xv</span></tt> in the background, and sets its priority to allow
+fair use of the machine by other people. In fact, xv is not a process
+that would normally need to be niced, as, unless image processing
+operations are being performed it usually takes virtually no processing
+power. It is used here simply as an example.</p>
+</div>
+</div>
+<div class="section" id="remote-access">
+<h2>3.5 remote access<a class="headerlink" href="#remote-access" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="ping">
+<h3>ping<a class="headerlink" href="#ping" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">ping</span></tt> sends some test packets to a remote computer and reports on
+what is returned. Normally, e.g. to check the status of a machine called
+<tt class="docutils literal"><span class="pre">socrates.ucl.ac.uk</span></tt> you just type:</p>
+<p><tt class="docutils literal"><span class="pre">berlin%</span> <span class="pre">ping</span> <span class="pre">socrates.ucl.ac.uk</span></tt></p>
+<p>which will report e.g.:</p>
+<p><tt class="docutils literal"><span class="pre">PING</span> <span class="pre">socrates.ucl.ac.uk</span> <span class="pre">(144.82.110.1)</span> <span class="pre">56(84)</span> <span class="pre">bytes</span> <span class="pre">of</span> <span class="pre">data.</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">64</span> <span class="pre">bytes</span> <span class="pre">from</span> <span class="pre">socrates.ucl.ac.uk</span> <span class="pre">(144.82.110.1):</span> <span class="pre">icmp_seq=1</span> <span class="pre">ttl=252</span> <span class="pre">time=0.527</span> <span class="pre">ms</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">64</span> <span class="pre">bytes</span> <span class="pre">from</span> <span class="pre">socrates.ucl.ac.uk</span> <span class="pre">(144.82.110.1):</span> <span class="pre">icmp_seq=2</span> <span class="pre">ttl=252</span> <span class="pre">time=0.342</span> <span class="pre">ms</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">64</span> <span class="pre">bytes</span> <span class="pre">from</span> <span class="pre">socrates.ucl.ac.uk</span> <span class="pre">(144.82.110.1):</span> <span class="pre">icmp_seq=3</span> <span class="pre">ttl=252</span> <span class="pre">time=0.355</span> <span class="pre">ms</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">---</span> <span class="pre">socrates.ucl.ac.uk</span> <span class="pre">ping</span> <span class="pre">statistics</span> <span class="pre">---</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">3</span> <span class="pre">packets</span> <span class="pre">transmitted,</span> <span class="pre">3</span> <span class="pre">received,</span> <span class="pre">0%</span> <span class="pre">packet</span> <span class="pre">loss,</span> <span class="pre">time</span> <span class="pre">2001ms</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">rtt</span> <span class="pre">min/avg/max/mdev</span> <span class="pre">=</span> <span class="pre">0.342/0.408/0.527/0.084</span> <span class="pre">ms</span></tt></p>
+<p>Use <tt class="docutils literal"><span class="pre">^C</span></tt> to quit <tt class="docutils literal"><span class="pre">ping</span></tt>.</p>
+<p>If nothing happens for some time, the machine is probably not available
+(because it is down or the network in unreachable). You can wait for a
+timeout, or use <tt class="docutils literal"><span class="pre">^C</span></tt> (<tt class="docutils literal"><span class="pre">Control</span></tt> and <tt class="docutils literal"><span class="pre">C</span></tt>) at the same time) to quit
+the command. To limit the call to a certain number of attempts, use:</p>
+<p><tt class="docutils literal"><span class="pre">berlin%</span> <span class="pre">ping</span> <span class="pre">-c</span> <span class="pre">10</span> <span class="pre">socrates.ucl.ac.uk</span></tt></p>
+<p>If the response is:</p>
+<p><tt class="docutils literal"><span class="pre">---</span> <span class="pre">socrates.ucl.ac.uk</span> <span class="pre">ping</span> <span class="pre">statistics</span> <span class="pre">---</span> <span class="pre">10</span> <span class="pre">packets</span> <span class="pre">transmitted,</span> <span class="pre">0</span> <span class="pre">packets</span> <span class="pre">received,</span> <span class="pre">100.0%</span> <span class="pre">packet</span> <span class="pre">loss</span></tt></p>
+<p>Then you can’t currently access the machine.</p>
+</div>
+<div class="section" id="sftp">
+<h3>sftp<a class="headerlink" href="#sftp" title="Permalink to this headline">¶</a></h3>
+<p>Secure file transfer using <tt class="docutils literal"><span class="pre">ssh</span></tt> protocols. If working from a terminal
+(shell) and you want to transfer files from your local machine to a
+machine e.g. <tt class="docutils literal"><span class="pre">shankly.geog.ucl.ac.uk</span></tt>, <tt class="docutils literal"><span class="pre">cd</span></tt> to where the files are
+on the local machine, then type:</p>
+<p><tt class="docutils literal"><span class="pre">berlin%</span> <span class="pre">sftp</span> <span class="pre">shankly.geog.ucl.ac.uk</span></tt></p>
+<p>at which point you will normally be prompted for a password. If the
+username on the local and remote machines are different, you should use:</p>
+<p><tt class="docutils literal"><span class="pre">berlin%</span> <span class="pre">sftp</span> <span class="pre">plewis&#64;shankly.geog.ucl.ac.uk</span></tt></p>
+<p>You can then use the <a class="reference external" href="http://kb.iu.edu/data/akqg.html">limited command
+set</a> within <tt class="docutils literal"><span class="pre">sftp</span></tt> to change
+directory etc. and copy the files to or from the remote machine. A
+typical session then would be something along the lines of:</p>
+<p><tt class="docutils literal"><span class="pre">sftp&gt;</span> <span class="pre">cd</span> <span class="pre">whereIWantToPutTheData</span>&nbsp; <span class="pre">sftp&gt;</span> <span class="pre">put</span> <span class="pre">theFileIWantToTransfer.dat</span></tt></p>
+<p>to copy the local file <tt class="docutils literal"><span class="pre">theFileIWantToTransfer.dat</span></tt> into the directory
+<tt class="docutils literal"><span class="pre">whereIWantToPutTheData</span></tt> on the remote machine. Similarly to pull a
+file from the remote machine, use <tt class="docutils literal"><span class="pre">get</span></tt> rather than <tt class="docutils literal"><span class="pre">put</span></tt>.</p>
+<p>Use <tt class="docutils literal"><span class="pre">exit</span></tt> to exit the <tt class="docutils literal"><span class="pre">sftp</span></tt> session.</p>
+</div>
+<div class="section" id="scp">
+<h3>scp<a class="headerlink" href="#scp" title="Permalink to this headline">¶</a></h3>
+<p>Sometimes, it is convenient to use <tt class="docutils literal"><span class="pre">scp</span></tt>, a secure copy command that
+you can use over digfferent machines on the network when they do not
+have common disk access. The syntax is of the form:</p>
+<p><tt class="docutils literal"><span class="pre">scp</span> <span class="pre">plewis&#64;shankly.geog.ucl.ac.uk:///home/plewis/msc/hello.dat</span> <span class="pre">~/Data/helloLewis.dat</span></tt></p>
+</div>
+<div class="section" id="id8">
+<h3>ssh<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>Securely connect (‘log in’) to a shell on a remote computer. To set up
+an interactive session, from a terminal or <tt class="docutils literal"><span class="pre">ssh</span></tt> client type:</p>
+<p><tt class="docutils literal"><span class="pre">home%</span> <span class="pre">ssh</span> <span class="pre">plewis&#64;shankly.geog.ucl.ac.uk</span></tt></p>
+<p>and respond to any confirmation request (the first time you connect two
+machines) and the request for your password.</p>
+<p>If you wish to run a session that uses X11, you need to set X11
+tunneling:</p>
+<p><tt class="docutils literal"><span class="pre">home%</span> <span class="pre">ssh</span> <span class="pre">-X</span> <span class="pre">plewis&#64;shankly.geog.ucl.ac.uk</span></tt></p>
+<p>on most unix/linux machines, or:</p>
+<p><tt class="docutils literal"><span class="pre">home%</span> <span class="pre">ssh</span> <span class="pre">-Y</span> <span class="pre">ucfaabc&#64;shankly.geog.ucl.ac.uk</span></tt></p>
+<p>from OS X.</p>
+<p>From a Windows machine, you should be able to connect using a client
+such as <tt class="docutils literal"><span class="pre">putty</span></tt>, but this does not directly allow <tt class="docutils literal"><span class="pre">X11</span></tt> sessions. To
+do that, you need some <tt class="docutils literal"><span class="pre">X11</span></tt> software (on the Windows machine) such as
+<tt class="docutils literal"><span class="pre">exceed</span></tt>. You can purchase that software, or at no cost, use a WTS
+session (see above) to start up
+<a class="reference external" href="http://faq.rutgers.edu/?q=node/836">exceed</a> and then use e.g.
+<tt class="docutils literal"><span class="pre">putty</span></tt> (or tools in exceed) with <tt class="docutils literal"><span class="pre">X11</span></tt> forwarding.</p>
+<p>There are several alternatives to this from a Windows machine, one of
+which is to set up a unix environment within windows using <tt class="docutils literal"><span class="pre">cygwin</span></tt>
+but that might be too complex for novice users.</p>
+<p>Another is to make your Windows computer dual boot and install a linux
+system such as <tt class="docutils literal"><span class="pre">ubuntu</span></tt> on it.</p>
+<p>Yet another is to run linux as a virtual machine on top of Windows (or
+the other way around!).</p>
+<p>Another alternative is <tt class="docutils literal"><span class="pre">Xming</span></tt> that will run X11 on top of windows.</p>
+<p>Please note that whilst there are all of these potential solutions, we
+do not endorse or provide support for any particular solution. If you
+want to be able to do this and think it would be useful, try it out
+yourself and use the internet for resources to help you solve any
+problems you come across. If you have particular problems you think are
+connected with the UCL end of things, you can try asking the Geography
+System Manager, or ISD (if it is a UCL issue), or at a push, Professor
+Lewis in his office hours.</p>
+<p><strong>Important</strong>: Note that you cannot use <tt class="docutils literal"><span class="pre">ssh</span></tt> (or <tt class="docutils literal"><span class="pre">sftp</span></tt>) to connect
+to <em>any</em> of the UCL Geography computers, as we only have a small number
+open to the UCL firewall (such as <tt class="docutils literal"><span class="pre">shankly.geog.ucl.ac.uk</span></tt>) and the
+machines we do have open are not ones you would normally want to do any
+processing on (or at least, we don’t want everyone processing on these
+gateway machines, as noone else will be able to get in).</p>
+<p>You will normally have to use <tt class="docutils literal"><span class="pre">ssh</span></tt> to get on to one of these firewall
+gateway machines, then <tt class="docutils literal"><span class="pre">ssh</span></tt> (normally <tt class="docutils literal"><span class="pre">ssh</span> <span class="pre">-X</span></tt> if you want to
+maintain X11 port forwarding) from there to a machine (e.g. one in the
+classroom) to do any processing. This might seem a little ‘roundabout’,
+but you will soon get used to it and it is like this for good security
+reasons.</p>
+<p>N.B. if your username is different on the two machines, use e.g.
+<tt class="docutils literal"><span class="pre">ssh</span> <span class="pre">-X</span> <span class="pre">ucfaabc&#64;socrates.ucl.ac.uk</span></tt> or
+<tt class="docutils literal"><span class="pre">ssh</span> <span class="pre">-X</span> <span class="pre">socrates.ucl.ac.uk</span> <span class="pre">-l</span> <span class="pre">ucfaabc</span></tt> to give the correct username
+for the remote machine (the one you are trying to log on to), otherwise
+you can just use <tt class="docutils literal"><span class="pre">ssh</span> <span class="pre">-X</span> <span class="pre">socrates.ucl.ac.uk</span></tt>.</p>
+<p>Once you (think you have) established a remote session with X11, you
+should test it out, trying to open a simple application such as
+<tt class="docutils literal"><span class="pre">xclock</span></tt> or <tt class="docutils literal"><span class="pre">xv</span></tt> or <tt class="docutils literal"><span class="pre">xeyes</span></tt> from the remote machine onto your
+local machine.</p>
+<p>If you are sure you are on a secure machine, you can set things up so
+that you don’t have to keep typing the password when you connect (see
+here) but remember that anybody else will be able to connect those
+machines without a password.</p>
+<p>Finally, if what you want to do with <tt class="docutils literal"><span class="pre">ssh</span></tt> is not to run an
+interactive session, but to run a process on the remote machine (e.g.
+for some parallel processing), then you would normally use <tt class="docutils literal"><span class="pre">ssh</span> <span class="pre">-f</span></tt>
+for this, with the option <tt class="docutils literal"><span class="pre">-X</span></tt> (or <tt class="docutils literal"><span class="pre">-Y</span></tt> for OS X) if the processing
+requires <tt class="docutils literal"><span class="pre">X11</span></tt>. A simple example would be, get a listing of your home
+directory:</p>
+<p><tt class="docutils literal"><span class="pre">home%</span> <span class="pre">ssh</span> <span class="pre">-f</span> <span class="pre">ucfaabc&#64;shankly.geog.ucl.ac.uk</span> <span class="pre">&quot;ls</span> <span class="pre">-l</span> <span class="pre">/home/plewis&quot;</span></tt></p>
+<p>This will execute the sequence of commands in quotes on the remote
+machine, then, when completed, terminate the session (that is what the
+<tt class="docutils literal"><span class="pre">-f</span></tt> flag does). If you want to ssh from that machine onto another (to
+run a process) that is a little more involved.</p>
+<p>One way to do this would be e.g.:</p>
+<p><tt class="docutils literal"><span class="pre">home%</span> <span class="pre">ssh</span> <span class="pre">-f</span> <span class="pre">shankly.geog.ucl.ac.uk</span> <span class="pre">'ssh</span> <span class="pre">-f</span> <span class="pre">berlin.geog.ucl.ac.uk</span> <span class="pre">&quot;uname</span> <span class="pre">-a;pwd;</span> <span class="pre">cd</span> <span class="pre">/home/plewis</span> <span class="pre">;</span> <span class="pre">ls</span> <span class="pre">-l&quot;'</span></tt></p>
+<p>which will <tt class="docutils literal"><span class="pre">ssh</span></tt> onto <tt class="docutils literal"><span class="pre">shankly.geog.ucl.ac.uk</span></tt> and from there run an
+<tt class="docutils literal"><span class="pre">ssh</span></tt> process onto <tt class="docutils literal"><span class="pre">berlin</span></tt> and then run the requested sequence of
+commands. Note that in this case you will have needed to previously
+ssh&#8217;d from <tt class="docutils literal"><span class="pre">shankly</span></tt> to <tt class="docutils literal"><span class="pre">berlin</span></tt> to have responded to the
+authentification request. This is a littler convoluted, especially the
+use of quotes here but is it feasible and sometimes useful to do this.
+You are much more likely to make use of this sort of command directly
+from within the UCL Geography system, in which case you do not need
+multiple levels of <tt class="docutils literal"><span class="pre">ssh</span></tt> calls to get through the firewall.</p>
+</div>
+</div>
+<div class="section" id="id9">
+<h2>3.6 Exercise<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<p>This final section covers a bit more than the basics of unix, and in
+that sense, is a bit more than what we consider <em>critical</em> for you in
+this class. If you <em>do</em> learn these few other commands though, you
+should (hopefully) feel empowered to do more with your computers and get
+some real control over whats going on (rather than just clicking a
+button or sliding a slider).</p>
+<p>As a follow up to this section, you could try to see if you can access
+the unix system from outside of the lab and copy files to and from
+another computer.</p>
+<p>You might also like to look at further command line options for some of
+these commands. Mostly, there is a <tt class="docutils literal"><span class="pre">--help</span></tt> option (e.g.
+<tt class="docutils literal"><span class="pre">ls</span> <span class="pre">--help</span></tt>) that you can use. You can also access manual pages (type:
+<tt class="docutils literal"><span class="pre">man</span> <span class="pre">ls</span></tt>) or on some systems info pages (type: <tt class="docutils literal"><span class="pre">info</span> <span class="pre">ls</span></tt>). This will
+give you more depth to your understanding of what you can do with these
+commands.</p>
+<p>Getting to &#8216;guru&#8217; status in unix will take you some time, but the more
+you explore and try things on the operating system, the more you will
+learn. If you are worried about breaking things, or just want to explore
+more, buy a cheap computer such as a <a class="reference external" href="http://www.raspberrypi.org/">raspberry
+pi</a> (around £25), install a free version
+of linux on it, and play!</p>
+<p>Finally, one other skill you might like to develop is to learn to write
+some shell programs (e.g. in bash). This can be a very useful thing to
+be able to do as you essentially make your own unix program by combining
+others. We will learn such skills using python in subsequent sessions,
+but there is value to at least learning the basics in a lower level
+shell language (e.g.
+<a class="reference external" href="http://www.tldp.org/LDP/Bash-Beginners-Guide/html/">bash</a> or
+<a class="reference external" href="http://www-cs.canisius.edu/ONLINESTUFF/UNIX/shellprogramming.html">csh</a>.</p>
+</div>
+<div class="section" id="id10">
+<h2>3.7 Summary<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+<p>In this section, you should have learned a wider set of commands to
+control what is going on in the unix environment a little more. You may
+not remember all of these to start with, but can use this page as a
+reference as you explore what you can do with the operating system.</p>
+<div class="section" id="id11">
+<h3>Commands in this section<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">[<a class="reference external" href="#awk">awk</a>] : pattern scanning and interpretation language</div>
+<div class="line">[<a class="reference external" href="#appending">&gt;&gt;</a>] : appending to file</div>
+<div class="line">[<a class="reference external" href="#background">bg</a>] : background process</div>
+<div class="line">[<a class="reference external" href="#cat">cat</a>] : concatenate</div>
+<div class="line">[<a class="reference external" href="#date">date</a>] : date</div>
+<div class="line">[<a class="reference external" href="#echo">echo</a>] : echo</div>
+<div class="line">[<a class="reference external" href="#fg">fg</a>] : foreground</div>
+<div class="line">[<a class="reference external" href="#grep">grep</a>] : globally search a regular expression and print</div>
+<div class="line">[<a class="reference external" href="#jobs">jobs</a>] : process jobs</div>
+<div class="line">[<a class="reference external" href="#kill">kill</a>] : kill a process</div>
+<div class="line">[<a class="reference external" href="#less">less</a>] : less</div>
+<div class="line">[<a class="reference external" href="#more">more</a>] : more</div>
+<div class="line">[<a class="reference external" href="#nice">nice</a>] : nice a process</div>
+<div class="line">[<a class="reference external" href="#ping">ping</a>] : ping</div>
+<div class="line">[<a class="reference external" href="#pipe">|</a>] : pipe</div>
+<div class="line">[<a class="reference external" href="#ps">ps</a>] : process show</div>
+<div class="line">[<a class="reference external" href="#sed">sed</a>] : stream editor</div>
+<div class="line">[<a class="reference external" href="#sfscptp">scp</a>] : secure copy</div>
+<div class="line">[<a class="reference external" href="#sftp">sftp</a>] : secure file transfer protocol</div>
+<div class="line">[<a class="reference external" href="#ssh">ssh</a>] : secure shell</div>
+<div class="line">[<a class="reference external" href="#stderr">&gt;&amp;</a>] : standard error <tt class="docutils literal"><span class="pre">&gt;&amp;</span></tt> or <tt class="docutils literal"><span class="pre">2&gt;</span></tt></div>
+<div class="line">[<a class="reference external" href="#stdin">&lt;</a>] : standard input <tt class="docutils literal"><span class="pre">&lt;</span></tt></div>
+<div class="line">[<a class="reference external" href="#stdout">&gt;</a>] : standard output <tt class="docutils literal"><span class="pre">&gt;</span></tt></div>
+<div class="line">[<a class="reference external" href="#streams">streams</a>] : streams</div>
+<div class="line">[<a class="reference external" href="#top">top</a>] : top processes</div>
+<div class="line">[<a class="reference external" href="#vi">vi</a>] : vi editor</div>
+<div class="line">[<a class="reference external" href="#wc">wc</a>] : wc</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="summary-of-all-commands">
+<h1>4. Summary of all commands<a class="headerlink" href="#summary-of-all-commands" title="Permalink to this headline">¶</a></h1>
+<div class="line-block">
+<div class="line">[<a class="reference external" href="#awk">awk</a>] : pattern scanning and interpretation language</div>
+<div class="line">[<a class="reference external" href="#appending">&gt;&gt;</a>] : appending to file</div>
+<div class="line">[<a class="reference external" href="#background">bg</a>] : background process</div>
+<div class="line">[<a class="reference external" href="#cat">cat</a>] : concatenate</div>
+<div class="line">[<a class="reference external" href="#cd">cd</a>] : change directory</div>
+<div class="line">[<a class="reference external" href="#chmod">chmod</a>] : change mode</div>
+<div class="line">[<a class="reference external" href="#cp">cp</a>] : copy</div>
+<div class="line">[<a class="reference external" href="#date">date</a>] : date</div>
+<div class="line">[<a class="reference external" href="#df">df</a>] : disk free</div>
+<div class="line">[<a class="reference external" href="#du">du</a>] : disk usage</div>
+<div class="line">[<a class="reference external" href="#dot">.</a>]: dot (current level)</div>
+<div class="line">[<a class="reference external" href="#dotdot">..</a>] : dot dot (up one level) [<a class="reference external" href="#echo">echo</a>] :</div>
+</div>
+<p>echo
+| [<a class="reference external" href="#fg">fg</a>] : foreground
+| [<a class="reference external" href="#grep">grep</a>] : globally search a regular expression and print
+| [<a class="reference external" href="#jobs">jobs</a>] : process jobs
+| [<a class="reference external" href="#kill">kill</a>] : kill a process
+| [<a class="reference external" href="#less">less</a>] : less
+| [<a class="reference external" href="#passwd">ls</a>] : list
+| [<a class="reference external" href="#ls--l">ls -l</a>] : long listing
+| [<a class="reference external" href="#more">more</a>] : more
+| [<a class="reference external" href="#mkdir">mkdir</a>] : make directory
+| [<a class="reference external" href="#mv">mv</a>] : move
+| [<a class="reference external" href="#nice">nice</a>] : nice a process
+| [<a class="reference external" href="#ls">passwd</a>] : change password
+| [<a class="reference external" href="#ping">ping</a>] : ping
+| [<a class="reference external" href="#pipe">|</a>] : pipe
+| [<a class="reference external" href="#ps">ps</a>] : process show
+| [<a class="reference external" href="#pwd">pwd</a>]: print working directory
+| [<a class="reference external" href="#quota">quota</a>] : personal disk quota
+| [<a class="reference external" href="#rm">rm</a>] : remove
+| [<a class="reference external" href="#rmdir">rmdir</a>] : remove (empty) directory
+| [<a class="reference external" href="#sed">sed</a>] : stream editor
+| [<a class="reference external" href="#sfscptp">scp</a>] : secure copy
+| [<a class="reference external" href="#sftp">sftp</a>] : secure file transfer protocol
+| [<a class="reference external" href="#ssh">ssh</a>] : secure shell
+| [<a class="reference external" href="#stderr">&gt;&amp;</a>] : standard error <tt class="docutils literal"><span class="pre">&gt;&amp;</span></tt> or <tt class="docutils literal"><span class="pre">2&gt;</span></tt>
+| [<a class="reference external" href="#stdin">&lt;</a>] : standard input <tt class="docutils literal"><span class="pre">&lt;</span></tt>
+| [<a class="reference external" href="#stdout">&gt;</a>] : standard output <tt class="docutils literal"><span class="pre">&gt;</span></tt>
+| [<a class="reference external" href="#streams">streams</a>] : streams
+| [<a class="reference external" href="#top">top</a>] : top processes
+| [<a class="reference external" href="#twiddle">~</a>]: tilde (twiddle) - home
+| [<a class="reference external" href="#vi">vi</a>] : vi editor
+| [<a class="reference external" href="#wc">wc</a>] : wc
+| [<a class="reference external" href="#Wildcards">*?</a>] : wildcards</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+        <p class="logo"><a href="../index.html" title="index">
+          <img class="logo" src="../_static/ucl_logo.png" alt="Logo"/>
+        </a></p><div class="sphinxlocaltoc">
+    <h3><a href="../index.html">Page contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">1. A Brief Introduction to Unix</a><ul>
+<li><a class="reference internal" href="#in-this-section">1.1 In this section</a><ul>
+<li><a class="reference internal" href="#commands-in-this-section">Commands in this section</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#unix">1.2 Unix</a></li>
+<li><a class="reference internal" href="#what-is-unix">1.3 What is Unix?</a><ul>
+<li><a class="reference internal" href="#passwd">passwd</a><ul>
+<li><a class="reference internal" href="#logging-out">1.3.3 Logging out</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-unix-file-system">1.4 The UNIX file system</a><ul>
+<li><a class="reference internal" href="#dotdot">dotdot</a></li>
+<li><a class="reference internal" href="#dot">dot</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#negotiating-the-file-system">1.5 Negotiating the file system</a><ul>
+<li><a class="reference internal" href="#pwd">pwd</a></li>
+<li><a class="reference internal" href="#twiddle">twiddle</a></li>
+<li><a class="reference internal" href="#cd">cd</a></li>
+<li><a class="reference internal" href="#ls">ls</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#exercise-unix-1">1.6 Exercise Unix-1</a></li>
+<li><a class="reference internal" href="#summary">1.7 Summary</a><ul>
+<li><a class="reference internal" href="#id3">commands in this section</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#making-and-breaking-things-in-unix">2. Making and breaking things in Unix</a><ul>
+<li><a class="reference internal" href="#id4">2.0 In this section</a></li>
+<li><a class="reference internal" href="#making-and-removing-directories">2.1 Making and removing directories</a><ul>
+<li><a class="reference internal" href="#mkdir">mkdir</a></li>
+<li><a class="reference internal" href="#rmdir">rmdir</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#wildcards">2.2 Wildcards</a></li>
+<li><a class="reference internal" href="#copying-moving-and-deleting-files">2.3 Copying, moving and deleting files</a><ul>
+<li><a class="reference internal" href="#cp">cp</a></li>
+<li><a class="reference internal" href="#rm">rm</a></li>
+<li><a class="reference internal" href="#mv">mv</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#getting-more-control">2.4 Getting more control</a><ul>
+<li><a class="reference internal" href="#quota">quota</a></li>
+<li><a class="reference internal" href="#ssh">ssh</a></li>
+<li><a class="reference internal" href="#df">df</a></li>
+<li><a class="reference internal" href="#du">du</a></li>
+<li><a class="reference internal" href="#ls-l">ls -l</a></li>
+<li><a class="reference internal" href="#chmod">chmod</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#exercise">2.5 Exercise</a></li>
+<li><a class="reference internal" href="#id5">2.6 Summary</a><ul>
+<li><a class="reference internal" href="#id6">Commands in this section</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#some-more-unix-and-associated-tools">3. Some more Unix and associated tools</a><ul>
+<li><a class="reference internal" href="#unix-command-structure-data-flow-and-file-manipulation">3.1 UNIX Command Structure, Data Flow and File Manipulation</a><ul>
+<li><a class="reference internal" href="#streams">streams</a></li>
+<li><a class="reference internal" href="#echo">echo</a></li>
+<li><a class="reference internal" href="#stdout">stdout</a></li>
+<li><a class="reference internal" href="#wc">wc</a></li>
+<li><a class="reference internal" href="#stdin">stdin</a></li>
+<li><a class="reference internal" href="#pipe">pipe</a></li>
+<li><a class="reference internal" href="#sed">sed</a></li>
+<li><a class="reference internal" href="#awk">awk</a></li>
+<li><a class="reference internal" href="#cat">cat</a></li>
+<li><a class="reference internal" href="#date">date</a></li>
+<li><a class="reference internal" href="#appending">appending</a></li>
+<li><a class="reference internal" href="#more">more</a></li>
+<li><a class="reference internal" href="#less">less</a></li>
+<li><a class="reference internal" href="#grep">grep</a></li>
+<li><a class="reference internal" href="#stderr">stderr</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#creating-and-editing-text-files">3.2 Creating and editing text files</a><ul>
+<li><a class="reference internal" href="#vi">vi</a><ul>
+<li><a class="reference internal" href="#id7">3.2.3 Exercise</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#process-control">3.3 Process control</a><ul>
+<li><a class="reference internal" href="#foreground">foreground</a></li>
+<li><a class="reference internal" href="#background">background</a></li>
+<li><a class="reference internal" href="#bg">bg</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#killing-a-job-running-in-the-foreground">3.4 Killing a job running in the foreground</a><ul>
+<li><a class="reference internal" href="#fg">fg</a></li>
+<li><a class="reference internal" href="#kill">kill</a></li>
+<li><a class="reference internal" href="#jobs">jobs</a><ul>
+<li><a class="reference internal" href="#killing-or-changing-the-priority-of-a-job-from-outside-its-parent-shell">3.4.2 Killing or changing the priority of a job from outside its parent shell</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#top">top</a></li>
+<li><a class="reference internal" href="#ps">ps</a></li>
+<li><a class="reference internal" href="#nice">nice</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#remote-access">3.5 remote access</a><ul>
+<li><a class="reference internal" href="#ping">ping</a></li>
+<li><a class="reference internal" href="#sftp">sftp</a></li>
+<li><a class="reference internal" href="#scp">scp</a></li>
+<li><a class="reference internal" href="#id8">ssh</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id9">3.6 Exercise</a></li>
+<li><a class="reference internal" href="#id10">3.7 Summary</a><ul>
+<li><a class="reference internal" href="#id11">Commands in this section</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#summary-of-all-commands">4. Summary of all commands</a></li>
+</ul>
+
+  </div>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/Chapter1_Unix/f3_1_unix_intro.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+    <li><a href="../index.html">geogg122</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2014, Prof. P. Lewis.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

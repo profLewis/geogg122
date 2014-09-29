@@ -1,0 +1,299 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Exercise Unix-1 answers &mdash; GeogG122: Scientific Computing v&lt;release&gt; documentation</title>
+    
+    <link rel="stylesheet" href="../_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../_static/cloud.js"></script>
+    <link rel="top" title="GeogG122: Scientific Computing v&lt;release&gt; documentation" href="../index.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div class="relbar-top">
+        
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+    <li><a href="../index.html">geogg122</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="exercise-unix-1-answers">
+<h1>Exercise Unix-1 answers<a class="headerlink" href="#exercise-unix-1-answers" title="Permalink to this headline">¶</a></h1>
+<p>If you get &#8216;lost&#8217; or confused in any part of this exercise, don&#8217;t panic,
+just use these basic tools to make sure you know where you are on the
+system (<tt class="docutils literal"><span class="pre">pwd</span></tt>) and/or change directory back to your home (<tt class="docutils literal"><span class="pre">cd</span> <span class="pre">~</span></tt>)
+and start again.</p>
+<p>Your session for the exercise with <tt class="docutils literal"><span class="pre">cd</span></tt>, <tt class="docutils literal"><span class="pre">ls</span></tt> and <tt class="docutils literal"><span class="pre">pwd</span></tt> should
+have gone something like this:</p>
+<div class="section" id="using-to-mean-home">
+<h2>Using ~ to mean &#8216;home&#8217;:<a class="headerlink" href="#using-to-mean-home" title="Permalink to this headline">¶</a></h2>
+<div class="code python highlight-python"><div class="highlight"><pre>cd ~
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>/Users/plewis
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">pwd</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="s">u&#39;/Users/plewis&#39;</span>
+</pre></div>
+</div>
+<p>Now, let&#8217;s make sure we understand <em>dot</em> <tt class="docutils literal"><span class="pre">.</span></tt>:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>cd .
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>/Users/plewis
+</pre></div>
+</div>
+<p>Get a listing (this will be different for different users!):</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">ls</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>[34mDesktop[m[m/     [34mDropbox[m[m/     [34mMusic[m[m/       [34mSites[m[m/       [34mstuff[m[m/
+[34mDocuments[m[m/   [34mLibrary[m[m/     [34mPictures[m[m/    [34mgeogg122[m[m/
+[34mDownloads[m[m/   [34mMovies[m[m/      [34mPublic[m[m/      [34mpublic_html[m[m/
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre>cd ~ucfajlg
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>/Users/ucfajlg
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">pwd</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="s">u&#39;/Users/ucfajlg&#39;</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">ls</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>[34mDesktop[m[m/   [34mDownloads[m[m/ [34mMovies[m[m/    [34mPictures[m[m/  [34mSites[m[m/
+[34mDocuments[m[m/ [34mLibrary[m[m/   [34mMusic[m[m/     [34mPublic[m[m/
+</pre></div>
+</div>
+<p>Or, get a listing without changing directory:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>ls ~plewis
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>[34mDesktop[m[m/     [34mDropbox[m[m/     [34mMusic[m[m/       [34mSites[m[m/       [34mstuff[m[m/
+[34mDocuments[m[m/   [34mLibrary[m[m/     [34mPictures[m[m/    [34mgeogg122[m[m/
+[34mDownloads[m[m/   [34mMovies[m[m/      [34mPublic[m[m/      [34mpublic_html[m[m/
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre>ls ~ucfajlg
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>[34mDesktop[m[m/   [34mDownloads[m[m/ [34mMovies[m[m/    [34mPictures[m[m/  [34mSites[m[m/
+[34mDocuments[m[m/ [34mLibrary[m[m/   [34mMusic[m[m/     [34mPublic[m[m/
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre>ls ~plewis/Music
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>[34miTunes[m[m/
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-absolute-path-names">
+<h2>Using absolute path names:<a class="headerlink" href="#using-absolute-path-names" title="Permalink to this headline">¶</a></h2>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">cd</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">plewis</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>/Users/plewis
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">pwd</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="s">u&#39;/Users/plewis&#39;</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">cd</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">ucfajlg</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>/Users/ucfajlg
+</pre></div>
+</div>
+<p>Not get a listing of the contents:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">ls</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">plewis</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>[34mDesktop[m[m/     [34mDropbox[m[m/     [34mMusic[m[m/       [34mSites[m[m/       [34mstuff[m[m/
+[34mDocuments[m[m/   [34mLibrary[m[m/     [34mPictures[m[m/    [34mgeogg122[m[m/
+[34mDownloads[m[m/   [34mMovies[m[m/      [34mPublic[m[m/      [34mpublic_html[m[m/
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre>ls .
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>[34mDesktop[m[m/   [34mDownloads[m[m/ [34mMovies[m[m/    [34mPictures[m[m/  [34mSites[m[m/
+[34mDocuments[m[m/ [34mLibrary[m[m/   [34mMusic[m[m/     [34mPublic[m[m/
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-relative-pathnames-first-make-sure-you-are-in-your-home-directory">
+<h2>Using relative pathnames. First make sure you are in your home directory:<a class="headerlink" href="#using-relative-pathnames-first-make-sure-you-are-in-your-home-directory" title="Permalink to this headline">¶</a></h2>
+<div class="code python highlight-python"><div class="highlight"><pre>cd ~
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>/Users/plewis
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">pwd</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="s">u&#39;/Users/plewis&#39;</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">ls</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>[34mDesktop[m[m/     [34mDropbox[m[m/     [34mMusic[m[m/       [34mSites[m[m/       [34mstuff[m[m/
+[34mDocuments[m[m/   [34mLibrary[m[m/     [34mPictures[m[m/    [34mgeogg122[m[m/
+[34mDownloads[m[m/   [34mMovies[m[m/      [34mPublic[m[m/      [34mpublic_html[m[m/
+</pre></div>
+</div>
+<p>Now we will move relative to this:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>cd ../ucfajlg
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>/Users/ucfajlg
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">pwd</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="s">u&#39;/Users/ucfajlg&#39;</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">ls</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>[34mDesktop[m[m/   [34mDownloads[m[m/ [34mMovies[m[m/    [34mPictures[m[m/  [34mSites[m[m/
+[34mDocuments[m[m/ [34mLibrary[m[m/   [34mMusic[m[m/     [34mPublic[m[m/
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre>ls ../ucfajlg
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>[34mDesktop[m[m/   [34mDownloads[m[m/ [34mMovies[m[m/    [34mPictures[m[m/  [34mSites[m[m/
+[34mDocuments[m[m/ [34mLibrary[m[m/   [34mMusic[m[m/     [34mPublic[m[m/
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre>cd ../plewis
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>/Users/plewis
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">pwd</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="s">u&#39;/Users/plewis&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+        <p class="logo"><a href="../index.html" title="index">
+          <img class="logo" src="../_static/ucl_logo.png" alt="Logo"/>
+        </a></p><div class="sphinxlocaltoc">
+    <h3><a href="../index.html">Page contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Exercise Unix-1 answers</a><ul>
+<li><a class="reference internal" href="#using-to-mean-home">Using ~ to mean &#8216;home&#8217;:</a></li>
+<li><a class="reference internal" href="#using-absolute-path-names">Using absolute path names:</a></li>
+<li><a class="reference internal" href="#using-relative-pathnames-first-make-sure-you-are-in-your-home-directory">Using relative pathnames. First make sure you are in your home directory:</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/Chapter1_Unix/f3_1a_unix_intro_answers.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+    <li><a href="../index.html">geogg122</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2014, Prof. P. Lewis.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>
