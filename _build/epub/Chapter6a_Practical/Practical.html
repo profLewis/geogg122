@@ -1,0 +1,996 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>6a. Assessed Practical</title>
+    
+    <link rel="stylesheet" href="../_static/epub.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /> 
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../Chapter7_ENSO/ENSO.html" title="7.0 Fire/ENSO teleconnections"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../Chapter6_ENVI/envi.html" title="ENVI"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">geogg122</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="a-assessed-practical">
+<h1>6a. Assessed Practical</h1>
+<div class="section" id="introduction">
+<h2>6.1 Introduction</h2>
+<div class="section" id="site-data-and-task-overview">
+<h3>6.1.1 Site, Data and Task overview</h3>
+<p>These notes describe the practical you must submit for assessment in
+this course.</p>
+<p>The practical comes in two parts: (1) data preparation; (2) modelling.</p>
+<p>It is important that you complete both parts of this exercise, as you
+will need to make use of the code and results in the work you submit for
+assessment for this course.</p>
+<ul>
+<li><p class="first"><strong>Data Preparation</strong></p>
+<p>The first task you must complete is to produce a dataset of the
+proportion of HUC catchment 13010001 (Rio Grande headwaters in
+Colorado, USA) that is covered by snow for <strong>two consecutive years</strong>,
+along with associated datasets on temperature (in C) and river
+discharge at the Del Norte monitoring station. You <strong>may not</strong> use
+data from the year 2005, as this is given to you in the illustrations
+above.</p>
+<p>The dataset you produce must have a value for the mean snow cover,
+temperature and discharge in the catchment for every day over each
+year.</p>
+<p>Your write up <strong>must</strong> include fully labelled graph(s) of snow cover,
+temperature and discharge for the catchment for each year (with units
+as appropriate), along with some summary statistics (e.g. mean or
+median, minimum, maximum, and the timing of these).</p>
+<p>You <strong>must</strong> provide evidence of how you got these data (i.e. the
+code and commands you ran to produce the data).</p>
+</li>
+<li><p class="first"><strong>Modelling</strong></p>
+<p>You will have prepared two years of data above. Use one of these
+years to calibrate the (snowmelt) hydrological model (described
+below) and one year to test it.</p>
+<p>The model parameter estimate <em>must</em> be objective (i.e. you can&#8217;t just
+arbitrarily choose a set) and ideally optimal, and you <em>must</em> state
+the equation of the cost function you will try to minimise and
+explain the approach used.</p>
+<p>You <strong>must</strong> state the values of the model parameters that you have
+estimated and show evidence for how you went about calculating them.
+Ideally, you should also state the uncertainty in these parameter
+estimates (not critical to pass this section though).</p>
+<p>You <strong>must</strong> quantify the goodness of fit between your measured flow
+data and that produced by your model, booth for the calibration
+exercise and the validation.</p>
+</li>
+</ul>
+<p>You <strong>must</strong> work individually on this task. If you do not, it will be
+treated as plagiarism. By reading these instructions for this exercise,
+we assume that you are aware of the UCL rules on plagiarism. You can
+find more information on this matter in your student handbook. If in
+doubt about what might constitute plagiarism, ask one of the course
+convenors.</p>
+<p>What you are going to do is to build, calibrate and test a (snowmelt)
+hydrological model, driven by observations in the Rio Grande Headwaters
+in Colorado, USA.</p>
+<p><strong>You will need to process two years of data (N.B. *not* 2005 as that is
+given in the illustrations).</strong></p>
+<p>The purpose of the model is to describe the streamflow at the Del Norte
+measurement station, just on the edge of the catchment.</p>
+<p>The average climate for Del Norte is:</p>
+<div class="figure">
+<img alt="" src="Chapter6a_Practical/files/images/usco0103climatedelnorte.png" />
+</div>
+<p>Further general information is available from various
+<a class="reference external" href="http://www.usclimatedata.com/climate.php?location=USCO0103">websites</a><span class="link-target"> [http://www.usclimatedata.com/climate.php?location=USCO0103]</span>,
+including
+<a class="reference external" href="http://www4.ncdc.noaa.gov/cgi-win/wwcgi.dll?wwDI~StnSrch~StnID~10100138">NOAA</a><span class="link-target"> [http://www4.ncdc.noaa.gov/cgi-win/wwcgi.dll?wwDI~StnSrch~StnID~10100138]</span>.</p>
+<p>You can visualise the site
+<a class="reference external" href="http://mesonet.agron.iastate.edu/sites/site.php?station=CO2184&amp;network=COCLIMATE">here</a><span class="link-target"> [http://mesonet.agron.iastate.edu/sites/site.php?station=CO2184&amp;network=COCLIMATE]</span>.</p>
+<p>First then, we should look at the streamflow data. These data are in the
+file <a class="reference external" href="files/data/delnorte.dat">delnorte.dat</a> for the years 2000 to
+2010 inclusive. You can get further data from <a class="reference external" href="http://waterdata.usgs.gov">http://waterdata.usgs.gov</a>
+if you wish.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># load a pre-cooked version of the data for 2005 (NB -- Dont use this year!!!</span>
+<span class="c"># except perhaps for testing)</span>
+
+<span class="c"># load the data from a pickle file</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="n">pkl_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;files/data/data.pkl&#39;</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">pkl_file</span><span class="p">)</span>
+<span class="n">pkl_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="c"># set up plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;doy&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;doy&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;day of year 2005&#39;</span><span class="p">)</span>
+
+<span class="c"># plot data</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;doy&#39;</span><span class="p">],</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;temp&#39;</span><span class="p">],</span><span class="s">&#39;r&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s">&#39;temperature / C&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;doy&#39;</span><span class="p">],</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;snowprop&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s">&#39;snow cover %&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;doy&#39;</span><span class="p">],</span><span class="mi">100</span><span class="o">-</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;snowprop&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="s">&#39;c&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s">&#39;snow free cover %&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;doy&#39;</span><span class="p">],</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;flow&#39;</span><span class="p">]</span><span class="o">/</span><span class="mf">100.</span><span class="p">,</span><span class="s">&#39;g&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s">&#39;river flow / 100&#39;</span><span class="p">)</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">&#39;best&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>&lt;matplotlib.legend.Legend at 0x1a2cae10&gt;
+</pre></div>
+</div>
+<img alt="../_images/Practical_5_1.png" src="../_images/Practical_5_1.png" />
+<p>we have plotted the streamflow (scaled) in green, the snow cover in
+blue, and the non snow cover in cyan and the temperature in red. It
+should be apparent that thge hydrology is snow melt dominated, and to
+describe this (i.e. to build the simplest possible model) we can
+probably just apply some time lag function to the snow cover.</p>
+</div>
+<div class="section" id="the-model">
+<h3>6.1.2 The Model</h3>
+<p>We will build a mass balance model, in terms of &#8216;snow water equivalent&#8217;:</p>
+<p>The basis of a model is going to be something of the form:</p>
+<div class="math">
+\[SWE = k * snowProportion\]</div>
+<p>where <span class="math">\(SWE\)</span> is the &#8216;snow water equivalent&#8217;, the amount of snow in
+the entire snow pack in the catchment. <span class="math">\(snowProportion\)</span> here then,
+is the proportion of snow cover in the catchment. We lump together
+density and volume terms into the coefficient <span class="math">\(k\)</span>.</p>
+<p><span class="math">\(SWE\)</span> then is the &#8216;mass&#8217; (of water) that is available for melting
+on a particular day. We can obtain <span class="math">\(snowProportion\)</span> from satellite
+data, so we only need the area / density term <span class="math">\(k\)</span>, which we can
+suppose to be constant over time.</p>
+<p>The simplest model of snowmelt is one where we assume that a proportion
+of this <span class="math">\(SWE\)</span> is released (melted) as a function of temperature.
+In its simplest form, this is simply a temperature threshold:</p>
+<p><tt class="docutils literal"><span class="pre">meltDays</span> <span class="pre">=</span> <span class="pre">np.where(temperature</span> <span class="pre">&gt;</span> <span class="pre">tempThresh)[0]</span></tt></p>
+<p>On these melt days then, we add <tt class="docutils literal"><span class="pre">k</span> <span class="pre">*</span> <span class="pre">snowProportion</span></tt> of water into the
+system. For the present, we will ignore direct precipitation. So:</p>
+<p><tt class="docutils literal"><span class="pre">for</span> <span class="pre">d</span> <span class="pre">in</span> <span class="pre">meltDays:</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="pre">water</span> <span class="pre">=</span> <span class="pre">K</span> <span class="pre">*</span> <span class="pre">snowProportion[d]</span></tt></p>
+<p>Now we have a mechanism to release snow melt into the catchment, but
+there will always be some delay in the water reaching the monitoring
+station from far away regions, compared to nearby areas. The function
+that describes this delay can be called a network response function. It
+is often modelled as a Laplace function (an exponential). The idea is
+that if we have a &#8216;flash&#8217; input to the catchment, this <a class="reference external" href="http://www.google.co.uk/search?q=network+response+function&amp;ie=utf-8&amp;oe=utf-8&amp;aq=t&amp;rls=org.mozilla:en-US:official&amp;client=firefox-a#sclient=psy-ab&amp;hl=en&amp;client=firefox-a&amp;hs=qgI&amp;rls=org.mozilla:en-US%3Aofficial&amp;source=hp&amp;q=network+response+function+hydrology&amp;pbx=1&amp;oq=network+response+function+hydrology&amp;aq=f&amp;aqi=&amp;aql=&amp;gs_sm=e&amp;gs_upl=2213l4483l0l4547l10l9l0l0l0l0l226l961l6.2.1l9l0&amp;bav=on.2,or.r_gc.r_pw.r_cp.,cf.osb&amp;fp=d48ede2c1f2a6462&amp;biw=1098&amp;bih=673">network response
+function</a><span class="link-target"> [http://www.google.co.uk/search?q=network+response+function&amp;ie=utf-8&amp;oe=utf-8&amp;aq=t&amp;rls=org.mozilla:en-US:official&amp;client=firefox-a#sclient=psy-ab&amp;hl=en&amp;client=firefox-a&amp;hs=qgI&amp;rls=org.mozilla:en-US%3Aofficial&amp;source=hp&amp;q=network+response+function+hydrology&amp;pbx=1&amp;oq=network+response+function+hydrology&amp;aq=f&amp;aqi=&amp;aql=&amp;gs_sm=e&amp;gs_upl=2213l4483l0l4547l10l9l0l0l0l0l226l961l6.2.1l9l0&amp;bav=on.2,or.r_gc.r_pw.r_cp.,cf.osb&amp;fp=d48ede2c1f2a6462&amp;biw=1098&amp;bih=673]</span>
+will give us what we would measure as a hydrograph at the monitoring
+station (or elsewhere).</p>
+<p>We can parameterise this with a decay factor, p, so that if the amount
+of water on day d is 1, the amount on day d+1 is p, on d+2, p^2 etc:</p>
+<p><tt class="docutils literal"><span class="pre">n</span> <span class="pre">=</span> <span class="pre">np.arange(len(snowProportion))</span> <span class="pre">-</span> <span class="pre">d</span> <span class="pre">m</span> <span class="pre">=</span> <span class="pre">p</span> <span class="pre">**</span> <span class="pre">n</span> <span class="pre">m[np.where(n&lt;0)]=0</span></tt></p>
+<p>so here, <tt class="docutils literal"><span class="pre">m</span></tt> is the decay function:</p>
+<div class="figure">
+<img alt="" src="Chapter6a_Practical/files/images/laplace.png" />
+</div>
+<p>for day 150. This model will transfer a large amount of water of the
+peak day, then less and less as time goes by. So, a simple model then is
+of the form:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">model_accum</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">tempThresh</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">p</span><span class="p">):</span>
+    <span class="n">meltDays</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;temp&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">tempThresh</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">accum</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;snowprop&#39;</span><span class="p">]</span><span class="o">*</span><span class="mf">0.</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">meltDays</span><span class="p">:</span>
+        <span class="n">water</span> <span class="o">=</span> <span class="n">k</span> <span class="o">*</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;snowprop&#39;</span><span class="p">][</span><span class="n">d</span><span class="p">]</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;snowprop&#39;</span><span class="p">]))</span> <span class="o">-</span> <span class="n">d</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">p</span> <span class="o">**</span> <span class="n">n</span>
+        <span class="n">m</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">n</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)]</span><span class="o">=</span><span class="mi">0</span>
+        <span class="n">accum</span> <span class="o">+=</span> <span class="n">m</span> <span class="o">*</span> <span class="n">water</span>
+    <span class="k">return</span> <span class="n">accum</span>
+
+
+<span class="n">tempThresh</span> <span class="o">=</span> <span class="mf">8.5</span>
+<span class="n">k</span> <span class="o">=</span> <span class="mf">2000.0</span>
+<span class="n">p</span> <span class="o">=</span> <span class="mf">0.95</span>
+
+<span class="c"># test it</span>
+<span class="n">accum</span> <span class="o">=</span> <span class="n">model_accum</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">tempThresh</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">p</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This is a very simple model. It has three parameters (<tt class="docutils literal"><span class="pre">tempThresh</span></tt>,
+<tt class="docutils literal"><span class="pre">k</span></tt>, <tt class="docutils literal"><span class="pre">p</span></tt>) and is driven only by temperature and snow cover data. And
+yet, we see that even with a rough guess at what the parameters ought to
+be, we can get a reasonable match with the observed flow data:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;doy&#39;</span><span class="p">],</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;flow&#39;</span><span class="p">],</span><span class="s">&#39;k&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s">&#39;measured&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;doy&#39;</span><span class="p">],</span><span class="n">accum</span><span class="p">,</span><span class="s">&#39;k--&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s">&#39;modelled&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;river flow / units??&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;day of year 2005&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">&#39;best&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>&lt;matplotlib.legend.Legend at 0x1c0b4ed0&gt;
+</pre></div>
+</div>
+<img alt="../_images/Practical_11_1.png" src="../_images/Practical_11_1.png" />
+</div>
+</div>
+<div class="section" id="data-preparation">
+<h2>6.2 Data Preparation</h2>
+<div class="section" id="statement-of-the-task">
+<h3>6.2.1 Statement of the task</h3>
+<p>The first task you must complete is to produce a dataset of the
+proportion of HUC catchment 13010001 (Rio Grande headwaters) that is
+covered by snow for <strong>two years</strong>, along with associated datasets on
+temperature and river discharge at the Del Norte monitoring station.</p>
+<p>The dataset you produce must have a value for the mean snow cover,
+temperature and discharge in the catchment for every day over each year.</p>
+<p>Your write up <strong>must</strong> include a fully labelled graph of snow cover,
+temperature and discharge for the catchment for each year, along with
+some summary statistics (e.g. mean or median, minimum, maximum, and the
+timing of these).</p>
+<div class="figure">
+<img alt="" src="Chapter6a_Practical/files/images/snow.png" />
+</div>
+<p>You should aim to complete this task soon after Reading Week.</p>
+</div>
+<div class="section" id="some-advice">
+<h3>6.2.2 Some Advice</h3>
+<p>You would probably want to use a <strong>daily</strong> snow product for this task,
+such as that available from MODIS, so make sure you know what that is
+and explore the characteristics of the dataset.</p>
+<p>You will notice from the figure above (the figure should give you some
+clue as to a suitable data product) that there will be areas of each
+image for which you have no information (described in the dataset QC).
+You will need to decide what to do about &#8216;missing data&#8217;. For instance,
+you might consider interpolating over missing values.</p>
+<p>The simplest thing might be to produce a mean snow cover over what
+samples are available (ignoring the missing values). But whilst that may
+be sufficient to pass this section, it is far from ideal.</p>
+<p>Whilst you only need to produce an average daily value for the
+catchment, a better approach would be to try to estimate snow cover for
+each pixel in the catchment (e.g. so you could do spatially explicit
+modelling with such data). I stress that this is not strictly necessary,
+but would be an interesting thing to do if you feel able.</p>
+<p>However you decide to process the data, you must give a rationale for
+why you have taken the approach you have done.</p>
+<p>You will notice that if you use MODIS data, you have access to both data
+from Terra (MOD10A) and Aqua (MYD10A), which potentially gives you two
+samples per day. Think about how to take that into account. Again, the
+simplest thing to do might be to just use one of these. That is likely
+to be sufficient, but it would be much better to include both datasets.</p>
+<p>You should be able to hunt around to find the temperature and discharge
+data you want, but we take you through finding them in the advice below.</p>
+</div>
+<div class="section" id="data-advice">
+<h3>6.2.3 Data Advice</h3>
+<div class="section" id="modis-snow-cover-data">
+<h4>6.2.3.1 MODIS snow cover data</h4>
+<p>For MODIS data, you will need to work out which data product you want
+and how to download it. To help you with this, we have included urls of
+the MODIS Terra snow data product <tt class="docutils literal"><span class="pre">MOD10A1</span></tt> and Aqua product
+<tt class="docutils literal"><span class="pre">MYD10A1</span></tt> in the files <tt class="docutils literal"><span class="pre">files/data/robot_snow.????.txt</span></tt>:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>!ls -l files/data/robot_snow.????.txt
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>-rw-rw-r-- 1 plewis plewis  9034752 Nov  6 09:12 files/data/robot_snow.2000.txt
+-rw-rw-r-- 1 plewis plewis 10820568 Nov  6 09:12 files/data/robot_snow.2001.txt
+-rw-rw-r-- 1 plewis plewis 16321938 Nov  6 09:12 files/data/robot_snow.2002.txt
+-rw-rw-r-- 1 plewis plewis 22423068 Nov  6 09:12 files/data/robot_snow.2003.txt
+-rw-rw-r-- 1 plewis plewis  7633374 Nov  6 09:12 files/data/robot_snow.2004.txt
+-rw-rw-r-- 1 plewis plewis 18872448 Nov  6 09:12 files/data/robot_snow.2005.txt
+-rw-rw-r-- 1 plewis plewis 11433078 Nov  6 09:12 files/data/robot_snow.2006.txt
+-rw-rw-r-- 1 plewis plewis 22663686 Nov  6 09:12 files/data/robot_snow.2007.txt
+-rw-rw-r-- 1 plewis plewis 22668990 Nov  6 09:12 files/data/robot_snow.2008.txt
+-rw-rw-r-- 1 plewis plewis 22705317 Nov  6 09:12 files/data/robot_snow.2009.txt
+-rw-rw-r-- 1 plewis plewis 22712370 Nov  6 09:13 files/data/robot_snow.2010.txt
+-rw-rw-r-- 1 plewis plewis 17129166 Nov  6 09:13 files/data/robot_snow.2011.txt
+-rw-rw-r-- 1 plewis plewis 22756824 Nov  6 09:13 files/data/robot_snow.2012.txt
+-rw-rw-r-- 1 plewis plewis 18104898 Nov  6 09:13 files/data/robot_snow.2013.txt
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre>!head -10 &lt; files/data/robot_snow.2007.txt
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2007.01.01/MYD10A1.A2007001.h00v08.005.2008309053908.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2007.01.01/MYD10A1.A2007001.h00v09.005.2008309053510.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2007.01.01/MYD10A1.A2007001.h00v10.005.2008309053824.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2007.01.01/MYD10A1.A2007001.h01v08.005.2008309053759.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2007.01.01/MYD10A1.A2007001.h01v09.005.2008309053913.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2007.01.01/MYD10A1.A2007001.h01v10.005.2008309053817.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2007.01.01/MYD10A1.A2007001.h01v11.005.2008309053918.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2007.01.01/MYD10A1.A2007001.h02v06.005.2008309053503.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2007.01.01/MYD10A1.A2007001.h02v08.005.2008309053822.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2007.01.01/MYD10A1.A2007001.h02v09.005.2008309054221.hdf
+</pre></div>
+</div>
+<p>We can use the usual tools to explore the MODIS hdf files:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">gdal</span>
+<span class="n">target_vector_file</span> <span class="o">=</span> <span class="nb">file</span>
+<span class="n">modis_file</span> <span class="o">=</span> <span class="s">&#39;files/data/MYD10A1.A2003026.h09v05.005.2008047035848.hdf&#39;</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="n">modis_file</span><span class="p">)</span>
+<span class="n">data_layer</span> <span class="o">=</span> <span class="s">&#39;MOD_Grid_Snow_500m:Fractional_Snow_Cover&#39;</span>
+
+<span class="n">subdatasets</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">GetSubDatasets</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">fname</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">subdatasets</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">name</span>
+    <span class="k">print</span> <span class="s">&quot;</span><span class="se">\t</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">fname</span>
+
+<span class="n">fname</span> <span class="o">=</span> <span class="s">&#39;HDF4_EOS:EOS_GRID:&quot;</span><span class="si">%s</span><span class="s">&quot;:</span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">modis_file</span><span class="p">,</span><span class="n">data_layer</span><span class="p">)</span>
+<span class="n">raster</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>[2400x2400] Snow_Cover_Daily_Tile MOD_Grid_Snow_500m (8-bit unsigned integer)
+    HDF4_EOS:EOS_GRID:&quot;files/data/MYD10A1.A2003026.h09v05.005.2008047035848.hdf&quot;:MOD_Grid_Snow_500m:Snow_Cover_Daily_Tile
+[2400x2400] Snow_Spatial_QA MOD_Grid_Snow_500m (8-bit unsigned integer)
+    HDF4_EOS:EOS_GRID:&quot;files/data/MYD10A1.A2003026.h09v05.005.2008047035848.hdf&quot;:MOD_Grid_Snow_500m:Snow_Spatial_QA
+[2400x2400] Snow_Albedo_Daily_Tile MOD_Grid_Snow_500m (8-bit unsigned integer)
+    HDF4_EOS:EOS_GRID:&quot;files/data/MYD10A1.A2003026.h09v05.005.2008047035848.hdf&quot;:MOD_Grid_Snow_500m:Snow_Albedo_Daily_Tile
+[2400x2400] Fractional_Snow_Cover MOD_Grid_Snow_500m (8-bit unsigned integer)
+    HDF4_EOS:EOS_GRID:&quot;files/data/MYD10A1.A2003026.h09v05.005.2008047035848.hdf&quot;:MOD_Grid_Snow_500m:Fractional_Snow_Cover
+</pre></div>
+</div>
+</div>
+<div class="section" id="boundary-data">
+<h4>6.2.3.2 Boundary Data</h4>
+<p>Boundary data, such as catchments, might typically come as <a class="reference external" href="http://en.wikipedia.org/wiki/Shapefile">ESRI
+shapefiles</a><span class="link-target"> [http://en.wikipedia.org/wiki/Shapefile]</span> or may be in
+other vector formats. There tends to be variable quality among different
+databases, but a reliable source for catchment data the USA is the
+<a class="reference external" href="http://water.usgs.gov/GIS/huc.html">USGS</a><span class="link-target"> [http://water.usgs.gov/GIS/huc.html]</span>. One set of catchments in
+the tile we have is the Rio Grande headwaters, which we can
+<a class="reference external" href="http://water.usgs.gov/GIS/huc_rdb.html">see</a><span class="link-target"> [http://water.usgs.gov/GIS/huc_rdb.html]</span> has a HUC 8-digit code
+of 13010001. The full dataset is easily found from the
+<a class="reference external" href="http://water.usgs.gov/GIS/dsdl/huc250k_shp.zip">USGS</a><span class="link-target"> [http://water.usgs.gov/GIS/dsdl/huc250k_shp.zip]</span> or
+<a class="reference external" href="files/data/huc250k_shp.zip">locally</a>. Literature and associated data
+concerning this area can be found
+<a class="reference external" href="http://water.usgs.gov/lookup/getwatershed?13010001">here</a><span class="link-target"> [http://water.usgs.gov/lookup/getwatershed?13010001]</span>.
+Associated <a class="reference external" href="http://water.usgs.gov/lookup/getgislist?type=huc&amp;value=13010001">GIS data are
+here</a><span class="link-target"> [http://water.usgs.gov/lookup/getgislist?type=huc&amp;value=13010001]</span>,
+including the <a class="reference external" href="http://water.usgs.gov/GIS/dsdl/ds573_wbdhuc8.ZIP">watershed boundary
+data</a><span class="link-target"> [http://water.usgs.gov/GIS/dsdl/ds573_wbdhuc8.ZIP]</span>.</p>
+<p>Data more specific to our particular catchment of interest can be found
+on the <a class="reference external" href="http://txpub.usgs.gov/USACE/resources.aspx">Rio Grande Data Project
+pages</a><span class="link-target"> [http://txpub.usgs.gov/USACE/resources.aspx]</span>.</p>
+<p>You should download the file
+<a class="reference external" href="http://txpub.usgs.gov/USACE/data/water_resources/Hydrologic_Units.zip">Hydrologic_Units.zip</a><span class="link-target"> [http://txpub.usgs.gov/USACE/data/water_resources/Hydrologic_Units.zip]</span>
+or get this <a class="reference external" href="files/data/Hydrologic_Units.zip">locally</a>. Obviously,
+you will need to <tt class="docutils literal"><span class="pre">unzip</span></tt> this file to get at the shapefile
+<tt class="docutils literal"><span class="pre">`Hydrologic_Units/HUC_Polygons.shp</span></tt> &lt;files/data/Hydrologic_Units/HUC_Polygons.shp&gt;`__
+within it.</p>
+<p>You can explore the shape file with the following:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>!ogrinfo files/data/Hydrologic_Units/HUC_Polygons.shp HUC_Polygons | head -89 | tail -16
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>OGRFeature(HUC_Polygons):2
+  HUC (Integer) = 13010001
+  REG_NAME (String) = Rio Grande Region
+  SUB_NAME (String) = Rio Grande Headwaters
+  ACC_NAME (String) = Rio Grande Headwaters
+  CAT_NAME (String) = Rio Grande Headwaters. Colorado.
+  HUC2 (Integer) = 13
+  HUC4 (Integer) = 1301
+  HUC6 (Integer) = 130100
+  REG (Integer) = 13
+  SUB (Integer) = 1301
+  ACC (Integer) = 130100
+  CAT (Integer) = 13010001
+  CAT_NUM (String) = 13010001
+  Shape_Leng (Real) = 313605.66409400001
+  Shape_Area (Real) = 3458016895.23000001907
+</pre></div>
+</div>
+<p>This tells us that we want <strong>HUC feature 2</strong> (catchment 13010001).</p>
+<p>We can produce a mask with <tt class="docutils literal"><span class="pre">raster_mask</span></tt>, but in this case, we need to
+use a function <tt class="docutils literal"><span class="pre">raster_mask2</span></tt>:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="s">&#39;files/python&#39;</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">raster_mask</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">m</span> <span class="o">=</span> <span class="n">raster_mask2</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span>\
+                <span class="n">target_vector_file</span><span class="o">=</span><span class="s">&quot;files/data/Hydrologic_Units/HUC_Polygons.shp&quot;</span><span class="p">,</span>\
+                <span class="n">attribute_filter</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>&lt;matplotlib.colorbar.Colorbar instance at 0x2b6b7fcd6cb0&gt;
+</pre></div>
+</div>
+<img alt="../_images/Practical_32_1.png" src="../_images/Practical_32_1.png" />
+<p>The catchment is only a very small portion of the dataset, so you should
+make sure that you perform masking when you read the dataset in and only
+extract the area of data that you want.</p>
+</div>
+<div class="section" id="discharge-data">
+<h4>6.2.3.3 Discharge Data</h4>
+<p>The river discharge data are in the file
+<tt class="docutils literal"><span class="pre">`files/data/delnorte.dat</span></tt> &lt;files/data/delnorte.dat&gt;`__.</p>
+<p>If you examine the file:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>!head -35 &lt; files/data/delnorte.dat
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre># ---------------------------------- WARNING ----------------------------------------
+# The data you have obtained from this automated U.S. Geological Survey database
+# have not received Director&#39;s approval and as such are provisional and subject to
+# revision.  The data are released on the condition that neither the USGS nor the
+# United States Government may be held liable for any damages resulting from its use.
+# Additional info: http://waterdata.usgs.gov/nwis/help/?provisional
+#
+# File-format description:  http://waterdata.usgs.gov/nwis/?tab_delimited_format_info
+# Automated-retrieval info: http://waterdata.usgs.gov/nwis/?automated_retrieval_info
+#
+# Contact:   gs-w_support_nwisweb@usgs.gov
+# retrieved: 2011-09-30 09:35:31 EDT       (caww02)
+#
+# Data for the following 1 site(s) are contained in this file
+#    USGS 08220000 RIO GRANDE NEAR DEL NORTE, CO
+# -----------------------------------------------------------------------------------
+#
+# Data provided for site 08220000
+#    DD parameter statistic   Description
+#    01   00060     00003     Discharge, cubic feet per second (Mean)
+#
+# Data-value qualification codes included in this output:
+#     A  Approved for publication -- Processing and review completed.
+#     e  Value has been estimated.
+# agency_cd site_no datetime        01_00060_00003  01_00060_00003_cd
+# 5s        15s     20d     14n     10s
+USGS        08220000        2000-01-01      190     A:e
+USGS        08220000        2000-01-02      170     A:e
+USGS        08220000        2000-01-03      160     A:e
+USGS        08220000        2000-01-04      160     A:e
+USGS        08220000        2000-01-05      170     A:e
+USGS        08220000        2000-01-06      180     A:e
+USGS        08220000        2000-01-07      170     A:e
+USGS        08220000        2000-01-08      190     A:e
+USGS        08220000        2000-01-09      190     A:e
+</pre></div>
+</div>
+<p>you will see comment lines that start with <tt class="docutils literal"><span class="pre">#</span></tt>, followed by data
+lines.</p>
+<p>The easiest way to read these data would be to use:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="nb">file</span> <span class="o">=</span> <span class="s">&#39;files/data/delnorte.dat&#39;</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="nb">file</span><span class="p">,</span><span class="n">usecols</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="n">unpack</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># so you have the dates in</span>
+<span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">array</span><span class="p">([</span><span class="s">&#39;2000-01-01&#39;</span><span class="p">,</span> <span class="s">&#39;2000-01-02&#39;</span><span class="p">,</span> <span class="s">&#39;2000-01-03&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="s">&#39;2010-12-29&#39;</span><span class="p">,</span>
+       <span class="s">&#39;2010-12-30&#39;</span><span class="p">,</span> <span class="s">&#39;2010-12-31&#39;</span><span class="p">],</span>
+      <span class="n">dtype</span><span class="o">=</span><span class="s">&#39;|S10&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># and the stream flow in data[1]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>[&lt;matplotlib.lines.Line2D at 0x2b6b7c573950&gt;]
+</pre></div>
+</div>
+<img alt="../_images/Practical_40_1.png" src="../_images/Practical_40_1.png" />
+<p>You will need to convert the date field (i.e. the data in <tt class="docutils literal"><span class="pre">data[0]</span></tt>)
+into the day of year.</p>
+<p>This is readily accomplished using <tt class="docutils literal"><span class="pre">datetime</span></tt>:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="c"># transform the first one</span>
+<span class="n">ds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">ds</span>
+<span class="n">year</span><span class="p">,</span><span class="n">doy</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="n">ds</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">ds</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">ds</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">&#39;%Y %j&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="k">print</span> <span class="n">year</span><span class="p">,</span><span class="n">doy</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>[2000    1    1]
+2000 001
+</pre></div>
+</div>
+</div>
+<div class="section" id="temperature-data">
+<h4>6.2.3.4 Temperature data</h4>
+<p>We can directly access temperature data from
+<a class="reference external" href="http://ccc.atmos.colostate.edu/cgi-bin/dlydb.pl?yrbeg=2000&amp;yrend=2020&amp;station=52184+DEL+NORTE&amp;proc=2+-+List+Format+%28see+docs%29">here</a><span class="link-target"> [http://ccc.atmos.colostate.edu/cgi-bin/dlydb.pl?yrbeg=2000&amp;yrend=2020&amp;station=52184+DEL+NORTE&amp;proc=2+-+List+Format+%28see+docs%29]</span>.</p>
+<p>The format of <tt class="docutils literal"><span class="pre">`delNorteT.dat</span></tt> &lt;files/data/delNorteT.dat&gt;`__ is given
+here.</p>
+<p>The first three fields are date fields (<tt class="docutils literal"><span class="pre">YEAR</span></tt>, <tt class="docutils literal"><span class="pre">MONTH</span></tt> and
+<tt class="docutils literal"><span class="pre">DAY</span></tt>), followed by <tt class="docutils literal"><span class="pre">TMAX</span></tt>, <tt class="docutils literal"><span class="pre">TMIN</span></tt>, <tt class="docutils literal"><span class="pre">PRCP</span></tt>, <tt class="docutils literal"><span class="pre">SNOW</span></tt>, <tt class="docutils literal"><span class="pre">SNDP</span></tt>.</p>
+<p>You should read in the temperature data for the days and years that you
+want.</p>
+<p>For temperature, you might take a <strong>mean of TMAX and TMIN</strong>.</p>
+<p><strong>Note that these are in Fahrenheit. You should convert them to
+Celcius.</strong></p>
+<p>Note also that there are missing data (values <tt class="docutils literal"><span class="pre">9998</span></tt> and <tt class="docutils literal"><span class="pre">9999</span></tt>).
+You will need to filter these and interpolate the data in some way. A
+median might be a good approach, but any interpolation will suffice.</p>
+<p>With that processing then, you should have a dataset, Temperature that
+will look something like (in cyan, for the year 2005):</p>
+<div class="figure">
+<img alt="" src="Chapter6a_Practical/files/images/temperature.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="coursework">
+<h2>6.3 Coursework</h2>
+<p>You need to submit you coursework in the usual manner by the usual
+submission date.</p>
+<p>You <strong>must</strong> work individually on this task. If you do not, it will be
+treated as plagiarism. By reading these instructions for this exercise,
+we assume that you are aware of the UCL rules on plagiarism. You can
+find more information on this matter in your student handbook. If in
+doubt about what might constitute plagiarism, ask one of the course
+convenors.</p>
+<div class="section" id="summary-of-coursework-requirements">
+<h3>6.3.1 Summary of coursework requirements</h3>
+<ul>
+<li><p class="first"><strong>Data Preparation</strong></p>
+<p>The first task you must complete is to produce a dataset of the
+proportion of HUC catchment 13010001 (Rio Grande headwaters in
+Colorado, USA) that is covered by snow for <strong>two consecutive years</strong>,
+along with associated datasets on temperature (in C) and river
+discharge at the Del Norte monitoring station.</p>
+<p>You <strong>may not</strong> use data from the year 2005, as this is given to you
+in the illustrations above.</p>
+<p>The dataset you produce must have a value for the mean snow cover,
+temperature and discharge in the catchment for every day over each
+year.</p>
+<p>Your write up <strong>must</strong> include fully labelled graph(s) of snow cover,
+temperature and discharge for the catchment for each year (with units
+as appropriate), along with some summary statistics (e.g. mean or
+median, minimum, maximum, and the timing of these).</p>
+<p>You <strong>must</strong> provide evidence of how you got these data (i.e. the
+code and commands you ran to produce the data).</p>
+</li>
+<li><p class="first"><strong>Modelling</strong></p>
+<p>You will have prepared two years of data above. Use one of these
+years to calibrate the (snowmelt) hydrological model (described
+below) and one year to test it.</p>
+<p>The model parameter estimate <em>must</em> be objective (i.e. you can&#8217;t just
+arbitrarily choose a set) and ideally optimal, and you <em>must</em> state
+the equation of the cost function you will try to minimise and
+explain the approach used.</p>
+<p>You <strong>must</strong> state the values of the model parameters that you have
+estimated and show evidence for how you went about calculating them.
+Ideally, you should also state the uncertainty in these parameter
+estimates (not critical to pass this section though).</p>
+<p>You <strong>must</strong> quantify the goodness of fit between your measured flow
+data and that produced by your model, booth for the calibration
+exercise and the validation.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="summary-of-advice">
+<h3>6.3.2 Summary of Advice</h3>
+<p>The first task involves pulling datasets from different sources. No
+individual part of that should be too difficult, but you must put this
+together from the material we have done so far. It is more a question of
+organisation then.</p>
+<p>Perhaps think first about where you want to end up with on this (the
+&#8216;output&#8217;). This might for example be a dictionary with keys <tt class="docutils literal"><span class="pre">temp</span></tt>,
+<tt class="docutils literal"><span class="pre">doy</span></tt>, <tt class="docutils literal"><span class="pre">snow</span></tt> and <tt class="docutils literal"><span class="pre">flow</span></tt>, where each of these would be an array
+with 365 values (or 366 in a leap year).</p>
+<p>Then consider the datasets you have: these are: (i) a stack of MODIS
+data with daily observations; (ii) temperature data in a file; (iii)
+flow data in a file.</p>
+<p>It might be a little fiddly getting the data you want from the flow and
+temperature data files, but its not very complicated. You will need to
+consider flagging invalid observations and perhaps interpolating between
+these.</p>
+<p>Processing the MODIS data might take a little more thought, but it is
+much the same process. Again, we read the datasets in, trying to make
+this efficient on data size by only using the area of the vector data
+mask as in a previous exercise. The data reading will be very similar to
+reading the MODIS LAI product, but you need to work out and implement
+what changes are necessary. As advised abovem you should use the
+<tt class="docutils literal"><span class="pre">raster_mask2()</span></tt> function for creating the spatial data masks. Again,
+you will need to interpolate or perhaps smooth between observations, and
+then process the snow cover proportions to get an average over the
+catchment.</p>
+<p>The second task revolves around using the model that we have developed
+above in the function <tt class="docutils literal"><span class="pre">model_accum()</span></tt>. You have been through previous
+examples in Python where you attempt to estimate some model parameters
+given an initial estimate of the parameters and some cost function to be
+minimised. Solving the model calibration part of problem should follow
+those same lines then. Testing (validation) should be easy enough. Don&#8217;t
+forget to include the estimated parameters (and other relevant
+information, e.g. your initial estimate, uncertainties if available) in
+your write up.</p>
+<p>There is quite a lot of data presentation here, and you need to provide
+<em>evidence</em> that you have done the task. Make sure you use images (e.g.
+of snow cover varying), graphs (e.g. modelled and predicted flow, etc.),
+and tables (e.g. model parameter estimates) throughout, as appropriate.</p>
+<p>If, for some reason, you are unable to complete the first part of the
+practical, you should submit what you can for that first part, and
+continue with calibrating the model using the 2005 dataset that we used
+above. This would be far from ideal as you would not have completed the
+required elements for either part in that case, but it would generall be
+better than not submitting anything.</p>
+</div>
+<div class="section" id="further-advice">
+<h3>6.3.3 Further advice</h3>
+<p>There is plenty of scope here for going beyond the basic requirements,
+if you get time and are interested (and/or want a higher mark!).</p>
+<p>You will be given credit for all additional work included in the write
+up, <strong>once you have achieved the basic requirements</strong>. So, there is no
+point (i.e. you will not get credit for) going off on all sorts of
+interesting lines of exploration here <em>unless</em> you have first completed
+the core task.</p>
+</div>
+<div class="section" id="structure-of-the-report">
+<h3>6.3.4 Structure of the Report</h3>
+<p>The required elements of the report are:</p>
+<div class="highlight-python"><div class="highlight"><pre>Introduction (5%)
+Data Preparation (45%)
+Modelling (45%)
+Discussion/Conclusions (5%)
+</pre></div>
+</div>
+<p>The figures in brackets indicate the percentage of marks that we will
+award for each section of the report.</p>
+<div class="section" id="introduction-5">
+<h4>Introduction (5%)</h4>
+<p>This should be of around 2-3 pages.</p>
+<p>It should introduce the purpose of the study, being at a base level, ‘to
+build and calibrate a snow/hydrological model in Python’.</p>
+<p>It should provide some background to building models of this sort (their
+purpose/role) and include some review of the types of models that might
+be built, with reference to the literature (journals).</p>
+<p>A pass mark for this section will describe and explain the purpose of
+the study and examine some of the context to such modelling, with
+appropriate literature being cited. Higher or lower marks will depend on
+the depth that this goes into and the clarity of expression.</p>
+</div>
+<div class="section" id="data-preparation-45">
+<h4>Data Preparation (45%)</h4>
+<p>This should contain around 3-4 pages of text, other than codes, figures
+and tables.</p>
+<p>For a pass mark in this section, you must :</p>
+<ul class="simple">
+<li>introduce the study site, giving general site characteristics, with
+appropriate figures.</li>
+<li>provide an overview of the data used in the study (snow cover,
+temperature, flow data) and produce visualisations of the data you
+are using (images, graphs, tables as appropriate) alongside
+appropriate summary statistics.</li>
+<li>fully demonstrate how you got these data to this point of processing
+&#8211; i.e. submit appropriate Python codes and/or unix commands that
+when run in the sequence you describe would produce the data you have
+described.</li>
+</ul>
+<p>The weighting here on the study site description is 5% and on the rest,
+40%.</p>
+<p>You can obtain higher marks here by going beyond the basics in your
+approaches to the data or modelling. You still need to demonstrate that
+you have done the core &#8216;pass&#8217; material.</p>
+</div>
+<div class="section" id="modelling">
+<h4>Modelling</h4>
+<p>This should contain around 3-4 pages of text, other than codes, figures
+and tables.</p>
+<p>For a pass mark in this section, you must :</p>
+<ul class="simple">
+<li>provide an overview of the model that is constructed here, explaining
+the role of each parameter.</li>
+<li>explain the way in which model calibration and validation is to be
+undertaken.</li>
+<li>provide an overview of results of the calibration and validation
+along with relevant visualisations (images, graphs, tables as
+appropriate).</li>
+<li>fully demonstrate how you got these results &#8211; i.e. submit
+appropriate Python codes and/or unix commands that when run in the
+sequence you describe would produce the results you have described.</li>
+</ul>
+<p>The weighting here is 5% for the model description and on the rest, 40%.</p>
+<p>For a mildly improved mark, you should examine and discuss the model
+assumptions in the context of any modelling literature you looked at in
+the Introduction. For a significantly improved mark, you could try
+improving the model.</p>
+</div>
+<div class="section" id="discussion-and-conclusions">
+<h4>Discussion and Conclusions</h4>
+<p>This section should be around 2 pages. It should provide a discussion
+and analysis of your results and you should draw appropriate conclusions
+from these.</p>
+<p>You can also use this section to critique the model/data/methods, and
+suggest ways that you would improve things. If you do this, you must
+give some indication of how that would be achieved. You will get no
+credit for simply saying ‘next time I would make the code more
+efficient’, for example.</p>
+<p>Very good/excellent marks would normally require you to cite appropriate
+literature.</p>
+<p>A sufficient effort for a pass would make a reasonable effort at
+discussing these results in the context of some literature and draw a
+few (non trivial) conclusions from the study.</p>
+</div>
+</div>
+<div class="section" id="computer-code">
+<h3>6.3.5 Computer Code</h3>
+<div class="section" id="general-requirements">
+<h4>General requirements</h4>
+<p>You will obviously need to submit computer codes as part of this
+assessment. Some flexibility in the style of these codes is to be
+expected. For example, some might write a class that encompasses the
+functionality for all tasks. Some poeple might have multiple versions of
+codes with different functionality. All of these, and other reasonable
+variations are allowed.</p>
+<p>All codes needed to demonstrate that you have performed the core tasks
+are required to be included in the submission. You should include all
+codes that you make use of in the main body of the text in the main
+body. Any other codes that you want to refer to (e.g. something you
+tried out as an enhancement and didn’t quite get there) you can include
+in appendices.</p>
+<p>All codes should be well-commented. Part of the marks you get for code
+will depend on the adequacy of the commenting.</p>
+</div>
+<div class="section" id="degree-of-original-work-required-and-plagiarism">
+<h4>Degree of original work required and plagiarism</h4>
+<p>If you use a piece of code verbatim that you have taken from the course
+pages or any other source, <strong>you must acknowledge this</strong> in comments in
+your text. <strong>Not to do so is plagiarism</strong>. Where you have taken some
+part (e.g. a few lines) of someone else’s code, <strong>you should also
+indicate this</strong>. If some of your code is heavily based on code from
+elsewhere, <strong>you must also indicate that</strong>.</p>
+<p>Some examples. You may recognise this snippet of code from above.</p>
+<p>The first example is guilty of strong plagiarism, it does not seek to
+acknowledge the source of this code, even though it is just a direct
+copy, pasted into a method called <tt class="docutils literal"><span class="pre">model()</span></tt>:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="n">tempThresh</span><span class="o">=</span><span class="mf">9.0</span><span class="p">,</span><span class="n">K</span><span class="o">=</span><span class="mf">2000.0</span><span class="p">,</span><span class="n">p</span><span class="o">=</span><span class="mf">0.96</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;need to comment this further ...</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+    <span class="n">meltDays</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">temperature</span> <span class="o">&gt;</span> <span class="n">tempThresh</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">accum</span> <span class="o">=</span> <span class="n">snowProportion</span><span class="o">*</span><span class="mf">0.</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">meltDays</span><span class="p">:</span>
+        <span class="n">water</span> <span class="o">=</span> <span class="n">K</span> <span class="o">*</span> <span class="n">snowProportion</span><span class="p">[</span><span class="n">d</span><span class="p">]</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">snowProportion</span><span class="p">))</span> <span class="o">-</span> <span class="n">d</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">p</span> <span class="o">**</span> <span class="n">n</span>
+        <span class="n">m</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">n</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)]</span><span class="o">=</span><span class="mi">0</span>
+        <span class="n">accum</span> <span class="o">+=</span> <span class="n">m</span> <span class="o">*</span> <span class="n">water</span>
+    <span class="k">return</span> <span class="n">accum</span>
+</pre></div>
+</div>
+<p>This is <strong>not</strong> acceptable.</p>
+<p>This should probably be something along the lines of:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="n">tempThresh</span><span class="o">=</span><span class="mf">9.0</span><span class="p">,</span><span class="n">K</span><span class="o">=</span><span class="mf">2000.0</span><span class="p">,</span><span class="n">p</span><span class="o">=</span><span class="mf">0.96</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;need to comment this further ...</span>
+
+<span class="sd">    This code is taken directly from</span>
+<span class="sd">    &quot;Modelling delay in a hydrological network&quot;</span>
+<span class="sd">    by P. Lewis http://www2.geog.ucl.ac.uk/~plewis/geogg122/DelNorte.html</span>
+<span class="sd">    and wrapped into a method.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c"># my code: make sure numpy is imported</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+    <span class="c"># code below verbatim from Lewis</span>
+    <span class="n">meltDays</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">temperature</span> <span class="o">&gt;</span> <span class="n">tempThresh</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">accum</span> <span class="o">=</span> <span class="n">snowProportion</span><span class="o">*</span><span class="mf">0.</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">meltDays</span><span class="p">:</span>
+        <span class="n">water</span> <span class="o">=</span> <span class="n">K</span> <span class="o">*</span> <span class="n">snowProportion</span><span class="p">[</span><span class="n">d</span><span class="p">]</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">snowProportion</span><span class="p">))</span> <span class="o">-</span> <span class="n">d</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">p</span> <span class="o">**</span> <span class="n">n</span>
+        <span class="n">m</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">n</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)]</span><span class="o">=</span><span class="mi">0</span>
+        <span class="n">accum</span> <span class="o">+=</span> <span class="n">m</span> <span class="o">*</span> <span class="n">water</span>
+    <span class="c"># my code: return accumulator</span>
+    <span class="k">return</span> <span class="n">accum</span>
+</pre></div>
+</div>
+<p>Now, we acknowledge that this is in essence a direct copy of someone
+else’s code, and clearly state this. We do also show that we have added
+some new lines to the code, and that we have wrapped this into a method.</p>
+<p>In the next example, we have seen that the way m is generated is in fact
+rather inefficient, and have re-structured the code. It is partially
+developed from the original code, and acknowledges this:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="n">tempThresh</span><span class="o">=</span><span class="mf">9.0</span><span class="p">,</span><span class="n">K</span><span class="o">=</span><span class="mf">2000.0</span><span class="p">,</span><span class="n">p</span><span class="o">=</span><span class="mf">0.96</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;need to comment this further ...</span>
+
+<span class="sd">    This code after the model developed in</span>
+<span class="sd">    &quot;Modelling delay in a hydrological network&quot;</span>
+<span class="sd">    by P. Lewis</span>
+<span class="sd">    http://www2.geog.ucl.ac.uk/~plewis/geogg122/DelNorte.html</span>
+
+<span class="sd">    My modifications have been to make the filtering more efficient.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c"># my code: make sure numpy is imported</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+    <span class="c"># code below verbatim from Lewis unless otherwise indicated</span>
+    <span class="n">meltDays</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">temperature</span> <span class="o">&gt;</span> <span class="n">tempThresh</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">accum</span> <span class="o">=</span> <span class="n">snowProportion</span><span class="o">*</span><span class="mf">0.</span>
+
+    <span class="c"># my code: pull the filter block out of the loop</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">snowProportion</span><span class="p">))</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">p</span> <span class="o">**</span> <span class="n">n</span>
+
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">meltDays</span><span class="p">:</span>
+        <span class="n">water</span> <span class="o">=</span> <span class="n">K</span> <span class="o">*</span> <span class="n">snowProportion</span><span class="p">[</span><span class="n">d</span><span class="p">]</span>
+
+        <span class="c"># my code: shift the filter on by one day</span>
+        <span class="c"># ...do something clever to shift it on by one day</span>
+
+        <span class="n">accum</span> <span class="o">+=</span> <span class="n">m</span> <span class="o">*</span> <span class="n">water</span>
+    <span class="c"># my code: return accumulator</span>
+    <span class="k">return</span> <span class="n">accum</span>
+</pre></div>
+</div>
+<p>This example makes it clear that significant modifications have been
+made to the code structure (and probably to its efficiency) although the
+basic model and looping comes from an existing piece of code. It clearly
+highlights what the actual modifications have been. Note that this is
+not a working example!!</p>
+<p>Although you are supposed to do this piece of work on your own, there
+might be some circumstances under which someone has significantly helped
+you to develop the code (e.g. written the main part of it for you &amp;
+you’ve just copied that with some minor modifications). You <strong>must</strong>
+acknowledge in your code comments if this has happened. On the whole
+though, this should not occur, as you <strong>must</strong> complete this work on
+your own.</p>
+<p>If you take a piece of code from somewhere else and all you do is change
+the variable names and/or other cosmetic changes, you <strong>must</strong>
+acknowledge the source of the original code (with a URL if available).</p>
+<p>Plagiarism in coding is a tricky issue. One reason for that is that
+often the best way to learn something like this is to find an example
+that someone else has written and adapt that to your purposes. Equally,
+if someone has written some tool/library to do what you want to do, it
+would generally not be worthwhile for you to write your own but to
+concentrate on using that to achieve something new. Even in general code
+writing (i.e. when not submitting it as part of your assessment) you and
+anyone else who ever has to read your code would find it of value to
+make reference to where you found the material to base what you did on.
+The key issue to bear in mind in this work, as it is submitted ‘as your
+own work’ is that, to avoid being accused of plagiarism and to allow a
+fair assessment of what you have done, you must clearly acknowledge
+which parts of it are your own, and the degree to which you could claim
+them to be your own.</p>
+<p>For example, based on ... is absolutely fine, and you would certainly be
+given credit for what you have done. In many circumstances ‘taken
+verbatim from ...’ would also be fine (provided it is acknowledged) but
+then you would be given credit for what you had done with the code that
+you had taken from elsewhere (e.g. you find some elegant way of doing
+the graphs that someone has written and you make use of it for
+presenting your results).</p>
+<p>The difference between what you submit here and the code you might write
+if this were not a piece submitted for assessment is that you the vast
+majority of the credit you will gain for the code will be based on the
+degree to which you demonstrate that you can write code to achieve the
+required tasks. There would obviously be some credit for taking codes
+from the coursenotes and bolting them together into something that
+achieves the overall aim: provided that worked, and you had commented it
+adequately and acknowledge what the extent of your efforts had been, you
+should be able to achieve a pass in that component of the work. If there
+was no original input other than vbolting pieces of existing code
+together though, you be unlikely to achieve more than a pass. If you get
+less than a pass in another component of the coursework, that then puts
+you in danger of an overall fail.</p>
+<p>Provided you achieve the core tasks, the more original work that you
+do/show (that is of good quality), the higher the mark you will get.
+Once you have achieved the core tasks, even if you try something and
+don’t quite achieve it, is is probably worth including, as you may get
+marks for what you have done (or that fact that it was a good or
+interesting thing to try to do).</p>
+</div>
+<div class="section" id="documentation">
+<h4>Documentation</h4>
+<p>Note: All methods/functions and classes must be documented for the code
+to be adequate. Generally, this will contain:</p>
+<ul class="simple">
+<li>some text on the purpose of the method (/function/class)</li>
+<li>some text describing the inputs and outputs, including reference to
+any relevant details such as datatype, shape etc where such things
+are of relevance to understanding the code.</li>
+<li>some text on keywords, e.g.:</li>
+</ul>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">complex</span><span class="p">(</span><span class="n">real</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">imag</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Form a complex number.</span>
+
+<span class="sd">    Keyword arguments:</span>
+<span class="sd">    real -- the real part (default 0.0)</span>
+<span class="sd">    imag -- the imaginary part (default 0.0)</span>
+
+<span class="sd">    Example taken verbatim from:</span>
+<span class="sd">    http://www.python.org/dev/peps/pep-0257/</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">imag</span> <span class="o">==</span> <span class="mf">0.0</span> <span class="ow">and</span> <span class="n">real</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">:</span> <span class="k">return</span> <span class="n">complex_zero</span>
+</pre></div>
+</div>
+<p>You should look at the <a class="reference external" href="http://www.python.org/dev/peps/pep-0257/">document on good docstring
+conventions</a><span class="link-target"> [http://www.python.org/dev/peps/pep-0257/]</span> when
+considering how to document methods, classes etc.</p>
+<p>To demonstrate your documentation, you <strong>must</strong> include the help text
+generated by your code after you include the code. e.g.:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">print_something</span><span class="p">(</span><span class="n">this</span><span class="p">,</span><span class="n">stderr</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This does something.</span>
+
+<span class="sd">    Keyword arguments:</span>
+<span class="sd">    stderr -- set to True to print to stderr (default False)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">if</span> <span class="n">stderr</span><span class="p">:</span>
+        <span class="c"># import sys.stderr</span>
+        <span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">stderr</span>
+
+        <span class="c"># print to stderr channel, converting this to str</span>
+        <span class="k">print</span> <span class="o">&gt;&gt;</span> <span class="n">stderr</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">this</span><span class="p">)</span>
+
+        <span class="c"># job done, return</span>
+        <span class="k">return</span>
+
+    <span class="c"># print to stdout, converting this to str</span>
+    <span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">this</span><span class="p">)</span>
+
+    <span class="k">return</span>
+</pre></div>
+</div>
+<p>Then the help text would be:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">help</span><span class="p">(</span><span class="n">print_something</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>Help on function print_something in module __main__:
+
+print_something(this, stderr=False)
+    This does something.
+
+    Keyword arguments:
+    stderr -- set to True to print to stderr (default False)
+</pre></div>
+</div>
+<p>The above example represents a ‘good’ level of commenting as the code
+broadly adheres to the style suggestions and most of the major features
+are covered. It is not quite ‘very good/excellent’ as the description of
+the purpose of the method (rather important) is trivial and it fails to
+describe the input this in any way. An excellent piece would do all of
+these things, and might well tell us about any dependencies (e.g.
+requires sys if stderr set to True).</p>
+<p>An inadequate example would be:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">print_something</span><span class="p">(</span><span class="n">this</span><span class="p">,</span><span class="n">stderr</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This prints something&#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="n">stderr</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">stderr</span>
+        <span class="k">print</span> <span class="o">&gt;&gt;</span> <span class="n">stderr</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">this</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">this</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>It is inadequate because it still only has a trivial description of the
+purpose of the method, it tells us nothing about inputs/outputs and
+there is no commenting inside the method.</p>
+</div>
+<div class="section" id="word-limit">
+<h4>Word limit</h4>
+<p>There is no word limit per se on the computer codes, though as with all
+writing, you should try to be succint rather than overly verbose.</p>
+</div>
+<div class="section" id="code-style">
+<h4>Code style</h4>
+<p>A good to excellent piece of code would take into account issues raised
+in the <a class="reference external" href="http://www.python.org/dev/peps/pep-0008/">style guide</a><span class="link-target"> [http://www.python.org/dev/peps/pep-0008/]</span>. The
+‘degree of excellence’ would depend on how well you take those points on
+board.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2014, Prof. P. Lewis.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

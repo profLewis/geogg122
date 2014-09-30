@@ -1,0 +1,1327 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>A2.1 Binary Operators</title>
+    
+    <link rel="stylesheet" href="../_static/epub.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /> 
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="advanced_answers.html" title="AE2. Advanced Exercises"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../Chapter8_ptheory/Ptheory.html" title="Recollision Probability Theory"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">geogg122</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <p>This section of the notes is intended for follow-up after the class and
+future reference. We will not go through this in detail in the teaching
+sessions.</p>
+<p>This material and the exercises are more advanced than in the main
+notes. You are not <em>required</em> to do these, but may like to do so if you
+want to stretch yourself.</p>
+<div class="section" id="a2-1-binary-operators">
+<h1>A2.1 Binary Operators</h1>
+<div class="section" id="a2-1-1-basic-logic">
+<h2>A2.1.1 Basic Logic</h2>
+<p>Quite often (data masks in data products, being the most typical
+example), you will need to deal with binary numbers and binary
+operations, so we will introduce the concepts you need here.</p>
+<p>We came across <em>logical</em> or <em>Boolean</em> operations in the main session
+(with the data type <tt class="docutils literal"><span class="pre">bool</span></tt>). In logic, something can be <tt class="docutils literal"><span class="pre">True</span></tt> or
+<tt class="docutils literal"><span class="pre">False</span></tt>, and operations such as
+<tt class="docutils literal"><span class="pre">`not</span></tt> &lt;<a class="reference external" href="http://en.wikipedia.org/wiki/Logical_NOT">http://en.wikipedia.org/wiki/Logical_NOT</a>&gt;`__,
+<tt class="docutils literal"><span class="pre">`and</span></tt> &lt;<a class="reference external" href="http://en.wikipedia.org/wiki/Logical_AND">http://en.wikipedia.org/wiki/Logical_AND</a>&gt;`__ and
+<tt class="docutils literal"><span class="pre">`or</span></tt> &lt;<a class="reference external" href="http://en.wikipedia.org/wiki/Logical_OR">http://en.wikipedia.org/wiki/Logical_OR</a>&gt;`__ have quite obvious
+meanings. More generally in logic (and electronics) we may come across
+other logical operators such as
+<tt class="docutils literal"><span class="pre">`nand</span></tt> &lt;<a class="reference external" href="http://en.wikipedia.org/wiki/Logical_NAND">http://en.wikipedia.org/wiki/Logical_NAND</a>&gt;`__ (<tt class="docutils literal"><span class="pre">not</span> <span class="pre">and</span></tt>)
+and <tt class="docutils literal"><span class="pre">`nor</span></tt> &lt;<a class="reference external" href="http://en.wikipedia.org/wiki/Logical_NOR">http://en.wikipedia.org/wiki/Logical_NOR</a>&gt;`__ (<tt class="docutils literal"><span class="pre">not</span> <span class="pre">or</span></tt>)
+and <tt class="docutils literal"><span class="pre">`xor</span></tt> &lt;<a class="reference external" href="http://en.wikipedia.org/wiki/Logical_XOR">http://en.wikipedia.org/wiki/Logical_XOR</a>&gt;`__ (exclusive
+<tt class="docutils literal"><span class="pre">or</span></tt>: <em>either but not both</em>), but these are not defined in Python
+(they can of course be <em>derived</em> though).</p>
+<p>You should first make sure that you understand the results of the
+<tt class="docutils literal"><span class="pre">and</span></tt>, <tt class="docutils literal"><span class="pre">or</span></tt> and <tt class="docutils literal"><span class="pre">not</span></tt> <tt class="docutils literal"><span class="pre">bool</span></tt> operators:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="s">&#39;False and False =&#39;</span><span class="p">,</span><span class="bp">False</span> <span class="ow">and</span> <span class="bp">False</span>
+<span class="k">print</span> <span class="s">&#39;False and True  =&#39;</span><span class="p">,</span><span class="bp">False</span> <span class="ow">and</span> <span class="bp">True</span>
+<span class="k">print</span> <span class="s">&#39;True  and False =&#39;</span><span class="p">,</span><span class="bp">True</span> <span class="ow">and</span> <span class="bp">False</span>
+<span class="k">print</span> <span class="s">&#39;True  and True  =&#39;</span><span class="p">,</span><span class="bp">True</span> <span class="ow">and</span> <span class="bp">True</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="bp">False</span> <span class="ow">and</span> <span class="bp">False</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="bp">False</span> <span class="ow">and</span> <span class="bp">True</span>  <span class="o">=</span> <span class="bp">False</span>
+<span class="bp">True</span>  <span class="ow">and</span> <span class="bp">False</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="bp">True</span>  <span class="ow">and</span> <span class="bp">True</span>  <span class="o">=</span> <span class="bp">True</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="s">&#39;False or False =&#39;</span><span class="p">,</span><span class="bp">False</span> <span class="ow">or</span> <span class="bp">False</span>
+<span class="k">print</span> <span class="s">&#39;False or True  =&#39;</span><span class="p">,</span><span class="bp">False</span> <span class="ow">or</span> <span class="bp">True</span>
+<span class="k">print</span> <span class="s">&#39;True  or False =&#39;</span><span class="p">,</span><span class="bp">True</span> <span class="ow">or</span> <span class="bp">False</span>
+<span class="k">print</span> <span class="s">&#39;True  or True  =&#39;</span><span class="p">,</span><span class="bp">True</span> <span class="ow">or</span> <span class="bp">True</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="bp">False</span> <span class="ow">or</span> <span class="bp">False</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="bp">False</span> <span class="ow">or</span> <span class="bp">True</span>  <span class="o">=</span> <span class="bp">True</span>
+<span class="bp">True</span>  <span class="ow">or</span> <span class="bp">False</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="bp">True</span>  <span class="ow">or</span> <span class="bp">True</span>  <span class="o">=</span> <span class="bp">True</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="s">&#39;not False =&#39;</span><span class="p">,</span><span class="ow">not</span> <span class="bp">False</span>
+<span class="k">print</span> <span class="s">&#39;not True  =&#39;</span><span class="p">,</span><span class="ow">not</span> <span class="bp">True</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="ow">not</span> <span class="bp">False</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="ow">not</span> <span class="bp">True</span>  <span class="o">=</span> <span class="bp">False</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="exercise-a2-1">
+<h2>Exercise A2.1</h2>
+<p>As an exercise for this, you could see if you can simulate the logical
+combinations <tt class="docutils literal"><span class="pre">xor</span></tt>, <tt class="docutils literal"><span class="pre">nor</span></tt> and <tt class="docutils literal"><span class="pre">nand</span></tt>, e.g.:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># nand test:</span>
+<span class="c"># see http://en.wikipedia.org/wiki/Logical_NAND</span>
+<span class="c"># (A nand B) is not (A and B)</span>
+
+<span class="n">ABList</span> <span class="o">=</span> <span class="p">[(</span><span class="bp">False</span><span class="p">,</span><span class="bp">False</span><span class="p">),(</span><span class="bp">False</span><span class="p">,</span><span class="bp">True</span><span class="p">),(</span><span class="bp">True</span><span class="p">,</span><span class="bp">False</span><span class="p">),(</span><span class="bp">True</span><span class="p">,</span><span class="bp">True</span><span class="p">)]</span>
+<span class="k">for</span> <span class="n">A</span><span class="p">,</span><span class="n">B</span> <span class="ow">in</span> <span class="n">ABList</span><span class="p">:</span>
+  <span class="k">print</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s"> nand </span><span class="si">%s</span><span class="s">  =&#39;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">A</span><span class="p">),</span><span class="nb">str</span><span class="p">(</span><span class="n">B</span><span class="p">)),</span><span class="ow">not</span> <span class="p">(</span><span class="n">A</span> <span class="ow">and</span> <span class="n">B</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>False nand False  = True
+False nand True  = True
+True nand False  = True
+True nand True  = False
+</pre></div>
+</div>
+</div>
+<div class="section" id="a2-1-2-binary">
+<h2>A2.1.2 Binary</h2>
+</div>
+<div class="section" id="endianness">
+<h2>Endianness</h2>
+<p>It is of value to have some understanding of binary operations and
+representation(s):</p>
+<ul class="simple">
+<li>you will come across these in encoded data products (such as the QA
+information in MODIS and other satellite products) as it is a more
+efficient way of enconding multiple sets of logical information</li>
+<li>this is the form in which the computer ultimately stores and
+processes information, so it is useful to have some appreciation of
+that</li>
+<li>you will sometimes need to consider how large a number representation
+is (e.g. byte or short integer or long integer) as this can impact
+computer memory and storage requirements</li>
+<li>you may come across different binary representations for different
+datasets</li>
+</ul>
+<p>There are two main number representations used in computing, which
+depend on the interpretation of the
+<a class="reference external" href="http://en.wikipedia.org/wiki/Most_significant_bit">MSB</a><span class="link-target"> [http://en.wikipedia.org/wiki/Most_significant_bit]</span>, Most
+Significant Bit or &#8216;high bit order&#8217; (or Byte) and
+<a class="reference external" href="http://en.wikipedia.org/wiki/Least_significant_bit">LSB</a><span class="link-target"> [http://en.wikipedia.org/wiki/Least_significant_bit]</span>, Least
+Significant Bit or &#8216;low bit order&#8217; (or Byte).</p>
+<p>Which system is used is sometimes refered to as
+<a class="reference external" href="http://en.wikipedia.org/wiki/Endianness">&#8216;endianness&#8217;</a><span class="link-target"> [http://en.wikipedia.org/wiki/Endianness]</span> so we may
+refer to a &#8216;big-endian&#8217; or &#8216;little-endian&#8217; representation. In a
+big-endian representation, the left-most byte represents the highest
+number. In a little-endian system, this is the lowest number.</p>
+<p>It is probably easiest to understand this with decimal numbers:</p>
+<p>So, in a big-endian decimal representation:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">152</span>
+</pre></div>
+</div>
+<p>represents one hundred and fifty two
+(<tt class="docutils literal"><span class="pre">(1</span> <span class="pre">x</span> <span class="pre">10^2)</span> <span class="pre">+</span> <span class="pre">(5</span> <span class="pre">x</span> <span class="pre">10^1)</span> <span class="pre">+</span> <span class="pre">(2</span> <span class="pre">x</span> <span class="pre">10^0)</span></tt>)</p>
+<p>In a little-endian system, this is interpreted the other way around, so
+<tt class="docutils literal"><span class="pre">152</span></tt> is <tt class="docutils literal"><span class="pre">(2</span> <span class="pre">x</span> <span class="pre">10^2)</span> <span class="pre">+</span> <span class="pre">(5</span> <span class="pre">x</span> <span class="pre">10^1)</span> <span class="pre">+</span> <span class="pre">(1</span> <span class="pre">x</span> <span class="pre">10^0)</span></tt>, so is actually two
+hundred and fifty one.</p>
+<p>The term comes from Jonathan Swift&#8217;s <a class="reference external" href="http://www.gutenberg.org/files/829/829-h/829-h.htm">Gulliver&#8217;s
+travels</a><span class="link-target"> [http://www.gutenberg.org/files/829/829-h/829-h.htm]</span>, if you
+are interested, refering to the which end of an egg the people of
+Lilliput and Blefuscu believe you should open:</p>
+<p><tt class="docutils literal"><span class="pre">&quot;(The</span> <span class="pre">people</span> <span class="pre">of</span> <span class="pre">Lilliput</span> <span class="pre">and</span> <span class="pre">Blefuscu</span> <span class="pre">have)</span> <span class="pre">been</span> <span class="pre">engaged</span> <span class="pre">in</span> <span class="pre">a</span> <span class="pre">most</span> <span class="pre">obstinate</span> <span class="pre">war</span> <span class="pre">for</span> <span class="pre">six-and-thirty</span> <span class="pre">moons</span> <span class="pre">past.</span>&nbsp; <span class="pre">It</span> <span class="pre">began</span> <span class="pre">upon</span> <span class="pre">the</span> <span class="pre">following</span> <span class="pre">occasion.</span>&nbsp; <span class="pre">It</span> <span class="pre">is</span> <span class="pre">allowed</span> <span class="pre">on</span> <span class="pre">all</span> <span class="pre">hands,</span> <span class="pre">that</span> <span class="pre">the</span> <span class="pre">primitive</span> <span class="pre">way</span> <span class="pre">of</span> <span class="pre">breaking</span> <span class="pre">eggs,</span> <span class="pre">before</span> <span class="pre">we</span> <span class="pre">eat</span> <span class="pre">them,</span> <span class="pre">was</span> <span class="pre">upon</span> <span class="pre">the</span> <span class="pre">larger</span> <span class="pre">end;</span> <span class="pre">but</span> <span class="pre">his</span> <span class="pre">present</span> <span class="pre">majesty’s</span> <span class="pre">grandfather,</span> <span class="pre">while</span> <span class="pre">he</span> <span class="pre">was</span> <span class="pre">a</span> <span class="pre">boy,</span> <span class="pre">going</span> <span class="pre">to</span> <span class="pre">eat</span> <span class="pre">an</span> <span class="pre">egg,</span> <span class="pre">and</span> <span class="pre">breaking</span> <span class="pre">it</span> <span class="pre">according</span> <span class="pre">to</span> <span class="pre">the</span> <span class="pre">ancient</span> <span class="pre">practice,</span> <span class="pre">happened</span> <span class="pre">to</span> <span class="pre">cut</span> <span class="pre">one</span> <span class="pre">of</span> <span class="pre">his</span> <span class="pre">fingers.</span>&nbsp; <span class="pre">Whereupon</span> <span class="pre">the</span> <span class="pre">emperor</span> <span class="pre">his</span> <span class="pre">father</span> <span class="pre">published</span> <span class="pre">an</span> <span class="pre">edict,</span> <span class="pre">commanding</span> <span class="pre">all</span> <span class="pre">his</span> <span class="pre">subjects,</span> <span class="pre">upon</span> <span class="pre">great</span> <span class="pre">penalties,</span> <span class="pre">to</span> <span class="pre">break</span> <span class="pre">the</span> <span class="pre">smaller</span> <span class="pre">end</span> <span class="pre">of</span> <span class="pre">their</span> <span class="pre">eggs.</span>&nbsp; <span class="pre">The</span> <span class="pre">people</span> <span class="pre">so</span> <span class="pre">highly</span> <span class="pre">resented</span> <span class="pre">this</span> <span class="pre">law,</span> <span class="pre">that</span> <span class="pre">our</span> <span class="pre">histories</span> <span class="pre">tell</span> <span class="pre">us,</span> <span class="pre">there</span> <span class="pre">have</span> <span class="pre">been</span> <span class="pre">six</span> <span class="pre">rebellions</span> <span class="pre">raised</span> <span class="pre">on</span> <span class="pre">that</span> <span class="pre">account;</span> <span class="pre">wherein</span> <span class="pre">one</span> <span class="pre">emperor</span> <span class="pre">lost</span> <span class="pre">his</span> <span class="pre">life,</span> <span class="pre">and</span> <span class="pre">another</span> <span class="pre">his</span> <span class="pre">crown.</span>&nbsp; <span class="pre">These</span> <span class="pre">civil</span> <span class="pre">commotions</span> <span class="pre">were</span> <span class="pre">constantly</span> <span class="pre">fomented</span> <span class="pre">by</span> <span class="pre">the</span> <span class="pre">monarchs</span> <span class="pre">of</span> <span class="pre">Blefuscu;</span> <span class="pre">and</span> <span class="pre">when</span> <span class="pre">they</span> <span class="pre">were</span> <span class="pre">quelled,</span> <span class="pre">the</span> <span class="pre">exiles</span> <span class="pre">always</span> <span class="pre">fled</span> <span class="pre">for</span> <span class="pre">refuge</span> <span class="pre">to</span> <span class="pre">that</span> <span class="pre">empire.</span>&nbsp; <span class="pre">It</span> <span class="pre">is</span> <span class="pre">computed</span> <span class="pre">that</span> <span class="pre">eleven</span> <span class="pre">thousand</span> <span class="pre">persons</span> <span class="pre">have</span> <span class="pre">at</span> <span class="pre">several</span> <span class="pre">times</span> <span class="pre">suffered</span> <span class="pre">death,</span> <span class="pre">rather</span> <span class="pre">than</span> <span class="pre">submit</span> <span class="pre">to</span> <span class="pre">break</span> <span class="pre">their</span> <span class="pre">eggs</span> <span class="pre">at</span> <span class="pre">the</span> <span class="pre">smaller</span> <span class="pre">end.</span>&nbsp; <span class="pre">Many</span> <span class="pre">hundred</span> <span class="pre">large</span> <span class="pre">volumes</span> <span class="pre">have</span> <span class="pre">been</span> <span class="pre">published</span> <span class="pre">upon</span> <span class="pre">this</span> <span class="pre">controversy:</span> <span class="pre">but</span> <span class="pre">the</span> <span class="pre">books</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">Big-endians</span> <span class="pre">have</span> <span class="pre">been</span> <span class="pre">long</span> <span class="pre">forbidden,</span> <span class="pre">and</span> <span class="pre">the</span> <span class="pre">whole</span> <span class="pre">party</span> <span class="pre">rendered</span> <span class="pre">incapable</span> <span class="pre">by</span> <span class="pre">law</span> <span class="pre">of</span> <span class="pre">holding</span> <span class="pre">employments.&quot;</span></tt></p>
+<p>Endianness then (like which end of an egg you should break), is
+ultimately arbitrary, but we must still have conventions so that
+information on one computer system can be interpreted by another.</p>
+<p>At present, probably most computers you use will be little-endian (the
+&#8216;Intel convention&#8217; as it has come to be known), but you may also come
+across data stored in big-endian (so-called &#8216;Motorola convention&#8217;)
+format.</p>
+<p>Endianness is mainly implemented at the byte level, so if you are
+considering a signle byte, which &#8216;end you open the egg&#8217; has no
+consequence.</p>
+<p>For longer number representations though (e.g. a 2-byte or 4-byte
+integer) it can have significant consequences, and you need to be aware
+of the endianness of data that you might try to be reading. Many file
+formats will explicitly store the endinaness that data were written in,
+so a correct interpretation will be handled by low level reading
+routines. But, if you get binary data that are of more than one byte
+that look rather odd when you display them, one possible reason is that
+you have assumed a different endinaness to what the data were written
+in.</p>
+</div>
+<div class="section" id="binary-numbers">
+<h2>Binary numbers</h2>
+<p>When we are working with <em>binary</em> numbers <em>for a single bit</em>, we
+represent <tt class="docutils literal"><span class="pre">False</span></tt> by <tt class="docutils literal"><span class="pre">0</span></tt> and <tt class="docutils literal"><span class="pre">True</span></tt> by <tt class="docutils literal"><span class="pre">1</span></tt>.</p>
+<p>In Python, these representations can essentially be used interchangably
+with logical operators, (but we use the function <tt class="docutils literal"><span class="pre">bool()</span></tt> to convert
+to a boolean representation)</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="bp">True</span> <span class="ow">or</span> <span class="bp">False</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="bp">True</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="mi">1</span> <span class="ow">or</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">1</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">1</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="bp">True</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">whatTheySay</span> <span class="o">=</span> <span class="bp">True</span>
+
+<span class="k">if</span> <span class="n">whatTheySay</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;it&#39;s true what they say ...&quot;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;it&#39;s not true what they say ...&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>it&#39;s true what they say ...
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">whatTheySay</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="k">if</span> <span class="n">whatTheySay</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;it&#39;s true what they say ...&quot;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;it&#39;s not true what they say ...&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>it&#39;s true what they say ...
+</pre></div>
+</div>
+<p>A binary representation of a number is a representation in <a class="reference external" href="http://en.wikipedia.org/wiki/Binary_number">base
+2</a><span class="link-target"> [http://en.wikipedia.org/wiki/Binary_number]</span>, where we may use
+multiple <a class="reference external" href="http://en.wikipedia.org/wiki/Bit">bits</a><span class="link-target"> [http://en.wikipedia.org/wiki/Bit]</span> to represent
+numbers.</p>
+<p>Some number representations (such as <a class="reference external" href="http://en.wikipedia.org/wiki/IEEE_floating_point">floating
+point</a><span class="link-target"> [http://en.wikipedia.org/wiki/IEEE_floating_point]</span>) are stored
+in a more complicated manner, but <a class="reference external" href="http://www.asciitable.com/">ASCII
+codes</a><span class="link-target"> [http://www.asciitable.com/]</span> for string representation and
+integers are in a more straightforward binary format.</p>
+<p>So, e.g. the (integer) <strong>decimal</strong> number 3 is <tt class="docutils literal"><span class="pre">11</span></tt> in binary (base
+2):</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="mi">3</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1</span> <span class="o">*</span> <span class="mi">2</span><span class="o">**</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> \
+     <span class="p">(</span><span class="mi">1</span> <span class="o">*</span> <span class="mi">2</span><span class="o">**</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="bp">True</span>
+</pre></div>
+</div>
+<p>We can use the Python function <tt class="docutils literal"><span class="pre">bin()</span></tt> to get this more directly:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="nb">bin</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">0</span><span class="n">b11</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="mi">0</span><span class="n">b11</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">3</span>
+</pre></div>
+</div>
+<p>Similarly, the decimal number <tt class="docutils literal"><span class="pre">101</span></tt> is <tt class="docutils literal"><span class="pre">1100101</span></tt> in binary:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="mi">101</span> <span class="o">==</span>  <span class="p">(</span><span class="mi">1</span> <span class="o">*</span> <span class="mi">2</span><span class="o">**</span><span class="mi">6</span><span class="p">)</span> <span class="o">+</span> \
+        <span class="p">(</span><span class="mi">1</span> <span class="o">*</span> <span class="mi">2</span><span class="o">**</span><span class="mi">5</span><span class="p">)</span> <span class="o">+</span> \
+        <span class="p">(</span><span class="mi">0</span> <span class="o">*</span> <span class="mi">2</span><span class="o">**</span><span class="mi">4</span><span class="p">)</span> <span class="o">+</span> \
+        <span class="p">(</span><span class="mi">0</span> <span class="o">*</span> <span class="mi">2</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> \
+        <span class="p">(</span><span class="mi">1</span> <span class="o">*</span> <span class="mi">2</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> \
+        <span class="p">(</span><span class="mi">0</span> <span class="o">*</span> <span class="mi">2</span><span class="o">**</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> \
+        <span class="p">(</span><span class="mi">1</span> <span class="o">*</span> <span class="mi">2</span><span class="o">**</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="bp">True</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="nb">bin</span><span class="p">(</span><span class="mi">101</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">0</span><span class="n">b1100101</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="exercise-a2-2">
+<h2>Exercise A2.2</h2>
+<ol class="loweralpha">
+<li><p class="first">Work out what the following decimal numbers are in binary:</p>
+<div class="line-block">
+<div class="line">7</div>
+<div class="line">493</div>
+<div class="line">127</div>
+<div class="line">255</div>
+<div class="line">1024</div>
+</div>
+</li>
+</ol>
+<p>and check your result using the approach we took to confirming <tt class="docutils literal"><span class="pre">101</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">101</span> <span class="o">==</span>  <span class="p">(</span><span class="mi">1</span> <span class="o">*</span> <span class="mi">2</span><span class="o">**</span><span class="mi">6</span><span class="p">)</span> <span class="o">+</span> \
+        <span class="p">(</span><span class="mi">1</span> <span class="o">*</span> <span class="mi">2</span><span class="o">**</span><span class="mi">5</span><span class="p">)</span> <span class="o">+</span> \
+        <span class="p">(</span><span class="mi">0</span> <span class="o">*</span> <span class="mi">2</span><span class="o">**</span><span class="mi">4</span><span class="p">)</span> <span class="o">+</span> \
+        <span class="p">(</span><span class="mi">0</span> <span class="o">*</span> <span class="mi">2</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> \
+        <span class="p">(</span><span class="mi">1</span> <span class="o">*</span> <span class="mi">2</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> \
+        <span class="p">(</span><span class="mi">0</span> <span class="o">*</span> <span class="mi">2</span><span class="o">**</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> \
+        <span class="p">(</span><span class="mi">1</span> <span class="o">*</span> <span class="mi">2</span><span class="o">**</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="loweralpha simple" start="2">
+<li>How many bits are needed to represent each of these numbers?</li>
+<li>What is the largest number you could represent in: (i) a 32 bit
+representation; (b) a 64 bit representation?</li>
+<li>Recalling that there are 8 bits in a
+<a class="reference external" href="http://en.wikipedia.org/wiki/Byte">byte</a><span class="link-target"> [http://en.wikipedia.org/wiki/Byte]</span>, what is the largest
+number you could represent in: (a) a single byte; (b) two bytes?</li>
+</ol>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Explorations in binary!</span>
+
+<span class="sd">    We can represent:</span>
+
+<span class="sd">    binary numbers, e.g.    0b010101</span>
+<span class="sd">    octal numbers, e.g.     0o755</span>
+<span class="sd">    hexadecimal, e.g.       0x2A2FF</span>
+
+<span class="sd">    but if we print these,</span>
+<span class="sd">    by default they are printed as the decimal equivalents.</span>
+
+<span class="sd">    We can convert to binary, octal or hex string with</span>
+<span class="sd">    bin(), oct(), hex()</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="n">b111101101</span>
+<span class="k">print</span> <span class="nb">bin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="s">&#39;is&#39;</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="s">&#39;in decimal&#39;</span>
+<span class="k">print</span> <span class="nb">bin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="s">&#39;is&#39;</span><span class="p">,</span><span class="nb">oct</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="s">&#39;in octal&#39;</span>
+<span class="k">print</span> <span class="nb">bin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="s">&#39;is&#39;</span><span class="p">,</span><span class="nb">hex</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="s">&#39;in hexadecimal&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">0</span><span class="n">b111101101</span> <span class="ow">is</span> <span class="mi">493</span> <span class="ow">in</span> <span class="n">decimal</span>
+<span class="mi">0</span><span class="n">b111101101</span> <span class="ow">is</span> <span class="mo">0755</span> <span class="ow">in</span> <span class="n">octal</span>
+<span class="mi">0</span><span class="n">b111101101</span> <span class="ow">is</span> <span class="mh">0x1ed</span> <span class="ow">in</span> <span class="n">hexadecimal</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="a2-1-2-bitwise-operators">
+<h2>A2.1.2 Bitwise Operators</h2>
+<p>In Python (and most other computer languages) you have access to bitwise
+operators. As you might expect, these are operators that are executed on
+individual bits in a binary representation of a number.</p>
+<p>The bitwise operators available in Python are:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">&amp;</span></tt> bitwise and</li>
+<li><tt class="docutils literal"><span class="pre">|</span></tt> bitwise or</li>
+<li><tt class="docutils literal"><span class="pre">^</span></tt> bitwise <tt class="docutils literal"><span class="pre">xor</span></tt> (exclusive or)</li>
+<li><tt class="docutils literal"><span class="pre">~</span></tt> bitwise ones complement</li>
+<li><tt class="docutils literal"><span class="pre">&lt;&lt;</span></tt> bitwise left shift</li>
+<li><tt class="docutils literal"><span class="pre">&gt;&gt;</span></tt> bitwise right shift</li>
+</ul>
+<p>The <tt class="docutils literal"><span class="pre">&amp;</span></tt> operator simply performs a logical <tt class="docutils literal"><span class="pre">and</span></tt> operation on two
+sets of binary representations, so:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">1</span> <span class="o">&amp;</span> <span class="mi">0</span> <span class="o">==</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>is the same as a logical <tt class="docutils literal"><span class="pre">True</span> <span class="pre">and</span> <span class="pre">False</span></tt> operation that we saw above
+.</p>
+<p>The <tt class="docutils literal"><span class="pre">|</span></tt> operator simply performs a logical <tt class="docutils literal"><span class="pre">or</span></tt> operation on two
+sets of binary representations, so:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">1</span> <span class="o">|</span> <span class="mi">0</span> <span class="o">==</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>is the same as a logical <tt class="docutils literal"><span class="pre">True</span> <span class="pre">or</span> <span class="pre">False</span></tt> operation that we saw above.</p>
+<p>Similarly,</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">1</span> <span class="o">^</span> <span class="mi">0</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="o">^</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>and</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">~</span><span class="mi">1</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="o">~</span><span class="mi">0</span> <span class="o">==</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>These same rules apply then to all bit fields:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">~</span><span class="mi">1010</span> <span class="o">==</span> <span class="mo">0101</span>
+</pre></div>
+</div>
+<p>etc.</p>
+<p>The shift operators are interesting:</p>
+<p>left shift by 1, for example is equivalent to multiplying by 2, and
+right shift by 1 a division by 2.</p>
+<p>They are also very useful in sorting out &#8216;bit masks&#8217; for data products.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Bitwise operators:</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="mi">521</span>
+<span class="n">B</span> <span class="o">=</span> <span class="mi">523</span>
+<span class="c"># print as binary:</span>
+<span class="k">print</span> <span class="n">A</span><span class="p">,</span><span class="s">&#39;</span><span class="se">\t</span><span class="s">A:</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span><span class="nb">bin</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">B</span><span class="p">,</span><span class="s">&#39;</span><span class="se">\t</span><span class="s">B:</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span><span class="nb">bin</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+
+<span class="c"># some operations</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">A | B:</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span><span class="nb">bin</span><span class="p">(</span><span class="n">A</span><span class="o">|</span><span class="n">B</span><span class="p">),</span><span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span><span class="n">A</span><span class="o">|</span><span class="n">B</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">A ^ B:</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span><span class="nb">bin</span><span class="p">(</span><span class="n">A</span><span class="o">^</span><span class="n">B</span><span class="p">),</span><span class="s">&#39;</span><span class="se">\t\t</span><span class="s">&#39;</span><span class="p">,</span><span class="n">A</span><span class="o">^</span><span class="n">B</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">A &amp; B:</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span><span class="nb">bin</span><span class="p">(</span><span class="n">A</span><span class="o">&amp;</span><span class="n">B</span><span class="p">),</span><span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span><span class="n">A</span><span class="o">&amp;</span><span class="n">B</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>521         A:      0b1000001001
+523         B:      0b1000001011
+    A | B:  0b1000001011    523
+    A ^ B:  0b10            2
+    A &amp; B:  0b1000001001    521
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Bitwise shift operators:</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="mi">531</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">A:</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span><span class="nb">bin</span><span class="p">(</span><span class="n">A</span><span class="p">),</span><span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span><span class="n">A</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">A&gt;&gt;1:</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span><span class="nb">bin</span><span class="p">(</span><span class="n">A</span><span class="o">&gt;&gt;</span><span class="mi">1</span><span class="p">),</span><span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span><span class="n">A</span><span class="o">&gt;&gt;</span><span class="mi">1</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">A&gt;&gt;1:</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span><span class="nb">bin</span><span class="p">(</span><span class="n">A</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="p">),</span><span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span><span class="n">A</span><span class="o">&lt;&lt;</span><span class="mi">1</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">A&gt;&gt;3:</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span><span class="nb">bin</span><span class="p">(</span><span class="n">A</span><span class="o">&gt;&gt;</span><span class="mi">3</span><span class="p">),</span><span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span><span class="n">A</span><span class="o">&gt;&gt;</span><span class="mi">3</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">A&gt;&gt;3:</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span><span class="nb">bin</span><span class="p">(</span><span class="n">A</span><span class="o">&lt;&lt;</span><span class="mi">3</span><span class="p">),</span><span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span><span class="n">A</span><span class="o">&lt;&lt;</span><span class="mi">3</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>A:      0b1000010011    531
+A&gt;&gt;1:   0b100001001     265
+A&gt;&gt;1:   0b10000100110   1062
+A&gt;&gt;3:   0b1000010       66
+A&gt;&gt;3:   0b1000010011000         4248
+</pre></div>
+</div>
+<p>As an example of data masking, consider the QA mask in the <a class="reference external" href="https://lpdaac.usgs.gov/products/modis_products_table/leaf_area_index_fraction_of_photosynthetically_active_radiation/8_day_l4_global_1km/mod15a2">MODIS Leaf
+Area Index
+(LAI)</a><span class="link-target"> [https://lpdaac.usgs.gov/products/modis_products_table/leaf_area_index_fraction_of_photosynthetically_active_radiation/8_day_l4_global_1km/mod15a2]</span>
+product:</p>
+<table><tr><td><p>Bit number</p>
+</td><td><p>Parameter Name</p>
+</td><td><p>Bit combination</p>
+</td><td><p>Interpretation</p>
+</td></tr><tr><td><p>0</p>
+</td><td><p>MODLAND_QC bits</p>
+</td><td><p>0</p>
+</td><td><p>Good quality (main algorithm with or without saturation)</p>
+</td></tr><tr><td></td><td></td><td><p>1</p>
+</td><td><p>Other Quality (back-up algorithm or fill values)</p>
+</td></tr><tr><td><p>1</p>
+</td><td><p>Sensor</p>
+</td><td><p>0</p>
+</td><td><p>Terra</p>
+</td></tr><tr><td></td><td></td><td><p>1</p>
+</td><td><p>Aqua</p>
+</td></tr><tr><td><p>2</p>
+</td><td><p>DeadDetector</p>
+</td><td><p>0</p>
+</td><td><p>Detectors apparently fine for up to 50% of channels</p>
+</td></tr><tr><td></td><td></td><td><p>1</p>
+</td><td><p>Dead detectors caused &gt;50% adjacent detector retrieval</p>
+</td></tr><tr><td><p>3-4</p>
+</td><td><p>CloudState</p>
+</td><td><p>00</p>
+</td><td><p>Significant clouds NOT present (clear)</p>
+</td></tr><tr><td></td><td></td><td><p>01</p>
+</td><td><p>Significant clouds WERE present</p>
+</td></tr><tr><td></td><td></td><td><p>10</p>
+</td><td><p>Mixed cloud present on pixel</p>
+</td></tr><tr><td></td><td></td><td><p>11</p>
+</td><td><p>Cloud state not defined (assumed clear)</p>
+</td></tr><tr><td><p>5-7</p>
+</td><td><p>CF_QC</p>
+</td><td><p>000</p>
+</td><td><p>Main (RT) method used (best result possible (no saturation))</p>
+</td></tr><tr><td></td><td></td><td><p>001</p>
+</td><td><p>Main (RT) method used with saturation. (usable)</p>
+</td></tr><tr><td></td><td></td><td><p>010</p>
+</td><td><p>Main (RT) method failed due to bad geometry (empirical algorithm used)</p>
+</td></tr><tr><td></td><td></td><td><p>010</p>
+</td><td><p>Main (RT) method failed due to problems other than geometry (empirical
+algorithm used)</p>
+</td></tr><tr><td></td><td></td><td><p>010</p>
+</td><td><p>Pixel not produced at all.</p>
+</td></tr></table><p>So, the MODIS LAI QA information is contained in one byte (8 bits),
+which encodes data about five different categories of QA information.</p>
+<p>When using such data, we need to make choices about what quality of data
+we are willing to accept.</p>
+<p>How can we use our understanding of bitwise operations to pull out these
+datasets?</p>
+<p>First, we can try to pull out the different categories.</p>
+<p>One way to do this is using a set of &#8216;bit masks&#8217; for each of the bit
+fields we want to cover.</p>
+<p>If then perform a bitwise and operation with these, only relevant bits
+will &#8216;show&#8217; through.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># an example QA value: fill all fields</span>
+<span class="n">qa</span> <span class="o">=</span> <span class="mi">0</span><span class="n">b11111111</span>
+
+<span class="k">print</span> <span class="s">&#39;qa&#39;</span><span class="p">,</span><span class="n">qa</span>
+<span class="k">print</span> <span class="s">&#39;binary qa&#39;</span><span class="p">,</span><span class="nb">bin</span><span class="p">(</span><span class="n">qa</span><span class="p">)</span>
+
+<span class="c"># set up masks for the different parameters</span>
+<span class="n">mask1</span> <span class="o">=</span> <span class="mi">0</span><span class="n">b00000001</span>    <span class="c"># bit 0</span>
+<span class="n">mask2</span> <span class="o">=</span> <span class="mi">0</span><span class="n">b00000010</span>    <span class="c"># bit 1</span>
+<span class="n">mask3</span> <span class="o">=</span> <span class="mi">0</span><span class="n">b00000100</span>    <span class="c"># bit 2</span>
+<span class="n">mask4</span> <span class="o">=</span> <span class="mi">0</span><span class="n">b00011000</span>    <span class="c"># bit 3-4</span>
+<span class="n">mask5</span> <span class="o">=</span> <span class="mi">0</span><span class="n">b11100000</span>    <span class="c"># bit 5-7</span>
+
+<span class="n">qa1</span> <span class="o">=</span> <span class="n">qa</span> <span class="o">&amp;</span> <span class="n">mask1</span>
+<span class="n">qa2</span> <span class="o">=</span> <span class="n">qa</span> <span class="o">&amp;</span> <span class="n">mask2</span>
+<span class="n">qa3</span> <span class="o">=</span> <span class="n">qa</span> <span class="o">&amp;</span> <span class="n">mask3</span>
+<span class="n">qa4</span> <span class="o">=</span> <span class="n">qa</span> <span class="o">&amp;</span> <span class="n">mask4</span>
+<span class="n">qa5</span> <span class="o">=</span> <span class="n">qa</span> <span class="o">&amp;</span> <span class="n">mask5</span>
+
+<span class="k">print</span> <span class="s">&#39;qa1&#39;</span><span class="p">,</span><span class="nb">bin</span><span class="p">(</span><span class="n">qa1</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;qa2&#39;</span><span class="p">,</span><span class="nb">bin</span><span class="p">(</span><span class="n">qa2</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;qa3&#39;</span><span class="p">,</span><span class="nb">bin</span><span class="p">(</span><span class="n">qa3</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;qa4&#39;</span><span class="p">,</span><span class="nb">bin</span><span class="p">(</span><span class="n">qa4</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;qa5&#39;</span><span class="p">,</span><span class="nb">bin</span><span class="p">(</span><span class="n">qa5</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>qa 255
+binary qa 0b11111111
+qa1 0b1
+qa2 0b10
+qa3 0b100
+qa4 0b11000
+qa5 0b11100000
+</pre></div>
+</div>
+<p>We gave an example qa value with <tt class="docutils literal"><span class="pre">1</span></tt> in all bit fields, and can see
+that this information has been passed through above, but we still need
+to remove the trailing zeros to the right of the bit field.</p>
+<p>We can easily do this with a right shift operator:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">qa1</span> <span class="o">=</span> <span class="p">(</span><span class="n">qa</span> <span class="o">&amp;</span> <span class="mi">0</span><span class="n">b00000001</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">0</span>    <span class="c"># bit 0</span>
+<span class="n">qa2</span> <span class="o">=</span> <span class="p">(</span><span class="n">qa</span> <span class="o">&amp;</span> <span class="mi">0</span><span class="n">b00000010</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>    <span class="c"># bit 1</span>
+<span class="n">qa3</span> <span class="o">=</span> <span class="p">(</span><span class="n">qa</span> <span class="o">&amp;</span> <span class="mi">0</span><span class="n">b00000100</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span>    <span class="c"># bit 2</span>
+<span class="n">qa4</span> <span class="o">=</span> <span class="p">(</span><span class="n">qa</span> <span class="o">&amp;</span> <span class="mi">0</span><span class="n">b00011000</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">3</span>    <span class="c"># bit 3-4</span>
+<span class="n">qa5</span> <span class="o">=</span> <span class="p">(</span><span class="n">qa</span> <span class="o">&amp;</span> <span class="mi">0</span><span class="n">b11100000</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">5</span>    <span class="c"># bit 5-7</span>
+
+<span class="k">print</span> <span class="s">&#39;qa1&#39;</span><span class="p">,</span><span class="nb">bin</span><span class="p">(</span><span class="n">qa1</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;qa2&#39;</span><span class="p">,</span><span class="nb">bin</span><span class="p">(</span><span class="n">qa2</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;qa3&#39;</span><span class="p">,</span><span class="nb">bin</span><span class="p">(</span><span class="n">qa3</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;qa4&#39;</span><span class="p">,</span><span class="nb">bin</span><span class="p">(</span><span class="n">qa4</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;qa5&#39;</span><span class="p">,</span><span class="nb">bin</span><span class="p">(</span><span class="n">qa5</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>qa1 0b1
+qa2 0b1
+qa3 0b1
+qa4 0b11
+qa5 0b111
+</pre></div>
+</div>
+<p>And now we see that we have <em>just</em> the information we required.</p>
+<p>There are many ways to achieve the same result in filtering such QA
+masks, but it is quite easy to make a mistake in doing so, so the
+<em>clearest</em> way to do this is generally as above:</p>
+<ul class="simple">
+<li>develop a bit mask with <tt class="docutils literal"><span class="pre">1</span></tt> in the required fields<ul>
+<li>e.g. <tt class="docutils literal"><span class="pre">mask4</span> <span class="pre">=</span> <span class="pre">0b00011000</span>&nbsp;&nbsp;&nbsp; <span class="pre">#</span> <span class="pre">bit</span> <span class="pre">3-4</span></tt></li>
+<li>e.g. <tt class="docutils literal"><span class="pre">mask1</span> <span class="pre">=</span> <span class="pre">0b00000001</span>&nbsp;&nbsp;&nbsp; <span class="pre">#</span> <span class="pre">bit</span> <span class="pre">0</span></tt></li>
+</ul>
+</li>
+<li>do a bitwise and (<tt class="docutils literal"><span class="pre">&amp;</span></tt>) between the data and the bit mask</li>
+<li>and right shift the result by the &#8216;starting&#8217; bit<ul>
+<li>e.g. <tt class="docutils literal"><span class="pre">(qa</span> <span class="pre">&amp;</span> <span class="pre">0b00011000)</span> <span class="pre">&gt;&gt;</span> <span class="pre">3</span>&nbsp;&nbsp;&nbsp; <span class="pre">#</span> <span class="pre">bit</span> <span class="pre">3-4</span></tt></li>
+</ul>
+</li>
+</ul>
+<p>It is always a good idea to test the application of such masks by
+setting <tt class="docutils literal"><span class="pre">1</span></tt> in all fields, as you can easily see if you get the result
+you should be expecting.</p>
+</div>
+<div class="section" id="exercise-a2-3">
+<h2>Exercise A2.3</h2>
+<p>Develop some code to repeat the QA bit masking done above, but make the
+code generate the bit masks itself from knowledge of the first and last
+of the bit fields you require (assuming they are sequential).</p>
+<p>If possible, do this in a function.</p>
+<p>Demonstrate its operation with several example bit masks.</p>
+</div>
+</div>
+<div class="section" id="a2-2-exception-handling">
+<h1>A2.2 Exception handling</h1>
+<p>In Python, the mechanism for trapping errors (i.e. when something goes
+wrong in running a block of code) is:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">try</span><span class="p">:</span>
+    <span class="o">...</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+<p>e.g.:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">print</span> <span class="n">a</span><span class="o">/</span><span class="n">b</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>---------------------------------------------------------------------------
+ZeroDivisionError                         Traceback (most recent call last)
+
+&lt;ipython-input-20-e0a9b2305aea&gt; in &lt;module&gt;()
+      1 a = 1
+      2 b = 0
+----&gt; 3 print a/b
+
+
+ZeroDivisionError: integer division or modulo by zero
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    What do we want to happen if we try to divide by zero?</span>
+<span class="sd">    In this case, we decide we want to set the result to zero</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">a</span><span class="o">/</span><span class="n">b</span>
+<span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
+    <span class="k">print</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">0</span>
+</pre></div>
+</div>
+<p>Note the indentation in the code. This is what defines the heirarchy of
+conditional statements in Python (rather than some explicit &#8216;start&#8217; and
+&#8216;end&#8217; statements, as in some other languages).</p>
+<p>We can trap <em>explicit</em> types of error, e.g.:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">x</span> <span class="o">=</span> <span class="mf">100.</span>
+<span class="k">del</span> <span class="n">x</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">x</span>
+<span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;name &#39;x&#39; is not defined&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>name &#39;x&#39; is not defined
+</pre></div>
+</div>
+<p>or we can be non-specific and trap all errors in a code block:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;2&#39;</span> <span class="o">+</span> <span class="mi">2</span>     <span class="c"># adding a string to integer doesn&#39;t make sense</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;you made an error&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>you made an error
+</pre></div>
+</div>
+<p>You can trap multiple forms of error:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;files/data/progress.dat&#39;</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+    <span class="k">print</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">print</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">10</span>
+<span class="k">except</span> <span class="ne">IOError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="c"># trap a specific IOError</span>
+    <span class="k">print</span> <span class="s">&quot;I/O error reading from </span><span class="si">%s</span><span class="s">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="c"># trap any further errors</span>
+    <span class="k">print</span> <span class="s">&quot;Error in processing data from file </span><span class="si">%s</span><span class="s">&quot;</span><span class="o">%</span><span class="n">filename</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>AS I walk’d through the wilderness of this world,
+
+Error in processing data from file files/data/progress.dat
+</pre></div>
+</div>
+<p>If you want to know more on this subject, you can follow this up with a
+more detailed
+<a class="reference external" href="http://docs.python.org/2/tutorial/errors.html">tutorial</a><span class="link-target"> [http://docs.python.org/2/tutorial/errors.html]</span>.</p>
+</div>
+<div class="section" id="a2-3-more-complex-splitting-examples">
+<h1>A2.3 More complex splitting examples</h1>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># We can use separators other than whitespace with split:</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="s">&quot;1964,1220</span><span class="se">\n</span><span class="s">1974,2470</span><span class="se">\n</span><span class="s">1984,2706</span><span class="se">\n</span><span class="s">1994,4812</span><span class="se">\n</span><span class="s">2004,2707&quot;</span>
+<span class="k">print</span> <span class="s">&quot;data.split(&#39;</span><span class="se">\\</span><span class="s">n&#39;):</span><span class="se">\n\t</span><span class="s">&quot;</span><span class="p">,</span><span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+<span class="c"># note &#39;\\n&#39; in here as &#39;\n&#39; would have printed a newline</span>
+<span class="c"># \ is an escape character (as in unix)</span>
+</pre></div>
+</div>
+<pre class="literal-block">
+data.split('n'):
+    ['1964,1220', '1974,2470', '1984,2706', '1994,4812', '2004,2707']
+</pre>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># using a generator expressions</span>
+
+<span class="n">fdata1</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">))</span>
+
+<span class="k">print</span> <span class="nb">list</span><span class="p">(</span><span class="n">fdata1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[[</span><span class="s">&#39;1964,1220&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;1974,2470&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;1984,2706&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;1994,4812&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;2004,2707&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># two listcomps to split first</span>
+<span class="c"># on \n and then each of these on comma</span>
+
+<span class="n">fdata1</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)]</span>
+
+<span class="n">fdata2</span> <span class="o">=</span> <span class="p">[</span><span class="n">j</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">fdata1</span><span class="p">]</span>
+
+<span class="k">print</span> <span class="n">fdata2</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[[</span><span class="s">&#39;1964&#39;</span><span class="p">,</span> <span class="s">&#39;1220&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;1974&#39;</span><span class="p">,</span> <span class="s">&#39;2470&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;1984&#39;</span><span class="p">,</span> <span class="s">&#39;2706&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;1994&#39;</span><span class="p">,</span> <span class="s">&#39;4812&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;2004&#39;</span><span class="p">,</span> <span class="s">&#39;2707&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">fdata1</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)]</span>
+<span class="n">fdata2</span> <span class="o">=</span> <span class="p">[</span><span class="n">j</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">fdata1</span><span class="p">]</span>
+<span class="n">fdata</span> <span class="o">=</span> <span class="p">[[</span><span class="nb">int</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">fdata2</span><span class="p">]</span>
+
+<span class="k">print</span> <span class="n">fdata</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[[</span><span class="mi">1964</span><span class="p">,</span> <span class="mi">1220</span><span class="p">],</span> <span class="p">[</span><span class="mi">1974</span><span class="p">,</span> <span class="mi">2470</span><span class="p">],</span> <span class="p">[</span><span class="mi">1984</span><span class="p">,</span> <span class="mi">2706</span><span class="p">],</span> <span class="p">[</span><span class="mi">1994</span><span class="p">,</span> <span class="mi">4812</span><span class="p">],</span> <span class="p">[</span><span class="mi">2004</span><span class="p">,</span> <span class="mi">2707</span><span class="p">]]</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># or all at once, which works</span>
+<span class="c"># but now the meaning of code is too obscure</span>
+<span class="c"># so this is poor style</span>
+
+<span class="n">fdata</span> <span class="o">=</span> <span class="p">[[</span><span class="nb">int</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="n">j</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">)</span> \
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)]]]</span>
+
+<span class="k">print</span> <span class="n">fdata</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[[</span><span class="mi">1964</span><span class="p">,</span> <span class="mi">1220</span><span class="p">],</span> <span class="p">[</span><span class="mi">1974</span><span class="p">,</span> <span class="mi">2470</span><span class="p">],</span> <span class="p">[</span><span class="mi">1984</span><span class="p">,</span> <span class="mi">2706</span><span class="p">],</span> <span class="p">[</span><span class="mi">1994</span><span class="p">,</span> <span class="mi">4812</span><span class="p">],</span> <span class="p">[</span><span class="mi">2004</span><span class="p">,</span> <span class="mi">2707</span><span class="p">]]</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># It might be comprehensible if laid out better</span>
+
+<span class="n">fdata</span> <span class="o">=</span> <span class="p">[[</span><span class="nb">int</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> \
+            <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">k</span><span class="p">]</span> \
+                <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="n">j</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">)</span> \
+                    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> \
+                        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)]]]</span>
+
+<span class="c"># even so you might find this confusing</span>
+<span class="c"># and prefer to do it is smaller chunks</span>
+
+<span class="k">print</span> <span class="n">fdata</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[[</span><span class="mi">1964</span><span class="p">,</span> <span class="mi">1220</span><span class="p">],</span> <span class="p">[</span><span class="mi">1974</span><span class="p">,</span> <span class="mi">2470</span><span class="p">],</span> <span class="p">[</span><span class="mi">1984</span><span class="p">,</span> <span class="mi">2706</span><span class="p">],</span> <span class="p">[</span><span class="mi">1994</span><span class="p">,</span> <span class="mi">4812</span><span class="p">],</span> <span class="p">[</span><span class="mi">2004</span><span class="p">,</span> <span class="mi">2707</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="a2-4-string-formatting">
+<h1>A2.4 String formatting</h1>
+<p>You can control spaces, and precision e.g.:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="s">&quot;</span><span class="si">%20s</span><span class="s"> </span><span class="si">%s</span><span class="s">&quot;</span><span class="o">%</span><span class="p">(</span><span class="s">&#39;hello&#39;</span><span class="p">,</span><span class="s">&#39;world&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-20s</span><span class="s"> </span><span class="si">%s</span><span class="s">&quot;</span><span class="o">%</span><span class="p">(</span><span class="s">&#39;hello&#39;</span><span class="p">,</span><span class="s">&#39;world&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>               hello world
+hello                world
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">pi</span> <span class="o">=</span> <span class="mf">3.1415926536</span>
+<span class="k">for</span> <span class="n">format</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;</span><span class="si">%3.2f</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&quot;</span><span class="si">%3.20f</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&quot;</span><span class="si">%9.5f</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&quot;</span><span class="si">%020.3f</span><span class="s">&quot;</span><span class="p">]:</span>
+    <span class="k">print</span> <span class="n">format</span><span class="p">,</span><span class="s">&#39;</span><span class="se">\n\t</span><span class="s">:&#39;</span><span class="p">,</span><span class="n">format</span><span class="o">%</span><span class="n">pi</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>%3.2f
+    : 3.14
+%3.20f
+    : 3.14159265360000006240
+%9.5f
+    :   3.14159
+%020.3f
+    : 0000000000000003.142
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">pi</span> <span class="o">=</span> <span class="mf">3.1415926536</span>
+<span class="k">for</span> <span class="n">format</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;</span><span class="si">%3.2e</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&quot;</span><span class="si">%3.20e</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&quot;</span><span class="si">%9.5e</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&quot;</span><span class="si">%020.3e</span><span class="s">&quot;</span><span class="p">]:</span>
+    <span class="k">print</span> <span class="n">format</span><span class="p">,</span><span class="s">&#39;</span><span class="se">\n\t</span><span class="s">:&#39;</span><span class="p">,</span><span class="n">format</span><span class="o">%</span><span class="n">pi</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>%3.2e
+    : 3.14e+00
+%3.20e
+    : 3.14159265360000006240e+00
+%9.5e
+    : 3.14159e+00
+%020.3e
+    : 000000000003.142e+00
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">i</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="k">for</span> <span class="n">format</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;</span><span class="si">%i</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&quot;</span><span class="si">%3i</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&quot;</span><span class="si">%5i</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&quot;</span><span class="si">%08i</span><span class="s">&quot;</span><span class="p">]:</span>
+    <span class="k">print</span> <span class="n">format</span><span class="p">,</span><span class="s">&#39;</span><span class="se">\n\t</span><span class="s">:&#39;</span><span class="p">,</span><span class="n">format</span><span class="o">%</span><span class="n">i</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>%i
+    : 100
+%3i
+    : 100
+%5i
+    :   100
+%08i
+    : 00000100
+</pre></div>
+</div>
+<p>There are other (and in some ways more elegant) ways to <a class="reference external" href="http://docs.python.org/2/library/string.html">format strings
+in Python</a><span class="link-target"> [http://docs.python.org/2/library/string.html]</span>. e.g:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="s">&quot;Hey {1}, Hello {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s">&#39;world&#39;</span><span class="p">,</span><span class="s">&#39;you&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;{0}{1}{0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s">&#39;abra&#39;</span><span class="p">,</span> <span class="s">&#39;cad&#39;</span><span class="p">)</span>
+
+<span class="c"># date formatting is a particular example</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="k">print</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">At the third stroke, it will be</span>
+<span class="s">{:%Y-%m-</span><span class="si">%d</span><span class="s"> %H:%M:%S}</span>
+<span class="s">Beep</span>
+<span class="s">Beep</span>
+<span class="s">Beep</span>
+<span class="s">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span><span class="s">&#39;beep&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>Hey you, Hello world
+abracadabra
+
+At the third stroke, it will be
+2014-09-30 11:11:37
+Beep
+Beep
+Beep
+</pre></div>
+</div>
+<p>There are also additional formatting codes, including:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># character</span>
+<span class="k">print</span> <span class="s">&quot;char: </span><span class="si">%c</span><span class="s"> </span><span class="si">%c</span><span class="s"> </span><span class="si">%c</span><span class="s">&quot;</span><span class="o">%</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mi">101</span><span class="p">,</span><span class="mi">102</span><span class="p">)</span>
+
+<span class="c"># octal</span>
+<span class="k">print</span> <span class="s">&quot;octal: </span><span class="si">%o</span><span class="s">&quot;</span><span class="o">%</span><span class="p">(</span><span class="mi">0</span><span class="n">o755</span><span class="p">)</span>
+
+<span class="c"># hex</span>
+<span class="k">print</span> <span class="s">&quot;hex: </span><span class="si">%X</span><span class="s">&quot;</span><span class="o">%</span><span class="p">(</span><span class="mh">0xFFF</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;hex: </span><span class="si">%x</span><span class="s">&quot;</span><span class="o">%</span><span class="p">(</span><span class="mh">0xFFF</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>char: d e f
+octal: 755
+hex: FFF
+hex: fff
+</pre></div>
+</div>
+</div>
+<div class="section" id="a2-5-file-separator-portability">
+<h1>A2.5 File Separator: portability</h1>
+<p>We noted earlier that in parsing a filename, you might want to split it
+by the file separator:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># example, with directory names</span>
+
+<span class="c"># glob unix style pattern matching for files and directories</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+
+<span class="c"># returns a list (or [] if empty)</span>
+<span class="c"># to match the pattern given</span>
+<span class="n">file_list</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">&quot;files/data/*.txt&quot;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;file_list:</span><span class="se">\n\t</span><span class="s">&quot;</span><span class="p">,</span><span class="n">file_list</span>
+
+<span class="c"># e.g. the first string in the list</span>
+<span class="n">this_file</span> <span class="o">=</span> <span class="n">file_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c"># split the filename on the field &#39;/&#39;</span>
+<span class="k">print</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">this_file.split(&#39;/&#39;):</span><span class="se">\n\t</span><span class="s">&quot;</span><span class="p">,</span><span class="n">this_file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+
+<span class="c"># so the filename is just the last element in this list</span>
+<span class="k">print</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">this_file.split(&#39;/&#39;)[-1]:</span><span class="se">\n\t</span><span class="s">&quot;</span><span class="p">,</span><span class="n">this_file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>file_list:
+    [&#39;files/data/HadSEEP_monthly_qc.txt&#39;, &#39;files/data/heathrowdata.txt&#39;, &#39;files/data/modis_files.txt&#39;, &#39;files/data/modis_files2a.txt&#39;, &#39;files/data/modis_files2b.txt&#39;, &#39;files/data/some_modis_files.txt&#39;]
+
+this_file.split(&#39;/&#39;):
+    [&#39;files&#39;, &#39;data&#39;, &#39;HadSEEP_monthly_qc.txt&#39;]
+
+this_file.split(&#39;/&#39;)[-1]:
+    HadSEEP_monthly_qc.txt
+</pre></div>
+</div>
+<p>That&#8217;s fine if you are on a unix system, but on a windows system, the
+file separator is the other way around, so this code is not portable.</p>
+<p>To make aspects of your code like this portable, we can use features
+from Python that will tend to be in the module <tt class="docutils literal"><span class="pre">os</span></tt>:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">sep</span> <span class="c"># import the string sep from the module os</span>
+
+<span class="k">print</span> <span class="s">&quot;On this system, the file separator is&quot;</span><span class="p">,</span><span class="n">sep</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>On this system, the file separator is /
+</pre></div>
+</div>
+<p>So, better code than the above is:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># example, with directory names</span>
+
+<span class="c"># glob unix style pattern matching for files and directories</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">sep</span>
+
+<span class="c"># returns a list (or [] if empty)</span>
+<span class="c"># to match the pattern given</span>
+<span class="n">file_list</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">&quot;files{0}data{0}*.txt&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sep</span><span class="p">))</span>
+<span class="k">print</span> <span class="s">&quot;file_list:</span><span class="se">\n\t</span><span class="s">&quot;</span><span class="p">,</span><span class="n">file_list</span>
+
+<span class="c"># e.g. the first string in the list</span>
+<span class="n">this_file</span> <span class="o">=</span> <span class="n">file_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c"># split the filename on the field &#39;/&#39; or &#39;\&#39; (sep)</span>
+<span class="k">print</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">this_file.split({0}):</span><span class="se">\n\t</span><span class="s">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sep</span><span class="p">),</span>\
+                            <span class="n">this_file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">sep</span><span class="p">)</span>
+
+<span class="c"># so the filename is just the last element in this list</span>
+<span class="k">print</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">this_file.split({0})[-1]:</span><span class="se">\n\t</span><span class="s">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sep</span><span class="p">),</span>\
+                            <span class="n">this_file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">sep</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>file_list:
+    [&#39;files/data/HadSEEP_monthly_qc.txt&#39;, &#39;files/data/heathrowdata.txt&#39;, &#39;files/data/modis_files.txt&#39;, &#39;files/data/modis_files2a.txt&#39;, &#39;files/data/modis_files2b.txt&#39;, &#39;files/data/some_modis_files.txt&#39;]
+
+this_file.split(/):
+    [&#39;files&#39;, &#39;data&#39;, &#39;HadSEEP_monthly_qc.txt&#39;]
+
+this_file.split(/)[-1]:
+    HadSEEP_monthly_qc.txt
+</pre></div>
+</div>
+<p>There will always be a compromise between portability and readability of
+the code, so try to make sure that any portability modifications you
+make don&#8217;t obscure the meaniong of the code.</p>
+</div>
+<div class="section" id="a2-7-installing-your-own-packages">
+<h1>A2.7 Installing your own packages</h1>
+<p>Most of what you will want (especially to begin with) will be contained
+in your current Python distribution.</p>
+<p>Sometimes though, you might need to install some new module.</p>
+<p>Generally, the easiest way to do this is to use <tt class="docutils literal"><span class="pre">easy_install</span></tt>.</p>
+<p>We will use this to install a package <tt class="docutils literal"><span class="pre">pyephem</span></tt> into your user area:</p>
+<p>at a unix prompt, type:</p>
+<p><tt class="docutils literal"><span class="pre">easy_install</span> <span class="pre">--user</span> <span class="pre">pyephem</span></tt></p>
+<p>If all goes well, the text that comes up at the terminal should tell you
+that this has installed (e.g. in
+<tt class="docutils literal"><span class="pre">/home/plewis/.local/lib/python2.7/site-packages/pyephem-3.7.5.1-py2.7-linux-x86_64.egg</span></tt>).</p>
+<p>We can test to see if we can load this package:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">ephem</span>
+</pre></div>
+</div>
+<p>and then do some interesting things with it.</p>
+<p>The following piece of code might seem a little complicated right now,
+but it just uses</p>
+<p>We will need to <tt class="docutils literal"><span class="pre">import</span></tt> some other things from a few other packages
+as well:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">ephem</span> <span class="kn">import</span> <span class="n">Sun</span><span class="p">,</span> <span class="n">Observer</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">pi</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span><span class="p">,</span><span class="n">datetime</span><span class="p">,</span><span class="n">time</span>
+
+<span class="c"># radians to degrees</span>
+<span class="n">rtod</span> <span class="o">=</span> <span class="mf">180.</span><span class="o">/</span><span class="n">pi</span>
+
+<span class="c"># observer information in pyephem</span>
+<span class="n">obs</span> <span class="o">=</span> <span class="n">Observer</span><span class="p">()</span>
+
+<span class="n">today</span> <span class="o">=</span> <span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+<span class="c"># or datetime.date(2013, 3, 12)</span>
+
+<span class="c"># put in lat / lon for UCL</span>
+<span class="c"># https://www.google.co.uk/search?q=ucl+longitude+latitude</span>
+<span class="n">obs</span><span class="o">.</span><span class="n">lat</span>  <span class="o">=</span> <span class="s">&#39;51.5248&#39;</span>
+<span class="n">obs</span><span class="o">.</span><span class="n">long</span> <span class="o">=</span> <span class="s">&#39;-0.1336&#39;</span>
+
+<span class="k">for</span> <span class="n">hour</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">24</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">minute</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">30</span><span class="p">):</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="p">(</span><span class="n">hour</span><span class="p">,</span> <span class="n">minute</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">obs</span><span class="o">.</span><span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">combine</span><span class="p">(</span><span class="n">today</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+        <span class="n">sun</span> <span class="o">=</span> <span class="n">Sun</span><span class="p">(</span><span class="n">obs</span><span class="p">)</span>
+        <span class="n">zenith_elevation</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">sun</span><span class="o">.</span><span class="n">alt</span><span class="p">)</span><span class="o">*</span><span class="n">rtod</span> <span class="c"># degrees</span>
+
+        <span class="k">print</span> <span class="n">obs</span><span class="o">.</span><span class="n">date</span><span class="p">,</span><span class="n">zenith_elevation</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>2014/9/30 00:00:00 -41.1227180114
+2014/9/30 00:30:00 -40.4796625312
+2014/9/30 00:59:59 -39.0649015428
+2014/9/30 01:30:00 -36.9463783528
+2014/9/30 02:00:00 -34.2136162508
+2014/9/30 02:30:00 -30.9643006022
+2014/9/30 03:00:00 -27.2941667536
+2014/9/30 03:30:00 -23.2912319377
+2014/9/30 03:59:59 -19.0337171884
+2014/9/30 04:30:00 -14.5903017653
+2014/9/30 05:00:00 -10.0216590927
+2014/9/30 05:30:00 -5.01932715546
+2014/9/30 06:00:00 -0.134849371939
+2014/9/30 06:30:00 4.09286322097
+2014/9/30 06:59:59 8.55453445901
+2014/9/30 07:30:00 12.938958392
+2014/9/30 08:00:00 17.1514399965
+2014/9/30 08:30:00 21.1181133381
+2014/9/30 09:00:00 24.7672136192
+2014/9/30 09:30:00 28.020436136
+2014/9/30 09:59:59 30.7949255712
+2014/9/30 10:30:00 33.0070257679
+2014/9/30 11:00:00 34.579161145
+2014/9/30 11:30:00 35.4491052641
+2014/9/30 12:00:00 35.5794764999
+2014/9/30 12:30:00 34.9643838142
+2014/9/30 12:59:59 33.6305127561
+2014/9/30 13:30:00 31.6322282163
+2014/9/30 14:00:00 29.0427156717
+2014/9/30 14:30:00 25.9443096378
+2014/9/30 15:00:00 22.4206252902
+2014/9/30 15:30:00 18.5516782953
+2014/9/30 15:59:59 14.4111578562
+2014/9/30 16:30:00 10.0714597095
+2014/9/30 17:00:00 5.61372180666
+2014/9/30 17:30:00 1.2203105187
+2014/9/30 18:00:00 -2.38322183516
+2014/9/30 18:30:00 -8.47981048194
+2014/9/30 18:59:59 -13.0951972617
+2014/9/30 19:30:00 -17.6077341991
+2014/9/30 20:00:00 -21.9594218892
+2014/9/30 20:30:00 -26.0849005441
+2014/9/30 21:00:00 -29.9096032812
+2014/9/30 21:30:00 -33.3488186792
+2014/9/30 21:59:59 -36.3086640806
+2014/9/30 22:30:00 -38.6902793272
+2014/9/30 23:00:00 -40.3983491291
+2014/9/30 23:30:00 -41.3537969714
+</pre></div>
+</div>
+<p>Let&#8217;s write this out to a file now:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">ephem</span> <span class="kn">import</span> <span class="n">Sun</span><span class="p">,</span> <span class="n">Observer</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">pi</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span><span class="p">,</span><span class="n">datetime</span><span class="p">,</span><span class="n">time</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;files/data/elevation.dat&#39;</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">fp</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="s">&quot;w&quot;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;Failed to open file </span><span class="si">%s</span><span class="s"> for writing&quot;</span><span class="o">%</span><span class="n">filename</span>
+
+<span class="c"># radians to degrees</span>
+<span class="n">rtod</span> <span class="o">=</span> <span class="mf">180.</span><span class="o">/</span><span class="n">pi</span>
+
+<span class="c"># observer information in pyephem</span>
+<span class="n">obs</span> <span class="o">=</span> <span class="n">Observer</span><span class="p">()</span>
+
+<span class="n">today</span> <span class="o">=</span> <span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+<span class="c"># or datetime.date(2013, 3, 12)</span>
+
+<span class="c"># put in lat / lon for UCL</span>
+<span class="c"># https://www.google.co.uk/search?q=ucl+longitude+latitude</span>
+<span class="n">obs</span><span class="o">.</span><span class="n">lat</span>  <span class="o">=</span> <span class="s">&#39;51.5248&#39;</span>
+<span class="n">obs</span><span class="o">.</span><span class="n">long</span> <span class="o">=</span> <span class="s">&#39;-0.1336&#39;</span>
+
+<span class="k">for</span> <span class="n">hour</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">24</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">minute</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">30</span><span class="p">):</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="p">(</span><span class="n">hour</span><span class="p">,</span> <span class="n">minute</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">obs</span><span class="o">.</span><span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">combine</span><span class="p">(</span><span class="n">today</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+        <span class="n">sun</span> <span class="o">=</span> <span class="n">Sun</span><span class="p">(</span><span class="n">obs</span><span class="p">)</span>
+        <span class="n">elevation</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">sun</span><span class="o">.</span><span class="n">alt</span><span class="p">)</span><span class="o">*</span><span class="n">rtod</span> <span class="c"># degrees</span>
+        <span class="n">fp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">obs</span><span class="o">.</span><span class="n">date</span><span class="p">,</span><span class="n">elevation</span><span class="p">))</span>
+
+<span class="n">fp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># just for interest, let&#39;s plot this:</span>
+
+<span class="kn">import</span> <span class="nn">pylab</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;files/data/elevation.dat&#39;</span>
+<span class="n">fp</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="s">&quot;r&quot;</span><span class="p">)</span>
+
+<span class="n">hours</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">zeniths</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">fp</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="n">time</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;:&#39;</span><span class="p">)]</span>
+    <span class="n">hour</span> <span class="o">=</span> <span class="n">time</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">time</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mf">60.</span> <span class="o">+</span> <span class="n">time</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="mf">60.</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+    <span class="n">zenith</span> <span class="o">=</span> <span class="mf">90.</span> <span class="o">-</span> <span class="nb">float</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">zenith</span> <span class="o">&lt;=</span> <span class="mf">90.</span><span class="p">:</span>
+        <span class="n">hours</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hour</span><span class="p">)</span>
+        <span class="n">zeniths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">zenith</span><span class="p">)</span>
+<span class="n">fp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="c"># plotting</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">hours</span><span class="p">,</span><span class="n">zeniths</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;hour&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;solar zenith / degrees&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>&lt;matplotlib.text.Text at 0x106574710&gt;
+</pre></div>
+</div>
+<img alt="../_images/advanced_88_1.png" src="../_images/advanced_88_1.png" />
+</div>
+<div class="section" id="a2-8-reading-files-from-a-url">
+<h1>A2.8 Reading Files from a URL</h1>
+<p>In the main exercises, you have been advised to download a file and read
+it using the normal file <tt class="docutils literal"><span class="pre">open</span></tt> commands.</p>
+<p>If a file is available as a
+<a class="reference external" href="http://en.wikipedia.org/wiki/Uniform_resource_locator">URL</a><span class="link-target"> [http://en.wikipedia.org/wiki/Uniform_resource_locator]</span>, you can
+conveniently use the <tt class="docutils literal"><span class="pre">urllib2</span></tt> module in Python to access the file
+directly.</p>
+<p>So, in the case of the precipitation data in an earlier exercise, we
+could hhave directly read the data with:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">urllib2</span>
+
+<span class="c">#as files</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">&quot;http://www.metoffice.gov.uk/hadobs/hadukp/data/monthly/HadSEEP_monthly_qc.txt&quot;</span>
+
+<span class="n">req</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">Request</span> <span class="p">(</span> <span class="n">url</span> <span class="p">)</span>
+<span class="n">raw_data</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">req</span><span class="p">)</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="n">raw_data</span><span class="p">[:</span><span class="mi">6</span><span class="p">]</span>
+</pre></div>
+</div>
+<pre class="literal-block">
+['Monthly Southeast England precipitation (mm). Daily automated values used after 1996.n', 'Wigley &amp; Jones (J.Climatol.,1987), Gregory et al. (Int.J.Clim.,1991)n', 'Jones &amp; Conway (Int.J.Climatol.,1997), Alexander &amp; Jones (ASL,2001). Values may change after QC.n', 'YEAR   JAN   FEB   MAR   APR   MAY   JUN   JUL   AUG   SEP   OCT   NOV   DEC   ANNn', ' 1873  87.1  50.4  52.9  19.9  41.1  63.6  53.2  56.4  62.0  86.0  59.4  15.7  647.7n', ' 1874  46.8  44.9  15.8  48.4  24.1  49.9  28.3  43.6  79.4  96.1  63.9  52.3  593.5n']
+</pre>
+</div>
+<div class="section" id="a2-9-advanced-dictionaries">
+<h1>A2.9 Advanced dictionaries</h1>
+<p>They are particularly useful when you want to build clear data
+structures, e.g. in loading a dataset such as
+<tt class="docutils literal"><span class="pre">`files/data/HadSEEP_monthly_qc.txt</span></tt> &lt;files/data/HadSEEP_monthly_qc.txt&gt;`__.</p>
+<p>First, let&#8217;s read the data from this file into the lists <tt class="docutils literal"><span class="pre">label</span></tt> and
+<tt class="docutils literal"><span class="pre">rdata</span></tt>, where <tt class="docutils literal"><span class="pre">rdata[0]</span></tt> will be the first column in the file,
+<tt class="docutils literal"><span class="pre">rdata[1]</span></tt> the second column etc.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">fp</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;files/data/HadSEEP_monthly_qc.txt&#39;</span><span class="p">,</span><span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">sdata</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+<span class="n">fp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">labels</span> <span class="o">=</span> <span class="n">sdata</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sdata</span><span class="p">[</span><span class="mi">4</span><span class="p">:]]</span>
+<span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">rdata</span> <span class="o">=</span> <span class="p">[[</span><span class="nb">float</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">])</span> \
+         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))]</span>\
+         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]))]</span>
+
+<span class="k">print</span> <span class="n">rdata</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="mf">1873.0</span><span class="p">,</span> <span class="mf">1874.0</span><span class="p">,</span> <span class="mf">1875.0</span><span class="p">,</span> <span class="mf">1876.0</span><span class="p">,</span> <span class="mf">1877.0</span><span class="p">,</span> <span class="mf">1878.0</span><span class="p">,</span> <span class="mf">1879.0</span><span class="p">,</span> <span class="mf">1880.0</span><span class="p">,</span> <span class="mf">1881.0</span><span class="p">,</span> <span class="mf">1882.0</span><span class="p">,</span> <span class="mf">1883.0</span><span class="p">,</span> <span class="mf">1884.0</span><span class="p">,</span> <span class="mf">1885.0</span><span class="p">,</span> <span class="mf">1886.0</span><span class="p">,</span> <span class="mf">1887.0</span><span class="p">,</span> <span class="mf">1888.0</span><span class="p">,</span> <span class="mf">1889.0</span><span class="p">,</span> <span class="mf">1890.0</span><span class="p">,</span> <span class="mf">1891.0</span><span class="p">,</span> <span class="mf">1892.0</span><span class="p">,</span> <span class="mf">1893.0</span><span class="p">,</span> <span class="mf">1894.0</span><span class="p">,</span> <span class="mf">1895.0</span><span class="p">,</span> <span class="mf">1896.0</span><span class="p">,</span> <span class="mf">1897.0</span><span class="p">,</span> <span class="mf">1898.0</span><span class="p">,</span> <span class="mf">1899.0</span><span class="p">,</span> <span class="mf">1900.0</span><span class="p">,</span> <span class="mf">1901.0</span><span class="p">,</span> <span class="mf">1902.0</span><span class="p">,</span> <span class="mf">1903.0</span><span class="p">,</span> <span class="mf">1904.0</span><span class="p">,</span> <span class="mf">1905.0</span><span class="p">,</span> <span class="mf">1906.0</span><span class="p">,</span> <span class="mf">1907.0</span><span class="p">,</span> <span class="mf">1908.0</span><span class="p">,</span> <span class="mf">1909.0</span><span class="p">,</span> <span class="mf">1910.0</span><span class="p">,</span> <span class="mf">1911.0</span><span class="p">,</span> <span class="mf">1912.0</span><span class="p">,</span> <span class="mf">1913.0</span><span class="p">,</span> <span class="mf">1914.0</span><span class="p">,</span> <span class="mf">1915.0</span><span class="p">,</span> <span class="mf">1916.0</span><span class="p">,</span> <span class="mf">1917.0</span><span class="p">,</span> <span class="mf">1918.0</span><span class="p">,</span> <span class="mf">1919.0</span><span class="p">,</span> <span class="mf">1920.0</span><span class="p">,</span> <span class="mf">1921.0</span><span class="p">,</span> <span class="mf">1922.0</span><span class="p">,</span> <span class="mf">1923.0</span><span class="p">,</span> <span class="mf">1924.0</span><span class="p">,</span> <span class="mf">1925.0</span><span class="p">,</span> <span class="mf">1926.0</span><span class="p">,</span> <span class="mf">1927.0</span><span class="p">,</span> <span class="mf">1928.0</span><span class="p">,</span> <span class="mf">1929.0</span><span class="p">,</span> <span class="mf">1930.0</span><span class="p">,</span> <span class="mf">1931.0</span><span class="p">,</span> <span class="mf">1932.0</span><span class="p">,</span> <span class="mf">1933.0</span><span class="p">,</span> <span class="mf">1934.0</span><span class="p">,</span> <span class="mf">1935.0</span><span class="p">,</span> <span class="mf">1936.0</span><span class="p">,</span> <span class="mf">1937.0</span><span class="p">,</span> <span class="mf">1938.0</span><span class="p">,</span> <span class="mf">1939.0</span><span class="p">,</span> <span class="mf">1940.0</span><span class="p">,</span> <span class="mf">1941.0</span><span class="p">,</span> <span class="mf">1942.0</span><span class="p">,</span> <span class="mf">1943.0</span><span class="p">,</span> <span class="mf">1944.0</span><span class="p">,</span> <span class="mf">1945.0</span><span class="p">,</span> <span class="mf">1946.0</span><span class="p">,</span> <span class="mf">1947.0</span><span class="p">,</span> <span class="mf">1948.0</span><span class="p">,</span> <span class="mf">1949.0</span><span class="p">,</span> <span class="mf">1950.0</span><span class="p">,</span> <span class="mf">1951.0</span><span class="p">,</span> <span class="mf">1952.0</span><span class="p">,</span> <span class="mf">1953.0</span><span class="p">,</span> <span class="mf">1954.0</span><span class="p">,</span> <span class="mf">1955.0</span><span class="p">,</span> <span class="mf">1956.0</span><span class="p">,</span> <span class="mf">1957.0</span><span class="p">,</span> <span class="mf">1958.0</span><span class="p">,</span> <span class="mf">1959.0</span><span class="p">,</span> <span class="mf">1960.0</span><span class="p">,</span> <span class="mf">1961.0</span><span class="p">,</span> <span class="mf">1962.0</span><span class="p">,</span> <span class="mf">1963.0</span><span class="p">,</span> <span class="mf">1964.0</span><span class="p">,</span> <span class="mf">1965.0</span><span class="p">,</span> <span class="mf">1966.0</span><span class="p">,</span> <span class="mf">1967.0</span><span class="p">,</span> <span class="mf">1968.0</span><span class="p">,</span> <span class="mf">1969.0</span><span class="p">,</span> <span class="mf">1970.0</span><span class="p">,</span> <span class="mf">1971.0</span><span class="p">,</span> <span class="mf">1972.0</span><span class="p">,</span> <span class="mf">1973.0</span><span class="p">,</span> <span class="mf">1974.0</span><span class="p">,</span> <span class="mf">1975.0</span><span class="p">,</span> <span class="mf">1976.0</span><span class="p">,</span> <span class="mf">1977.0</span><span class="p">,</span> <span class="mf">1978.0</span><span class="p">,</span> <span class="mf">1979.0</span><span class="p">,</span> <span class="mf">1980.0</span><span class="p">,</span> <span class="mf">1981.0</span><span class="p">,</span> <span class="mf">1982.0</span><span class="p">,</span> <span class="mf">1983.0</span><span class="p">,</span> <span class="mf">1984.0</span><span class="p">,</span> <span class="mf">1985.0</span><span class="p">,</span> <span class="mf">1986.0</span><span class="p">,</span> <span class="mf">1987.0</span><span class="p">,</span> <span class="mf">1988.0</span><span class="p">,</span> <span class="mf">1989.0</span><span class="p">,</span> <span class="mf">1990.0</span><span class="p">,</span> <span class="mf">1991.0</span><span class="p">,</span> <span class="mf">1992.0</span><span class="p">,</span> <span class="mf">1993.0</span><span class="p">,</span> <span class="mf">1994.0</span><span class="p">,</span> <span class="mf">1995.0</span><span class="p">,</span> <span class="mf">1996.0</span><span class="p">,</span> <span class="mf">1997.0</span><span class="p">,</span> <span class="mf">1998.0</span><span class="p">,</span> <span class="mf">1999.0</span><span class="p">,</span> <span class="mf">2000.0</span><span class="p">,</span> <span class="mf">2001.0</span><span class="p">,</span> <span class="mf">2002.0</span><span class="p">,</span> <span class="mf">2003.0</span><span class="p">,</span> <span class="mf">2004.0</span><span class="p">,</span> <span class="mf">2005.0</span><span class="p">,</span> <span class="mf">2006.0</span><span class="p">,</span> <span class="mf">2007.0</span><span class="p">,</span> <span class="mf">2008.0</span><span class="p">,</span> <span class="mf">2009.0</span><span class="p">,</span> <span class="mf">2010.0</span><span class="p">,</span> <span class="mf">2011.0</span><span class="p">,</span> <span class="mf">2012.0</span><span class="p">,</span> <span class="mf">2013.0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>We can of course just remember that the first column is &#8216;year&#8217;, the
+second column data for &#8216;JAN&#8217; etc., but we would have a much better
+organised dataset if we put it in a dictionary.</p>
+<p>One way to do this would be:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># set up a</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">k</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">labels</span><span class="p">):</span>
+    <span class="n">dataset</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">rdata</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>and we could now refer to the &#8216;year&#8217; data as:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="n">dataset</span><span class="p">[</span><span class="s">&#39;YEAR&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="mf">1873.0</span><span class="p">,</span> <span class="mf">1874.0</span><span class="p">,</span> <span class="mf">1875.0</span><span class="p">,</span> <span class="mf">1876.0</span><span class="p">,</span> <span class="mf">1877.0</span><span class="p">,</span> <span class="mf">1878.0</span><span class="p">,</span> <span class="mf">1879.0</span><span class="p">,</span> <span class="mf">1880.0</span><span class="p">,</span> <span class="mf">1881.0</span><span class="p">,</span> <span class="mf">1882.0</span><span class="p">,</span> <span class="mf">1883.0</span><span class="p">,</span> <span class="mf">1884.0</span><span class="p">,</span> <span class="mf">1885.0</span><span class="p">,</span> <span class="mf">1886.0</span><span class="p">,</span> <span class="mf">1887.0</span><span class="p">,</span> <span class="mf">1888.0</span><span class="p">,</span> <span class="mf">1889.0</span><span class="p">,</span> <span class="mf">1890.0</span><span class="p">,</span> <span class="mf">1891.0</span><span class="p">,</span> <span class="mf">1892.0</span><span class="p">,</span> <span class="mf">1893.0</span><span class="p">,</span> <span class="mf">1894.0</span><span class="p">,</span> <span class="mf">1895.0</span><span class="p">,</span> <span class="mf">1896.0</span><span class="p">,</span> <span class="mf">1897.0</span><span class="p">,</span> <span class="mf">1898.0</span><span class="p">,</span> <span class="mf">1899.0</span><span class="p">,</span> <span class="mf">1900.0</span><span class="p">,</span> <span class="mf">1901.0</span><span class="p">,</span> <span class="mf">1902.0</span><span class="p">,</span> <span class="mf">1903.0</span><span class="p">,</span> <span class="mf">1904.0</span><span class="p">,</span> <span class="mf">1905.0</span><span class="p">,</span> <span class="mf">1906.0</span><span class="p">,</span> <span class="mf">1907.0</span><span class="p">,</span> <span class="mf">1908.0</span><span class="p">,</span> <span class="mf">1909.0</span><span class="p">,</span> <span class="mf">1910.0</span><span class="p">,</span> <span class="mf">1911.0</span><span class="p">,</span> <span class="mf">1912.0</span><span class="p">,</span> <span class="mf">1913.0</span><span class="p">,</span> <span class="mf">1914.0</span><span class="p">,</span> <span class="mf">1915.0</span><span class="p">,</span> <span class="mf">1916.0</span><span class="p">,</span> <span class="mf">1917.0</span><span class="p">,</span> <span class="mf">1918.0</span><span class="p">,</span> <span class="mf">1919.0</span><span class="p">,</span> <span class="mf">1920.0</span><span class="p">,</span> <span class="mf">1921.0</span><span class="p">,</span> <span class="mf">1922.0</span><span class="p">,</span> <span class="mf">1923.0</span><span class="p">,</span> <span class="mf">1924.0</span><span class="p">,</span> <span class="mf">1925.0</span><span class="p">,</span> <span class="mf">1926.0</span><span class="p">,</span> <span class="mf">1927.0</span><span class="p">,</span> <span class="mf">1928.0</span><span class="p">,</span> <span class="mf">1929.0</span><span class="p">,</span> <span class="mf">1930.0</span><span class="p">,</span> <span class="mf">1931.0</span><span class="p">,</span> <span class="mf">1932.0</span><span class="p">,</span> <span class="mf">1933.0</span><span class="p">,</span> <span class="mf">1934.0</span><span class="p">,</span> <span class="mf">1935.0</span><span class="p">,</span> <span class="mf">1936.0</span><span class="p">,</span> <span class="mf">1937.0</span><span class="p">,</span> <span class="mf">1938.0</span><span class="p">,</span> <span class="mf">1939.0</span><span class="p">,</span> <span class="mf">1940.0</span><span class="p">,</span> <span class="mf">1941.0</span><span class="p">,</span> <span class="mf">1942.0</span><span class="p">,</span> <span class="mf">1943.0</span><span class="p">,</span> <span class="mf">1944.0</span><span class="p">,</span> <span class="mf">1945.0</span><span class="p">,</span> <span class="mf">1946.0</span><span class="p">,</span> <span class="mf">1947.0</span><span class="p">,</span> <span class="mf">1948.0</span><span class="p">,</span> <span class="mf">1949.0</span><span class="p">,</span> <span class="mf">1950.0</span><span class="p">,</span> <span class="mf">1951.0</span><span class="p">,</span> <span class="mf">1952.0</span><span class="p">,</span> <span class="mf">1953.0</span><span class="p">,</span> <span class="mf">1954.0</span><span class="p">,</span> <span class="mf">1955.0</span><span class="p">,</span> <span class="mf">1956.0</span><span class="p">,</span> <span class="mf">1957.0</span><span class="p">,</span> <span class="mf">1958.0</span><span class="p">,</span> <span class="mf">1959.0</span><span class="p">,</span> <span class="mf">1960.0</span><span class="p">,</span> <span class="mf">1961.0</span><span class="p">,</span> <span class="mf">1962.0</span><span class="p">,</span> <span class="mf">1963.0</span><span class="p">,</span> <span class="mf">1964.0</span><span class="p">,</span> <span class="mf">1965.0</span><span class="p">,</span> <span class="mf">1966.0</span><span class="p">,</span> <span class="mf">1967.0</span><span class="p">,</span> <span class="mf">1968.0</span><span class="p">,</span> <span class="mf">1969.0</span><span class="p">,</span> <span class="mf">1970.0</span><span class="p">,</span> <span class="mf">1971.0</span><span class="p">,</span> <span class="mf">1972.0</span><span class="p">,</span> <span class="mf">1973.0</span><span class="p">,</span> <span class="mf">1974.0</span><span class="p">,</span> <span class="mf">1975.0</span><span class="p">,</span> <span class="mf">1976.0</span><span class="p">,</span> <span class="mf">1977.0</span><span class="p">,</span> <span class="mf">1978.0</span><span class="p">,</span> <span class="mf">1979.0</span><span class="p">,</span> <span class="mf">1980.0</span><span class="p">,</span> <span class="mf">1981.0</span><span class="p">,</span> <span class="mf">1982.0</span><span class="p">,</span> <span class="mf">1983.0</span><span class="p">,</span> <span class="mf">1984.0</span><span class="p">,</span> <span class="mf">1985.0</span><span class="p">,</span> <span class="mf">1986.0</span><span class="p">,</span> <span class="mf">1987.0</span><span class="p">,</span> <span class="mf">1988.0</span><span class="p">,</span> <span class="mf">1989.0</span><span class="p">,</span> <span class="mf">1990.0</span><span class="p">,</span> <span class="mf">1991.0</span><span class="p">,</span> <span class="mf">1992.0</span><span class="p">,</span> <span class="mf">1993.0</span><span class="p">,</span> <span class="mf">1994.0</span><span class="p">,</span> <span class="mf">1995.0</span><span class="p">,</span> <span class="mf">1996.0</span><span class="p">,</span> <span class="mf">1997.0</span><span class="p">,</span> <span class="mf">1998.0</span><span class="p">,</span> <span class="mf">1999.0</span><span class="p">,</span> <span class="mf">2000.0</span><span class="p">,</span> <span class="mf">2001.0</span><span class="p">,</span> <span class="mf">2002.0</span><span class="p">,</span> <span class="mf">2003.0</span><span class="p">,</span> <span class="mf">2004.0</span><span class="p">,</span> <span class="mf">2005.0</span><span class="p">,</span> <span class="mf">2006.0</span><span class="p">,</span> <span class="mf">2007.0</span><span class="p">,</span> <span class="mf">2008.0</span><span class="p">,</span> <span class="mf">2009.0</span><span class="p">,</span> <span class="mf">2010.0</span><span class="p">,</span> <span class="mf">2011.0</span><span class="p">,</span> <span class="mf">2012.0</span><span class="p">,</span> <span class="mf">2013.0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>A simper and more Pythonic way is to use <tt class="docutils literal"><span class="pre">zip</span></tt>:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">dataset</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span><span class="n">rdata</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="n">dataset</span><span class="p">[</span><span class="s">&#39;YEAR&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="mf">1873.0</span><span class="p">,</span> <span class="mf">1874.0</span><span class="p">,</span> <span class="mf">1875.0</span><span class="p">,</span> <span class="mf">1876.0</span><span class="p">,</span> <span class="mf">1877.0</span><span class="p">,</span> <span class="mf">1878.0</span><span class="p">,</span> <span class="mf">1879.0</span><span class="p">,</span> <span class="mf">1880.0</span><span class="p">,</span> <span class="mf">1881.0</span><span class="p">,</span> <span class="mf">1882.0</span><span class="p">,</span> <span class="mf">1883.0</span><span class="p">,</span> <span class="mf">1884.0</span><span class="p">,</span> <span class="mf">1885.0</span><span class="p">,</span> <span class="mf">1886.0</span><span class="p">,</span> <span class="mf">1887.0</span><span class="p">,</span> <span class="mf">1888.0</span><span class="p">,</span> <span class="mf">1889.0</span><span class="p">,</span> <span class="mf">1890.0</span><span class="p">,</span> <span class="mf">1891.0</span><span class="p">,</span> <span class="mf">1892.0</span><span class="p">,</span> <span class="mf">1893.0</span><span class="p">,</span> <span class="mf">1894.0</span><span class="p">,</span> <span class="mf">1895.0</span><span class="p">,</span> <span class="mf">1896.0</span><span class="p">,</span> <span class="mf">1897.0</span><span class="p">,</span> <span class="mf">1898.0</span><span class="p">,</span> <span class="mf">1899.0</span><span class="p">,</span> <span class="mf">1900.0</span><span class="p">,</span> <span class="mf">1901.0</span><span class="p">,</span> <span class="mf">1902.0</span><span class="p">,</span> <span class="mf">1903.0</span><span class="p">,</span> <span class="mf">1904.0</span><span class="p">,</span> <span class="mf">1905.0</span><span class="p">,</span> <span class="mf">1906.0</span><span class="p">,</span> <span class="mf">1907.0</span><span class="p">,</span> <span class="mf">1908.0</span><span class="p">,</span> <span class="mf">1909.0</span><span class="p">,</span> <span class="mf">1910.0</span><span class="p">,</span> <span class="mf">1911.0</span><span class="p">,</span> <span class="mf">1912.0</span><span class="p">,</span> <span class="mf">1913.0</span><span class="p">,</span> <span class="mf">1914.0</span><span class="p">,</span> <span class="mf">1915.0</span><span class="p">,</span> <span class="mf">1916.0</span><span class="p">,</span> <span class="mf">1917.0</span><span class="p">,</span> <span class="mf">1918.0</span><span class="p">,</span> <span class="mf">1919.0</span><span class="p">,</span> <span class="mf">1920.0</span><span class="p">,</span> <span class="mf">1921.0</span><span class="p">,</span> <span class="mf">1922.0</span><span class="p">,</span> <span class="mf">1923.0</span><span class="p">,</span> <span class="mf">1924.0</span><span class="p">,</span> <span class="mf">1925.0</span><span class="p">,</span> <span class="mf">1926.0</span><span class="p">,</span> <span class="mf">1927.0</span><span class="p">,</span> <span class="mf">1928.0</span><span class="p">,</span> <span class="mf">1929.0</span><span class="p">,</span> <span class="mf">1930.0</span><span class="p">,</span> <span class="mf">1931.0</span><span class="p">,</span> <span class="mf">1932.0</span><span class="p">,</span> <span class="mf">1933.0</span><span class="p">,</span> <span class="mf">1934.0</span><span class="p">,</span> <span class="mf">1935.0</span><span class="p">,</span> <span class="mf">1936.0</span><span class="p">,</span> <span class="mf">1937.0</span><span class="p">,</span> <span class="mf">1938.0</span><span class="p">,</span> <span class="mf">1939.0</span><span class="p">,</span> <span class="mf">1940.0</span><span class="p">,</span> <span class="mf">1941.0</span><span class="p">,</span> <span class="mf">1942.0</span><span class="p">,</span> <span class="mf">1943.0</span><span class="p">,</span> <span class="mf">1944.0</span><span class="p">,</span> <span class="mf">1945.0</span><span class="p">,</span> <span class="mf">1946.0</span><span class="p">,</span> <span class="mf">1947.0</span><span class="p">,</span> <span class="mf">1948.0</span><span class="p">,</span> <span class="mf">1949.0</span><span class="p">,</span> <span class="mf">1950.0</span><span class="p">,</span> <span class="mf">1951.0</span><span class="p">,</span> <span class="mf">1952.0</span><span class="p">,</span> <span class="mf">1953.0</span><span class="p">,</span> <span class="mf">1954.0</span><span class="p">,</span> <span class="mf">1955.0</span><span class="p">,</span> <span class="mf">1956.0</span><span class="p">,</span> <span class="mf">1957.0</span><span class="p">,</span> <span class="mf">1958.0</span><span class="p">,</span> <span class="mf">1959.0</span><span class="p">,</span> <span class="mf">1960.0</span><span class="p">,</span> <span class="mf">1961.0</span><span class="p">,</span> <span class="mf">1962.0</span><span class="p">,</span> <span class="mf">1963.0</span><span class="p">,</span> <span class="mf">1964.0</span><span class="p">,</span> <span class="mf">1965.0</span><span class="p">,</span> <span class="mf">1966.0</span><span class="p">,</span> <span class="mf">1967.0</span><span class="p">,</span> <span class="mf">1968.0</span><span class="p">,</span> <span class="mf">1969.0</span><span class="p">,</span> <span class="mf">1970.0</span><span class="p">,</span> <span class="mf">1971.0</span><span class="p">,</span> <span class="mf">1972.0</span><span class="p">,</span> <span class="mf">1973.0</span><span class="p">,</span> <span class="mf">1974.0</span><span class="p">,</span> <span class="mf">1975.0</span><span class="p">,</span> <span class="mf">1976.0</span><span class="p">,</span> <span class="mf">1977.0</span><span class="p">,</span> <span class="mf">1978.0</span><span class="p">,</span> <span class="mf">1979.0</span><span class="p">,</span> <span class="mf">1980.0</span><span class="p">,</span> <span class="mf">1981.0</span><span class="p">,</span> <span class="mf">1982.0</span><span class="p">,</span> <span class="mf">1983.0</span><span class="p">,</span> <span class="mf">1984.0</span><span class="p">,</span> <span class="mf">1985.0</span><span class="p">,</span> <span class="mf">1986.0</span><span class="p">,</span> <span class="mf">1987.0</span><span class="p">,</span> <span class="mf">1988.0</span><span class="p">,</span> <span class="mf">1989.0</span><span class="p">,</span> <span class="mf">1990.0</span><span class="p">,</span> <span class="mf">1991.0</span><span class="p">,</span> <span class="mf">1992.0</span><span class="p">,</span> <span class="mf">1993.0</span><span class="p">,</span> <span class="mf">1994.0</span><span class="p">,</span> <span class="mf">1995.0</span><span class="p">,</span> <span class="mf">1996.0</span><span class="p">,</span> <span class="mf">1997.0</span><span class="p">,</span> <span class="mf">1998.0</span><span class="p">,</span> <span class="mf">1999.0</span><span class="p">,</span> <span class="mf">2000.0</span><span class="p">,</span> <span class="mf">2001.0</span><span class="p">,</span> <span class="mf">2002.0</span><span class="p">,</span> <span class="mf">2003.0</span><span class="p">,</span> <span class="mf">2004.0</span><span class="p">,</span> <span class="mf">2005.0</span><span class="p">,</span> <span class="mf">2006.0</span><span class="p">,</span> <span class="mf">2007.0</span><span class="p">,</span> <span class="mf">2008.0</span><span class="p">,</span> <span class="mf">2009.0</span><span class="p">,</span> <span class="mf">2010.0</span><span class="p">,</span> <span class="mf">2011.0</span><span class="p">,</span> <span class="mf">2012.0</span><span class="p">,</span> <span class="mf">2013.0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>So, e.g. plotting data sets would be clear using the dictionary:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pylab</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">JFM</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([[</span><span class="s">&#39;JAN&#39;</span><span class="p">,</span><span class="s">&#39;FEB&#39;</span><span class="p">,</span><span class="s">&#39;MAR&#39;</span><span class="p">],[</span><span class="s">&#39;APR&#39;</span><span class="p">,</span><span class="s">&#39;MAY&#39;</span><span class="p">,</span><span class="s">&#39;JUN&#39;</span><span class="p">],</span>\
+              <span class="p">[</span><span class="s">&#39;JUL&#39;</span><span class="p">,</span><span class="s">&#39;AUG&#39;</span><span class="p">,</span><span class="s">&#39;SEP&#39;</span><span class="p">],[</span><span class="s">&#39;OCT&#39;</span><span class="p">,</span><span class="s">&#39;NOV&#39;</span><span class="p">,</span><span class="s">&#39;DEC&#39;</span><span class="p">]]):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;Year&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;Precip. (mm)&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">month</span> <span class="ow">in</span> <span class="n">JFM</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">250</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="s">&#39;YEAR&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">dataset</span><span class="p">[</span><span class="s">&#39;YEAR&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">JFM</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="s">&#39;YEAR&#39;</span><span class="p">],</span><span class="n">dataset</span><span class="p">[</span><span class="n">month</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;Year&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;Precip. (mm)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&#39;ANN&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1100</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="s">&#39;YEAR&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">dataset</span><span class="p">[</span><span class="s">&#39;YEAR&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="s">&#39;YEAR&#39;</span><span class="p">],</span><span class="n">dataset</span><span class="p">[</span><span class="s">&#39;ANN&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>[&lt;matplotlib.lines.Line2D at 0x107593850&gt;]
+</pre></div>
+</div>
+<img alt="../_images/advanced_103_1.png" src="../_images/advanced_103_1.png" />
+<img alt="../_images/advanced_103_2.png" src="../_images/advanced_103_2.png" />
+<img alt="../_images/advanced_103_3.png" src="../_images/advanced_103_3.png" />
+<img alt="../_images/advanced_103_4.png" src="../_images/advanced_103_4.png" />
+<img alt="../_images/advanced_103_5.png" src="../_images/advanced_103_5.png" />
+</div>
+<div class="section" id="excercise">
+<h1>Excercise</h1>
+<p>In this example, we want to read all data from the Heathrow Met data
+file <tt class="docutils literal"><span class="pre">files/data/heathrowdata.txt</span></tt> and plot each data field.</p>
+<p>In doing this, we want to store the data in a dictionary, as this is a
+convenient way of access the different data fields.</p>
+<p>At the heart of this example is the statement</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span><span class="n">rdata</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>This is a very useful combination in Python as it allows us to generate
+a dictionary with the keys specified by <tt class="docutils literal"><span class="pre">labels</span></tt> and the values
+<tt class="docutils literal"><span class="pre">rdata</span></tt>.</p>
+<p>A few things that make this a bit more complicated are:</p>
+<ol class="arabic">
+<li><p class="first">When we read the data line by line from the file, we have it stored
+as data[line][sample], i.e. each data[line] is the data for that
+line. When we want to load it into the dictionary, we want the data
+the other way around. This is a bit tricky with lists, and we have to
+use the following, which is a general statement, so you can use it
+for similar rotations, but its a bit dense.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">rdata</span> <span class="o">=</span> <span class="p">[[</span><span class="n">data</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]))]</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">When parsing the file, we have to deal with some awkward aspects,
+such as the presence of <tt class="docutils literal"><span class="pre">#</span></tt> symbols here and there and the fact
+that <tt class="docutils literal"><span class="pre">'---'</span></tt> is used to indicate no data. Here, we replace these
+awkward fields with more convenient numerical values (that won&#8217;t
+break the conversion to <tt class="docutils literal"><span class="pre">float</span></tt>), or get rid of them as appropriate
+(using <tt class="docutils literal"><span class="pre">replace()</span></tt> on the strings).</p>
+</li>
+<li><p class="first">When we come to plot the data, we have to confront the fact that we
+used <tt class="docutils literal"><span class="pre">-999</span></tt> to indicate no data, and have to filter these values
+out before plotting. This is easy enough to do in a listcomp for the
+<tt class="docutils literal"><span class="pre">y</span></tt> values by using a conditional statement:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">items</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">999</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>But for the x values, we have to filter these based on a test with
+the <tt class="docutils literal"><span class="pre">y</span></tt> values ... and so we use a more complex statement:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">time</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span><span class="p">,</span><span class="n">i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">items</span><span class="p">[</span><span class="n">label</span><span class="p">])</span> <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">999</span><span class="p">]</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Finally, lists are not very convenient for numerical operations on
+the lists ... we can&#8217;t simply add [0.1,0.2] to [3.0,4.0] to get
+[3.1,4.2], because <tt class="docutils literal"><span class="pre">+</span></tt> is a concatenation operator for lists.
+Instead, we have to loop over all of the items in the lists:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">time</span> <span class="o">=</span> <span class="p">[</span><span class="n">items</span><span class="p">[</span><span class="s">&#39;year&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">items</span><span class="p">[</span><span class="s">&#39;month&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="mf">12.</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">[</span><span class="s">&#39;year&#39;</span><span class="p">]))]</span>
+</pre></div>
+</div>
+<p>We will see next time that there are more convenient modules for
+doing this sort of thing, but it&#8217;s of value to know how you can do it
+if you only have lists.</p>
+</li>
+</ol>
+<p>One final comment is that we have made extensive use of listcomps here,
+which make the code more compact but may be more difficult for people
+just starting coding to follow.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># Read files/data/heathrowdata.txt as above into data as float</span>
+<span class="c"># doing some clever things to deal with file markers</span>
+<span class="c"># i.e. where it says #  Provisional or # we will not worry about</span>
+<span class="c"># that for the moment</span>
+<span class="c"># where it has fillers, ---, replace by -999</span>
+
+<span class="n">fp</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;files/data/heathrowdata.txt&#39;</span><span class="p">,</span><span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">ldata</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;---&#39;</span><span class="p">,</span><span class="s">&#39;-999&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;#  Provisional&#39;</span><span class="p">,</span><span class="s">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;#&#39;</span><span class="p">,</span><span class="s">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> \
+                     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">fp</span><span class="o">.</span><span class="n">readlines</span><span class="p">()[</span><span class="mi">7</span><span class="p">:]]</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">[[</span><span class="nb">float</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">ldata</span><span class="p">]</span>
+<span class="n">fp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="c"># The reading by line is a bit inconvenient, so rotate the</span>
+<span class="c"># dataset</span>
+<span class="n">rdata</span> <span class="o">=</span> <span class="p">[[</span><span class="n">data</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]))]</span>
+
+<span class="c"># set some labels for each column</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;year&#39;</span><span class="p">,</span><span class="s">&#39;month&#39;</span><span class="p">,</span><span class="s">&#39;tmax (degC)&#39;</span><span class="p">,</span><span class="s">&#39;tmin (degC)&#39;</span><span class="p">,</span>\
+          <span class="s">&#39;air frost (days)&#39;</span><span class="p">,</span><span class="s">&#39;rain (mm)&#39;</span><span class="p">,</span><span class="s">&#39;sun (hours)&#39;</span><span class="p">]</span>
+
+<span class="c"># generate a dictionary with the labels as keys</span>
+<span class="n">items</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span><span class="n">rdata</span><span class="p">))</span>
+
+<span class="kn">import</span> <span class="nn">pylab</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="c"># its quite difficult to add arrays</span>
+<span class="c"># so we have to loop over each item</span>
+<span class="n">time</span> <span class="o">=</span> <span class="p">[</span><span class="n">items</span><span class="p">[</span><span class="s">&#39;year&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">items</span><span class="p">[</span><span class="s">&#39;month&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="mf">12.</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">[</span><span class="s">&#39;year&#39;</span><span class="p">]))]</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">label</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="mi">2</span><span class="p">:]):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;year&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+    <span class="c"># filter out the -999 values</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">time</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span><span class="p">,</span><span class="n">i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">items</span><span class="p">[</span><span class="n">label</span><span class="p">])</span> <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">999</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">items</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">999</span><span class="p">]</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/advanced_106_0.png" src="../_images/advanced_106_0.png" />
+<img alt="../_images/advanced_106_1.png" src="../_images/advanced_106_1.png" />
+<img alt="../_images/advanced_106_2.png" src="../_images/advanced_106_2.png" />
+<img alt="../_images/advanced_106_3.png" src="../_images/advanced_106_3.png" />
+<img alt="../_images/advanced_106_4.png" src="../_images/advanced_106_4.png" />
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2014, Prof. P. Lewis.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

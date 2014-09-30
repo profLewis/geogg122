@@ -1,0 +1,949 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>E3.3: Exercise: Improved Solar Radiation Modelling</title>
+    
+    <link rel="stylesheet" href="../_static/epub.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /> 
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="answers.html" title="E3 Answers to Exercise"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="advanced.html" title="A3. Advanced notes: Scientific and Numerical Python"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">geogg122</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="e3-3-exercise-improved-solar-radiation-modelling">
+<h1>E3.3: Exercise: Improved Solar Radiation Modelling</h1>
+<p>Using the material above and the global albedo datasets from the main
+class material, <strong>calculate an improved estimate of the total absorbed
+power per unit area per month (MJ per m^2 per month) for the Earth land
+surface</strong>.</p>
+<p>You should do this with a function that will take as input the year and
+returns the monthly total absorbed power density (MJ m^-2 per month) and
+the monthly total power density (MJ m^-2 per month).</p>
+<p>You might have an optional argument <tt class="docutils literal"><span class="pre">minute_step</span></tt> to control the
+resolution of the calculation as above.</p>
+<p>You could then use this to derive latitudinal variations in annual and
+latitudinal total absorbed power per unit area.</p>
+</div>
+<div class="section" id="ae3-3-answer-improved-solar-radiation-modelling">
+<h1>AE3.3 Answer: Improved Solar Radiation Modelling</h1>
+<p>The function definition should look something like:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">absorbed_power_density</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">minute_step</span><span class="o">=</span><span class="mi">60</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Function to calculate the monthly total absorbed solar radiation</span>
+<span class="sd">        power density in MJ / m^2 for a given year</span>
+<span class="sd">        given an input dataset albedo and associated lat and lon</span>
+<span class="sd">        information (in degrees).</span>
+
+<span class="sd">        The shape of the albedo dataset is: (12,nlat,nlon)</span>
+
+<span class="sd">        Aguments:</span>
+
+<span class="sd">        year  : integer of the year</span>
+
+<span class="sd">        Options:</span>
+
+<span class="sd">        minute_step : integer: resolution of steps in minutes. Must be</span>
+<span class="sd">                      a divisor of 60 (e.g. 10, 15, 30, 60)</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+</pre></div>
+</div>
+<p>The first thing to do is sort out the <tt class="docutils literal"><span class="pre">lat</span></tt> and <tt class="docutils literal"><span class="pre">lon</span></tt> arrays to be
+the same shape as <tt class="docutils literal"><span class="pre">albedo</span></tt>.</p>
+<p>Before that, we&#8217;d better read in the <tt class="docutils literal"><span class="pre">albedo</span></tt>, <tt class="docutils literal"><span class="pre">lat</span></tt> and <tt class="docutils literal"><span class="pre">lon</span></tt>
+datasets here though:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="s">&#39;files/python&#39;</span><span class="p">)</span>
+<span class="c"># modification of masked.py</span>
+<span class="kn">from</span> <span class="nn">masked2</span> <span class="kn">import</span> <span class="n">masked</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="n">year</span> <span class="o">=</span> <span class="mi">2010</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">masked</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;lat&#39;</span><span class="p">,</span><span class="s">&#39;lon&#39;</span><span class="p">,</span><span class="s">&#39;BHR_SW&#39;</span><span class="p">],</span><span class="n">year</span><span class="o">=</span><span class="n">year</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># take the first lat and lon only as they are all the same</span>
+<span class="n">lat</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;lat&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">lon</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;lon&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">albedo</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;BHR_SW&#39;</span><span class="p">]</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">albedo</span><span class="o">.</span><span class="n">shape</span>
+<span class="k">print</span> <span class="n">s</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">360</span><span class="p">,</span> <span class="mi">720</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># pad out the lat and lon arrays</span>
+<span class="c"># this is a bit tricky so test this in parts</span>
+<span class="c"># we dont need this repeated for each month though</span>
+<span class="n">lat2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">lat</span><span class="p">]</span> <span class="o">*</span> <span class="n">s</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+<span class="n">lon2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">lon</span><span class="p">]</span> <span class="o">*</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="n">lat2</span><span class="o">.</span><span class="n">shape</span>
+<span class="k">print</span> <span class="n">lon2</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">(</span><span class="mi">360</span><span class="p">,</span> <span class="mi">720</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">360</span><span class="p">,</span> <span class="mi">720</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now put together the code for solar radiation modelling for a given
+lat/lon</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">Pysolar</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="k">def</span> <span class="nf">solar</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">day</span><span class="p">,</span> <span class="n">hour</span><span class="p">,</span> <span class="n">lat_deg</span><span class="p">,</span> <span class="n">lon_deg</span><span class="p">,</span> <span class="n">minute</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">second</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Return solar zenith and clear sky radiation</span>
+<span class="sd">       for given lat, lon and time/date</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+    <span class="kn">import</span> <span class="nn">Pysolar</span>
+
+    <span class="n">d</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">day</span><span class="p">,</span> <span class="n">hour</span><span class="p">,</span> <span class="n">minute</span><span class="p">,</span> <span class="n">second</span><span class="p">)</span>
+    <span class="n">altitude_deg</span> <span class="o">=</span> <span class="n">Pysolar</span><span class="o">.</span><span class="n">GetAltitude</span><span class="p">(</span><span class="n">lat_deg</span><span class="p">,</span> <span class="n">lon_deg</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+    <span class="c"># W m^-2</span>
+    <span class="n">solar_rad</span> <span class="o">=</span> <span class="n">Pysolar</span><span class="o">.</span><span class="n">solar</span><span class="o">.</span><span class="n">radiation</span><span class="o">.</span><span class="n">GetRadiationDirect</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">altitude_deg</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mf">90.</span> <span class="o">-</span> <span class="n">altitude_deg</span><span class="p">,</span><span class="n">solar_rad</span>
+
+<span class="k">def</span> <span class="nf">radiation</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">day</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span><span class="n">minute_step</span><span class="o">=</span><span class="mi">30</span><span class="p">):</span>
+    <span class="n">rad</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">hour</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">24</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">minute</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="n">minute_step</span><span class="p">):</span>
+            <span class="n">thr</span> <span class="o">=</span> <span class="n">hour</span> <span class="o">+</span> <span class="n">minute</span><span class="o">/</span><span class="mf">60.</span>
+            <span class="c"># append data line as tuple</span>
+            <span class="n">rad</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">thr</span><span class="p">,)</span> <span class="o">+</span> \
+                     <span class="n">solar</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">day</span><span class="p">,</span> <span class="n">hour</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">minute</span><span class="o">=</span><span class="n">minute</span><span class="p">)</span> <span class="o">+</span>\
+                     <span class="p">(</span><span class="n">month</span><span class="p">,</span> <span class="n">day</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">))</span>
+    <span class="c"># convert to numpy array</span>
+    <span class="c"># transpose so access eg zenith as</span>
+    <span class="c"># rad[0]</span>
+    <span class="n">rad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">rad</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+    <span class="k">return</span> <span class="n">rad</span>
+
+<span class="k">def</span> <span class="nf">days_in_month</span><span class="p">(</span><span class="n">month</span><span class="p">,</span><span class="n">year</span><span class="o">=</span><span class="mi">2013</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; number of days in month&#39;&#39;&#39;</span>
+    <span class="kn">import</span> <span class="nn">calendar</span>
+    <span class="k">return</span> <span class="n">calendar</span><span class="o">.</span><span class="n">monthrange</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">month</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># UCL lat/lon</span>
+<span class="n">lat</span> <span class="o">=</span> <span class="mf">51.5248</span>
+<span class="n">lon</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.1336</span>
+
+<span class="n">year</span> <span class="o">=</span> <span class="mi">2013</span>
+
+<span class="n">pd</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">month</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">12</span><span class="p">):</span>
+    <span class="n">pd_month</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">ndays</span> <span class="o">=</span> <span class="n">days_in_month</span><span class="p">(</span><span class="n">month</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">year</span><span class="o">=</span><span class="n">year</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">month</span><span class="p">,</span><span class="n">ndays</span>
+    <span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">ndays</span><span class="p">):</span>
+        <span class="n">rad</span> <span class="o">=</span> <span class="n">radiation</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">day</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">)</span>
+        <span class="n">pd_month</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">rad</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">30</span><span class="p">])</span>
+    <span class="n">pd_month</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pd_month</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">month</span><span class="p">,</span><span class="n">pd_month</span><span class="o">.</span><span class="n">sum</span><span class="p">()])</span>
+<span class="n">pd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pd</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>0 31
+1 28
+2 31
+3 30
+4 31
+5 30
+6 31
+7 31
+8 30
+9 31
+10 30
+11 31
+</pre></div>
+</div>
+<p>Putiing that all together now:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># functions so far</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="s">&#39;files/python&#39;</span><span class="p">)</span>
+<span class="c"># modification of masked.py</span>
+<span class="kn">from</span> <span class="nn">masked2</span> <span class="kn">import</span> <span class="n">masked</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">Pysolar</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="k">def</span> <span class="nf">solar</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">day</span><span class="p">,</span> <span class="n">hour</span><span class="p">,</span> <span class="n">lat_deg</span><span class="p">,</span> <span class="n">lon_deg</span><span class="p">,</span> <span class="n">minute</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">second</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Return solar zenith and clear sky radiation</span>
+<span class="sd">       for given lat, lon and time/date</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+    <span class="kn">import</span> <span class="nn">Pysolar</span>
+
+    <span class="n">d</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">day</span><span class="p">,</span> <span class="n">hour</span><span class="p">,</span> <span class="n">minute</span><span class="p">,</span> <span class="n">second</span><span class="p">)</span>
+    <span class="n">altitude_deg</span> <span class="o">=</span> <span class="n">Pysolar</span><span class="o">.</span><span class="n">GetAltitude</span><span class="p">(</span><span class="n">lat_deg</span><span class="p">,</span> <span class="n">lon_deg</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+    <span class="c"># W m^-2</span>
+    <span class="n">solar_rad</span> <span class="o">=</span> <span class="n">Pysolar</span><span class="o">.</span><span class="n">solar</span><span class="o">.</span><span class="n">radiation</span><span class="o">.</span><span class="n">GetRadiationDirect</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">altitude_deg</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mf">90.</span> <span class="o">-</span> <span class="n">altitude_deg</span><span class="p">,</span><span class="n">solar_rad</span>
+
+<span class="k">def</span> <span class="nf">radiation</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">day</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span><span class="n">minute_step</span><span class="o">=</span><span class="mi">30</span><span class="p">):</span>
+    <span class="n">rad</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">hour</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">24</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">minute</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="n">minute_step</span><span class="p">):</span>
+            <span class="n">thr</span> <span class="o">=</span> <span class="n">hour</span> <span class="o">+</span> <span class="n">minute</span><span class="o">/</span><span class="mf">60.</span>
+            <span class="c"># append data line as tuple</span>
+            <span class="n">rad</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">thr</span><span class="p">,)</span> <span class="o">+</span> \
+                     <span class="n">solar</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">day</span><span class="p">,</span> <span class="n">hour</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">minute</span><span class="o">=</span><span class="n">minute</span><span class="p">)</span> <span class="o">+</span>\
+                     <span class="p">(</span><span class="n">month</span><span class="p">,</span> <span class="n">day</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">))</span>
+    <span class="c"># convert to numpy array</span>
+    <span class="c"># transpose so access eg zenith as</span>
+    <span class="c"># rad[0]</span>
+    <span class="n">rad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">rad</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+    <span class="k">return</span> <span class="n">rad</span>
+
+<span class="k">def</span> <span class="nf">days_in_month</span><span class="p">(</span><span class="n">month</span><span class="p">,</span><span class="n">year</span><span class="o">=</span><span class="mi">2013</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; number of days in month&#39;&#39;&#39;</span>
+    <span class="kn">import</span> <span class="nn">calendar</span>
+    <span class="k">return</span> <span class="n">calendar</span><span class="o">.</span><span class="n">monthrange</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">month</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Before proceeding, let us examine the variation in total monthly power
+density with latitude.</p>
+<p>With the model developed in the main notes, we would expect no varition
+with longitude (it was a function of latitude only).</p>
+<p>In this more precise model, we would expect only small variation, but we
+should examine this:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Processing -- test for several lat/long</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">import</span> <span class="nn">numpy.ma</span> <span class="kn">as</span> <span class="nn">ma</span>
+
+<span class="n">year</span> <span class="o">=</span> <span class="mi">2010</span>
+
+<span class="n">minute_step</span> <span class="o">=</span> <span class="mi">60</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">masked</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;lat&#39;</span><span class="p">,</span><span class="s">&#39;lon&#39;</span><span class="p">,</span><span class="s">&#39;BHR_SW&#39;</span><span class="p">],</span><span class="n">year</span><span class="o">=</span><span class="n">year</span><span class="p">)</span>
+
+<span class="n">lat</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;lat&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">lon</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;lon&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">albedo</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;BHR_SW&#39;</span><span class="p">]</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">albedo</span><span class="o">.</span><span class="n">shape</span>
+<span class="n">lat</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span> <span class="p">[</span><span class="n">lat</span><span class="p">]</span> <span class="o">*</span><span class="n">s</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+<span class="n">lon</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">lon</span><span class="p">]</span> <span class="o">*</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="c"># array for output</span>
+<span class="n">absorbed</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">albedo</span><span class="p">),</span><span class="n">mask</span><span class="o">=</span><span class="n">albedo</span><span class="o">.</span><span class="n">mask</span><span class="p">)</span>
+<span class="c">#</span>
+
+<span class="c">#for i in xrange(lat.shape[0]):</span>
+<span class="c">#    for j in xrange(lat.shape[1]):</span>
+
+<span class="c"># try it out for 6 samples in longitude, including first and last</span>
+<span class="n">lons</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">lon</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">lon</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">5</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="n">lon</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="c"># an array to hold the sample pd for the sample</span>
+<span class="c"># longitudes</span>
+<span class="n">all_pd</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">i</span> <span class="o">=</span> <span class="n">lon</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">lons</span><span class="p">:</span>
+    <span class="n">pd</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c"># loop over month</span>
+    <span class="k">for</span> <span class="n">month</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">12</span><span class="p">):</span>
+        <span class="n">pd_month</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">ndays</span> <span class="o">=</span> <span class="n">days_in_month</span><span class="p">(</span><span class="n">month</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">year</span><span class="o">=</span><span class="n">year</span><span class="p">)</span>
+        <span class="k">print</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">month</span><span class="p">,</span><span class="n">ndays</span>
+        <span class="c"># loop over days</span>
+        <span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">ndays</span><span class="p">):</span>
+            <span class="c"># solar radiation for that day</span>
+            <span class="n">rad</span> <span class="o">=</span> <span class="n">radiation</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">day</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> \
+                            <span class="n">lat</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">],</span> <span class="n">lon</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">],</span><span class="n">minute_step</span><span class="o">=</span><span class="n">minute_step</span><span class="p">)</span>
+            <span class="n">pd_month</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">rad</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="n">minute_step</span><span class="p">])</span>
+        <span class="n">pd_month</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pd_month</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">pd_month</span><span class="o">.</span><span class="n">sum</span><span class="p">()])</span>
+    <span class="c"># pd is the power density for each month</span>
+    <span class="n">all_pd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pd</span><span class="p">)</span>
+
+<span class="c"># MJ per m2</span>
+<span class="n">all_pd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">all_pd</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>180 0 0 31
+180 0 1 28
+180 0 2 31
+180 0 3 30
+180 0 4 31
+180 0 5 30
+180 0 6 31
+180 0 7 31
+180 0 8 30
+180 0 9 31
+180 0 10 30
+180 0 11 31
+180 144 0 31
+180 144 1 28
+180 144 2 31
+180 144 3 30
+180 144 4 31
+180 144 5 30
+180 144 6 31
+180 144 7 31
+180 144 8 30
+180 144 9 31
+180 144 10 30
+180 144 11 31
+180 288 0 31
+180 288 1 28
+180 288 2 31
+180 288 3 30
+180 288 4 31
+180 288 5 30
+180 288 6 31
+180 288 7 31
+180 288 8 30
+180 288 9 31
+180 288 10 30
+180 288 11 31
+180 432 0 31
+180 432 1 28
+180 432 2 31
+180 432 3 30
+180 432 4 31
+180 432 5 30
+180 432 6 31
+180 432 7 31
+180 432 8 30
+180 432 9 31
+180 432 10 30
+180 432 11 31
+180 576 0 31
+180 576 1 28
+180 576 2 31
+180 576 3 30
+180 576 4 31
+180 576 5 30
+180 576 6 31
+180 576 7 31
+180 576 8 30
+180 576 9 31
+180 576 10 30
+180 576 11 31
+180 719 0 31
+180 719 1 28
+180 719 2 31
+180 719 3 30
+180 719 4 31
+180 719 5 30
+180 719 6 31
+180 719 7 31
+180 719 8 30
+180 719 9 31
+180 719 10 30
+180 719 11 31
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pylab</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lon</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">lons</span><span class="p">],</span><span class="n">all_pd</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">180.</span><span class="p">,</span><span class="mf">180.</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;latitude&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;power density total per month&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>&lt;matplotlib.text.Text at 0x108fc52d0&gt;
+</pre></div>
+</div>
+<img alt="../_images/advanced_answers_17_1.png" src="../_images/advanced_answers_17_1.png" />
+<p>So, with this in mind, let&#8217;s just take a single value per latitude as
+otherwise the processing cost will be rather high.</p>
+<p>Putting this into a function (in this case, reading the albedo, lat and
+long internally):</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">absorbed_power_density</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">minute_step</span><span class="o">=</span><span class="mi">60</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Function to calculate the monthly total absorbed solar radiation</span>
+<span class="sd">        power density in MJ / m^2 for a given year</span>
+<span class="sd">        given an input dataset albedo and associated lat and lon</span>
+<span class="sd">        information (in degrees).</span>
+
+<span class="sd">        The shape of the albedo dataset is: (12,nlat,nlon)</span>
+
+<span class="sd">        Aguments:</span>
+
+<span class="sd">        year  : integer of the year</span>
+
+<span class="sd">        Options:</span>
+
+<span class="sd">        minute_step : integer: resolution of steps in minutes. Must be</span>
+<span class="sd">                      a divisor of 60 (e.g. 10, 15, 30, 60)</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="n">masked</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;lat&#39;</span><span class="p">,</span><span class="s">&#39;lon&#39;</span><span class="p">,</span><span class="s">&#39;BHR_SW&#39;</span><span class="p">],</span><span class="n">year</span><span class="o">=</span><span class="n">year</span><span class="p">)</span>
+
+    <span class="n">lat</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;lat&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">lon</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;lon&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">albedo</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;BHR_SW&#39;</span><span class="p">]</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">albedo</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">lat</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span> <span class="p">[</span><span class="n">lat</span><span class="p">]</span> <span class="o">*</span><span class="n">s</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">lon</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">lon</span><span class="p">]</span> <span class="o">*</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="c"># array for output</span>
+    <span class="n">absorbed</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">albedo</span><span class="p">),</span><span class="n">mask</span><span class="o">=</span><span class="n">albedo</span><span class="o">.</span><span class="n">mask</span><span class="p">)</span>
+    <span class="n">power_density</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">albedo</span><span class="p">),</span><span class="n">mask</span><span class="o">=</span><span class="n">albedo</span><span class="o">.</span><span class="n">mask</span><span class="p">)</span>
+    <span class="c">#</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">lat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">print</span> <span class="s">&#39;lat&#39;</span><span class="p">,</span><span class="n">lat</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c"># single longitude</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="p">[</span><span class="n">lat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">]:</span>
+            <span class="n">pd</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="c"># loop over month</span>
+            <span class="k">for</span> <span class="n">month</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">12</span><span class="p">):</span>
+                <span class="n">pd_month</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">ndays</span> <span class="o">=</span> <span class="n">days_in_month</span><span class="p">(</span><span class="n">month</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">year</span><span class="o">=</span><span class="n">year</span><span class="p">)</span>
+                <span class="c"># loop over days</span>
+                <span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">ndays</span><span class="p">):</span>
+                    <span class="c"># solar radiation for that day</span>
+                    <span class="n">rad</span> <span class="o">=</span> <span class="n">radiation</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">day</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> \
+                                    <span class="n">lat</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">],</span> <span class="n">lon</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">],</span><span class="n">minute_step</span><span class="o">=</span><span class="n">minute_step</span><span class="p">)</span>
+                    <span class="c"># get rid of -ves</span>
+                    <span class="n">rad</span><span class="p">[</span><span class="n">rad</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="n">pd_month</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">rad</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="n">minute_step</span><span class="p">])</span>
+                <span class="n">pd_month</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pd_month</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+                <span class="n">pd</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">pd_month</span><span class="o">.</span><span class="n">sum</span><span class="p">()])</span>
+            <span class="n">pd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pd</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+
+            <span class="c"># pd is the power density for each month</span>
+            <span class="c"># load this into all longitudes</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">power_density</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+                <span class="n">power_density</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">pd</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+    <span class="n">power_density</span> <span class="o">/=</span> <span class="mf">10.</span><span class="o">**</span><span class="mi">6</span> <span class="c"># MJ per m2</span>
+    <span class="n">absorbed</span> <span class="o">=</span> <span class="n">power_density</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">albedo</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">absorbed</span><span class="p">,</span><span class="n">power_density</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># this will still take some minutes to calculate</span>
+<span class="n">absorbed</span><span class="p">,</span><span class="n">power_density</span> <span class="o">=</span> <span class="n">absorbed_power_density</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">minute_step</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>lat 89.6957
+lat 89.196
+lat 88.6963
+lat 88.1966
+lat 87.6969
+lat 87.1972
+lat 86.6975
+lat 86.1978
+lat 85.6981
+lat 85.1984
+lat 84.6987
+lat 84.1991
+lat 83.6994
+lat 83.1997
+lat 82.7
+lat 82.2003
+lat 81.7006
+lat 81.2009
+lat 80.7012
+lat 80.2015
+lat 79.7018
+lat 79.2021
+lat 78.7024
+lat 78.2027
+lat 77.703
+lat 77.2033
+lat 76.7036
+lat 76.2039
+lat 75.7042
+lat 75.2045
+lat 74.7048
+lat 74.2051
+lat 73.7054
+lat 73.2057
+lat 72.706
+lat 72.2063
+lat 71.7066
+lat 71.2069
+lat 70.7072
+lat 70.2075
+lat 69.7078
+lat 69.2081
+lat 68.7084
+lat 68.2087
+lat 67.709
+lat 67.2093
+lat 66.7096
+lat 66.2099
+lat 65.7102
+lat 65.2105
+lat 64.7108
+lat 64.2111
+lat 63.7114
+lat 63.2118
+lat 62.7121
+lat 62.2124
+lat 61.7127
+lat 61.213
+lat 60.7133
+lat 60.2136
+lat 59.7139
+lat 59.2142
+lat 58.7145
+lat 58.2148
+lat 57.7151
+lat 57.2154
+lat 56.7157
+lat 56.216
+lat 55.7163
+lat 55.2166
+lat 54.7169
+lat 54.2172
+lat 53.7175
+lat 53.2178
+lat 52.7181
+lat 52.2184
+lat 51.7187
+lat 51.219
+lat 50.7193
+lat 50.2196
+lat 49.7199
+lat 49.2202
+lat 48.7205
+lat 48.2208
+lat 47.7211
+lat 47.2214
+lat 46.7217
+lat 46.222
+lat 45.7223
+lat 45.2226
+lat 44.7229
+lat 44.2232
+lat 43.7235
+lat 43.2238
+lat 42.7241
+lat 42.2245
+lat 41.7248
+lat 41.2251
+lat 40.7254
+lat 40.2257
+lat 39.726
+lat 39.2263
+lat 38.7266
+lat 38.2269
+lat 37.7272
+lat 37.2275
+lat 36.7278
+lat 36.2281
+lat 35.7284
+lat 35.2287
+lat 34.729
+lat 34.2293
+lat 33.7296
+lat 33.2299
+lat 32.7302
+lat 32.2305
+lat 31.7308
+lat 31.2311
+lat 30.7314
+lat 30.2317
+lat 29.732
+lat 29.2323
+lat 28.7326
+lat 28.2329
+lat 27.7332
+lat 27.2335
+lat 26.7338
+lat 26.2341
+lat 25.7344
+lat 25.2347
+lat 24.735
+lat 24.2353
+lat 23.7356
+lat 23.2359
+lat 22.7362
+lat 22.2365
+lat 21.7369
+lat 21.2372
+lat 20.7375
+lat 20.2378
+lat 19.7381
+lat 19.2384
+lat 18.7387
+lat 18.239
+lat 17.7393
+lat 17.2396
+lat 16.7399
+lat 16.2402
+lat 15.7405
+lat 15.2408
+lat 14.7411
+lat 14.2414
+lat 13.7417
+lat 13.242
+lat 12.7423
+lat 12.2426
+lat 11.7429
+lat 11.2432
+lat 10.7435
+lat 10.2438
+lat 9.74411
+lat 9.24441
+lat 8.74471
+lat 8.24501
+lat 7.74532
+lat 7.24562
+lat 6.74592
+lat 6.24622
+lat 5.74653
+lat 5.24683
+lat 4.74713
+lat 4.24743
+lat 3.74774
+lat 3.24804
+lat 2.74834
+lat 2.24864
+lat 1.74895
+lat 1.24925
+lat 0.74955
+lat 0.249853
+lat -0.249845
+lat -0.749542
+lat -1.24924
+lat -1.74894
+lat -2.24864
+lat -2.74833
+lat -3.24803
+lat -3.74773
+lat -4.24743
+lat -4.74712
+lat -5.24682
+lat -5.74652
+lat -6.24622
+lat -6.74591
+lat -7.24561
+lat -7.74531
+lat -8.24501
+lat -8.7447
+lat -9.2444
+lat -9.7441
+lat -10.2438
+lat -10.7435
+lat -11.2432
+lat -11.7429
+lat -12.2426
+lat -12.7423
+lat -13.242
+lat -13.7417
+lat -14.2414
+lat -14.7411
+lat -15.2408
+lat -15.7405
+lat -16.2402
+lat -16.7399
+lat -17.2396
+lat -17.7393
+lat -18.239
+lat -18.7387
+lat -19.2384
+lat -19.7381
+lat -20.2377
+lat -20.7374
+lat -21.2371
+lat -21.7368
+lat -22.2365
+lat -22.7362
+lat -23.2359
+lat -23.7356
+lat -24.2353
+lat -24.735
+lat -25.2347
+lat -25.7344
+lat -26.2341
+lat -26.7338
+lat -27.2335
+lat -27.7332
+lat -28.2329
+lat -28.7326
+lat -29.2323
+lat -29.732
+lat -30.2317
+lat -30.7314
+lat -31.2311
+lat -31.7308
+lat -32.2305
+lat -32.7302
+lat -33.2299
+lat -33.7296
+lat -34.2293
+lat -34.729
+lat -35.2287
+lat -35.7284
+lat -36.2281
+lat -36.7278
+lat -37.2275
+lat -37.7272
+lat -38.2269
+lat -38.7266
+lat -39.2263
+lat -39.726
+lat -40.2257
+lat -40.7253
+lat -41.225
+lat -41.7247
+lat -42.2244
+lat -42.7241
+lat -43.2238
+lat -43.7235
+lat -44.2232
+lat -44.7229
+lat -45.2226
+lat -45.7223
+lat -46.222
+lat -46.7217
+lat -47.2214
+lat -47.7211
+lat -48.2208
+lat -48.7205
+lat -49.2202
+lat -49.7199
+lat -50.2196
+lat -50.7193
+lat -51.219
+lat -51.7187
+lat -52.2184
+lat -52.7181
+lat -53.2178
+lat -53.7175
+lat -54.2172
+lat -54.7169
+lat -55.2166
+lat -55.7163
+lat -56.216
+lat -56.7157
+lat -57.2154
+lat -57.7151
+lat -58.2148
+lat -58.7145
+lat -59.2142
+lat -59.7139
+lat -60.2136
+lat -60.7133
+lat -61.213
+lat -61.7127
+lat -62.2123
+lat -62.712
+lat -63.2117
+lat -63.7114
+lat -64.2111
+lat -64.7108
+lat -65.2105
+lat -65.7102
+lat -66.2099
+lat -66.7096
+lat -67.2093
+lat -67.709
+lat -68.2087
+lat -68.7084
+lat -69.2081
+lat -69.7078
+lat -70.2075
+lat -70.7072
+lat -71.2069
+lat -71.7066
+lat -72.2063
+lat -72.706
+lat -73.2057
+lat -73.7054
+lat -74.2051
+lat -74.7048
+lat -75.2045
+lat -75.7042
+lat -76.2039
+lat -76.7036
+lat -77.2033
+lat -77.703
+lat -78.2027
+lat -78.7024
+lat -79.2021
+lat -79.7018
+lat -80.2015
+lat -80.7012
+lat -81.2009
+lat -81.7006
+lat -82.2002
+lat -82.7
+lat -83.1996
+lat -83.6993
+lat -84.199
+lat -84.6987
+lat -85.1984
+lat -85.6981
+lat -86.1978
+lat -86.6975
+lat -87.1972
+lat -87.6969
+lat -88.1966
+lat -88.6963
+lat -89.196
+lat -89.6957
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># this is how you can save a numpy array</span>
+<span class="n">np</span><span class="o">.</span><span class="n">savez</span><span class="p">(</span><span class="s">&#39;files/data/absorbed.npz&#39;</span><span class="p">,</span><span class="n">absorbed</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">absorbed</span><span class="p">),</span>\
+         <span class="n">power_density</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">power_density</span><span class="p">),</span><span class="n">mask</span><span class="o">=</span><span class="n">absorbed</span><span class="o">.</span><span class="n">mask</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># now next time we should be able to load it</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;files/data/absorbed.npz&#39;</span><span class="p">)</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="s">&#39;mask&#39;</span><span class="p">]</span>
+    <span class="n">absorbed</span><span class="p">,</span><span class="n">power_density</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="s">&#39;absorbed&#39;</span><span class="p">],</span><span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">),</span>\
+                             <span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="s">&#39;power_density&#39;</span><span class="p">],</span><span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="n">absorbed</span><span class="p">,</span><span class="n">power_density</span> <span class="o">=</span> <span class="n">absorbed_power_density</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">minute_step</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pylab</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s">&#39;Spectral&#39;</span><span class="p">)</span>
+<span class="n">vmax</span> <span class="o">=</span> <span class="n">absorbed</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span>
+<span class="n">vmin</span> <span class="o">=</span> <span class="mf">0.</span>
+
+<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">12</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&#39;Absorbed radiation Month </span><span class="si">%02d</span><span class="s"> </span><span class="si">%d</span><span class="s"> MJ / m^2&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">year</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">absorbed</span><span class="p">[</span><span class="n">m</span><span class="p">],</span><span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span><span class="n">interpolation</span><span class="o">=</span><span class="s">&#39;none&#39;</span><span class="p">,</span><span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span><span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s">&#39;files/data/absorbed</span><span class="si">%02d</span><span class="s">.jpg&#39;</span><span class="o">%</span><span class="n">m</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/advanced_answers_24_0.png" src="../_images/advanced_answers_24_0.png" />
+<img alt="../_images/advanced_answers_24_1.png" src="../_images/advanced_answers_24_1.png" />
+<img alt="../_images/advanced_answers_24_2.png" src="../_images/advanced_answers_24_2.png" />
+<img alt="../_images/advanced_answers_24_3.png" src="../_images/advanced_answers_24_3.png" />
+<img alt="../_images/advanced_answers_24_4.png" src="../_images/advanced_answers_24_4.png" />
+<img alt="../_images/advanced_answers_24_5.png" src="../_images/advanced_answers_24_5.png" />
+<img alt="../_images/advanced_answers_24_6.png" src="../_images/advanced_answers_24_6.png" />
+<img alt="../_images/advanced_answers_24_7.png" src="../_images/advanced_answers_24_7.png" />
+<img alt="../_images/advanced_answers_24_8.png" src="../_images/advanced_answers_24_8.png" />
+<img alt="../_images/advanced_answers_24_9.png" src="../_images/advanced_answers_24_9.png" />
+<img alt="../_images/advanced_answers_24_10.png" src="../_images/advanced_answers_24_10.png" />
+<img alt="../_images/advanced_answers_24_11.png" src="../_images/advanced_answers_24_11.png" />
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pylab</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s">&#39;Spectral&#39;</span><span class="p">)</span>
+<span class="n">vmax</span> <span class="o">=</span> <span class="n">absorbed</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">*</span> <span class="mf">2.</span><span class="o">/</span><span class="mf">3.</span>
+<span class="n">vmin</span> <span class="o">=</span> <span class="mf">0.</span>
+
+<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">12</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&#39;Solar radiation power density Month </span><span class="si">%02d</span><span class="s"> </span><span class="si">%d</span><span class="s"> MJ / m^2&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">year</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">power_density</span><span class="p">[</span><span class="n">m</span><span class="p">],</span><span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span><span class="n">interpolation</span><span class="o">=</span><span class="s">&#39;none&#39;</span><span class="p">,</span><span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span><span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s">&#39;files/data/power</span><span class="si">%02d</span><span class="s">.jpg&#39;</span><span class="o">%</span><span class="n">m</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/advanced_answers_25_0.png" src="../_images/advanced_answers_25_0.png" />
+<img alt="../_images/advanced_answers_25_1.png" src="../_images/advanced_answers_25_1.png" />
+<img alt="../_images/advanced_answers_25_2.png" src="../_images/advanced_answers_25_2.png" />
+<img alt="../_images/advanced_answers_25_3.png" src="../_images/advanced_answers_25_3.png" />
+<img alt="../_images/advanced_answers_25_4.png" src="../_images/advanced_answers_25_4.png" />
+<img alt="../_images/advanced_answers_25_5.png" src="../_images/advanced_answers_25_5.png" />
+<img alt="../_images/advanced_answers_25_6.png" src="../_images/advanced_answers_25_6.png" />
+<img alt="../_images/advanced_answers_25_7.png" src="../_images/advanced_answers_25_7.png" />
+<img alt="../_images/advanced_answers_25_8.png" src="../_images/advanced_answers_25_8.png" />
+<img alt="../_images/advanced_answers_25_9.png" src="../_images/advanced_answers_25_9.png" />
+<img alt="../_images/advanced_answers_25_10.png" src="../_images/advanced_answers_25_10.png" />
+<img alt="../_images/advanced_answers_25_11.png" src="../_images/advanced_answers_25_11.png" />
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># make some movies!???</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;power&#39;</span><span class="p">,</span><span class="s">&#39;absorbed&#39;</span><span class="p">]:</span>
+    <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">12</span><span class="p">):</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="s">&#39;convert files/data/</span><span class="si">%s%02d</span><span class="s">.jpg files/data/</span><span class="si">%s%02d</span><span class="s">.gif&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">m</span><span class="p">)</span>
+        <span class="k">print</span> <span class="n">cmd</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+
+    <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;convert -delay 100  -loop 0  </span><span class="se">\</span>
+<span class="s">            files/data/</span><span class="si">%s</span><span class="s">??.gif files/data/</span><span class="si">%s</span><span class="s">_movie.gif&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>convert files/data/power00.jpg files/data/power00.gif
+convert files/data/power01.jpg files/data/power01.gif
+convert files/data/power02.jpg files/data/power02.gif
+convert files/data/power03.jpg files/data/power03.gif
+convert files/data/power04.jpg files/data/power04.gif
+convert files/data/power05.jpg files/data/power05.gif
+convert files/data/power06.jpg files/data/power06.gif
+convert files/data/power07.jpg files/data/power07.gif
+convert files/data/power08.jpg files/data/power08.gif
+convert files/data/power09.jpg files/data/power09.gif
+convert files/data/power10.jpg files/data/power10.gif
+convert files/data/power11.jpg files/data/power11.gif
+convert files/data/absorbed00.jpg files/data/absorbed00.gif
+convert files/data/absorbed01.jpg files/data/absorbed01.gif
+convert files/data/absorbed02.jpg files/data/absorbed02.gif
+convert files/data/absorbed03.jpg files/data/absorbed03.gif
+convert files/data/absorbed04.jpg files/data/absorbed04.gif
+convert files/data/absorbed05.jpg files/data/absorbed05.gif
+convert files/data/absorbed06.jpg files/data/absorbed06.gif
+convert files/data/absorbed07.jpg files/data/absorbed07.gif
+convert files/data/absorbed08.jpg files/data/absorbed08.gif
+convert files/data/absorbed09.jpg files/data/absorbed09.gif
+convert files/data/absorbed10.jpg files/data/absorbed10.gif
+convert files/data/absorbed11.jpg files/data/absorbed11.gif
+</pre></div>
+</div>
+<p><img alt="image0" src="Chapter3_Scientific_Numerical_Python/files/data/power_movie.gif" /> <img alt="image1" src="Chapter3_Scientific_Numerical_Python/files/data/absorbed_movie.gif" /></p>
+<p>This code is still quite slow (even for a single longitude).</p>
+<p>You should look it over and see how you might make it more efficient.</p>
+<p>Some ideas:</p>
+<ul class="simple">
+<li>interpolate the radiation field (over latitude?) and possibly improve
+by sub sampling over longitude and interpolating that as well</li>
+<li>when calculating daily integrals, don&#8217;t start the calculations until
+the sun is above the horizon (and the same for sunset).</li>
+</ul>
+<p>The exercise asks you to perform summations over latitude. This should
+be simple enough, being of the form:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">absorbed</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>which will sum over axes 0 (month) and 2 (longitude).</p>
+<p>Total absorbed involves working out the area for each sample pixel and
+including that in teh calculation. That is left as an exercise here.</p>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2014, Prof. P. Lewis.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

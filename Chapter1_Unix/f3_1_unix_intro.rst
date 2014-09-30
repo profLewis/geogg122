@@ -1159,6 +1159,7 @@ You can also run shell commands by invoking the ``bash`` shell:
 
 .. code:: python
 
+    %%bash
     ls ~/DATA/foo
 
 .. parsed-literal::
@@ -1190,6 +1191,7 @@ you would usually use the ``-v`` option:
 
 .. code:: python
 
+    %%bash
     quota -v
 
 .. parsed-literal::
@@ -1255,6 +1257,7 @@ there is, and how much is used. It is generally of value to use the
 
 .. code:: python
 
+    %%bash
     df -h ~/DATA
 
 .. parsed-literal::
@@ -1281,6 +1284,7 @@ that gives the results in 'human readable' form e.g.:
 
 .. code:: python
 
+    %%bash
     du -sh ~/DATA
 
 .. parsed-literal::
@@ -1307,6 +1311,7 @@ We will first make move the directory ``~/DATA/bar`` into the directory
 
 .. code:: python
 
+    %%bash
     mv ~/DATA/bar ~/DATA/foo
     ls -l ~/DATA/foo
 
@@ -1340,6 +1345,7 @@ understand):
 
 .. code:: python
 
+    %%bash
     ls -lh ~/DATA/foo
 
 .. parsed-literal::
@@ -1376,6 +1382,7 @@ from which we will *remove* all write permissions.
 
 .. code:: python
 
+    %%bash
     mkdir -p ~/DATA/foo/foobar
     ls -l ~/DATA/foo
     chmod uog-w ~/DATA/foo/foobar
@@ -1405,6 +1412,7 @@ would expect it to fail:
 
 .. code:: python
 
+    %%bash
     cp -f ~/DATA/foo/hello.dat ~/DATA/foo/foobar
 
 .. parsed-literal::
@@ -1474,6 +1482,7 @@ area called ``unix``:
 
 .. code:: python
 
+    %%bash
     mkdir -p ~/DATA/unix
 Remember that commands below that start with ``!`` (bang) should not
 have this symbol when you type them at the unix prompt: it is only
@@ -1512,6 +1521,7 @@ command in the terminal (by default), e.g.:
 
 .. code:: python
 
+    %%bash
     echo "my home is $HOME and my name is $USER"
 
 .. parsed-literal::
@@ -1535,6 +1545,7 @@ Often, we would put quotes around the text:
 
 .. code:: python
 
+    %%bash
     echo "hello world $USER"
 
 .. parsed-literal::
@@ -1551,6 +1562,7 @@ quotes, but a single quote ``'`` does not.
 
 .. code:: python
 
+    %%bash
     echo 'hello world $USER'
 
 .. parsed-literal::
@@ -1569,6 +1581,7 @@ allows us to redirect it, e.g. to a file:
 
 .. code:: python
 
+    %%bash
     echo "hello world" > ~/DATA/unix/hello.dat
 Now, nothing should have appeared in the terminal ... the text resulting
 from the ``echo`` command went instead to the file
@@ -1578,6 +1591,7 @@ We can check to see how big this file is to see if that makes sense:
 
 .. code:: python
 
+    %%bash
     ls -lh ~/DATA/unix/hello.dat
 
 .. parsed-literal::
@@ -1608,6 +1622,7 @@ a file. In unix, we can use the command ``wc`` (word count):
 
 .. code:: python
 
+    %%bash
     wc < ~/DATA/unix/hello.dat
 
 .. parsed-literal::
@@ -1622,6 +1637,7 @@ Useful modifcations of behaviour are e.g.:
 
 .. code:: python
 
+    %%bash
     wc -l < ~/DATA/unix/hello.dat
 
 .. parsed-literal::
@@ -1653,6 +1669,7 @@ So, for the examples above, we could write:
 
 .. code:: python
 
+    %%bash
     echo "hello world" | wc -c
 
 .. parsed-literal::
@@ -1674,6 +1691,7 @@ users to begin with, but we will just show a few examples here.
 
 .. code:: python
 
+    %%bash
     echo "welcome $USER to using a computer"
     echo "welcome $USER to using a computer" | sed 's/a computer/unix/'
 
@@ -1692,6 +1710,7 @@ the end, e.g.:
 
 .. code:: python
 
+    %%bash
     echo "welcome $USER to using a computer. How do you like using a computer?" | sed 's/a computer/unix/'
     echo "welcome $USER to using a computer. How do you like using a computer?" | sed 's/a computer/unix/g'
 
@@ -1715,6 +1734,7 @@ format. For example:
 
 .. code:: python
 
+    %%bash
     echo "1 2 3 4 5" | awk '{print $1+$3}'
 
 .. parsed-literal::
@@ -1729,6 +1749,7 @@ columsn of data.
 
 .. code:: python
 
+    %%bash
     echo "1 2 3 4 5"
     echo "1 2 3 4 5" | awk '{for(i=1;i<=NF;i++)sum+=$i} END{print "the sum is",sum}'
     echo "1 2 3 4 5" | sed 's/1/one/'
@@ -1755,6 +1776,7 @@ used, e.g.:
 
 .. code:: python
 
+    %%bash
     echo "hello" | cat -
 
 .. parsed-literal::
@@ -1766,6 +1788,7 @@ Let's create some files of one line and join them together.
 
 .. code:: python
 
+    %%bash
     echo "hello $USER" > ~/Data/unix/hello.dat
     echo "welcome to the world of unix" > ~/Data/unix/hello2.dat
 date
@@ -1773,6 +1796,7 @@ date
 
 .. code:: python
 
+    %%bash
     date | cat - ~/DATA/unix/hello.dat ~/DATA/unix/hello2.dat 
 
 .. parsed-literal::
@@ -1792,6 +1816,7 @@ output:
 
 .. code:: python
 
+    %%bash
     date | cat - ~/DATA/unix/hello.dat ~/DATA/unix/hello2.dat > ~/DATA/unix/helloWorld.dat
 We can also use the command ``cat`` to simply put the contents of its
 ``stdin`` channel to ``stdout``, which is one way to display the
@@ -1799,6 +1824,7 @@ contents of an ASCII file at the terminal.
 
 .. code:: python
 
+    %%bash
     cat < ~/DATA/unix/helloWorld.dat
 
 .. parsed-literal::
@@ -1817,6 +1843,7 @@ exist:
 
 .. code:: python
 
+    %%bash
     echo "Now you see me" > ~/DATA/unix/test.dat
     cat ~/DATA/unix/test.dat
     echo "now you don't" > ~/DATA/unix/test.dat
@@ -1833,6 +1860,7 @@ contents, you can use the ``>>`` symbol:
 
 .. code:: python
 
+    %%bash
     echo "Now you see me" > ~/DATA/unix/test.dat
     echo "now you still see me" >> ~/DATA/unix/test.dat
     cat ~/DATA/unix/test.dat
@@ -1847,6 +1875,7 @@ and you can continue adding lines in this way:
 
 .. code:: python
 
+    %%bash
     echo "ad nauseam" >> ~/DATA/unix/test.dat
     cat ~/DATA/unix/test.dat
 
@@ -1869,6 +1898,7 @@ First, let's create a long file:
 
 .. code:: python
 
+    %%bash
     echo "this is the start of file" > ~/DATA/unix/test2.dat
     cat ~/DATA/unix/test.dat >> ~/DATA/unix/test2.dat
     cat ~/DATA/unix/test.dat >> ~/DATA/unix/test2.dat
@@ -1962,6 +1992,7 @@ line 3, ``/end`` to search for the string ``end``, etc.)
 
 .. code:: python
 
+    %%bash
     more ~/DATA/unix/test2.dat
 
 .. parsed-literal::
@@ -2031,6 +2062,7 @@ In some ways better that ``more`` is ``less``. Try that on the file now.
 
 .. code:: python
 
+    %%bash
     less ~/DATA/unix/test2.dat
 
 .. parsed-literal::
@@ -2102,6 +2134,7 @@ file that match some pattern. E.g.:
 
 .. code:: python
 
+    %%bash
     grep see < ~/DATA/unix/test.dat
 
 .. parsed-literal::
@@ -2121,6 +2154,7 @@ lower case or upper case):
 
 .. code:: python
 
+    %%bash
     grep now < ~/DATA/unix/test.dat
 
 .. parsed-literal::
@@ -2130,6 +2164,7 @@ lower case or upper case):
 
 .. code:: python
 
+    %%bash
     grep -i now < ~/DATA/unix/test.dat
 
 .. parsed-literal::
@@ -2143,6 +2178,7 @@ the ``-v`` option:
 
 .. code:: python
 
+    %%bash
     grep -v see < ~/DATA/unix/test.dat
 
 .. parsed-literal::

@@ -1,0 +1,591 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Working with vector data: OGR</title>
+    
+    <link rel="stylesheet" href="../_static/epub.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /> 
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="GDAL_Python_bindings.html" title="GDAL and OGR libraries"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">geogg122</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="working-with-vector-data-ogr">
+<h1>Working with vector data: OGR</h1>
+<div class="code python highlight-python"><div class="highlight"><pre>import json
+import matplotlib
+import os
+import ogr
+import osr
+import gdal
+
+fp = open(&quot;../bmh_matplotlibrc.json&quot;, &#39;r&#39; )
+s = json.load ( fp )
+fp.close()
+matplotlib.rcParams.update(s)
+%pylab inline
+%config InlineBackend.figure_format = &#39;svg&#39;
+figsize( 7,7 )
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>Populating the interactive namespace from numpy and matplotlib
+</pre></div>
+</div>
+<div class="section" id="vector-data">
+<h2>Vector data</h2>
+<p>Sometimes, geospatial data is acquired and recorded for particular
+geometric objects such as polygons or lines. An example is a road
+layout, where each road is represented as a geometric object (a line,
+with points given in a geographical projection), with a number of added
+<em>features</em> associated with it, such as the road name, whether it is a
+toll road, or whether it is dual-carriageway, etc. This data is quite
+different to a raster, where the entire scene is tessellated into
+pixels, and each pixel holds a value (or an array of value in the case
+of multiband rasterfiles).</p>
+<p>If you are familiar with databases, vector files are effectively a
+database, where one of the fields is a geometry object (a line in our
+previous road example, or a polygon if you consider a cadastral system).
+We can thus select different records by writing queries on the features.
+Some of these queries might be spatial (e.g. check whether a point is
+inside a particular country polygon).</p>
+<p>The most common format for vector data is the <strong>ESRI Shapfile</strong>, which
+is a multifile format (i.e., several files are needed in order to access
+the data). We&#8217;ll start by getting hold of a shapefile that contains the
+countries of the world as polygons, together with information on country
+name, capital name, population, etc. The file is available
+<a class="reference external" href="http://aprsworld.net/gisdata/world/world.zip">here</a><span class="link-target"> [http://aprsworld.net/gisdata/world/world.zip]</span>.</p>
+<div class="figure">
+<img alt="World" src="http://aprsworld.net/gisdata/world/political-world-aprs-small.png" />
+<p class="caption">World</p>
+</div>
+<p>We will download the file with <tt class="docutils literal"><span class="pre">wget</span></tt> (or <tt class="docutils literal"><span class="pre">curl</span></tt> if you want to),
+and uncompress it using <tt class="docutils literal"><span class="pre">unzip</span></tt> in the shell:</p>
+<div class="code python highlight-python"><div class="highlight"><pre># Downloads the data using wget
+!wget http://aprsworld.net/gisdata/world/world.zip
+# or if you want to use curl...
+#! curl http://aprsworld.net/gisdata/world/world.zip -o world.zip
+!unzip -o -x world.zip
+</pre></div>
+</div>
+<p>We need to import <tt class="docutils literal"><span class="pre">ogr</span></tt>, and then open the file. As with GDAL, we get
+a handler to the file, (<tt class="docutils literal"><span class="pre">g</span></tt> in this case). OGR files can have
+different layers, although Shapefiles only have one. We need to select
+the layer using <tt class="docutils literal"><span class="pre">GetLayer(0)</span></tt> (selecting the first layer).</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">osgeo</span> <span class="kn">import</span> <span class="n">ogr</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">ogr</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span> <span class="s">&quot;world.shp&quot;</span> <span class="p">)</span>
+<span class="n">layer</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">GetLayer</span><span class="p">(</span> <span class="mi">0</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>In order to see a field (the field <tt class="docutils literal"><span class="pre">NAME</span></tt>) we can loop over the
+features in the layer, and use the <tt class="docutils literal"><span class="pre">GetField('NAME')</span></tt> method. We&#8217;ll
+only do ten features here:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">n_feat</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="n">layer</span><span class="p">:</span>
+
+    <span class="k">print</span> <span class="n">feat</span><span class="o">.</span><span class="n">GetField</span><span class="p">(</span><span class="s">&#39;NAME&#39;</span><span class="p">)</span>
+
+    <span class="n">n_feat</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">n_feat</span> <span class="o">==</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="k">break</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+
+&lt;ipython-input-2-f4731880d34d&gt; in &lt;module&gt;()
+      1
+      2 n_feat = 0
+----&gt; 3 for feat in layer:
+      4
+      5     print feat.GetField(&#39;NAME&#39;)
+
+
+NameError: name &#39;layer&#39; is not defined
+</pre></div>
+</div>
+<p>If you wanted to see the different layers, we could do this using:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">layerDefinition</span> <span class="o">=</span> <span class="n">layer</span><span class="o">.</span><span class="n">GetLayerDefn</span><span class="p">()</span>
+
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">layerDefinition</span><span class="o">.</span><span class="n">GetFieldCount</span><span class="p">()):</span>
+    <span class="k">print</span> <span class="s">&quot;Field </span><span class="si">%d</span><span class="s">: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">layerDefinition</span><span class="o">.</span><span class="n">GetFieldDefn</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">GetName</span><span class="p">()</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>Each feature, in addition to the fields shown agove, will have a
+<tt class="docutils literal"><span class="pre">Geometry</span></tt> field. We get a handle to this using the
+<tt class="docutils literal"><span class="pre">GetGeometryRef()</span></tt> method. Geometries have many methods, such as
+<tt class="docutils literal"><span class="pre">ExportToKML()</span></tt> to export to KML (Google Maps/Earth format):</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">the_geometry</span> <span class="o">=</span> <span class="n">feat</span><span class="o">.</span><span class="n">GetGeometryRef</span><span class="p">()</span>
+<span class="n">the_geometry</span><span class="o">.</span><span class="n">ExportToKML</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Many of the methods that don&#8217;t start with <tt class="docutils literal"><span class="pre">__</span></tt> are interesting. Let&#8217;s
+see what these are. typically, the interesting methods start with an
+upper case letter, so we&#8217;ll only show those:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">dir</span> <span class="p">(</span> <span class="n">the_geometry</span> <span class="p">):</span>
+    <span class="k">if</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">isupper</span><span class="p">():</span>
+        <span class="k">print</span> <span class="n">m</span>
+</pre></div>
+</div>
+<p>You&#8217;ll notice that many of these mechanisms e.g. <tt class="docutils literal"><span class="pre">Overlaps</span></tt> or
+<tt class="docutils literal"><span class="pre">Touches</span></tt> are effectively geoprocessing operations (they operate on
+geometries and return <tt class="docutils literal"><span class="pre">True</span></tt> if one geometry overlaps or touches,
+respectively, the other). Other operations, such as <tt class="docutils literal"><span class="pre">Buffer</span></tt> return a
+buffered version of the same geometry. This allows you to actually do
+fairly complicated geoprocessing operations with OGR. However, if you
+want to do geoprocessing in earnest, you should really be using
+<a class="reference external" href="http://toblerity.org/shapely/manual.html">Shapely</a><span class="link-target"> [http://toblerity.org/shapely/manual.html]</span>.</p>
+<p>A particularly useful webpage for this section is <a class="reference external" href="http://pcjericks.github.io/py-gdalogr-cookbook/">available in the OGR
+cookbook</a><span class="link-target"> [http://pcjericks.github.io/py-gdalogr-cookbook/]</span>. Have a
+look through that if you want more in depth information.</p>
+</div>
+<div class="section" id="selecting-attributes-and-or-data-extents">
+<h2>Selecting attributes and/or data extents</h2>
+<p>OGR provides an easy way to select attributes on a given layer. This is
+done using a SQL-like syntax (you can read more on <a class="reference external" href="http://www.gdal.org/ogr/ogr_sql.html">OGR&#8217;s SQL subset
+here</a><span class="link-target"> [http://www.gdal.org/ogr/ogr_sql.html]</span>. The main point is that
+the <em>attribute filter</em> is applied to a complete layer. For example,
+let&#8217;s say that we want to select only countries with a population (field
+APPROX) larger than 90 000 000 inhabitants:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">g</span> <span class="o">=</span> <span class="n">ogr</span><span class="o">.</span><span class="n">Open</span> <span class="p">(</span> <span class="s">&quot;world.shp&quot;</span> <span class="p">)</span>
+<span class="n">lyr</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">GetLayer</span><span class="p">(</span> <span class="mi">0</span> <span class="p">)</span>
+<span class="n">lyr</span><span class="o">.</span><span class="n">SetAttributeFilter</span> <span class="p">(</span> <span class="s">&quot;APPROX &gt; 90000000&quot;</span> <span class="p">)</span>
+<span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="n">lyr</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">feat</span><span class="o">.</span><span class="n">GetFieldAsString</span> <span class="p">(</span> <span class="s">&quot;NAME&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; has </span><span class="si">%d</span><span class="s"> inhabitants&quot;</span> <span class="o">%</span> \
+        <span class="n">feat</span><span class="o">.</span><span class="n">GetFieldAsInteger</span><span class="p">(</span><span class="s">&quot;APPROX&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>PAKISTAN has 123490000 inhabitants
+JAPAN has 124710000 inhabitants
+RUSSIAN FEDERATION has 150500000 inhabitants
+INDIA has 873850000 inhabitants
+BANGLADESH has 120850000 inhabitants
+BRAZIL has 159630000 inhabitants
+NIGERIA has 91700000 inhabitants
+CHINA has 1179030000 inhabitants
+INDONESIA has 186180000 inhabitants
+JOHNSTON ATOLL has 256420000 inhabitants
+KINGMAN REEF - PALMYRA ATOLL has 256420000 inhabitants
+UNITED STATES has 256420000 inhabitants
+</pre></div>
+</div>
+<p>So we get a list of popoulous countries (note that Johnston Atoll and
+Palmyra are part of the US, and report the sample popuation as the US!)</p>
+<p>An additional way to filter the data is by geographical extent. Let&#8217;s
+say we wanted a list of all the countries in (broadly speaking) Europe,
+<em>i.e.</em> a geographical extent in longitude from 14W to 37E, and in
+latitude from 72N to 38N. We can use <tt class="docutils literal"><span class="pre">SetSpatialFilterRect</span></tt> to do
+this:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">g</span> <span class="o">=</span> <span class="n">ogr</span><span class="o">.</span><span class="n">Open</span> <span class="p">(</span> <span class="s">&quot;world.shp&quot;</span> <span class="p">)</span>
+<span class="n">lyr</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">GetLayer</span><span class="p">(</span> <span class="mi">0</span> <span class="p">)</span>
+<span class="n">lyr</span><span class="o">.</span><span class="n">SetSpatialFilterRect</span> <span class="p">(</span> <span class="o">-</span><span class="mi">14</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">38</span><span class="p">,</span> <span class="mi">72</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="n">lyr</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">feat</span><span class="o">.</span><span class="n">GetFieldAsString</span> <span class="p">(</span> <span class="s">&quot;NAME&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; ---- &quot;</span> <span class="o">+</span> <span class="n">feat</span><span class="o">.</span><span class="n">GetFieldAsString</span> <span class="p">(</span> <span class="s">&quot;CAPITAL&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>ALGERIA ---- ALGIERS
+BELGIUM ---- BRUSSELS
+LUXEMBOURG ---- LUXEMBOURG
+SAN MARINO ---- SAN MARINO
+AUSTRIA ---- VIENNA
+CZECH REPUBLIC ---- PRAGUE
+SLOVENIA ---- LJUBLJANA
+HUNGARY ---- BUDAPEST
+SLOVAKIA ---- BRATISLAVA
+YUGOSLAVIA ---- BELGRADE [BEOGRADE]
+BOSNIA AND HERZEGOVINA ---- SARAJEVO
+ALBANIA ---- TIRANE
+MACEDONIA, THE FORMER YUGOSLAV REPUBLIC ---- SKOPJE
+LITHUANIA ---- VILNIUS
+LATVIA ---- RIGA
+BULGARIA ---- SOFIA
+BELARUS ---- MINSK
+MOLDOVA, REPUBLIC OF ---- KISHINEV
+IRELAND ---- DUBLIN
+ICELAND ---- REYKJAVIK
+SPAIN ---- MADRID
+SWEDEN ---- STOCKHOLM
+FINLAND ---- HELSINKI
+TURKEY ---- ANKARA
+RUSSIAN FEDERATION ---- MOSCOW
+GREECE ---- ATHENS
+PORTUGAL ---- LISBON
+POLAND ---- WARSAW
+NORWAY ---- OSLO
+GERMANY ---- BERLIN
+ESTONIA ---- TALLINN
+TUNISIA ---- TUNIS
+CROATIA ---- ZAGREB
+ROMANIA ---- BUCURESTI
+UKRAINE ---- KIEV
+NETHERLANDS ---- AMSTERDAM
+JERSEY ---- SAINT HELIER
+GUERNSEY ---- SAINT PETER PORT
+FAROE ISLANDS ---- TORSHAVN
+DENMARK ---- COPENHAGEN
+MONACO ---- MONACO
+ANDORRA ---- ANDORRA LA VELLA
+LIECHTENSTEIN ---- VADUZ
+SWITZERLAND ---- BERN
+ISLE OF MAN ---- DOUGLAS
+UNITED KINGDOM ---- LONDON
+FRANCE ---- PARIS
+VATICAN CITY (HOLY SEE) ---- VATICAN CITY
+ITALY ---- ROME
+</pre></div>
+</div>
+</div>
+<div class="section" id="saving-a-vector-file">
+<h2>Saving a vector file</h2>
+<p>Saving a vector file using OGR requires a number of steps:</p>
+<ol class="arabic simple">
+<li>Definition of the format</li>
+<li>Definition of the layer projection and geometry type (e.g. lines,
+polygons...)</li>
+<li>Definition of the data type of the different fields</li>
+<li>Creation of a feature, population of the different fields, and
+setting a geometry</li>
+<li>Addition of the feature to the layer</li>
+<li>Destruction of the feature</li>
+</ol>
+<p>This appears quite involved, but let&#8217;s see how this works. Note that
+when you generate a new vector file, OGR will fail if the file already
+exists. You might want to use <tt class="docutils literal"><span class="pre">os.remove()</span></tt> to get rid of the file if
+it exists.</p>
+<p>Let&#8217;s see how this is done with an example which is a snippet that
+creates a GeoJSON file with the location of the different national
+parks. GeoJSON is a nice geographic format, and <a class="reference external" href="https://github.com/blog/1528-there-s-a-map-for-that">github allows you to
+display it easily as a
+map</a><span class="link-target"> [https://github.com/blog/1528-there-s-a-map-for-that]</span>.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># National park information, separated by TABs</span>
+
+<span class="n">parks</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;Dartmoor national park</span><span class="se">\t</span><span class="s">-3.904</span><span class="se">\t</span><span class="s">50.58</span>
+<span class="s">New forest national park</span><span class="se">\t</span><span class="s">-1.595</span><span class="se">\t</span><span class="s">50.86</span>
+<span class="s">Exmoor national park</span><span class="se">\t</span><span class="s">-3.651</span><span class="se">\t</span><span class="s">51.14</span>
+<span class="s">Pembrokeshire coast national park</span><span class="se">\t</span><span class="s">-4.694</span><span class="se">\t</span><span class="s">51.64</span>
+<span class="s">Brecon beacons national park</span><span class="se">\t</span><span class="s">-3.432</span><span class="se">\t</span><span class="s">51.88</span>
+<span class="s">Pembrokeshire coast national park</span><span class="se">\t</span><span class="s">-4.79</span><span class="se">\t</span><span class="s">51.99</span>
+<span class="s">Norfolk and suffolk broads</span><span class="se">\t</span><span class="s">1.569</span><span class="se">\t</span><span class="s">52.62</span>
+<span class="s">Snowdonia national park</span><span class="se">\t</span><span class="s">-3.898</span><span class="se">\t</span><span class="s">52.9</span>
+<span class="s">Peak district national park</span><span class="se">\t</span><span class="s">-1.802</span><span class="se">\t</span><span class="s">53.3</span>
+<span class="s">Yorkshire dales national park</span><span class="se">\t</span><span class="s">-2.157</span><span class="se">\t</span><span class="s">54.23</span>
+<span class="s">North yorkshire moors national park</span><span class="se">\t</span><span class="s">-0.8855</span><span class="se">\t</span><span class="s">54.37</span>
+<span class="s">Lake district national park</span><span class="se">\t</span><span class="s">-3.084</span><span class="se">\t</span><span class="s">54.47</span>
+<span class="s">Galloway forest park</span><span class="se">\t</span><span class="s">-4.171</span><span class="se">\t</span><span class="s">54.87</span>
+<span class="s">Northumberland national park</span><span class="se">\t</span><span class="s">-2.228</span><span class="se">\t</span><span class="s">55.28</span>
+<span class="s">Loch lomond and the trossachs national park</span><span class="se">\t</span><span class="s">-4.593</span><span class="se">\t</span><span class="s">56.24</span>
+<span class="s">Tay forest park</span><span class="se">\t</span><span class="s">-4.025</span><span class="se">\t</span><span class="s">56.59</span>
+<span class="s">Cairngorms national park</span><span class="se">\t</span><span class="s">-3.545</span><span class="se">\t</span><span class="s">57.08&quot;&quot;&quot;</span>
+
+<span class="c"># See if the file exists from a previous run of this snippet</span>
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span> <span class="p">(</span> <span class="s">&quot;parks.json&quot;</span><span class="p">):</span>
+    <span class="c"># It does exist, so remove it</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">remove</span> <span class="p">(</span> <span class="s">&quot;parks.json&quot;</span> <span class="p">)</span>
+
+<span class="c"># We need the output projection to bet set to Lat/Long</span>
+<span class="n">latlong</span> <span class="o">=</span> <span class="n">osr</span><span class="o">.</span><span class="n">SpatialReference</span><span class="p">()</span>
+<span class="n">latlong</span><span class="o">.</span><span class="n">ImportFromEPSG</span><span class="p">(</span> <span class="mi">4326</span> <span class="p">)</span>
+
+<span class="c"># Invoke the GeoJSON driver</span>
+<span class="n">drv</span> <span class="o">=</span> <span class="n">ogr</span><span class="o">.</span><span class="n">GetDriverByName</span><span class="p">(</span> <span class="s">&#39;GeoJSON&#39;</span> <span class="p">)</span>
+<span class="c"># This is the output filename</span>
+<span class="n">dst_ds</span> <span class="o">=</span> <span class="n">drv</span><span class="o">.</span><span class="n">CreateDataSource</span><span class="p">(</span> <span class="s">&#39;parks.json&#39;</span> <span class="p">)</span>
+<span class="c"># This is a single layer dataset. The layer needs to be of points</span>
+<span class="c"># and needs to have the WGS84 projection, which we defined above</span>
+<span class="n">dst_layer</span> <span class="o">=</span> <span class="n">dst_ds</span><span class="o">.</span><span class="n">CreateLayer</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">srs</span> <span class="o">=</span><span class="n">latlong</span> <span class="p">,</span> \
+                               <span class="n">geom_type</span><span class="o">=</span><span class="n">ogr</span><span class="o">.</span><span class="n">wkbPoint</span> <span class="p">)</span>
+
+<span class="c"># We just need a field with the Park&#39;s name, and its type is a String</span>
+<span class="n">field_defn</span><span class="o">=</span><span class="n">ogr</span><span class="o">.</span><span class="n">FieldDefn</span><span class="p">(</span> <span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="n">ogr</span><span class="o">.</span><span class="n">OFTString</span> <span class="p">)</span>
+<span class="n">dst_layer</span><span class="o">.</span><span class="n">CreateField</span><span class="p">(</span> <span class="n">field_defn</span> <span class="p">)</span>
+
+
+<span class="c"># Algorithm is as follows:</span>
+<span class="c"># 1. Loop over lines</span>
+<span class="c"># 2. Split line into park name, longitude, latitude</span>
+<span class="c"># 3. Create WKT of the point</span>
+<span class="c"># 4. Set the attribute name to name of park</span>
+<span class="c"># 5. Clean up</span>
+
+<span class="k">for</span> <span class="n">park_id</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span> <span class="n">parks</span><span class="o">.</span><span class="n">split</span><span class="p">(</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span> <span class="p">)</span> <span class="p">):</span>
+    <span class="c"># Get the relevant information</span>
+    <span class="n">park_name</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">&quot;</span><span class="p">)</span>
+    <span class="c"># Create a geogrpahical representation of the current park</span>
+    <span class="n">wkt</span> <span class="o">=</span> <span class="s">&quot;POINT ( </span><span class="si">%f</span><span class="s"> </span><span class="si">%f</span><span class="s"> )&quot;</span> <span class="o">%</span> <span class="p">(</span> <span class="nb">float</span><span class="p">(</span><span class="n">lon</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">lat</span><span class="p">)</span> <span class="p">)</span>
+    <span class="c"># Create a feature, using the attributes/fields that are</span>
+    <span class="c"># required for this layer</span>
+    <span class="n">feat</span> <span class="o">=</span> <span class="n">ogr</span><span class="o">.</span><span class="n">Feature</span><span class="p">(</span><span class="n">feature_def</span><span class="o">=</span><span class="n">dst_layer</span><span class="o">.</span><span class="n">GetLayerDefn</span><span class="p">())</span>
+    <span class="c"># Feed the WKT into a geometry</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">ogr</span><span class="o">.</span><span class="n">CreateGeometryFromWkt</span><span class="p">(</span> <span class="n">wkt</span> <span class="p">)</span>
+    <span class="c"># Feed the geometry into a WKT</span>
+    <span class="n">feat</span><span class="o">.</span><span class="n">SetGeometryDirectly</span><span class="p">(</span> <span class="n">p</span> <span class="p">)</span>
+    <span class="c"># Set the name field to its value</span>
+    <span class="n">feat</span><span class="o">.</span><span class="n">SetField</span> <span class="p">(</span> <span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="n">park_name</span> <span class="p">)</span>
+    <span class="c"># Attach the feature to the layer</span>
+    <span class="n">dst_layer</span><span class="o">.</span><span class="n">CreateFeature</span><span class="p">(</span> <span class="n">feat</span> <span class="p">)</span>
+    <span class="c"># Clean up</span>
+    <span class="n">feat</span><span class="o">.</span><span class="n">Destroy</span><span class="p">()</span>
+
+<span class="c"># Close file</span>
+<span class="n">dst_ds</span> <span class="o">=</span> <span class="bp">None</span>
+</pre></div>
+</div>
+<p>You can see the result of this on
+<a class="reference external" href="https://gist.github.com/jgomezdans/6811102">github</a><span class="link-target"> [https://gist.github.com/jgomezdans/6811102]</span>.</p>
+<p>Additionally, note that if we had defined a coordinate transformation as
+in the raster session, we could apply this transformation to an OGR
+geometry entity (in the snippet above, <tt class="docutils literal"><span class="pre">p</span></tt> would be such), and it
+would be reprojected.</p>
+<p><strong>Exercise</strong> Modify the above snippet to output a GeoJSON file for the
+Peak District National Park, whose UTM30N (<a class="reference external" href="http://spatialreference.org/ref/epsg/32630/">EPSG code:
+32630</a><span class="link-target"> [http://spatialreference.org/ref/epsg/32630/]</span>) co-ordinates are
+<span class="math">\(577659, 5911841\)</span>.</p>
+<script src="https://gist.github.com/jgomezdans/6811102.js"></script><script src="https://gist.github.com/jgomezdans/6811102.js"></script></div>
+<div class="section" id="rasterising">
+<h2>Rasterising</h2>
+<p>A very frequent problem one finds is how to mask out an area in a raster
+file that is defined as polygon in a shapefile. For example, if you have
+a raster of the worlds population density, and you want to extract all
+the pixels that belong to one particular country, how do you go about
+that? One way around this is to <em>rasterise</em> the polygon(s), which
+translates into &#8220;burning&#8221; pixels that fall within the polygon with a
+number, resulting in a mask.</p>
+<p>The way to do this is to use GDAL&#8217;s <tt class="docutils literal"><span class="pre">RasterizeLayer</span></tt> method. The
+method takes a handle to a GDAL dataset (one that you create yourself,
+with the right projection and geotransform, as you&#8217;ve seen above), and a
+OGR layer. The syntax for <tt class="docutils literal"><span class="pre">RasterizeLayer</span></tt> is</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">err</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">RasterizeLayer</span> <span class="p">(</span> <span class="n">raster_ds</span><span class="p">,</span> <span class="p">[</span><span class="n">raster_band_no</span><span class="p">],</span> <span class="n">ogr_layer</span><span class="p">,</span> <span class="n">burn_values</span><span class="o">=</span><span class="p">[</span><span class="n">burn_val</span><span class="p">]</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>where <tt class="docutils literal"><span class="pre">raster_ds</span></tt> is the GDAL raster datasource (note that it needs to
+be georreferenced, <em>i.e.</em> it requires projection and geotransform),
+<tt class="docutils literal"><span class="pre">raster_band_no</span></tt> is the band of the GDAL dataset where we want to burn
+pixels, <tt class="docutils literal"><span class="pre">ogr_layer</span></tt> is the vector layer object, and <tt class="docutils literal"><span class="pre">burn_val</span></tt> is
+the value that we want to burn.</p>
+<p>Let&#8217;s use <tt class="docutils literal"><span class="pre">gdal.RasterizeLayer</span></tt> in conjunction with all that we have
+covered above. Say we want to create a mask that only selects the UK or
+Ireland in <tt class="docutils literal"><span class="pre">world.shp</span></tt>, and we want to apply this mask to the MODIS
+landcover product that we used in the GDAL session (h17v03 tile ), file
+<tt class="docutils literal"><span class="pre">lc_h17v03.tif</span></tt>. We find that in this case, <tt class="docutils literal"><span class="pre">world.shp</span></tt> is in
+longitude latitude, and the MODIS data is in the MODIS projection, so we
+will reproject the vector data to match the MODIS data (so the latter is
+not interpolated and artifacts introduced). To make this efficient and
+avoid saving to disk, we shall use <em>in-memory vector and rasters</em>, and
+we will output a numpy array as our mask. Note then the steps:</p>
+<ol class="arabic simple">
+<li>Crate the projection conversion object (as for GDAL before)</li>
+<li>Create an in memory <strong>raster</strong> dataset to store the mask, using
+<tt class="docutils literal"><span class="pre">lc_h17v03.tif</span></tt> as a reference for geotransforms, array size and
+projection.</li>
+<li>Create an in memory <strong>vector</strong> dataset to hold the features that will
+be reprojected</li>
+<li>Open <tt class="docutils literal"><span class="pre">world.shp</span></tt> and apply an <tt class="docutils literal"><span class="pre">AttributeFilter</span></tt> to select a
+country</li>
+<li>Select a geometry from <tt class="docutils literal"><span class="pre">world.shp</span></tt>, project it and store it in the
+destination in memory vector layer</li>
+<li>Once this is done, use <tt class="docutils literal"><span class="pre">gdal.RasterizeLayer</span></tt> with both in-memory
+raster and vector datasets</li>
+<li>Read the in memory raster into an array</li>
+</ol>
+<p>This is a particularly good exercise that will stress all that we have
+learned so far.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">reference_filename</span> <span class="o">=</span> <span class="s">&quot;lc_h17v03.tif&quot;</span>
+<span class="n">target_vector_file</span> <span class="o">=</span> <span class="s">&quot;world.shp&quot;</span>
+<span class="n">attribute_filter</span> <span class="o">=</span> <span class="s">&quot;NAME = &#39;IRELAND&#39;&quot;</span>
+<span class="n">burn_value</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="c"># First, open the file that we&#39;ll be taking as a reference</span>
+<span class="c"># We will need to gleam the size in pixels, as well as projection</span>
+<span class="c"># and geotransform.</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span> <span class="n">reference_filename</span> <span class="p">)</span>
+
+<span class="c"># We now create an in-memory raster, with the appropriate dimensions</span>
+<span class="n">drv</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">GetDriverByName</span><span class="p">(</span><span class="s">&#39;MEM&#39;</span><span class="p">)</span>
+<span class="n">target_ds</span> <span class="o">=</span> <span class="n">drv</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">g</span><span class="o">.</span><span class="n">RasterXSize</span><span class="p">,</span> <span class="n">g</span><span class="o">.</span><span class="n">RasterXSize</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>  <span class="n">gdal</span><span class="o">.</span><span class="n">GDT_Byte</span><span class="p">)</span>
+<span class="n">target_ds</span><span class="o">.</span><span class="n">SetGeoTransform</span><span class="p">(</span> <span class="n">g</span><span class="o">.</span><span class="n">GetGeoTransform</span><span class="p">()</span> <span class="p">)</span>
+
+<span class="c"># We set up a transform object as we saw in the previous notebook.</span>
+<span class="c"># This goes from WGS84 to the projection in the reference datasets</span>
+
+<span class="n">wgs84</span> <span class="o">=</span> <span class="n">osr</span><span class="o">.</span><span class="n">SpatialReference</span><span class="p">(</span> <span class="p">)</span> <span class="c"># Define a SpatialReference object</span>
+<span class="n">wgs84</span><span class="o">.</span><span class="n">ImportFromEPSG</span><span class="p">(</span> <span class="mi">4326</span> <span class="p">)</span> <span class="c"># And set it to WGS84 using the EPSG code</span>
+
+<span class="c"># Now for the target projection, Ordnance Survey&#39;s British National Grid</span>
+<span class="n">to_proj</span> <span class="o">=</span> <span class="n">osr</span><span class="o">.</span><span class="n">SpatialReference</span><span class="p">()</span> <span class="c"># define the SpatialReference object</span>
+<span class="c"># In this case, we get the projection from a Proj4 string</span>
+
+<span class="c"># or, if using the proj4 representation</span>
+<span class="n">to_proj</span><span class="o">.</span><span class="n">ImportFromWkt</span><span class="p">(</span> <span class="n">g</span><span class="o">.</span><span class="n">GetProjectionRef</span><span class="p">()</span> <span class="p">)</span>
+<span class="n">target_ds</span><span class="o">.</span><span class="n">SetProjection</span> <span class="p">(</span> <span class="n">to_proj</span><span class="o">.</span><span class="n">ExportToWkt</span><span class="p">()</span> <span class="p">)</span>
+<span class="c"># Now, we define a coordinate transformtion object, *from* wgs84 *to* OSNG</span>
+<span class="n">tx</span> <span class="o">=</span> <span class="n">osr</span><span class="o">.</span><span class="n">CoordinateTransformation</span><span class="p">(</span> <span class="n">wgs84</span><span class="p">,</span> <span class="n">to_proj</span> <span class="p">)</span>
+
+<span class="c"># We define an output in-memory OGR dataset</span>
+<span class="c"># You could also do select a driver for an eg &quot;ESRI Shapefile&quot; here</span>
+<span class="c"># and give it a sexier name than out!</span>
+
+<span class="n">drv</span> <span class="o">=</span> <span class="n">ogr</span><span class="o">.</span><span class="n">GetDriverByName</span><span class="p">(</span> <span class="s">&#39;Memory&#39;</span> <span class="p">)</span>
+<span class="n">dst_ds</span> <span class="o">=</span> <span class="n">drv</span><span class="o">.</span><span class="n">CreateDataSource</span><span class="p">(</span> <span class="s">&#39;out&#39;</span> <span class="p">)</span>
+<span class="c"># This is a single layer dataset. The layer needs to be of polygons</span>
+<span class="c"># and needs to have the target files&#39; projection</span>
+<span class="n">dst_layer</span> <span class="o">=</span> <span class="n">dst_ds</span><span class="o">.</span><span class="n">CreateLayer</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">srs</span> <span class="o">=</span> <span class="n">to_proj</span><span class="p">,</span> <span class="n">geom_type</span><span class="o">=</span><span class="n">ogr</span><span class="o">.</span><span class="n">wkbPolygon</span> <span class="p">)</span>
+
+<span class="c"># Open the original shapefile, get the first layer, and filter by attribute</span>
+<span class="n">vector_ds</span> <span class="o">=</span> <span class="n">ogr</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span> <span class="n">target_vector_file</span> <span class="p">)</span>
+<span class="n">lyr</span> <span class="o">=</span> <span class="n">vector_ds</span><span class="o">.</span><span class="n">GetLayer</span> <span class="p">(</span> <span class="mi">0</span> <span class="p">)</span>
+<span class="n">lyr</span><span class="o">.</span><span class="n">SetAttributeFilter</span><span class="p">(</span> <span class="n">attribute_filter</span> <span class="p">)</span>
+
+
+<span class="c"># Get a field definition from the original vector file.</span>
+<span class="c"># We don&#39;t need much more detail here</span>
+<span class="n">feature</span> <span class="o">=</span> <span class="n">lyr</span><span class="o">.</span><span class="n">GetFeature</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">field</span> <span class="o">=</span> <span class="n">feature</span><span class="o">.</span><span class="n">GetFieldDefnRef</span><span class="p">(</span> <span class="mi">0</span> <span class="p">)</span>
+<span class="c"># Apply the field definition from the original to the output</span>
+<span class="n">dst_layer</span><span class="o">.</span><span class="n">CreateField</span><span class="p">(</span> <span class="n">field</span> <span class="p">)</span>
+<span class="n">feature_defn</span> <span class="o">=</span> <span class="n">dst_layer</span><span class="o">.</span><span class="n">GetLayerDefn</span><span class="p">()</span>
+<span class="c"># Reset the original layer so we can read all features</span>
+<span class="n">lyr</span><span class="o">.</span><span class="n">ResetReading</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="n">lyr</span><span class="p">:</span>
+    <span class="c"># For each feature, get the geometry</span>
+    <span class="n">geom</span> <span class="o">=</span> <span class="n">feat</span><span class="o">.</span><span class="n">GetGeometryRef</span><span class="p">()</span>
+    <span class="c"># transform it to the reference projection</span>
+    <span class="n">geom</span><span class="o">.</span><span class="n">Transform</span> <span class="p">(</span> <span class="n">tx</span> <span class="p">)</span>
+    <span class="c"># Create an output feature</span>
+    <span class="n">out_geom</span> <span class="o">=</span> <span class="n">ogr</span><span class="o">.</span><span class="n">Feature</span> <span class="p">(</span> <span class="n">feature_defn</span> <span class="p">)</span>
+    <span class="c"># Set the geometry to be the reprojected/transformed geometry</span>
+    <span class="n">out_geom</span><span class="o">.</span><span class="n">SetGeometry</span> <span class="p">(</span> <span class="n">geom</span> <span class="p">)</span>
+    <span class="c"># Add the feature with its geometry to the output yaer</span>
+    <span class="n">dst_layer</span><span class="o">.</span><span class="n">CreateFeature</span><span class="p">(</span><span class="n">out_geom</span> <span class="p">)</span>
+    <span class="c"># Clear things up</span>
+    <span class="n">out_geom</span><span class="o">.</span><span class="n">Destroy</span>
+    <span class="n">geom</span><span class="o">.</span><span class="n">Destroy</span>
+<span class="c"># Done adding geometries</span>
+<span class="c"># Reset the output layer to the 0th geometry</span>
+<span class="n">dst_layer</span><span class="o">.</span><span class="n">ResetReading</span><span class="p">()</span>
+
+<span class="c"># Now, we rastertize the output vector in-memory file</span>
+<span class="c"># into the in-memory output raster file</span>
+
+<span class="n">err</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">RasterizeLayer</span><span class="p">(</span><span class="n">target_ds</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">dst_layer</span><span class="p">,</span>
+            <span class="n">burn_values</span><span class="o">=</span><span class="p">[</span><span class="n">burn_value</span><span class="p">])</span>
+<span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;error:&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+
+<span class="c"># Read the data from the raster, this is your mask</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">target_ds</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">()</span>
+
+
+
+<span class="c"># Plotting to see whether this makes sense.</span>
+
+<span class="n">ndata</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span> <span class="p">(</span> <span class="n">ndata</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s">&#39;nearest&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">gray</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span> <span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hold</span> <span class="p">(</span> <span class="bp">True</span> <span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span> <span class="p">(</span> <span class="n">data</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s">&#39;nearest&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">gray</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span> <span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span> <span class="p">(</span> <span class="bp">False</span> <span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img src="../_images/OGR_Python_31_0.svg" /></div>
+<div class="section" id="using-matplotlib-to-plot-geometries">
+<h2>Using matplotlib to plot geometries</h2>
+<p>Using matplotlib to plot geometries from OGR can be quite tedious.
+Here&#8217;s an example of plotting a map of Angola from the <tt class="docutils literal"><span class="pre">world.shp</span></tt>. In
+the same vein of recommending Shapely and Fiona above for serious
+geoprocessing of vector data, you are encouraged to use
+<a class="reference external" href="https://bitbucket.org/sgillies/descartes/">descartes</a><span class="link-target"> [https://bitbucket.org/sgillies/descartes/]</span> for plotting
+vector data!</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">matplotlib.path</span> <span class="kn">as</span> <span class="nn">mpath</span>
+<span class="kn">import</span> <span class="nn">matplotlib.patches</span> <span class="kn">as</span> <span class="nn">mpatches</span>
+
+
+<span class="c"># Extract first layer of features from shapefile using OGR</span>
+<span class="n">ds</span> <span class="o">=</span> <span class="n">ogr</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="s">&#39;world.shp&#39;</span><span class="p">)</span>
+<span class="n">lyr</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">GetLayer</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+
+<span class="c"># Prepare figure</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ioff</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+
+
+<span class="n">paths</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">lyr</span><span class="o">.</span><span class="n">ResetReading</span><span class="p">()</span>
+
+<span class="n">lyr</span><span class="o">.</span><span class="n">SetAttributeFilter</span> <span class="p">(</span> <span class="s">&quot; NAME = &#39;ANGOLA&#39; &quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mf">24.5</span> <span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+<span class="c"># Read all features in layer and store as paths</span>
+
+<span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="n">lyr</span><span class="p">:</span>
+
+    <span class="k">for</span> <span class="n">geom</span> <span class="ow">in</span> <span class="n">feat</span><span class="o">.</span><span class="n">GetGeometryRef</span><span class="p">():</span>
+        <span class="n">envelope</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span> <span class="n">geom</span><span class="o">.</span><span class="n">GetEnvelope</span><span class="p">()</span> <span class="p">)</span>
+        <span class="c"># check if geom is polygon</span>
+        <span class="k">if</span> <span class="n">geom</span><span class="o">.</span><span class="n">GetGeometryType</span><span class="p">()</span> <span class="o">==</span> <span class="n">ogr</span><span class="o">.</span><span class="n">wkbPolygon</span><span class="p">:</span>
+            <span class="n">codes</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">all_x</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">all_y</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">geom</span><span class="o">.</span><span class="n">GetGeometryCount</span><span class="p">()):</span>
+                <span class="c"># Read ring geometry and create path</span>
+                <span class="n">r</span> <span class="o">=</span> <span class="n">geom</span><span class="o">.</span><span class="n">GetGeometryRef</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">GetX</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">GetPointCount</span><span class="p">())]</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">GetY</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">GetPointCount</span><span class="p">())]</span>
+                <span class="c"># skip boundary between individual rings</span>
+                <span class="n">codes</span> <span class="o">+=</span> <span class="p">[</span><span class="n">mpath</span><span class="o">.</span><span class="n">Path</span><span class="o">.</span><span class="n">MOVETO</span><span class="p">]</span> <span class="o">+</span> \
+                             <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">[</span><span class="n">mpath</span><span class="o">.</span><span class="n">Path</span><span class="o">.</span><span class="n">LINETO</span><span class="p">]</span>
+                <span class="n">all_x</span> <span class="o">+=</span> <span class="n">x</span>
+                <span class="n">all_y</span> <span class="o">+=</span> <span class="n">y</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">mpath</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">all_x</span><span class="p">,</span><span class="n">all_y</span><span class="p">)),</span> <span class="n">codes</span><span class="p">)</span>
+            <span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="c"># Add paths as patches to axes</span>
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">:</span>
+        <span class="n">patch</span> <span class="o">=</span> <span class="n">mpatches</span><span class="o">.</span><span class="n">PathPatch</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> \
+                <span class="n">facecolor</span><span class="o">=</span><span class="s">&#39;0.8&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s">&#39;black&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">patch</span><span class="p">)</span>
+
+
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img src="../_images/OGR_Python_34_0.svg" /></div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2014, Prof. P. Lewis.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

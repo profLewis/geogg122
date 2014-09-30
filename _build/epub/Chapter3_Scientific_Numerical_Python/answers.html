@@ -1,0 +1,624 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>E3 Answers to Exercise</title>
+    
+    <link rel="stylesheet" href="../_static/epub.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /> 
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="solar_radiation.html" title="Incoming solar radiation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="advanced_answers.html" title="E3.3: Exercise: Improved Solar Radiation Modelling"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">geogg122</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="e3-answers-to-exercise">
+<h1>E3 Answers to Exercise</h1>
+<div class="section" id="e3-2-exercise-listing">
+<h2>E3.2 Exercise: listing</h2>
+<p><strong>Using Python, produce a listing of the files in the subdirectory
+``data`` of ``geogg122/Chapter3_Scientific_Numerical_Python`` that end
+with ``.nc`` and put this listing in a file called
+``files/data/data.dat`` with each entry on a different line</strong></p>
+</div>
+<div class="section" id="a3-2-answer-listing">
+<h2>A3.2 Answer: listing</h2>
+<p>Hopefully, you should already be in the directory
+<tt class="docutils literal"><span class="pre">geogg122/Chapter3_Scientific_Numerical_Python</span></tt>, if not, you may like
+to go there before starting this exercise.</p>
+<p>If you were to do this from unix, you would getr the listing with:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>!ls -l data/*.nc
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>-rw-r--r--  1 plewis  staff  115202868 11 Oct 09:53 data/GlobAlbedo.1998145.h17v03.nc
+-rw-r--r--  1 plewis  staff   18669672 11 Oct 20:07 data/GlobAlbedo.200901.mosaic.5.nc
+-rw-r--r--  1 plewis  staff   18669672 11 Oct 20:07 data/GlobAlbedo.200902.mosaic.5.nc
+-rw-r--r--  1 plewis  staff   18669672 11 Oct 20:08 data/GlobAlbedo.200903.mosaic.5.nc
+-rw-r--r--  1 plewis  staff   18669672 11 Oct 20:08 data/GlobAlbedo.200904.mosaic.5.nc
+-rw-r--r--  1 plewis  staff   18669672 11 Oct 20:08 data/GlobAlbedo.200905.mosaic.5.nc
+-rw-r--r--  1 plewis  staff   18669672 11 Oct 20:08 data/GlobAlbedo.200906.mosaic.5.nc
+-rw-r--r--  1 plewis  staff   18758652 11 Oct 20:08 data/GlobAlbedo.200907.mosaic.5.nc
+-rw-r--r--  1 plewis  staff   18669672 11 Oct 20:08 data/GlobAlbedo.200908.mosaic.5.nc
+-rw-r--r--  1 plewis  staff   18669672 11 Oct 20:08 data/GlobAlbedo.200909.mosaic.5.nc
+-rw-r--r--  1 plewis  staff   18669672 11 Oct 20:08 data/GlobAlbedo.200910.mosaic.5.nc
+-rw-r--r--  1 plewis  staff   18669672 11 Oct 20:08 data/GlobAlbedo.200911.mosaic.5.nc
+-rw-r--r--  1 plewis  staff   18669672 11 Oct 20:08 data/GlobAlbedo.200912.mosaic.5.nc
+</pre></div>
+</div>
+<p>or similar.</p>
+<p>To do this in Python, you should use <tt class="docutils literal"><span class="pre">glob</span></tt>, and the same &#8216;pattern&#8217;:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">glob</span>
+
+<span class="n">files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">&#39;data/*.nc&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">files</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="s">&#39;data/GlobAlbedo.1998145.h17v03.nc&#39;</span><span class="p">,</span> <span class="s">&#39;data/GlobAlbedo.200901.mosaic.5.nc&#39;</span><span class="p">,</span> <span class="s">&#39;data/GlobAlbedo.200902.mosaic.5.nc&#39;</span><span class="p">,</span> <span class="s">&#39;data/GlobAlbedo.200903.mosaic.5.nc&#39;</span><span class="p">,</span> <span class="s">&#39;data/GlobAlbedo.200904.mosaic.5.nc&#39;</span><span class="p">,</span> <span class="s">&#39;data/GlobAlbedo.200905.mosaic.5.nc&#39;</span><span class="p">,</span> <span class="s">&#39;data/GlobAlbedo.200906.mosaic.5.nc&#39;</span><span class="p">,</span> <span class="s">&#39;data/GlobAlbedo.200907.mosaic.5.nc&#39;</span><span class="p">,</span> <span class="s">&#39;data/GlobAlbedo.200908.mosaic.5.nc&#39;</span><span class="p">,</span> <span class="s">&#39;data/GlobAlbedo.200909.mosaic.5.nc&#39;</span><span class="p">,</span> <span class="s">&#39;data/GlobAlbedo.200910.mosaic.5.nc&#39;</span><span class="p">,</span> <span class="s">&#39;data/GlobAlbedo.200911.mosaic.5.nc&#39;</span><span class="p">,</span> <span class="s">&#39;data/GlobAlbedo.200912.mosaic.5.nc&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>This is a list. We want to write this to a file called
+<tt class="docutils literal"><span class="pre">files/data/data.dat</span></tt>.</p>
+<p>First we open it, then simply use <tt class="docutils literal"><span class="pre">writelines</span></tt> to write the list of
+strings, the close the file.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;files/data/data.dat&#39;</span>
+
+<span class="c"># open in write mode</span>
+<span class="n">fp</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="s">&#39;w&#39;</span><span class="p">)</span>
+<span class="n">fp</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+<span class="n">fp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Hopefully, that all worked well, but just to check from unix:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>!cat files/data/data.dat
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>data/GlobAlbedo.1998145.h17v03.ncdata/GlobAlbedo.200901.mosaic.5.ncdata/GlobAlbedo.200902.mosaic.5.ncdata/GlobAlbedo.200903.mosaic.5.ncdata/GlobAlbedo.200904.mosaic.5.ncdata/GlobAlbedo.200905.mosaic.5.ncdata/GlobAlbedo.200906.mosaic.5.ncdata/GlobAlbedo.200907.mosaic.5.ncdata/GlobAlbedo.200908.mosaic.5.ncdata/GlobAlbedo.200909.mosaic.5.ncdata/GlobAlbedo.200910.mosaic.5.ncdata/GlobAlbedo.200911.mosaic.5.ncdata/GlobAlbedo.200912.mosaic.5.nc
+</pre></div>
+</div>
+<p>which isn&#8217;t quite what we wanted: we need to insert a newline character
+at the end of each string before writing.</p>
+<p>There are several ways to do this, e.g.:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">&#39;data/*.nc&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="nb">file</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">files</span><span class="p">):</span>
+    <span class="n">files</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">file</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span>
+<span class="k">print</span> <span class="n">files</span>
+</pre></div>
+</div>
+<pre class="literal-block">
+['data/GlobAlbedo.1998145.h17v03.ncn', 'data/GlobAlbedo.200901.mosaic.5.ncn', 'data/GlobAlbedo.200902.mosaic.5.ncn', 'data/GlobAlbedo.200903.mosaic.5.ncn', 'data/GlobAlbedo.200904.mosaic.5.ncn', 'data/GlobAlbedo.200905.mosaic.5.ncn', 'data/GlobAlbedo.200906.mosaic.5.ncn', 'data/GlobAlbedo.200907.mosaic.5.ncn', 'data/GlobAlbedo.200908.mosaic.5.ncn', 'data/GlobAlbedo.200909.mosaic.5.ncn', 'data/GlobAlbedo.200910.mosaic.5.ncn', 'data/GlobAlbedo.200911.mosaic.5.ncn', 'data/GlobAlbedo.200912.mosaic.5.ncn']
+</pre>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">&#39;data/*.nc&#39;</span><span class="p">)</span>
+
+<span class="c"># or:</span>
+<span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="nb">file</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span> <span class="k">for</span> <span class="nb">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">]</span>
+
+<span class="k">print</span> <span class="n">files</span>
+</pre></div>
+</div>
+<pre class="literal-block">
+['data/GlobAlbedo.1998145.h17v03.ncn', 'data/GlobAlbedo.200901.mosaic.5.ncn', 'data/GlobAlbedo.200902.mosaic.5.ncn', 'data/GlobAlbedo.200903.mosaic.5.ncn', 'data/GlobAlbedo.200904.mosaic.5.ncn', 'data/GlobAlbedo.200905.mosaic.5.ncn', 'data/GlobAlbedo.200906.mosaic.5.ncn', 'data/GlobAlbedo.200907.mosaic.5.ncn', 'data/GlobAlbedo.200908.mosaic.5.ncn', 'data/GlobAlbedo.200909.mosaic.5.ncn', 'data/GlobAlbedo.200910.mosaic.5.ncn', 'data/GlobAlbedo.200911.mosaic.5.ncn', 'data/GlobAlbedo.200912.mosaic.5.ncn']
+</pre>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># or all at once if you like:</span>
+
+<span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="nb">file</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span> <span class="k">for</span> <span class="nb">file</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">&#39;data/*.nc&#39;</span><span class="p">)]</span>
+
+<span class="k">print</span> <span class="n">files</span>
+</pre></div>
+</div>
+<pre class="literal-block">
+['data/GlobAlbedo.1998145.h17v03.ncn', 'data/GlobAlbedo.200901.mosaic.5.ncn', 'data/GlobAlbedo.200902.mosaic.5.ncn', 'data/GlobAlbedo.200903.mosaic.5.ncn', 'data/GlobAlbedo.200904.mosaic.5.ncn', 'data/GlobAlbedo.200905.mosaic.5.ncn', 'data/GlobAlbedo.200906.mosaic.5.ncn', 'data/GlobAlbedo.200907.mosaic.5.ncn', 'data/GlobAlbedo.200908.mosaic.5.ncn', 'data/GlobAlbedo.200909.mosaic.5.ncn', 'data/GlobAlbedo.200910.mosaic.5.ncn', 'data/GlobAlbedo.200911.mosaic.5.ncn', 'data/GlobAlbedo.200912.mosaic.5.ncn']
+</pre>
+<p>or several other ways ...</p>
+<p>Putting this together:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">glob</span>
+
+<span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="nb">file</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span> <span class="k">for</span> <span class="nb">file</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">&#39;data/*.nc&#39;</span><span class="p">)]</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;files/data/data.dat&#39;</span>
+
+<span class="c"># open in write mode</span>
+<span class="n">fp</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="s">&#39;w&#39;</span><span class="p">)</span>
+<span class="n">fp</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+<span class="n">fp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>then checking:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>!cat files/data/data.dat
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>data/GlobAlbedo.1998145.h17v03.nc
+data/GlobAlbedo.200901.mosaic.5.nc
+data/GlobAlbedo.200902.mosaic.5.nc
+data/GlobAlbedo.200903.mosaic.5.nc
+data/GlobAlbedo.200904.mosaic.5.nc
+data/GlobAlbedo.200905.mosaic.5.nc
+data/GlobAlbedo.200906.mosaic.5.nc
+data/GlobAlbedo.200907.mosaic.5.nc
+data/GlobAlbedo.200908.mosaic.5.nc
+data/GlobAlbedo.200909.mosaic.5.nc
+data/GlobAlbedo.200910.mosaic.5.nc
+data/GlobAlbedo.200911.mosaic.5.nc
+data/GlobAlbedo.200912.mosaic.5.nc
+</pre></div>
+</div>
+<p>which <em>is</em> what we wanted.</p>
+</div>
+<div class="section" id="e3-2-exercise-making-movies">
+<h2>E3.2 Exercise: Making Movies</h2>
+<div class="section" id="e3-2-1-software">
+<h3>E3.2.1 Software</h3>
+<p>You can <em>sort of</em> make <a class="reference external" href="http://matplotlib.org/faq/howto_faq.html#make-a-movie">movies in
+pylab</a><span class="link-target"> [http://matplotlib.org/faq/howto_faq.html#make-a-movie]</span>, but
+you generally have to make a system call to unix at some point, so it&#8217;s
+probably easier to do this all in unix with the utility
+<tt class="docutils literal"><span class="pre">`convert</span></tt> &lt;<a class="reference external" href="http://www.imagemagick.org/script/convert.php">http://www.imagemagick.org/script/convert.php</a>&gt;`__.</p>
+<p>At the unix prompt, chack that you have access to convert:</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>berlin% which convert
+/usr/bin/convert
+</pre></div>
+</div>
+<p>If this doesn&#8217;t come up with anything useful, there is probably a
+version in <tt class="docutils literal"><span class="pre">/usr/bin/convert</span></tt> or <tt class="docutils literal"><span class="pre">/usr/local/bin/convert</span></tt> (If you
+don&#8217;t have it on your local machine, install
+<tt class="docutils literal"><span class="pre">`ImageMagick</span></tt> &lt;<a class="reference external" href="http://www.imagemagick.org/script/index.php">http://www.imagemagick.org/script/index.php</a>&gt;`__ which
+contains the command line tool <tt class="docutils literal"><span class="pre">convert</span></tt>).</p>
+<p>To use this, e.g.:</p>
+<p>from the unix command line:</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>berlin% cd ~/Data/geogg122/Chapter3_Scientific_Numerical_Python
+berlin% convert files/data/albedo.jpg files/data/albedo.gif
+</pre></div>
+</div>
+<p>or from within a notebook:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>!convert files/data/albedo.jpg files/data/albedo.gif
+</pre></div>
+</div>
+<p>Or, more practically here, you can run a unix command directly from
+Python:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="n">cmd</span> <span class="o">=</span> <span class="s">&#39;convert files/data/albedo.jpg files/data/albedo.gif&#39;</span>
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">0</span>
+</pre></div>
+</div>
+<p>This will convert the file <tt class="docutils literal"><span class="pre">files/data/albedo.jpg</span></tt> (in jpeg format) to
+<tt class="docutils literal"><span class="pre">files/data/albedo.gif</span></tt> (in gif format).</p>
+<div class="figure">
+<img alt="albedo" src="Chapter3_Scientific_Numerical_Python/files/data/albedo.gif" />
+<p class="caption">albedo</p>
+</div>
+<p>We can also use <tt class="docutils literal"><span class="pre">convert</span></tt> to make animated gifs, which is one way of
+making a movie.</p>
+</div>
+<div class="section" id="e3-2-2-looping-over-a-set-of-images">
+<h3>E3.2.2 Looping over a set of images</h3>
+<p>You have all of the code you need above to be able to read a GlobAlbedo
+file for a given month and waveband in Python and save a picture in jpeg
+format, but to recap for <tt class="docutils literal"><span class="pre">BHR_VIS</span></tt>:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">netCDF4</span> <span class="kn">import</span> <span class="n">Dataset</span>
+<span class="kn">import</span> <span class="nn">pylab</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">root</span> <span class="o">=</span> <span class="s">&#39;files/data/&#39;</span>
+
+<span class="n">month_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;January&#39;</span><span class="p">,</span><span class="s">&#39;February&#39;</span><span class="p">,</span><span class="s">&#39;March&#39;</span><span class="p">,</span><span class="s">&#39;April&#39;</span><span class="p">,</span><span class="s">&#39;May&#39;</span><span class="p">,</span><span class="s">&#39;June&#39;</span><span class="p">,</span>\
+              <span class="s">&#39;July&#39;</span><span class="p">,</span><span class="s">&#39;August&#39;</span><span class="p">,</span><span class="s">&#39;September&#39;</span><span class="p">,</span><span class="s">&#39;October&#39;</span><span class="p">,</span><span class="s">&#39;November&#39;</span><span class="p">,</span><span class="s">&#39;December&#39;</span><span class="p">]</span>
+<span class="c"># make a dictionary from 2 lists</span>
+<span class="n">month_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">13</span><span class="p">),</span><span class="n">month_list</span><span class="p">))</span>
+
+<span class="c"># example filename : use formatting string:</span>
+<span class="c"># %d%02d</span>
+<span class="n">year</span> <span class="o">=</span> <span class="mi">2009</span>
+
+
+<span class="c"># set the month</span>
+<span class="n">month</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="sd">&#39;&#39;&#39; Read the data &#39;&#39;&#39;</span>
+<span class="n">local_file</span> <span class="o">=</span> <span class="n">root</span> <span class="o">+</span> <span class="s">&#39;GlobAlbedo.</span><span class="si">%d%02d</span><span class="s">.mosaic.5.nc&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">month</span><span class="p">)</span>
+<span class="c"># load the netCDF data from the file f.filename</span>
+<span class="n">nc</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">local_file</span><span class="p">,</span><span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">band</span> <span class="o">=</span> <span class="n">nc</span><span class="o">.</span><span class="n">variables</span><span class="p">[</span><span class="s">&#39;DHR_VIS&#39;</span><span class="p">]</span>
+
+<span class="sd">&#39;&#39;&#39; Plot the data and save as picture jpeg format &#39;&#39;&#39;</span>
+<span class="c"># make a string with the output file name</span>
+<span class="n">out_file</span> <span class="o">=</span> <span class="n">root</span> <span class="o">+</span> <span class="s">&#39;GlobAlbedo.</span><span class="si">%d%02d</span><span class="s">.jpg&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">month</span><span class="p">)</span>
+<span class="c"># plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">clf</span><span class="p">()</span>
+<span class="c"># %9s forces the string to be 9 characters long</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&#39;VIS BHR albedo for </span><span class="si">%9s</span><span class="s"> </span><span class="si">%d</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">month_dict</span><span class="p">[</span><span class="n">month</span><span class="p">],</span><span class="n">year</span><span class="p">))</span>
+<span class="c"># use nearest neighbour interpolation</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">band</span><span class="p">,</span><span class="n">interpolation</span><span class="o">=</span><span class="s">&#39;nearest&#39;</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s">&#39;Spectral&#39;</span><span class="p">),</span><span class="n">vmin</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span><span class="n">vmax</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="c"># show a colour bar</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">out_file</span><span class="p">)</span>
+
+<span class="sd">&#39;&#39;&#39; Convert the file to gif &#39;&#39;&#39;</span>
+<span class="c"># set up the unix command which is of the form</span>
+<span class="c"># convert input output</span>
+<span class="c"># Here input will be out_file</span>
+<span class="c"># and output we can get with out_file.replace(&#39;.jpg&#39;,&#39;.gif&#39;)</span>
+<span class="c"># i.e. replacing where it says .jpg with .gif</span>
+<span class="n">cmd</span> <span class="o">=</span> <span class="s">&#39;convert </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span><span class="n">out_file</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;.jpg&#39;</span><span class="p">,</span><span class="s">&#39;.gif&#39;</span><span class="p">))</span>
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">0</span>
+</pre></div>
+</div>
+<img alt="../_images/answers_32_1.png" src="../_images/answers_32_1.png" />
+<p><strong>Modify the code above to loop over each month, so that it generates a
+set of gif format files for the TOTAL SHORTWAVE ALBEDO</strong></p>
+<p>You should confirm that these exist, and that the file modification time
+is when you ran it (not when I generated the files for these notes,
+which is Oct 10 2013).</p>
+<div class="code python highlight-python"><div class="highlight"><pre>ls -l files/data/GlobAlbedo*gif
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>-rw-r--r--  1 plewis  staff  340658 11 Oct 20:00 files/data/GlobAlbedo.2009.SW.1.gif
+-rw-r--r--  1 plewis  staff  340658 11 Oct 19:59 files/data/GlobAlbedo.2009.SW.gif
+-rw-r--r--  1 plewis  staff   55299 11 Oct 20:21 files/data/GlobAlbedo.200901.gif
+-rw-r--r--  1 plewis  staff   28139 11 Oct 19:59 files/data/GlobAlbedo.200902.gif
+-rw-r--r--  1 plewis  staff   28259 11 Oct 19:59 files/data/GlobAlbedo.200903.gif
+-rw-r--r--  1 plewis  staff   28249 11 Oct 19:59 files/data/GlobAlbedo.200904.gif
+-rw-r--r--  1 plewis  staff   28468 11 Oct 19:59 files/data/GlobAlbedo.200905.gif
+-rw-r--r--  1 plewis  staff   28672 11 Oct 19:59 files/data/GlobAlbedo.200906.gif
+-rw-r--r--  1 plewis  staff   28656 11 Oct 19:59 files/data/GlobAlbedo.200907.gif
+-rw-r--r--  1 plewis  staff   28275 11 Oct 19:59 files/data/GlobAlbedo.200908.gif
+-rw-r--r--  1 plewis  staff   28952 11 Oct 19:59 files/data/GlobAlbedo.200909.gif
+-rw-r--r--  1 plewis  staff   28450 11 Oct 19:59 files/data/GlobAlbedo.200910.gif
+-rw-r--r--  1 plewis  staff   28570 11 Oct 19:59 files/data/GlobAlbedo.200911.gif
+-rw-r--r--  1 plewis  staff   28438 11 Oct 19:59 files/data/GlobAlbedo.200912.gif
+</pre></div>
+</div>
+</div>
+<div class="section" id="a3-2-2-answer-looping-over-a-set-of-images">
+<h3>A3.2.2 Answer: Looping over a set of images</h3>
+<p>Really all you need to do here is to make <tt class="docutils literal"><span class="pre">month</span></tt> appear in a loop,
+e.g. using:</p>
+<p><tt class="docutils literal"><span class="pre">for</span> <span class="pre">month</span> <span class="pre">in</span> <span class="pre">range(1,13):</span></tt></p>
+<p>and then make sure that all of the code below is in that loop (i.e.
+indented) as below.</p>
+<p>One additional thing is to make sure you select the waveband you were
+supposed to (shortwave albedo)</p>
+<p><tt class="docutils literal"><span class="pre">band</span> <span class="pre">=</span> <span class="pre">nc.variables['DHR_SW']</span></tt></p>
+<p>and finally, make sure you change the title:</p>
+<p>You should <em>also</em> however, go through the code above line by line,
+making sure you appreciate what is going on at each stage and why we
+have done these things (in this oroder).</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">netCDF4</span> <span class="kn">import</span> <span class="n">Dataset</span>
+<span class="kn">import</span> <span class="nn">pylab</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">root</span> <span class="o">=</span> <span class="s">&#39;files/data/&#39;</span>
+
+<span class="n">month_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;January&#39;</span><span class="p">,</span><span class="s">&#39;February&#39;</span><span class="p">,</span><span class="s">&#39;March&#39;</span><span class="p">,</span><span class="s">&#39;April&#39;</span><span class="p">,</span><span class="s">&#39;May&#39;</span><span class="p">,</span><span class="s">&#39;June&#39;</span><span class="p">,</span>\
+              <span class="s">&#39;July&#39;</span><span class="p">,</span><span class="s">&#39;August&#39;</span><span class="p">,</span><span class="s">&#39;September&#39;</span><span class="p">,</span><span class="s">&#39;October&#39;</span><span class="p">,</span><span class="s">&#39;November&#39;</span><span class="p">,</span><span class="s">&#39;December&#39;</span><span class="p">]</span>
+<span class="c"># make a dictionary from 2 lists</span>
+<span class="n">month_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">13</span><span class="p">),</span><span class="n">month_list</span><span class="p">))</span>
+
+<span class="c"># example filename : use formatting string:</span>
+<span class="c"># %d%02d</span>
+<span class="n">year</span> <span class="o">=</span> <span class="mi">2009</span>
+
+
+<span class="c"># set the month</span>
+<span class="k">for</span> <span class="n">month</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">13</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; Read the data &#39;&#39;&#39;</span>
+    <span class="n">local_file</span> <span class="o">=</span> <span class="n">root</span> <span class="o">+</span> <span class="s">&#39;GlobAlbedo.</span><span class="si">%d%02d</span><span class="s">.mosaic.5.nc&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">month</span><span class="p">)</span>
+    <span class="c"># load the netCDF data from the file f.filename</span>
+    <span class="n">nc</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">local_file</span><span class="p">,</span><span class="s">&#39;r&#39;</span><span class="p">)</span>
+    <span class="c"># select which band we want</span>
+    <span class="n">band</span> <span class="o">=</span> <span class="n">nc</span><span class="o">.</span><span class="n">variables</span><span class="p">[</span><span class="s">&#39;DHR_SW&#39;</span><span class="p">]</span>
+
+    <span class="sd">&#39;&#39;&#39; Plot the data and save as picture jpeg format &#39;&#39;&#39;</span>
+    <span class="c"># make a string with the output file name</span>
+    <span class="n">out_file</span> <span class="o">=</span> <span class="n">root</span> <span class="o">+</span> <span class="s">&#39;GlobAlbedo.</span><span class="si">%d%02d</span><span class="s">.jpg&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">month</span><span class="p">)</span>
+    <span class="c"># plot</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">clf</span><span class="p">()</span>
+    <span class="c"># %9s forces the string to be 9 characters long</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&#39;SW BHR albedo for </span><span class="si">%9s</span><span class="s"> </span><span class="si">%d</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">month_dict</span><span class="p">[</span><span class="n">month</span><span class="p">],</span><span class="n">year</span><span class="p">))</span>
+    <span class="c"># use nearest neighbour interpolation</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">band</span><span class="p">,</span><span class="n">interpolation</span><span class="o">=</span><span class="s">&#39;nearest&#39;</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s">&#39;Spectral&#39;</span><span class="p">),</span><span class="n">vmin</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span><span class="n">vmax</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+    <span class="c"># show a colour bar</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">out_file</span><span class="p">)</span>
+
+    <span class="sd">&#39;&#39;&#39; Convert the file to gif &#39;&#39;&#39;</span>
+    <span class="c"># set up the unix command which is of the form</span>
+    <span class="c"># convert input output</span>
+    <span class="c"># Here input will be out_file</span>
+    <span class="c"># and output we can get with out_file.replace(&#39;.jpg&#39;,&#39;.gif&#39;)</span>
+    <span class="c"># i.e. replacing where it says .jpg with .gif</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="s">&#39;convert </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span><span class="n">out_file</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;.jpg&#39;</span><span class="p">,</span><span class="s">&#39;.gif&#39;</span><span class="p">))</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/answers_37_0.png" src="../_images/answers_37_0.png" />
+<img alt="../_images/answers_37_1.png" src="../_images/answers_37_1.png" />
+<img alt="../_images/answers_37_2.png" src="../_images/answers_37_2.png" />
+<img alt="../_images/answers_37_3.png" src="../_images/answers_37_3.png" />
+<img alt="../_images/answers_37_4.png" src="../_images/answers_37_4.png" />
+<img alt="../_images/answers_37_5.png" src="../_images/answers_37_5.png" />
+<img alt="../_images/answers_37_6.png" src="../_images/answers_37_6.png" />
+<img alt="../_images/answers_37_7.png" src="../_images/answers_37_7.png" />
+<img alt="../_images/answers_37_8.png" src="../_images/answers_37_8.png" />
+<img alt="../_images/answers_37_9.png" src="../_images/answers_37_9.png" />
+<img alt="../_images/answers_37_10.png" src="../_images/answers_37_10.png" />
+<img alt="../_images/answers_37_11.png" src="../_images/answers_37_11.png" />
+</div>
+<div class="section" id="e3-2-3-make-the-movie">
+<h3>E3.2.3 Make the movie</h3>
+<p>The unix command to convert these files to an animated gif is:</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>convert -delay 100 -loop 0 files/data/GlobAlbedo.2009??.gif files/data/GlobAlbedo.2009.SW.gif
+</pre></div>
+</div>
+<p><strong>Run this (ideally, from within Python) to create the animated gif
+GlobAlbedo.2009.SW.gif</strong></p>
+<p>Again, confirm that <em>you</em> created this file (and it is not just a
+version you downloaded):</p>
+<div class="code python highlight-python"><div class="highlight"><pre>ls -l files/data/GlobAlbedo.2009.SW.gif
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>-rw-r--r--  1 plewis  staff  340658 11 Oct 19:59 files/data/GlobAlbedo.2009.SW.gif
+</pre></div>
+</div>
+</div>
+<div class="section" id="a3-2-3-answer-make-the-movie">
+<h3>A3.2.3 Answer: Make the movie</h3>
+<p>You could just type the command at the unix prompt ... but to do it
+using a <tt class="docutils literal"><span class="pre">system</span></tt> call from within Python, e.g.:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c"># this is quite a neat way of generating the string for the input files</span>
+<span class="n">out_file</span> <span class="o">=</span> <span class="s">&#39;files/data/GlobAlbedo.</span><span class="si">%d</span><span class="s">.SW.1.gif&#39;</span><span class="o">%</span><span class="n">year</span>
+<span class="n">in_files</span> <span class="o">=</span> <span class="n">out_file</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;.SW.1.gif&#39;</span><span class="p">,</span><span class="s">&#39;??.gif&#39;</span><span class="p">)</span>
+
+<span class="n">cmd</span> <span class="o">=</span> <span class="s">&#39;convert -delay 100 -loop 0 </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">in_files</span><span class="p">,</span><span class="n">out_file</span><span class="p">)</span>
+<span class="c"># check the cmd is ok</span>
+<span class="k">print</span> <span class="n">cmd</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>convert -delay 100 -loop 0 files/data/GlobAlbedo.2009??.gif files/data/GlobAlbedo.2009.SW.1.gif
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># good ... so now run it</span>
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">0</span>
+</pre></div>
+</div>
+<div class="figure">
+<img alt="" src="Chapter3_Scientific_Numerical_Python/files/data/GlobAlbedo.2009.SW.1.gif" />
+</div>
+<p>To view the animated gif you have generated, open it in a browser.</p>
+</div>
+</div>
+<div class="section" id="e3-3-exercise-3d-masked-array">
+<h2>E3.3 Exercise: 3D Masked Array</h2>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">netCDF4</span> <span class="kn">import</span> <span class="n">Dataset</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="n">root</span> <span class="o">=</span> <span class="s">&#39;files/data/&#39;</span>
+<span class="n">year</span> <span class="o">=</span> <span class="mi">2009</span>
+
+<span class="c"># which months?</span>
+<span class="n">months</span> <span class="o">=</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">13</span><span class="p">)</span>
+
+<span class="c"># empty list</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c"># loop over month</span>
+<span class="c"># use enumerate so we have an index counter</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">month</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">months</span><span class="p">):</span>
+    <span class="c"># this then is the file we want</span>
+    <span class="n">local_file</span> <span class="o">=</span> <span class="n">root</span> <span class="o">+</span> <span class="s">&#39;GlobAlbedo.</span><span class="si">%d%02d</span><span class="s">.mosaic.5.nc&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">month</span><span class="p">)</span>
+
+    <span class="c"># load the netCDF data from the file local_file</span>
+    <span class="n">nc</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">local_file</span><span class="p">,</span><span class="s">&#39;r&#39;</span><span class="p">)</span>
+    <span class="c"># append what we read to the list called data</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">nc</span><span class="o">.</span><span class="n">variables</span><span class="p">[</span><span class="s">&#39;DHR_SW&#39;</span><span class="p">]))</span>
+
+<span class="c"># convert data to a numpy array (its a list of arrays at the moment)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>N.B. Do this exercise before proceeding to the next section.</p>
+<p><strong>Taking the code above as a starting point, generate a masked array of
+the GlobAlbedo dataset for the year 2009.</strong></p>
+</div>
+<div class="section" id="a3-3-answer-3d-masked-array">
+<h2>A3.3 Answer: 3D Masked Array</h2>
+<p>To recap, to make a masked array, we use some code such as:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy.ma</span> <span class="kn">as</span> <span class="nn">ma</span>
+
+<span class="n">band</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">nc</span><span class="o">.</span><span class="n">variables</span><span class="p">[</span><span class="s">&#39;DHR_SW&#39;</span><span class="p">])</span>
+
+<span class="n">masked_band</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">band</span><span class="p">,</span><span class="n">mask</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">band</span><span class="p">))</span>
+<span class="k">print</span> <span class="n">masked_band</span><span class="o">.</span><span class="n">mask</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>[[ True  True  True ...,  True  True  True]
+ [ True  True  True ...,  True  True  True]
+ [ True  True  True ...,  True  True  True]
+ ...,
+ [False False False ..., False False False]
+ [False False False ..., False False False]
+ [False False False ..., False False False]]
+</pre></div>
+</div>
+<p>So we can do this for each band as we loop over each month:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">netCDF4</span> <span class="kn">import</span> <span class="n">Dataset</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">numpy.ma</span> <span class="kn">as</span> <span class="nn">ma</span>
+
+<span class="n">root</span> <span class="o">=</span> <span class="s">&#39;files/data/&#39;</span>
+<span class="n">year</span> <span class="o">=</span> <span class="mi">2009</span>
+
+<span class="c"># which months?</span>
+<span class="n">months</span> <span class="o">=</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">13</span><span class="p">)</span>
+
+<span class="c"># empty list</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c"># loop over month</span>
+<span class="c"># use enumerate so we have an index counter</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">month</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">months</span><span class="p">):</span>
+    <span class="c"># this then is the file we want</span>
+    <span class="n">local_file</span> <span class="o">=</span> <span class="n">root</span> <span class="o">+</span> <span class="s">&#39;GlobAlbedo.</span><span class="si">%d%02d</span><span class="s">.mosaic.5.nc&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">month</span><span class="p">)</span>
+
+    <span class="c"># load the netCDF data from the file local_file</span>
+    <span class="n">nc</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">local_file</span><span class="p">,</span><span class="s">&#39;r&#39;</span><span class="p">)</span>
+    <span class="c"># load into the variable &#39;band&#39;</span>
+    <span class="n">band</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">nc</span><span class="o">.</span><span class="n">variables</span><span class="p">[</span><span class="s">&#39;DHR_SW&#39;</span><span class="p">])</span>
+    <span class="c"># convert to a masked array</span>
+    <span class="n">masked_band</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">band</span><span class="p">,</span><span class="n">mask</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">band</span><span class="p">))</span>
+    <span class="c"># append what we read to the list called data</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">masked_band</span><span class="p">)</span>
+
+<span class="c"># convert data to a numpy array (its a list of arrays at the moment)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>That&#8217;s a good start, but we used:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>at the end, which means that we have a 3D numpy array ... rather than a
+masked array:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+<span class="k">print</span> <span class="n">data</span><span class="o">.</span><span class="n">ndim</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>&lt;type &#39;numpy.ndarray&#39;&gt;
+(12, 360, 720)
+3
+</pre></div>
+</div>
+<p>so we need to replace this with a function to make it into a masked
+array:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">netCDF4</span> <span class="kn">import</span> <span class="n">Dataset</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">numpy.ma</span> <span class="kn">as</span> <span class="nn">ma</span>
+
+<span class="n">root</span> <span class="o">=</span> <span class="s">&#39;files/data/&#39;</span>
+<span class="n">year</span> <span class="o">=</span> <span class="mi">2009</span>
+
+<span class="c"># which months?</span>
+<span class="n">months</span> <span class="o">=</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">13</span><span class="p">)</span>
+
+<span class="c"># empty list</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c"># loop over month</span>
+<span class="c"># use enumerate so we have an index counter</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">month</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">months</span><span class="p">):</span>
+    <span class="c"># this then is the file we want</span>
+    <span class="n">local_file</span> <span class="o">=</span> <span class="n">root</span> <span class="o">+</span> <span class="s">&#39;GlobAlbedo.</span><span class="si">%d%02d</span><span class="s">.mosaic.5.nc&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">month</span><span class="p">)</span>
+
+    <span class="c"># load the netCDF data from the file local_file</span>
+    <span class="n">nc</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">local_file</span><span class="p">,</span><span class="s">&#39;r&#39;</span><span class="p">)</span>
+    <span class="c"># load into the variable &#39;band&#39;</span>
+    <span class="n">band</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">nc</span><span class="o">.</span><span class="n">variables</span><span class="p">[</span><span class="s">&#39;DHR_SW&#39;</span><span class="p">])</span>
+    <span class="c"># convert to a masked array</span>
+    <span class="n">masked_band</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">band</span><span class="p">,</span><span class="n">mask</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">band</span><span class="p">))</span>
+    <span class="c"># append what we read to the list called data</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">masked_band</span><span class="p">)</span>
+
+<span class="c"># convert data to a numpy array (its a list of arrays at the moment)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+<span class="k">print</span> <span class="n">data</span><span class="o">.</span><span class="n">ndim</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>&lt;class &#39;numpy.ma.core.MaskedArray&#39;&gt;
+(12, 360, 720)
+3
+</pre></div>
+</div>
+<p>we might notice that now, the data mask (<tt class="docutils literal"><span class="pre">data.mask</span></tt>) is a 3D mask:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="n">data</span><span class="o">.</span><span class="n">mask</span><span class="o">.</span><span class="n">shape</span>
+<span class="k">print</span> <span class="n">data</span><span class="o">.</span><span class="n">mask</span><span class="o">.</span><span class="n">ndim</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">360</span><span class="p">,</span> <span class="mi">720</span><span class="p">)</span>
+<span class="mi">3</span>
+</pre></div>
+</div>
+<p>and we might just check that the mask is the same for all months:</p>
+<p>First, lets sum the masks over axis 0 (i.e. over all months):</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="nb">sum</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">mask</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="k">print</span> <span class="nb">sum</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">(</span><span class="mi">360</span><span class="p">,</span> <span class="mi">720</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="nb">sum</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>[[12 12 12 ..., 12 12 12]
+ [12 12 12 ..., 12 12 12]
+ [12 12 12 ..., 12 12 12]
+ ...,
+ [ 0  0  0 ...,  0  0  0]
+ [ 0  0  0 ...,  0  0  0]
+ [ 0  0  0 ...,  0  0  0]]
+</pre></div>
+</div>
+<p>This should be 12 (where <tt class="docutils literal"><span class="pre">mask</span></tt> is <tt class="docutils literal"><span class="pre">True</span></tt>) or 0 (where mask is
+<tt class="docutils literal"><span class="pre">False</span></tt>). How can we chack that quickly?</p>
+<p>Fortunately, there is a convenient numpy function <tt class="docutils literal"><span class="pre">np.unique</span></tt> that
+will give you the unique values in an array:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="nb">sum</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">array</span><span class="p">([</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">12</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>The only values in here are 12 and 0, so the masks must be consistent!</p>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2014, Prof. P. Lewis.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>
