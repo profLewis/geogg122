@@ -397,7 +397,7 @@ type ``berlin%``: that represents the command line prompt), e.g.:
 
 | ``berlin% cd ~/DATA``
 |  ``berlin% git clone https://github.com/profLewis/geogg122.git``
-|  ``berlin% cd ~/Data/geogg122``
+|  ``berlin% cd ~/DATA/geogg122``
 
 This will create a directory ``~/Data/msc/geogg122`` which has the
 current versions of the notebooks for the course and associated files.
@@ -442,10 +442,10 @@ Using the course material
 
 Once you have copied the course material as described above (and have
 changed directory to where you have put the course (e.g.
-``~/Data/msc/geogg122-master`` or ``~/Data/msc/geogg122``) then ``cd``
-to the chapter you want, e.g.:
+``~/DATA/geogg122-master`` or ``~/DATA/geogg122``) then ``cd`` to the
+chapter you want, e.g.:
 
-``berlin% cd ~/Data/msc/geogg122/Chapter0_Introduction``
+``berlin% cd ~/DATA/geogg122/Chapter0_Introduction``
 
 and you can start the notebooks with:
 
@@ -496,15 +496,10 @@ the command ``ssh`` (or similar) to log on to the gateway machine
 
 This will normally be:
 
-``ssh -X username@shankly.geog.ucl.ac.uk``
+``ssh -Y username@shankly.geog.ucl.ac.uk``
 
 From there, you should log in (with ``ssh``) to another computer in the
 lab (or else everyone will be on the same computer).
 
-From OS X, you use:
-
-``ssh -Y username@shankly.geog.ucl.ac.uk``
-
-but then the usual ``-X`` option once you get on to shankly. An
-alternative gateway, if ``shankly`` is down or busy is
+An alternative gateway, if ``shankly`` is down or busy is
 ``lyon.geog.ucl.ac.uk``.

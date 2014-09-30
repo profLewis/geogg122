@@ -381,7 +381,7 @@ type <tt class="docutils literal"><span class="pre">berlin%</span></tt>: that re
 <div class="line"><tt class="docutils literal"><span class="pre">berlin%</span> <span class="pre">cd</span> <span class="pre">~/DATA</span></tt></div>
 <div class="line-block">
 <div class="line"><tt class="docutils literal"><span class="pre">berlin%</span> <span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/profLewis/geogg122.git</span></tt></div>
-<div class="line"><tt class="docutils literal"><span class="pre">berlin%</span> <span class="pre">cd</span> <span class="pre">~/Data/geogg122</span></tt></div>
+<div class="line"><tt class="docutils literal"><span class="pre">berlin%</span> <span class="pre">cd</span> <span class="pre">~/DATA/geogg122</span></tt></div>
 </div>
 </div>
 <p>This will create a directory <tt class="docutils literal"><span class="pre">~/Data/msc/geogg122</span></tt> which has the
@@ -419,9 +419,9 @@ in a browser (obviously changing the username and path as appropriate).</p>
 <h3>Using the course material<a class="headerlink" href="#using-the-course-material" title="Permalink to this headline">¶</a></h3>
 <p>Once you have copied the course material as described above (and have
 changed directory to where you have put the course (e.g.
-<tt class="docutils literal"><span class="pre">~/Data/msc/geogg122-master</span></tt> or <tt class="docutils literal"><span class="pre">~/Data/msc/geogg122</span></tt>) then <tt class="docutils literal"><span class="pre">cd</span></tt>
-to the chapter you want, e.g.:</p>
-<p><tt class="docutils literal"><span class="pre">berlin%</span> <span class="pre">cd</span> <span class="pre">~/Data/msc/geogg122/Chapter0_Introduction</span></tt></p>
+<tt class="docutils literal"><span class="pre">~/DATA/geogg122-master</span></tt> or <tt class="docutils literal"><span class="pre">~/DATA/geogg122</span></tt>) then <tt class="docutils literal"><span class="pre">cd</span></tt> to the
+chapter you want, e.g.:</p>
+<p><tt class="docutils literal"><span class="pre">berlin%</span> <span class="pre">cd</span> <span class="pre">~/DATA/geogg122/Chapter0_Introduction</span></tt></p>
 <p>and you can start the notebooks with:</p>
 <p><tt class="docutils literal"><span class="pre">berlin%</span> <span class="pre">ipython</span> <span class="pre">notebook</span></tt></p>
 <p>This should launch a web browser with the address
@@ -459,13 +459,10 @@ allow you to log on to the system.</p>
 the command <tt class="docutils literal"><span class="pre">ssh</span></tt> (or similar) to log on to the gateway machine
 <tt class="docutils literal"><span class="pre">shankly.geog.ucl.ac.uk</span></tt>:</p>
 <p>This will normally be:</p>
-<p><tt class="docutils literal"><span class="pre">ssh</span> <span class="pre">-X</span> <span class="pre">username&#64;shankly.geog.ucl.ac.uk</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">ssh</span> <span class="pre">-Y</span> <span class="pre">username&#64;shankly.geog.ucl.ac.uk</span></tt></p>
 <p>From there, you should log in (with <tt class="docutils literal"><span class="pre">ssh</span></tt>) to another computer in the
 lab (or else everyone will be on the same computer).</p>
-<p>From OS X, you use:</p>
-<p><tt class="docutils literal"><span class="pre">ssh</span> <span class="pre">-Y</span> <span class="pre">username&#64;shankly.geog.ucl.ac.uk</span></tt></p>
-<p>but then the usual <tt class="docutils literal"><span class="pre">-X</span></tt> option once you get on to shankly. An
-alternative gateway, if <tt class="docutils literal"><span class="pre">shankly</span></tt> is down or busy is
+<p>An alternative gateway, if <tt class="docutils literal"><span class="pre">shankly</span></tt> is down or busy is
 <tt class="docutils literal"><span class="pre">lyon.geog.ucl.ac.uk</span></tt>.</p>
 </div>
 </div>

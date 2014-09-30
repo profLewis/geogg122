@@ -1861,7 +1861,7 @@ div#notebook {
 <li><strong>using git</strong></li>
 </ol>
 <p>use the command <a href="http://en.wikipedia.org/wiki/Git_%28software%29">git</a>, if available:<br /> Create a place on the system that you want to work in (N.B., don't type <code>berlin%</code>: that represents the command line prompt), e.g.:</p>
-<p><code>berlin% cd ~/DATA</code><br /> <code>berlin% git clone https://github.com/profLewis/geogg122.git</code><br /> <code>berlin% cd ~/Data/geogg122</code></p>
+<p><code>berlin% cd ~/DATA</code><br /> <code>berlin% git clone https://github.com/profLewis/geogg122.git</code><br /> <code>berlin% cd ~/DATA/geogg122</code></p>
 <p>This will create a directory <code>~/Data/msc/geogg122</code> which has the current versions of the notebooks for the course and associated files.</p>
 <p>If the course notes change at all (e.g. are updated), you can update your copy with:</p>
 <p><code>berlin% git pull</code></p>
@@ -1901,8 +1901,8 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Once you have copied the course material as described above (and have changed directory to where you have put the course (e.g. <code>~/Data/msc/geogg122-master</code> or <code>~/Data/msc/geogg122</code>) then <code>cd</code> to the chapter you want, e.g.:</p>
-<p><code>berlin% cd ~/Data/msc/geogg122/Chapter0_Introduction</code></p>
+<p>Once you have copied the course material as described above (and have changed directory to where you have put the course (e.g. <code>~/DATA/geogg122-master</code> or <code>~/DATA/geogg122</code>) then <code>cd</code> to the chapter you want, e.g.:</p>
+<p><code>berlin% cd ~/DATA/geogg122/Chapter0_Introduction</code></p>
 <p>and you can start the notebooks with:</p>
 <p><code>berlin% ipython notebook</code></p>
 <p>This should launch a web browser with the address <code>http://127.0.0.1:8888/</code> or similar with links to the notebooks you have available.</p>
@@ -1959,11 +1959,9 @@ div#notebook {
 <p>Another approach is to use the <a href="http://www.ucl.ac.uk/isd/students/windows/wts/access/remote">UCL WTS</a> system, where you have access to some software called <code>exceed</code> to allow you to log on to the system.</p>
 <p>Using any of these (or other!) approaches, you want to be able to use the command <code>ssh</code> (or similar) to log on to the gateway machine <code>shankly.geog.ucl.ac.uk</code>:</p>
 <p>This will normally be:</p>
-<p><code>ssh -X username@shankly.geog.ucl.ac.uk</code></p>
-<p>From there, you should log in (with <code>ssh</code>) to another computer in the lab (or else everyone will be on the same computer).</p>
-<p>From OS X, you use:</p>
 <p><code>ssh -Y username@shankly.geog.ucl.ac.uk</code></p>
-<p>but then the usual <code>-X</code> option once you get on to shankly. An alternative gateway, if <code>shankly</code> is down or busy is <code>lyon.geog.ucl.ac.uk</code>.</p>
+<p>From there, you should log in (with <code>ssh</code>) to another computer in the lab (or else everyone will be on the same computer).</p>
+<p>An alternative gateway, if <code>shankly</code> is down or busy is <code>lyon.geog.ucl.ac.uk</code>.</p>
 </div>
 </div>
 </div>
