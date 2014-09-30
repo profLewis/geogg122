@@ -1,0 +1,1302 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Exercise 4.1 &mdash; GeogG122: Scientific Computing v&lt;release&gt; documentation</title>
+    
+    <link rel="stylesheet" href="../_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../_static/cloud.js"></script>
+    <link rel="top" title="GeogG122: Scientific Computing v&lt;release&gt; documentation" href="../index.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div class="relbar-top">
+        
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+    <li><a href="../index.html">geogg122</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="exercise-4-1">
+<h1>Exercise 4.1<a class="headerlink" href="#exercise-4-1" title="Permalink to this headline">¶</a></h1>
+<p>You are given the MODIS LAI data files for the year 2012 in the
+directory <tt class="docutils literal"><span class="pre">files/data</span></tt> for the UK (MODIS tile .</p>
+<p>Read the LAI datasets into a masked array, using QA bit 0 to mask the
+data (i.e. good quality data only) and generate a movie of LAI.</p>
+<div class="section" id="answer-4-1">
+<h2>Answer 4.1<a class="headerlink" href="#answer-4-1" title="Permalink to this headline">¶</a></h2>
+<p>You ought be getting familiar with this sort of problem, as it is very
+common.</p>
+<p>Since we have the code in the main notes to read a single data dataset:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">gdal</span> <span class="c"># Import GDAL library bindings</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="c"># The file that we shall be using</span>
+<span class="c"># Needs to be on current directory</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf&#39;</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="c"># g should now be a GDAL dataset, but if the file isn&#39;t found</span>
+<span class="c"># g will be none. Let&#39;s test this:</span>
+<span class="k">if</span> <span class="n">g</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;Problem opening file </span><span class="si">%s</span><span class="s">!&quot;</span> <span class="o">%</span> <span class="n">filename</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;File </span><span class="si">%s</span><span class="s"> opened fine&quot;</span> <span class="o">%</span> <span class="n">filename</span>
+
+
+<span class="n">subdatasets</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">GetSubDatasets</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">fname</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">subdatasets</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">name</span>
+    <span class="k">print</span> <span class="s">&quot;</span><span class="se">\t</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">fname</span>
+
+<span class="c"># Let&#39;s create a list with the selected layer names</span>
+<span class="n">selected_layers</span> <span class="o">=</span> <span class="p">[</span>  <span class="s">&quot;Lai_1km&quot;</span><span class="p">,</span> <span class="s">&quot;FparLai_QC&quot;</span> <span class="p">]</span>
+<span class="c"># We will store the data in a dictionary</span>
+<span class="c"># Initialise an empty dictionary</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="c"># for convenience, we will use string substitution to create a</span>
+<span class="c"># template for GDAL filenames, which we&#39;ll substitute on the fly:</span>
+<span class="n">file_template</span> <span class="o">=</span> <span class="s">&#39;HDF4_EOS:EOS_GRID:&quot;</span><span class="si">%s</span><span class="s">&quot;:MOD_Grid_MOD15A2:</span><span class="si">%s</span><span class="s">&#39;</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">layer</span> <span class="ow">in</span> <span class="nb">enumerate</span> <span class="p">(</span> <span class="n">selected_layers</span> <span class="p">):</span>
+    <span class="n">this_file</span> <span class="o">=</span> <span class="n">file_template</span> <span class="o">%</span> <span class="p">(</span> <span class="n">filename</span><span class="p">,</span> <span class="n">layer</span> <span class="p">)</span>
+    <span class="k">print</span> <span class="s">&quot;Opening Layer </span><span class="si">%d</span><span class="s">: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">this_file</span> <span class="p">)</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span> <span class="p">(</span> <span class="n">this_file</span> <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">g</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">IOError</span>
+    <span class="n">data</span><span class="p">[</span><span class="n">layer</span><span class="p">]</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&quot;</span><span class="se">\t</span><span class="s">&gt;&gt;&gt; Read </span><span class="si">%s</span><span class="s">!&quot;</span> <span class="o">%</span> <span class="n">layer</span>
+
+<span class="c"># scale the LAI</span>
+<span class="n">lai</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;Lai_1km&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.1</span>
+
+<span class="c"># pull out the QC</span>
+<span class="n">qc</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;FparLai_QC&#39;</span><span class="p">]</span>
+<span class="c"># find bit 0</span>
+<span class="n">qc</span> <span class="o">=</span> <span class="n">qc</span> <span class="o">&amp;</span> <span class="mi">1</span>
+
+<span class="c"># generate the masked array</span>
+<span class="n">laim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">array</span> <span class="p">(</span> <span class="n">lai</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">qc</span> <span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>File files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf opened fine
+[1200x1200] Fpar_1km MOD_Grid_MOD15A2 (8-bit unsigned integer)
+    HDF4_EOS:EOS_GRID:&quot;files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf&quot;:MOD_Grid_MOD15A2:Fpar_1km
+[1200x1200] Lai_1km MOD_Grid_MOD15A2 (8-bit unsigned integer)
+    HDF4_EOS:EOS_GRID:&quot;files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf&quot;:MOD_Grid_MOD15A2:Lai_1km
+[1200x1200] FparLai_QC MOD_Grid_MOD15A2 (8-bit unsigned integer)
+    HDF4_EOS:EOS_GRID:&quot;files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf&quot;:MOD_Grid_MOD15A2:FparLai_QC
+[1200x1200] FparExtra_QC MOD_Grid_MOD15A2 (8-bit unsigned integer)
+    HDF4_EOS:EOS_GRID:&quot;files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf&quot;:MOD_Grid_MOD15A2:FparExtra_QC
+[1200x1200] FparStdDev_1km MOD_Grid_MOD15A2 (8-bit unsigned integer)
+    HDF4_EOS:EOS_GRID:&quot;files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf&quot;:MOD_Grid_MOD15A2:FparStdDev_1km
+[1200x1200] LaiStdDev_1km MOD_Grid_MOD15A2 (8-bit unsigned integer)
+    HDF4_EOS:EOS_GRID:&quot;files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf&quot;:MOD_Grid_MOD15A2:LaiStdDev_1km
+Opening Layer 1: HDF4_EOS:EOS_GRID:&quot;files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf&quot;:MOD_Grid_MOD15A2:Lai_1km
+    &gt;&gt;&gt; Read Lai_1km!
+Opening Layer 2: HDF4_EOS:EOS_GRID:&quot;files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf&quot;:MOD_Grid_MOD15A2:FparLai_QC
+    &gt;&gt;&gt; Read FparLai_QC!
+</pre></div>
+</div>
+<p>We can use this as a function that reads a single dataset:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">read_modis_lai</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;  Read MODIS LAI data from filename</span>
+<span class="sd">         and return masked array</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">g</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="c"># g should now be a GDAL dataset, but if the file isn&#39;t found</span>
+    <span class="c"># g will be none. Let&#39;s test this:</span>
+    <span class="k">if</span> <span class="n">g</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;Problem opening file </span><span class="si">%s</span><span class="s">!&quot;</span> <span class="o">%</span> <span class="n">filename</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;File </span><span class="si">%s</span><span class="s"> opened fine&quot;</span> <span class="o">%</span> <span class="n">filename</span>
+
+
+    <span class="n">subdatasets</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">GetSubDatasets</span><span class="p">()</span>
+    <span class="c">#for fname, name in subdatasets:</span>
+        <span class="c">#print name</span>
+        <span class="c">#print &quot;\t&quot;, fname</span>
+
+    <span class="c"># Let&#39;s create a list with the selected layer names</span>
+    <span class="n">selected_layers</span> <span class="o">=</span> <span class="p">[</span>  <span class="s">&quot;Lai_1km&quot;</span><span class="p">,</span> <span class="s">&quot;FparLai_QC&quot;</span> <span class="p">]</span>
+    <span class="c"># We will store the data in a dictionary</span>
+    <span class="c"># Initialise an empty dictionary</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="c"># for convenience, we will use string substitution to create a</span>
+    <span class="c"># template for GDAL filenames, which we&#39;ll substitute on the fly:</span>
+    <span class="n">file_template</span> <span class="o">=</span> <span class="s">&#39;HDF4_EOS:EOS_GRID:&quot;</span><span class="si">%s</span><span class="s">&quot;:MOD_Grid_MOD15A2:</span><span class="si">%s</span><span class="s">&#39;</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">layer</span> <span class="ow">in</span> <span class="nb">enumerate</span> <span class="p">(</span> <span class="n">selected_layers</span> <span class="p">):</span>
+        <span class="n">this_file</span> <span class="o">=</span> <span class="n">file_template</span> <span class="o">%</span> <span class="p">(</span> <span class="n">filename</span><span class="p">,</span> <span class="n">layer</span> <span class="p">)</span>
+        <span class="c">#print &quot;Opening Layer %d: %s&quot; % (i+1, this_file )</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span> <span class="p">(</span> <span class="n">this_file</span> <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">g</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">IOError</span>
+        <span class="n">data</span><span class="p">[</span><span class="n">layer</span><span class="p">]</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">()</span>
+        <span class="c">#print &quot;\t&gt;&gt;&gt; Read %s!&quot; % layer</span>
+
+    <span class="c"># scale the LAI</span>
+    <span class="n">lai</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;Lai_1km&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.1</span>
+
+    <span class="c"># pull out the QC</span>
+    <span class="n">qc</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;FparLai_QC&#39;</span><span class="p">]</span>
+    <span class="c"># find bit 0</span>
+    <span class="n">qc</span> <span class="o">=</span> <span class="n">qc</span> <span class="o">&amp;</span> <span class="mi">1</span>
+
+    <span class="c"># generate the masked array</span>
+    <span class="n">laim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">array</span> <span class="p">(</span> <span class="n">lai</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">qc</span> <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">laim</span>
+</pre></div>
+</div>
+<p>and then loop:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">glob</span>
+
+<span class="n">year</span> <span class="o">=</span> <span class="mi">2012</span>
+<span class="n">tile</span> <span class="o">=</span> <span class="s">&#39;h17v03&#39;</span>
+<span class="n">files</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">&#39;files/data/MCD15A2.A</span><span class="si">%d</span><span class="s">*.</span><span class="si">%s</span><span class="s">.*.hdf&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">tile</span><span class="p">)))</span>
+
+<span class="n">lai</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+    <span class="n">lai</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">read_modis_lai</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+
+<span class="c"># force it to be a masked array</span>
+<span class="n">lai</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">lai</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>File files/data/MCD15A2.A2012017.h17v03.005.2012026072526.hdf opened fine
+File files/data/MCD15A2.A2012025.h17v03.005.2012052124839.hdf opened fine
+File files/data/MCD15A2.A2012033.h17v03.005.2012042060649.hdf opened fine
+File files/data/MCD15A2.A2012041.h17v03.005.2012050092057.hdf opened fine
+File files/data/MCD15A2.A2012049.h17v03.005.2012068144447.hdf opened fine
+File files/data/MCD15A2.A2012057.h17v03.005.2012068140544.hdf opened fine
+File files/data/MCD15A2.A2012065.h17v03.005.2012075021749.hdf opened fine
+File files/data/MCD15A2.A2012073.h17v03.005.2012083010304.hdf opened fine
+File files/data/MCD15A2.A2012081.h17v03.005.2012090131602.hdf opened fine
+File files/data/MCD15A2.A2012089.h17v03.005.2012107201245.hdf opened fine
+File files/data/MCD15A2.A2012097.h17v03.005.2012108125047.hdf opened fine
+File files/data/MCD15A2.A2012105.h17v03.005.2012116125519.hdf opened fine
+File files/data/MCD15A2.A2012113.h17v03.005.2012122072153.hdf opened fine
+File files/data/MCD15A2.A2012121.h17v03.005.2012137221611.hdf opened fine
+File files/data/MCD15A2.A2012129.h17v03.005.2012142001241.hdf opened fine
+File files/data/MCD15A2.A2012137.h17v03.005.2012153021910.hdf opened fine
+File files/data/MCD15A2.A2012145.h17v03.005.2012160130927.hdf opened fine
+File files/data/MCD15A2.A2012153.h17v03.005.2012166161748.hdf opened fine
+File files/data/MCD15A2.A2012161.h17v03.005.2012170080216.hdf opened fine
+File files/data/MCD15A2.A2012169.h17v03.005.2012181134242.hdf opened fine
+File files/data/MCD15A2.A2012177.h17v03.005.2012188150145.hdf opened fine
+File files/data/MCD15A2.A2012185.h17v03.005.2012208181105.hdf opened fine
+File files/data/MCD15A2.A2012193.h17v03.005.2012202144013.hdf opened fine
+File files/data/MCD15A2.A2012201.h17v03.005.2012215131931.hdf opened fine
+File files/data/MCD15A2.A2012209.h17v03.005.2012219144450.hdf opened fine
+File files/data/MCD15A2.A2012217.h17v03.005.2012228215213.hdf opened fine
+File files/data/MCD15A2.A2012225.h17v03.005.2012234105932.hdf opened fine
+File files/data/MCD15A2.A2012233.h17v03.005.2012242093511.hdf opened fine
+File files/data/MCD15A2.A2012241.h17v03.005.2012250182515.hdf opened fine
+File files/data/MCD15A2.A2012249.h17v03.005.2012261231425.hdf opened fine
+File files/data/MCD15A2.A2012257.h17v03.005.2012270114223.hdf opened fine
+File files/data/MCD15A2.A2012265.h17v03.005.2012276134731.hdf opened fine
+File files/data/MCD15A2.A2012273.h17v03.005.2012297134400.hdf opened fine
+File files/data/MCD15A2.A2012281.h17v03.005.2012297135831.hdf opened fine
+File files/data/MCD15A2.A2012289.h17v03.005.2012299194634.hdf opened fine
+File files/data/MCD15A2.A2012297.h17v03.005.2012306163257.hdf opened fine
+File files/data/MCD15A2.A2012305.h17v03.005.2012314140451.hdf opened fine
+File files/data/MCD15A2.A2012313.h17v03.005.2012322095802.hdf opened fine
+File files/data/MCD15A2.A2012321.h17v03.005.2012335133638.hdf opened fine
+File files/data/MCD15A2.A2012329.h17v03.005.2012340181739.hdf opened fine
+File files/data/MCD15A2.A2012337.h17v03.005.2012346165133.hdf opened fine
+File files/data/MCD15A2.A2012345.h17v03.005.2012356133200.hdf opened fine
+File files/data/MCD15A2.A2012353.h17v03.005.2012363125132.hdf opened fine
+File files/data/MCD15A2.A2012361.h17v03.005.2013007202756.hdf opened fine
+File files/data/MCD15A2.A2012001.h17v03.005.2012017211237.hdf opened fine
+File files/data/MCD15A2.A2012009.h17v03.005.2012019044037.hdf opened fine
+File files/data/MCD15A2.A2012017.h17v03.005.2012026072526.hdf opened fine
+File files/data/MCD15A2.A2012025.h17v03.005.2012052124839.hdf opened fine
+File files/data/MCD15A2.A2012033.h17v03.005.2012042060649.hdf opened fine
+File files/data/MCD15A2.A2012041.h17v03.005.2012050092057.hdf opened fine
+File files/data/MCD15A2.A2012049.h17v03.005.2012068144447.hdf opened fine
+File files/data/MCD15A2.A2012057.h17v03.005.2012068140544.hdf opened fine
+File files/data/MCD15A2.A2012065.h17v03.005.2012075021749.hdf opened fine
+File files/data/MCD15A2.A2012073.h17v03.005.2012083010304.hdf opened fine
+File files/data/MCD15A2.A2012081.h17v03.005.2012090131602.hdf opened fine
+File files/data/MCD15A2.A2012089.h17v03.005.2012107201245.hdf opened fine
+File files/data/MCD15A2.A2012097.h17v03.005.2012108125047.hdf opened fine
+File files/data/MCD15A2.A2012105.h17v03.005.2012116125519.hdf opened fine
+File files/data/MCD15A2.A2012113.h17v03.005.2012122072153.hdf opened fine
+File files/data/MCD15A2.A2012121.h17v03.005.2012137221611.hdf opened fine
+File files/data/MCD15A2.A2012129.h17v03.005.2012142001241.hdf opened fine
+File files/data/MCD15A2.A2012137.h17v03.005.2012153021910.hdf opened fine
+File files/data/MCD15A2.A2012145.h17v03.005.2012160130927.hdf opened fine
+File files/data/MCD15A2.A2012153.h17v03.005.2012166161748.hdf opened fine
+File files/data/MCD15A2.A2012161.h17v03.005.2012170080216.hdf opened fine
+File files/data/MCD15A2.A2012169.h17v03.005.2012181134242.hdf opened fine
+File files/data/MCD15A2.A2012177.h17v03.005.2012188150145.hdf opened fine
+File files/data/MCD15A2.A2012185.h17v03.005.2012208181105.hdf opened fine
+File files/data/MCD15A2.A2012193.h17v03.005.2012202144013.hdf opened fine
+File files/data/MCD15A2.A2012201.h17v03.005.2012215131931.hdf opened fine
+File files/data/MCD15A2.A2012209.h17v03.005.2012219144450.hdf opened fine
+File files/data/MCD15A2.A2012217.h17v03.005.2012228215213.hdf opened fine
+File files/data/MCD15A2.A2012225.h17v03.005.2012234105932.hdf opened fine
+File files/data/MCD15A2.A2012233.h17v03.005.2012242093511.hdf opened fine
+File files/data/MCD15A2.A2012241.h17v03.005.2012250182515.hdf opened fine
+File files/data/MCD15A2.A2012249.h17v03.005.2012261231425.hdf opened fine
+File files/data/MCD15A2.A2012257.h17v03.005.2012270114223.hdf opened fine
+File files/data/MCD15A2.A2012265.h17v03.005.2012276134731.hdf opened fine
+File files/data/MCD15A2.A2012273.h17v03.005.2012297134400.hdf opened fine
+File files/data/MCD15A2.A2012281.h17v03.005.2012297135831.hdf opened fine
+File files/data/MCD15A2.A2012289.h17v03.005.2012299194634.hdf opened fine
+File files/data/MCD15A2.A2012297.h17v03.005.2012306163257.hdf opened fine
+File files/data/MCD15A2.A2012305.h17v03.005.2012314140451.hdf opened fine
+File files/data/MCD15A2.A2012313.h17v03.005.2012322095802.hdf opened fine
+File files/data/MCD15A2.A2012321.h17v03.005.2012335133638.hdf opened fine
+File files/data/MCD15A2.A2012329.h17v03.005.2012340181739.hdf opened fine
+File files/data/MCD15A2.A2012337.h17v03.005.2012346165133.hdf opened fine
+File files/data/MCD15A2.A2012345.h17v03.005.2012356133200.hdf opened fine
+File files/data/MCD15A2.A2012353.h17v03.005.2012363125132.hdf opened fine
+File files/data/MCD15A2.A2012361.h17v03.005.2013007202756.hdf opened fine
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># plot the data</span>
+<span class="kn">import</span> <span class="nn">pylab</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="c"># work out a consistent scaling</span>
+<span class="n">lai_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">lai</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">f</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">files</span><span class="p">):</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">lai</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">interpolation</span><span class="o">=</span><span class="s">&#39;none&#39;</span><span class="p">,</span><span class="n">vmin</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span><span class="n">vmax</span><span class="o">=</span><span class="n">lai_max</span><span class="o">*</span><span class="mf">0.75</span><span class="p">)</span>
+    <span class="c"># remember filenames of the form</span>
+    <span class="c"># files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf&#39;</span>
+    <span class="n">file_id</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">5</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="k">print</span> <span class="n">file_id</span>
+    <span class="c"># plot a jpg</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">file_id</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s">&#39;files/images/lai_uk_</span><span class="si">%s</span><span class="s">.jpg&#39;</span><span class="o">%</span><span class="n">file_id</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">2012001</span>
+<span class="mi">2012009</span>
+<span class="mi">2012017</span>
+<span class="mi">2012025</span>
+<span class="mi">2012033</span>
+<span class="mi">2012041</span>
+<span class="mi">2012049</span>
+<span class="mi">2012057</span>
+<span class="mi">2012065</span>
+<span class="mi">2012073</span>
+<span class="mi">2012081</span>
+<span class="mi">2012089</span>
+<span class="mi">2012097</span>
+<span class="mi">2012105</span>
+<span class="mi">2012113</span>
+<span class="mi">2012121</span>
+<span class="mi">2012129</span>
+<span class="mi">2012137</span>
+<span class="mi">2012145</span>
+<span class="mi">2012153</span>
+<span class="mi">2012161</span>
+<span class="mi">2012169</span>
+<span class="mi">2012177</span>
+<span class="mi">2012185</span>
+<span class="mi">2012193</span>
+<span class="mi">2012201</span>
+<span class="mi">2012209</span>
+<span class="mi">2012217</span>
+<span class="mi">2012225</span>
+<span class="mi">2012233</span>
+<span class="mi">2012241</span>
+<span class="mi">2012249</span>
+<span class="mi">2012257</span>
+<span class="mi">2012265</span>
+<span class="mi">2012273</span>
+<span class="mi">2012281</span>
+<span class="mi">2012289</span>
+<span class="mi">2012297</span>
+<span class="mi">2012305</span>
+<span class="mi">2012313</span>
+<span class="mi">2012321</span>
+<span class="mi">2012329</span>
+<span class="mi">2012337</span>
+<span class="mi">2012345</span>
+<span class="mi">2012353</span>
+<span class="mi">2012361</span>
+<span class="mi">2012001</span>
+<span class="mi">2012009</span>
+<span class="mi">2012017</span>
+<span class="mi">2012025</span>
+<span class="mi">2012033</span>
+<span class="mi">2012041</span>
+<span class="mi">2012049</span>
+<span class="mi">2012057</span>
+<span class="mi">2012065</span>
+<span class="mi">2012073</span>
+<span class="mi">2012081</span>
+<span class="mi">2012089</span>
+<span class="mi">2012097</span>
+<span class="mi">2012105</span>
+<span class="mi">2012113</span>
+<span class="mi">2012121</span>
+<span class="mi">2012129</span>
+<span class="mi">2012137</span>
+<span class="mi">2012145</span>
+<span class="mi">2012153</span>
+<span class="mi">2012161</span>
+<span class="mi">2012169</span>
+<span class="mi">2012177</span>
+<span class="mi">2012185</span>
+<span class="mi">2012193</span>
+<span class="mi">2012201</span>
+<span class="mi">2012209</span>
+<span class="mi">2012217</span>
+<span class="mi">2012225</span>
+<span class="mi">2012233</span>
+<span class="mi">2012241</span>
+<span class="mi">2012249</span>
+<span class="mi">2012257</span>
+<span class="mi">2012265</span>
+<span class="mi">2012273</span>
+<span class="mi">2012281</span>
+<span class="mi">2012289</span>
+<span class="mi">2012297</span>
+<span class="mi">2012305</span>
+<span class="mi">2012313</span>
+<span class="mi">2012321</span>
+<span class="mi">2012329</span>
+<span class="mi">2012337</span>
+<span class="mi">2012345</span>
+<span class="mi">2012353</span>
+<span class="mi">2012361</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># now make a movie ...</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">cmd</span> <span class="o">=</span> <span class="s">&#39;convert -delay 100 -loop 0 files/images/lai_uk_*.jpg files/images/lai_uk2.gif&#39;</span>
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">0</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">0</span>
+</pre></div>
+</div>
+<div class="figure">
+<img alt="" src="Chapter4_GDAL/files/images/lai_uk02.gif" />
+</div>
+</div>
+</div>
+<div class="section" id="exercise-4-2-a-different-dataset">
+<h1>Exercise 4.2: A Different Dataset<a class="headerlink" href="#exercise-4-2-a-different-dataset" title="Permalink to this headline">¶</a></h1>
+<p>We have now dowloaded a different dataset, the <a class="reference external" href="http://www.icess.ucsb.edu/modis/SnowUsrGuide/usrguide_1dtil.html">MOD10A
+product</a>,
+which is the 500 m MODIS daily snow cover product, over the UK.</p>
+<p>This is a good opportunity to see if you can apply what was learned
+above about interpreting QC information and using <tt class="docutils literal"><span class="pre">gdal</span></tt> to examine a
+dataset.</p>
+<p>If you examine the <a class="reference external" href="http://nsidc.org/data/docs/daac/modis_v5/mod10a1_modis_terra_snow_daily_global_500m_grid.gd.html">data description
+page</a>,
+you will see that the data are in HDF EOS format (the same as the LAI
+product).</p>
+<div class="section" id="e4-2-1-download">
+<h2>E4.2.1 Download<a class="headerlink" href="#e4-2-1-download" title="Permalink to this headline">¶</a></h2>
+<div class="code python highlight-python"><div class="highlight"><pre>tile=h17v03
+year=2012
+type=MOST
+month=02
+
+file=robot_snow.${year}_${type}_${tile}_${month}.txt
+
+grep $tile &lt; files/data/robot_snow.$year.txt | grep $type | grep &quot;${year}\.${month}&quot; &gt; files/data/$file
+
+wc -l files/data/$file
+
+# cd temporarily to the local directory
+pushd files/data
+# -nc : no clobber : dont download if its there already
+# -nH --cut-dirs=3 : ignore the directories
+wget -nc -i $file -nH --cut-dirs=3
+# cd back again
+popd
+echo $file
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>29 files/data/robot_snow.2012_MOST_h17v03_02.txt
+~/p/geogg122_local/geogg122/Chapter4_GDAL/files/data ~/p/geogg122_local/geogg122/Chapter4_GDAL
+~/p/geogg122_local/geogg122/Chapter4_GDAL
+robot_snow.2012_MOST_h17v03_02.txt
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>Exception in thread Thread-2:
+Traceback (most recent call last):
+  File &quot;/opt/anaconda/lib/python2.7/threading.py&quot;, line 808, in __bootstrap_inner
+    self.run()
+  File &quot;/opt/anaconda/lib/python2.7/site-packages/IPython/kernel/zmq/heartbeat.py&quot;, line 55, in run
+    zmq.device(zmq.FORWARDER, self.socket, self.socket)
+  File &quot;device.pyx&quot;, line 55, in zmq.core.device.device (zmq/core/device.c:854)
+ZMQError: Interrupted system call
+
+File `MOD10A1.A2012032.h17v03.005.2012046141710.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012033.h17v03.005.2012035071148.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012034.h17v03.005.2012036060335.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012035.h17v03.005.2012037061127.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012036.h17v03.005.2012038044224.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012037.h17v03.005.2012039055929.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012038.h17v03.005.2012040045622.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012039.h17v03.005.2012041055153.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012040.h17v03.005.2012042055706.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012041.h17v03.005.2012045014038.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012042.h17v03.005.2012045024036.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012043.h17v03.005.2012045091534.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012044.h17v03.005.2012046060303.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012045.h17v03.005.2012047061553.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012046.h17v03.005.2012048071318.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012047.h17v03.005.2012049053946.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012048.h17v03.005.2012050063219.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012049.h17v03.005.2012051070019.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012050.h17v03.005.2012052062212.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012051.h17v03.005.2012053064001.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012052.h17v03.005.2012054062116.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012053.h17v03.005.2012056015333.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012054.h17v03.005.2012062191100.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012055.h17v03.005.2012057063901.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012056.h17v03.005.2012058061115.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012057.h17v03.005.2012059062619.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012058.h17v03.005.2012060061357.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012059.h17v03.005.2012061063515.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012060.h17v03.005.2012062064750.hdf&#39; already there; not retrieving.
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>29 files/data/robot_snow.2012_MOST_h17v03_02.txt
+~/p/geogg122_local/geogg122/Chapter4_GDAL/files/data ~/p/geogg122_local/geogg122/Chapter4_GDAL
+~/p/geogg122_local/geogg122/Chapter4_GDAL
+robot_snow.2012_MOST_h17v03_02.txt
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>File `MOD10A1.A2012032.h17v03.005.2012046141710.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012033.h17v03.005.2012035071148.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012034.h17v03.005.2012036060335.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012035.h17v03.005.2012037061127.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012036.h17v03.005.2012038044224.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012037.h17v03.005.2012039055929.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012038.h17v03.005.2012040045622.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012039.h17v03.005.2012041055153.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012040.h17v03.005.2012042055706.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012041.h17v03.005.2012045014038.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012042.h17v03.005.2012045024036.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012043.h17v03.005.2012045091534.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012044.h17v03.005.2012046060303.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012045.h17v03.005.2012047061553.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012046.h17v03.005.2012048071318.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012047.h17v03.005.2012049053946.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012048.h17v03.005.2012050063219.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012049.h17v03.005.2012051070019.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012050.h17v03.005.2012052062212.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012051.h17v03.005.2012053064001.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012052.h17v03.005.2012054062116.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012053.h17v03.005.2012056015333.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012054.h17v03.005.2012062191100.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012055.h17v03.005.2012057063901.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012056.h17v03.005.2012058061115.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012057.h17v03.005.2012059062619.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012058.h17v03.005.2012060061357.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012059.h17v03.005.2012061063515.hdf&#39; already there; not retrieving.
+File `MOD10A1.A2012060.h17v03.005.2012062064750.hdf&#39; already there; not retrieving.
+</pre></div>
+</div>
+</div>
+<div class="section" id="e4-2-2-explore">
+<h2>E4.2.2 Explore<a class="headerlink" href="#e4-2-2-explore" title="Permalink to this headline">¶</a></h2>
+<p>We explore the dataset in the same way as above:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># how to find out which datasets are in the file</span>
+
+<span class="kn">import</span> <span class="nn">gdal</span> <span class="c"># Import GDAL library bindings</span>
+
+<span class="c"># The file that we shall be using</span>
+<span class="c"># Needs to be on current directory</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;files/data/MOD10A1.A2012060.h17v03.005.2012062064750.hdf&#39;</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="c"># g should now be a GDAL dataset, but if the file isn&#39;t found</span>
+<span class="c"># g will be none. Let&#39;s test this:</span>
+<span class="k">if</span> <span class="n">g</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;Problem opening file </span><span class="si">%s</span><span class="s">!&quot;</span> <span class="o">%</span> <span class="n">filename</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;File </span><span class="si">%s</span><span class="s"> opened fine&quot;</span> <span class="o">%</span> <span class="n">filename</span>
+
+
+<span class="n">subdatasets</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">GetSubDatasets</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">fname</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">subdatasets</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">name</span>
+    <span class="k">print</span> <span class="s">&quot;</span><span class="se">\t</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">fname</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>File files/data/MOD10A1.A2012060.h17v03.005.2012062064750.hdf opened fine
+[2400x2400] Snow_Cover_Daily_Tile MOD_Grid_Snow_500m (8-bit unsigned integer)
+    HDF4_EOS:EOS_GRID:&quot;files/data/MOD10A1.A2012060.h17v03.005.2012062064750.hdf&quot;:MOD_Grid_Snow_500m:Snow_Cover_Daily_Tile
+[2400x2400] Snow_Spatial_QA MOD_Grid_Snow_500m (8-bit unsigned integer)
+    HDF4_EOS:EOS_GRID:&quot;files/data/MOD10A1.A2012060.h17v03.005.2012062064750.hdf&quot;:MOD_Grid_Snow_500m:Snow_Spatial_QA
+[2400x2400] Snow_Albedo_Daily_Tile MOD_Grid_Snow_500m (8-bit unsigned integer)
+    HDF4_EOS:EOS_GRID:&quot;files/data/MOD10A1.A2012060.h17v03.005.2012062064750.hdf&quot;:MOD_Grid_Snow_500m:Snow_Albedo_Daily_Tile
+[2400x2400] Fractional_Snow_Cover MOD_Grid_Snow_500m (8-bit unsigned integer)
+    HDF4_EOS:EOS_GRID:&quot;files/data/MOD10A1.A2012060.h17v03.005.2012062064750.hdf&quot;:MOD_Grid_Snow_500m:Fractional_Snow_Cover
+File files/data/MOD10A1.A2012060.h17v03.005.2012062064750.hdf opened fine
+[2400x2400] Snow_Cover_Daily_Tile MOD_Grid_Snow_500m (8-bit unsigned integer)
+    HDF4_EOS:EOS_GRID:&quot;files/data/MOD10A1.A2012060.h17v03.005.2012062064750.hdf&quot;:MOD_Grid_Snow_500m:Snow_Cover_Daily_Tile
+[2400x2400] Snow_Spatial_QA MOD_Grid_Snow_500m (8-bit unsigned integer)
+    HDF4_EOS:EOS_GRID:&quot;files/data/MOD10A1.A2012060.h17v03.005.2012062064750.hdf&quot;:MOD_Grid_Snow_500m:Snow_Spatial_QA
+[2400x2400] Snow_Albedo_Daily_Tile MOD_Grid_Snow_500m (8-bit unsigned integer)
+    HDF4_EOS:EOS_GRID:&quot;files/data/MOD10A1.A2012060.h17v03.005.2012062064750.hdf&quot;:MOD_Grid_Snow_500m:Snow_Albedo_Daily_Tile
+[2400x2400] Fractional_Snow_Cover MOD_Grid_Snow_500m (8-bit unsigned integer)
+    HDF4_EOS:EOS_GRID:&quot;files/data/MOD10A1.A2012060.h17v03.005.2012062064750.hdf&quot;:MOD_Grid_Snow_500m:Fractional_Snow_Cover
+</pre></div>
+</div>
+</div>
+<div class="section" id="e4-3-3-read-a-dataset">
+<h2>E4.3.3 Read a dataset<a class="headerlink" href="#e4-3-3-read-a-dataset" title="Permalink to this headline">¶</a></h2>
+<p>This is very nearly the same as the LAI dataset reading.</p>
+<p>We need obviously to select a different layer name.</p>
+<p>We should also notice that the <tt class="docutils literal"><span class="pre">file_template</span></tt> will be slightly
+different (look at the list of subsets above).</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># How to access specific datasets in gdal</span>
+
+<span class="c"># Let&#39;s create a list with the selected layer names</span>
+<span class="n">selected_layers</span> <span class="o">=</span> <span class="p">[</span>  <span class="s">&quot;Fractional_Snow_Cover&quot;</span> <span class="p">]</span>
+
+<span class="c"># We will store the data in a dictionary</span>
+<span class="c"># Initialise an empty dictionary</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="c"># for convenience, we will use string substitution to create a</span>
+<span class="c"># template for GDAL filenames, which we&#39;ll substitute on the fly:</span>
+<span class="n">file_template</span> <span class="o">=</span> <span class="s">&#39;HDF4_EOS:EOS_GRID:&quot;</span><span class="si">%s</span><span class="s">&quot;:MOD_Grid_Snow_500m:</span><span class="si">%s</span><span class="s">&#39;</span>
+<span class="c"># This has two substitutions (the %s parts) which will refer to:</span>
+<span class="c"># - the filename</span>
+<span class="c"># - the data layer</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">layer</span> <span class="ow">in</span> <span class="nb">enumerate</span> <span class="p">(</span> <span class="n">selected_layers</span> <span class="p">):</span>
+    <span class="n">this_file</span> <span class="o">=</span> <span class="n">file_template</span> <span class="o">%</span> <span class="p">(</span> <span class="n">filename</span><span class="p">,</span> <span class="n">layer</span> <span class="p">)</span>
+    <span class="k">print</span> <span class="s">&quot;Opening Layer </span><span class="si">%d</span><span class="s">: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">this_file</span> <span class="p">)</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span> <span class="p">(</span> <span class="n">this_file</span> <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">g</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">IOError</span>
+    <span class="n">data</span><span class="p">[</span><span class="n">layer</span><span class="p">]</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&quot;</span><span class="se">\t</span><span class="s">&gt;&gt;&gt; Read </span><span class="si">%s</span><span class="s">!&quot;</span> <span class="o">%</span> <span class="n">layer</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>Opening Layer 1: HDF4_EOS:EOS_GRID:&quot;files/data/MOD10A1.A2012060.h17v03.005.2012062064750.hdf&quot;:MOD_Grid_Snow_500m:Fractional_Snow_Cover
+    &gt;&gt;&gt; Read Fractional_Snow_Cover!
+Opening Layer 1: HDF4_EOS:EOS_GRID:&quot;files/data/MOD10A1.A2012060.h17v03.005.2012062064750.hdf&quot;:MOD_Grid_Snow_500m:Fractional_Snow_Cover
+    &gt;&gt;&gt; Read Fractional_Snow_Cover!
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&quot;Fractional_Snow_Cover&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&#39;</span><span class="si">% s</span><span class="s">now cover&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>&lt;matplotlib.text.Text at 0x5419ca90&gt;
+</pre></div>
+</div>
+<img alt="../_images/answers_22_1.png" src="../_images/answers_22_1.png" />
+<div class="highlight-python"><div class="highlight"><pre>&lt;matplotlib.text.Text at 0x5c29a310&gt;
+</pre></div>
+</div>
+<img alt="../_images/answers_22_3.png" src="../_images/answers_22_3.png" />
+</div>
+<div class="section" id="e4-3-4-water-mask">
+<h2>E4.3.4 Water mask<a class="headerlink" href="#e4-3-4-water-mask" title="Permalink to this headline">¶</a></h2>
+<p>The data description page tells us that values of 237 239 will indicate
+whether the data are ocean or inland water bodies. These are what you
+should use to build the water mask.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">snow</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&quot;Fractional_Snow_Cover&quot;</span><span class="p">]</span>
+
+<span class="n">water</span> <span class="o">=</span>  <span class="p">(</span><span class="n">snow</span> <span class="o">==</span> <span class="mi">239</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">water</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&#39;water mask&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>&lt;matplotlib.text.Text at 0x4eb36890&gt;
+</pre></div>
+</div>
+<img alt="../_images/answers_26_1.png" src="../_images/answers_26_1.png" />
+<div class="highlight-python"><div class="highlight"><pre>&lt;matplotlib.text.Text at 0x58256990&gt;
+</pre></div>
+</div>
+<img alt="../_images/answers_26_3.png" src="../_images/answers_26_3.png" />
+</div>
+<div class="section" id="e4-3-5-valid-pixel-mask">
+<h2>E4.3.5 Valid pixel mask<a class="headerlink" href="#e4-3-5-valid-pixel-mask" title="Permalink to this headline">¶</a></h2>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">snow</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&quot;Fractional_Snow_Cover&quot;</span><span class="p">]</span>
+
+<span class="n">valid_mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">snow</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">valid_mask</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&#39;valid mask&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>&lt;matplotlib.text.Text at 0x1c8f0e10&gt;
+</pre></div>
+</div>
+<img alt="../_images/answers_29_1.png" src="../_images/answers_29_1.png" />
+<div class="highlight-python"><div class="highlight"><pre>&lt;matplotlib.text.Text at 0x5ad9cb50&gt;
+</pre></div>
+</div>
+<img alt="../_images/answers_29_3.png" src="../_images/answers_29_3.png" />
+</div>
+<div class="section" id="e4-3-6-3d-dataset">
+<h2>E4.3.6 3D dataset<a class="headerlink" href="#e4-3-6-3d-dataset" title="Permalink to this headline">¶</a></h2>
+<p>You should be used to this sort of thing by now.</p>
+<p>First, lets sort the filenames:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># filenames from the file</span>
+<span class="n">url_file</span> <span class="o">=</span> <span class="s">&#39;files/data/robot_snow.2012_MOST_h17v03_02.txt&#39;</span>
+
+<span class="c"># open the file for read</span>
+<span class="n">fp</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">url_file</span><span class="p">,</span><span class="s">&#39;r&#39;</span><span class="p">)</span>
+
+<span class="c"># the strip is to get rid of the \n character</span>
+<span class="n">filenames</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fp</span><span class="o">.</span><span class="n">readlines</span><span class="p">()]</span>
+
+<span class="c"># close the file</span>
+<span class="n">fp</span><span class="o">.</span><span class="n">close</span>
+
+<span class="c"># lets see what we got</span>
+<span class="k">print</span> <span class="n">filenames</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="s">&#39;MOD10A1.A2012032.h17v03.005.2012046141710.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012033.h17v03.005.2012035071148.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012034.h17v03.005.2012036060335.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012035.h17v03.005.2012037061127.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012036.h17v03.005.2012038044224.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012037.h17v03.005.2012039055929.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012038.h17v03.005.2012040045622.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012039.h17v03.005.2012041055153.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012040.h17v03.005.2012042055706.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012041.h17v03.005.2012045014038.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012042.h17v03.005.2012045024036.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012043.h17v03.005.2012045091534.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012044.h17v03.005.2012046060303.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012045.h17v03.005.2012047061553.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012046.h17v03.005.2012048071318.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012047.h17v03.005.2012049053946.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012048.h17v03.005.2012050063219.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012049.h17v03.005.2012051070019.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012050.h17v03.005.2012052062212.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012051.h17v03.005.2012053064001.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012052.h17v03.005.2012054062116.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012053.h17v03.005.2012056015333.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012054.h17v03.005.2012062191100.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012055.h17v03.005.2012057063901.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012056.h17v03.005.2012058061115.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012057.h17v03.005.2012059062619.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012058.h17v03.005.2012060061357.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012059.h17v03.005.2012061063515.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012060.h17v03.005.2012062064750.hdf&#39;</span><span class="p">]</span>
+<span class="p">[</span><span class="s">&#39;MOD10A1.A2012032.h17v03.005.2012046141710.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012033.h17v03.005.2012035071148.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012034.h17v03.005.2012036060335.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012035.h17v03.005.2012037061127.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012036.h17v03.005.2012038044224.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012037.h17v03.005.2012039055929.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012038.h17v03.005.2012040045622.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012039.h17v03.005.2012041055153.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012040.h17v03.005.2012042055706.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012041.h17v03.005.2012045014038.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012042.h17v03.005.2012045024036.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012043.h17v03.005.2012045091534.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012044.h17v03.005.2012046060303.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012045.h17v03.005.2012047061553.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012046.h17v03.005.2012048071318.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012047.h17v03.005.2012049053946.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012048.h17v03.005.2012050063219.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012049.h17v03.005.2012051070019.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012050.h17v03.005.2012052062212.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012051.h17v03.005.2012053064001.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012052.h17v03.005.2012054062116.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012053.h17v03.005.2012056015333.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012054.h17v03.005.2012062191100.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012055.h17v03.005.2012057063901.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012056.h17v03.005.2012058061115.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012057.h17v03.005.2012059062619.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012058.h17v03.005.2012060061357.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012059.h17v03.005.2012061063515.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;MOD10A1.A2012060.h17v03.005.2012062064750.hdf&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Using <tt class="docutils literal"><span class="pre">glob</span></tt> you might try:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># using glob</span>
+<span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
+
+<span class="n">filenames</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="s">&#39;files/data/MOD10A1.A2012*.hdf&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">filenames</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="s">&#39;files/data/MOD10A1.A2012301.h17v03.005.2012303060756.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012022.h17v03.005.2012024065639.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012035.h17v03.005.2012037061127.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012099.h17v03.005.2012101130724.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012045.h17v03.005.2012047061553.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012026.h17v03.005.2012028061520.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012052.h17v03.005.2012054062116.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012300.h17v03.005.2012302074825.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012302.h17v03.005.2012305001707.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012101.h17v03.005.2012103060602.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012027.h17v03.005.2012029055452.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012033.h17v03.005.2012035071148.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012006.h17v03.005.2012008070328.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012034.h17v03.005.2012036060335.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012019.h17v03.005.2012021060039.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012011.h17v03.005.2012013083450.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012049.h17v03.005.2012051070019.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012021.h17v03.005.2012023061925.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012201.h17v03.005.2012203062815.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012102.h17v03.005.2012104064623.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012032.h17v03.005.2012046141710.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012056.h17v03.005.2012058061115.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012029.h17v03.005.2012031061407.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012100.h17v03.005.2012102064522.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012058.h17v03.005.2012060061357.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012047.h17v03.005.2012049053946.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012043.h17v03.005.2012045091534.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012051.h17v03.005.2012053064001.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012060.h17v03.005.2012062064750.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012001.h17v03.005.2012003054416.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012023.h17v03.005.2012025071134.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012010.h17v03.005.2012012062821.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012015.h17v03.005.2012018205153.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012025.h17v03.005.2012027050342.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012044.h17v03.005.2012046060303.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012017.h17v03.005.2012019073727.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012036.h17v03.005.2012038044224.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012018.h17v03.005.2012020053540.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012002.h17v03.005.2012004061011.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012048.h17v03.005.2012050063219.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012199.h17v03.005.2012201105729.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012008.h17v03.005.2012011154609.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012020.h17v03.005.2012022061254.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012009.h17v03.005.2012011222125.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012202.h17v03.005.2012204070422.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012097.h17v03.005.2012101074931.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012016.h17v03.005.2012019043022.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012024.h17v03.005.2012026061856.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012003.h17v03.005.2012005061244.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012030.h17v03.005.2012032062230.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012050.h17v03.005.2012052062212.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012040.h17v03.005.2012042055706.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012004.h17v03.005.2012006054639.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012039.h17v03.005.2012041055153.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012057.h17v03.005.2012059062619.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012041.h17v03.005.2012045014038.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012014.h17v03.005.2012017164755.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012038.h17v03.005.2012040045622.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012046.h17v03.005.2012048071318.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012054.h17v03.005.2012062191100.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012042.h17v03.005.2012045024036.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012299.h17v03.005.2012301062059.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012012.h17v03.005.2012014055337.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012098.h17v03.005.2012101093641.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012031.h17v03.005.2012033182451.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012059.h17v03.005.2012061063515.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012053.h17v03.005.2012056015333.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012013.h17v03.005.2012017195109.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012005.h17v03.005.2012007052708.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012028.h17v03.005.2012030055354.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012037.h17v03.005.2012039055929.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012055.h17v03.005.2012057063901.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012200.h17v03.005.2012202133641.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012007.h17v03.005.2012011144012.hdf&#39;</span><span class="p">]</span>
+<span class="p">[</span><span class="s">&#39;files/data/MOD10A1.A2012301.h17v03.005.2012303060756.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012022.h17v03.005.2012024065639.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012035.h17v03.005.2012037061127.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012099.h17v03.005.2012101130724.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012045.h17v03.005.2012047061553.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012026.h17v03.005.2012028061520.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012052.h17v03.005.2012054062116.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012300.h17v03.005.2012302074825.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012302.h17v03.005.2012305001707.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012101.h17v03.005.2012103060602.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012027.h17v03.005.2012029055452.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012033.h17v03.005.2012035071148.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012006.h17v03.005.2012008070328.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012034.h17v03.005.2012036060335.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012019.h17v03.005.2012021060039.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012011.h17v03.005.2012013083450.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012049.h17v03.005.2012051070019.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012021.h17v03.005.2012023061925.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012201.h17v03.005.2012203062815.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012102.h17v03.005.2012104064623.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012032.h17v03.005.2012046141710.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012056.h17v03.005.2012058061115.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012029.h17v03.005.2012031061407.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012100.h17v03.005.2012102064522.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012058.h17v03.005.2012060061357.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012047.h17v03.005.2012049053946.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012043.h17v03.005.2012045091534.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012051.h17v03.005.2012053064001.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012060.h17v03.005.2012062064750.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012001.h17v03.005.2012003054416.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012023.h17v03.005.2012025071134.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012010.h17v03.005.2012012062821.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012015.h17v03.005.2012018205153.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012025.h17v03.005.2012027050342.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012044.h17v03.005.2012046060303.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012017.h17v03.005.2012019073727.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012036.h17v03.005.2012038044224.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012018.h17v03.005.2012020053540.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012002.h17v03.005.2012004061011.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012048.h17v03.005.2012050063219.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012199.h17v03.005.2012201105729.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012008.h17v03.005.2012011154609.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012020.h17v03.005.2012022061254.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012009.h17v03.005.2012011222125.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012202.h17v03.005.2012204070422.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012097.h17v03.005.2012101074931.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012016.h17v03.005.2012019043022.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012024.h17v03.005.2012026061856.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012003.h17v03.005.2012005061244.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012030.h17v03.005.2012032062230.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012050.h17v03.005.2012052062212.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012040.h17v03.005.2012042055706.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012004.h17v03.005.2012006054639.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012039.h17v03.005.2012041055153.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012057.h17v03.005.2012059062619.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012041.h17v03.005.2012045014038.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012014.h17v03.005.2012017164755.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012038.h17v03.005.2012040045622.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012046.h17v03.005.2012048071318.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012054.h17v03.005.2012062191100.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012042.h17v03.005.2012045024036.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012299.h17v03.005.2012301062059.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012012.h17v03.005.2012014055337.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012098.h17v03.005.2012101093641.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012031.h17v03.005.2012033182451.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012059.h17v03.005.2012061063515.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012053.h17v03.005.2012056015333.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012013.h17v03.005.2012017195109.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012005.h17v03.005.2012007052708.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012028.h17v03.005.2012030055354.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012037.h17v03.005.2012039055929.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012055.h17v03.005.2012057063901.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012200.h17v03.005.2012202133641.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012007.h17v03.005.2012011144012.hdf&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>But that isn&#8217;t refined enough (i.e. it won&#8217;t only pull files for
+February if there are more).</p>
+<p>So, we need to pull files from doy 32 to 60 inclusive ... which is a lot
+more tricky ...</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># using glob</span>
+<span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
+
+<span class="n">filenames</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="s">&#39;files/data/MOD10A1.A201203[2-9].*.hdf&#39;</span><span class="p">)</span> <span class="o">+</span>\
+            <span class="n">glob</span><span class="p">(</span><span class="s">&#39;files/data/MOD10A1.A201204?.*.hdf&#39;</span><span class="p">)</span> <span class="o">+</span>\
+            <span class="n">glob</span><span class="p">(</span><span class="s">&#39;files/data/MOD10A1.A201205?.*.hdf&#39;</span><span class="p">)</span> <span class="o">+</span>\
+            <span class="n">glob</span><span class="p">(</span><span class="s">&#39;files/data/MOD10A1.A2012060.*.hdf&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">filenames</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="s">&#39;files/data/MOD10A1.A2012035.h17v03.005.2012037061127.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012033.h17v03.005.2012035071148.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012034.h17v03.005.2012036060335.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012032.h17v03.005.2012046141710.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012036.h17v03.005.2012038044224.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012039.h17v03.005.2012041055153.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012038.h17v03.005.2012040045622.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012037.h17v03.005.2012039055929.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012045.h17v03.005.2012047061553.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012049.h17v03.005.2012051070019.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012047.h17v03.005.2012049053946.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012043.h17v03.005.2012045091534.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012044.h17v03.005.2012046060303.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012048.h17v03.005.2012050063219.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012040.h17v03.005.2012042055706.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012041.h17v03.005.2012045014038.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012046.h17v03.005.2012048071318.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012042.h17v03.005.2012045024036.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012052.h17v03.005.2012054062116.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012056.h17v03.005.2012058061115.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012058.h17v03.005.2012060061357.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012051.h17v03.005.2012053064001.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012050.h17v03.005.2012052062212.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012057.h17v03.005.2012059062619.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012054.h17v03.005.2012062191100.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012059.h17v03.005.2012061063515.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012053.h17v03.005.2012056015333.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012055.h17v03.005.2012057063901.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012060.h17v03.005.2012062064750.hdf&#39;</span><span class="p">]</span>
+<span class="p">[</span><span class="s">&#39;files/data/MOD10A1.A2012035.h17v03.005.2012037061127.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012033.h17v03.005.2012035071148.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012034.h17v03.005.2012036060335.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012032.h17v03.005.2012046141710.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012036.h17v03.005.2012038044224.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012039.h17v03.005.2012041055153.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012038.h17v03.005.2012040045622.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012037.h17v03.005.2012039055929.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012045.h17v03.005.2012047061553.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012049.h17v03.005.2012051070019.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012047.h17v03.005.2012049053946.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012043.h17v03.005.2012045091534.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012044.h17v03.005.2012046060303.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012048.h17v03.005.2012050063219.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012040.h17v03.005.2012042055706.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012041.h17v03.005.2012045014038.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012046.h17v03.005.2012048071318.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012042.h17v03.005.2012045024036.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012052.h17v03.005.2012054062116.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012056.h17v03.005.2012058061115.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012058.h17v03.005.2012060061357.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012051.h17v03.005.2012053064001.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012050.h17v03.005.2012052062212.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012057.h17v03.005.2012059062619.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012054.h17v03.005.2012062191100.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012059.h17v03.005.2012061063515.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012053.h17v03.005.2012056015333.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012055.h17v03.005.2012057063901.hdf&#39;</span><span class="p">,</span> <span class="s">&#39;files/data/MOD10A1.A2012060.h17v03.005.2012062064750.hdf&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Practically, you might be better off reading an interpreting the url
+file as above, or alternatively, put all of the February files in a
+different directory and <tt class="docutils literal"><span class="pre">glob</span></tt> that ...</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># in any case, we should sort the filenames</span>
+<span class="n">filenames</span> <span class="o">=</span> <span class="n">sort</span><span class="p">(</span><span class="n">filenames</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Next, let&#8217;s define a function to read a single file into a numpy array
+(and simplify what we have above a bit):</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy.ma</span> <span class="kn">as</span> <span class="nn">ma</span>
+
+<span class="k">def</span> <span class="nf">read_snow</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+
+    <span class="n">layers</span> <span class="o">=</span> <span class="s">&quot;Fractional_Snow_Cover&quot;</span>
+
+    <span class="c"># for convenience, we will use string substitution to create a</span>
+    <span class="c"># template for GDAL filenames, which we&#39;ll substitute on the fly:</span>
+    <span class="n">file_template</span> <span class="o">=</span> <span class="s">&#39;HDF4_EOS:EOS_GRID:&quot;</span><span class="si">%s</span><span class="s">&quot;:MOD_Grid_Snow_500m:</span><span class="si">%s</span><span class="s">&#39;</span>
+    <span class="c"># This has two substitutions (the %s parts) which will refer to:</span>
+    <span class="c"># - the filename</span>
+    <span class="c"># - the data layer</span>
+
+    <span class="n">this_file</span> <span class="o">=</span> <span class="n">file_template</span> <span class="o">%</span> <span class="p">(</span> <span class="n">filename</span><span class="p">,</span> <span class="n">layer</span> <span class="p">)</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span> <span class="p">(</span> <span class="n">this_file</span> <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">g</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">IOError</span>
+    <span class="n">snow</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">()</span>
+
+    <span class="c"># dont use this here, but just in case useful</span>
+    <span class="c">#water = (snow == 239)</span>
+
+    <span class="n">valid_mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">snow</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">snow</span><span class="p">,</span><span class="n">mask</span><span class="o">=</span><span class="n">valid_mask</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now, test it:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">snow</span> <span class="o">=</span> <span class="n">read_snow</span><span class="p">(</span><span class="n">filenames</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">snow</span><span class="p">,</span><span class="n">vmax</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">filenames</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>&lt;matplotlib.text.Text at 0x51650d50&gt;
+</pre></div>
+</div>
+<img alt="../_images/answers_42_1.png" src="../_images/answers_42_1.png" />
+<div class="highlight-python"><div class="highlight"><pre>&lt;matplotlib.text.Text at 0x55663490&gt;
+</pre></div>
+</div>
+<img alt="../_images/answers_42_3.png" src="../_images/answers_42_3.png" />
+<p>Now its just a loop as in several previous examples:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">snow</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+    <span class="n">snow</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">read_snow</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+
+<span class="n">snow</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">snow</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># or neater ...</span>
+
+<span class="n">snow</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">read_snow</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="n">snow</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">(</span><span class="mi">29</span><span class="p">,</span> <span class="mi">2400</span><span class="p">,</span> <span class="mi">2400</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># now plot and save images</span>
+<span class="c"># plot the data</span>
+<span class="kn">import</span> <span class="nn">pylab</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">PuBu</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">f</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">filenames</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">snow</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span><span class="n">interpolation</span><span class="o">=</span><span class="s">&#39;none&#39;</span><span class="p">,</span><span class="n">vmin</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span><span class="n">vmax</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="c"># remember filenames of the form</span>
+    <span class="c"># files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf&#39;</span>
+    <span class="n">file_id</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">5</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="k">print</span> <span class="n">file_id</span>
+    <span class="c"># plot a jpg</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">file_id</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s">&#39;files/images/snow_uk_</span><span class="si">%s</span><span class="s">.jpg&#39;</span><span class="o">%</span><span class="n">file_id</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">2012032</span>
+<span class="mi">2012033</span>
+<span class="mi">2012034</span>
+<span class="mi">2012035</span>
+<span class="mi">2012036</span>
+<span class="mi">2012037</span>
+<span class="mi">2012038</span>
+<span class="mi">2012039</span>
+<span class="mi">2012040</span>
+<span class="mi">2012041</span>
+<span class="mi">2012042</span>
+<span class="mi">2012043</span>
+<span class="mi">2012044</span>
+<span class="mi">2012045</span>
+<span class="mi">2012046</span>
+<span class="mi">2012047</span>
+<span class="mi">2012048</span>
+<span class="mi">2012049</span>
+<span class="mi">2012050</span>
+<span class="mi">2012051</span>
+<span class="mi">2012052</span>
+<span class="mi">2012053</span>
+<span class="mi">2012054</span>
+<span class="mi">2012055</span>
+<span class="mi">2012056</span>
+<span class="mi">2012057</span>
+<span class="mi">2012058</span>
+<span class="mi">2012059</span>
+<span class="mi">2012060</span>
+</pre></div>
+</div>
+<pre class="literal-block">
+/opt/anaconda/lib/python2.7/site-packages/matplotlib/pyplot.py:412: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (<cite>matplotlib.pyplot.figure</cite>) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam <cite>figure.max_num_figures</cite>).
+  max_open_warning, RuntimeWarning)
+</pre>
+<img alt="../_images/answers_47_2.png" src="../_images/answers_47_2.png" />
+<img alt="../_images/answers_47_3.png" src="../_images/answers_47_3.png" />
+<img alt="../_images/answers_47_4.png" src="../_images/answers_47_4.png" />
+<img alt="../_images/answers_47_5.png" src="../_images/answers_47_5.png" />
+<img alt="../_images/answers_47_6.png" src="../_images/answers_47_6.png" />
+<img alt="../_images/answers_47_7.png" src="../_images/answers_47_7.png" />
+<img alt="../_images/answers_47_8.png" src="../_images/answers_47_8.png" />
+<img alt="../_images/answers_47_9.png" src="../_images/answers_47_9.png" />
+<img alt="../_images/answers_47_10.png" src="../_images/answers_47_10.png" />
+<img alt="../_images/answers_47_11.png" src="../_images/answers_47_11.png" />
+<img alt="../_images/answers_47_12.png" src="../_images/answers_47_12.png" />
+<img alt="../_images/answers_47_13.png" src="../_images/answers_47_13.png" />
+<img alt="../_images/answers_47_14.png" src="../_images/answers_47_14.png" />
+<img alt="../_images/answers_47_15.png" src="../_images/answers_47_15.png" />
+<img alt="../_images/answers_47_16.png" src="../_images/answers_47_16.png" />
+<img alt="../_images/answers_47_17.png" src="../_images/answers_47_17.png" />
+<img alt="../_images/answers_47_18.png" src="../_images/answers_47_18.png" />
+<img alt="../_images/answers_47_19.png" src="../_images/answers_47_19.png" />
+<img alt="../_images/answers_47_20.png" src="../_images/answers_47_20.png" />
+<img alt="../_images/answers_47_21.png" src="../_images/answers_47_21.png" />
+<img alt="../_images/answers_47_22.png" src="../_images/answers_47_22.png" />
+<img alt="../_images/answers_47_23.png" src="../_images/answers_47_23.png" />
+<img alt="../_images/answers_47_24.png" src="../_images/answers_47_24.png" />
+<img alt="../_images/answers_47_25.png" src="../_images/answers_47_25.png" />
+<img alt="../_images/answers_47_26.png" src="../_images/answers_47_26.png" />
+<img alt="../_images/answers_47_27.png" src="../_images/answers_47_27.png" />
+<img alt="../_images/answers_47_28.png" src="../_images/answers_47_28.png" />
+<img alt="../_images/answers_47_29.png" src="../_images/answers_47_29.png" />
+<img alt="../_images/answers_47_30.png" src="../_images/answers_47_30.png" />
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># now make a movie ...</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">cmd</span> <span class="o">=</span> <span class="s">&#39;convert -delay 100 -loop 0 files/images/snow_uk_*.jpg files/images/snow_uk2.gif&#39;</span>
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">0</span>
+</pre></div>
+</div>
+<div class="figure">
+<img alt="" src="Chapter4_GDAL/files/images/snow_uk2.gif" />
+</div>
+</div>
+<div class="section" id="exercise-4-3">
+<h2>Exercise 4.3<a class="headerlink" href="#exercise-4-3" title="Permalink to this headline">¶</a></h2>
+<p>Again, you should be used to this sort of thing by now.</p>
+<p>We have the following code to base this on:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="s">&#39;files/python&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">raster_mask</span> <span class="kn">import</span> <span class="n">raster_mask</span><span class="p">,</span> <span class="n">getLAI</span>
+
+<span class="c"># test this on an LAI file</span>
+
+<span class="c"># the data file name</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;files/data/MCD15A2.A2012273.h17v03.005.2012297134400.hdf&#39;</span>
+
+<span class="c"># a layer (doesn&#39;t matter so much which: use for geometry info)</span>
+<span class="n">layer</span> <span class="o">=</span> <span class="s">&#39;Lai_1km&#39;</span>
+<span class="c"># the full dataset specification</span>
+<span class="n">file_template</span> <span class="o">=</span> <span class="s">&#39;HDF4_EOS:EOS_GRID:&quot;</span><span class="si">%s</span><span class="s">&quot;:MOD_Grid_MOD15A2:</span><span class="si">%s</span><span class="s">&#39;</span>
+<span class="n">file_spec</span> <span class="o">=</span> <span class="n">file_template</span><span class="o">%</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="n">layer</span><span class="p">)</span>
+
+<span class="c"># make a raster mask</span>
+<span class="c"># from the layer IRELAND in world.shp</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">raster_mask</span><span class="p">(</span><span class="n">file_spec</span><span class="p">,</span>\
+                   <span class="n">target_vector_file</span> <span class="o">=</span> <span class="s">&quot;files/data/world.shp&quot;</span><span class="p">,</span>\
+                   <span class="n">attribute_filter</span> <span class="o">=</span> <span class="s">&quot;NAME = &#39;IRELAND&#39;&quot;</span><span class="p">)</span>
+
+<span class="c"># get the LAI data</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">getLAI</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+<span class="c"># reset the data mask</span>
+<span class="c"># &#39;mask&#39; is True for Ireland</span>
+<span class="c"># so take the opposite</span>
+<span class="n">data</span><span class="p">[</span><span class="s">&#39;Lai_1km&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;Lai_1km&#39;</span><span class="p">],</span><span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">)</span>
+<span class="n">data</span><span class="p">[</span><span class="s">&#39;LaiStdDev_1km&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;Lai_1km&#39;</span><span class="p">],</span><span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&#39;LAI for Eire: 2012273&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;Lai_1km&#39;</span><span class="p">],</span><span class="n">vmax</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>&lt;matplotlib.colorbar.Colorbar instance at 0x47fc61b8&gt;
+</pre></div>
+</div>
+<img alt="../_images/answers_52_1.png" src="../_images/answers_52_1.png" />
+<p>Obviously, we will need to specify a set of filenames again.</p>
+<p>These have a simple filename pattern, so <tt class="docutils literal"><span class="pre">glob</span></tt> would be appropriate
+(don&#8217;t forget to <tt class="docutils literal"><span class="pre">sort</span></tt>:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
+
+<span class="n">filenames</span> <span class="o">=</span> <span class="n">sort</span><span class="p">(</span><span class="n">glob</span><span class="p">(</span><span class="s">&#39;files/data/MCD15A2.A2012???.h17v03.005.*.hdf&#39;</span><span class="p">))</span>
+
+<span class="k">print</span> <span class="n">filenames</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="s">&#39;files/data/MCD15A2.A2012001.h17v03.005.2012017211237.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012009.h17v03.005.2012019044037.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012017.h17v03.005.2012026072526.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012025.h17v03.005.2012052124839.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012033.h17v03.005.2012042060649.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012041.h17v03.005.2012050092057.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012049.h17v03.005.2012068144447.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012057.h17v03.005.2012068140544.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012065.h17v03.005.2012075021749.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012073.h17v03.005.2012083010304.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012081.h17v03.005.2012090131602.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012089.h17v03.005.2012107201245.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012097.h17v03.005.2012108125047.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012105.h17v03.005.2012116125519.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012113.h17v03.005.2012122072153.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012121.h17v03.005.2012137221611.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012129.h17v03.005.2012142001241.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012137.h17v03.005.2012153021910.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012145.h17v03.005.2012160130927.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012153.h17v03.005.2012166161748.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012161.h17v03.005.2012170080216.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012169.h17v03.005.2012181134242.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012177.h17v03.005.2012188150145.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012185.h17v03.005.2012208181105.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012193.h17v03.005.2012202144013.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012201.h17v03.005.2012215131931.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012209.h17v03.005.2012219144450.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012217.h17v03.005.2012228215213.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012225.h17v03.005.2012234105932.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012233.h17v03.005.2012242093511.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012241.h17v03.005.2012250182515.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012249.h17v03.005.2012261231425.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012257.h17v03.005.2012270114223.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012265.h17v03.005.2012276134731.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012273.h17v03.005.2012297134400.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012281.h17v03.005.2012297135831.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012289.h17v03.005.2012299194634.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012297.h17v03.005.2012306163257.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012305.h17v03.005.2012314140451.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012313.h17v03.005.2012322095802.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012321.h17v03.005.2012335133638.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012329.h17v03.005.2012340181739.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012337.h17v03.005.2012346165133.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012345.h17v03.005.2012356133200.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012353.h17v03.005.2012363125132.hdf&#39;</span>
+ <span class="s">&#39;files/data/MCD15A2.A2012361.h17v03.005.2013007202756.hdf&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Now we just build a loop around that:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="s">&#39;files/python&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">raster_mask</span> <span class="kn">import</span> <span class="n">raster_mask</span><span class="p">,</span> <span class="n">getLAI</span>
+<span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
+
+<span class="c"># a layer (doesn&#39;t matter so much which: use for geometry info)</span>
+<span class="n">layer</span> <span class="o">=</span> <span class="s">&#39;Lai_1km&#39;</span>
+<span class="c"># the full dataset specification</span>
+
+<span class="n">file_template</span> <span class="o">=</span> <span class="s">&#39;HDF4_EOS:EOS_GRID:&quot;</span><span class="si">%s</span><span class="s">&quot;:MOD_Grid_MOD15A2:</span><span class="si">%s</span><span class="s">&#39;</span>
+
+<span class="c"># list of filenames</span>
+<span class="n">filenames</span> <span class="o">=</span> <span class="n">sort</span><span class="p">(</span><span class="n">glob</span><span class="p">(</span><span class="s">&#39;files/data/MCD15A2.A2012???.h17v03.005.*.hdf&#39;</span><span class="p">))</span>
+
+<span class="c"># build a mask: use filenames[0] for geometry</span>
+<span class="k">print</span> <span class="s">&#39;building mask ...&#39;</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">raster_mask</span><span class="p">(</span><span class="n">file_template</span><span class="o">%</span><span class="p">(</span><span class="n">filenames</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">layer</span><span class="p">),</span>\
+                       <span class="n">target_vector_file</span> <span class="o">=</span> <span class="s">&quot;files/data/world.shp&quot;</span><span class="p">,</span>\
+                       <span class="n">attribute_filter</span> <span class="o">=</span> <span class="s">&quot;NAME = &#39;IRELAND&#39;&quot;</span><span class="p">)</span>
+
+<span class="n">lai</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">print</span> <span class="s">&#39;looping over files...&#39;</span>
+<span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+    <span class="c"># get the LAI data</span>
+    <span class="k">print</span> <span class="n">filename</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">getLAI</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+    <span class="c"># reset the data mask</span>
+    <span class="n">lai</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;Lai_1km&#39;</span><span class="p">],</span><span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">))</span>
+
+<span class="c"># convert to masked array</span>
+<span class="n">lai</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">lai</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>building mask ...
+looping over files...
+files/data/MCD15A2.A2012001.h17v03.005.2012017211237.hdf
+files/data/MCD15A2.A2012009.h17v03.005.2012019044037.hdf
+files/data/MCD15A2.A2012017.h17v03.005.2012026072526.hdf
+files/data/MCD15A2.A2012025.h17v03.005.2012052124839.hdf
+files/data/MCD15A2.A2012033.h17v03.005.2012042060649.hdf
+files/data/MCD15A2.A2012041.h17v03.005.2012050092057.hdf
+files/data/MCD15A2.A2012049.h17v03.005.2012068144447.hdf
+files/data/MCD15A2.A2012057.h17v03.005.2012068140544.hdf
+files/data/MCD15A2.A2012065.h17v03.005.2012075021749.hdf
+files/data/MCD15A2.A2012073.h17v03.005.2012083010304.hdf
+files/data/MCD15A2.A2012081.h17v03.005.2012090131602.hdf
+files/data/MCD15A2.A2012089.h17v03.005.2012107201245.hdf
+files/data/MCD15A2.A2012097.h17v03.005.2012108125047.hdf
+files/data/MCD15A2.A2012105.h17v03.005.2012116125519.hdf
+files/data/MCD15A2.A2012113.h17v03.005.2012122072153.hdf
+files/data/MCD15A2.A2012121.h17v03.005.2012137221611.hdf
+files/data/MCD15A2.A2012129.h17v03.005.2012142001241.hdf
+files/data/MCD15A2.A2012137.h17v03.005.2012153021910.hdf
+files/data/MCD15A2.A2012145.h17v03.005.2012160130927.hdf
+files/data/MCD15A2.A2012153.h17v03.005.2012166161748.hdf
+files/data/MCD15A2.A2012161.h17v03.005.2012170080216.hdf
+files/data/MCD15A2.A2012169.h17v03.005.2012181134242.hdf
+files/data/MCD15A2.A2012177.h17v03.005.2012188150145.hdf
+files/data/MCD15A2.A2012185.h17v03.005.2012208181105.hdf
+files/data/MCD15A2.A2012193.h17v03.005.2012202144013.hdf
+files/data/MCD15A2.A2012201.h17v03.005.2012215131931.hdf
+files/data/MCD15A2.A2012209.h17v03.005.2012219144450.hdf
+files/data/MCD15A2.A2012217.h17v03.005.2012228215213.hdf
+files/data/MCD15A2.A2012225.h17v03.005.2012234105932.hdf
+files/data/MCD15A2.A2012233.h17v03.005.2012242093511.hdf
+files/data/MCD15A2.A2012241.h17v03.005.2012250182515.hdf
+files/data/MCD15A2.A2012249.h17v03.005.2012261231425.hdf
+files/data/MCD15A2.A2012257.h17v03.005.2012270114223.hdf
+files/data/MCD15A2.A2012265.h17v03.005.2012276134731.hdf
+files/data/MCD15A2.A2012273.h17v03.005.2012297134400.hdf
+files/data/MCD15A2.A2012281.h17v03.005.2012297135831.hdf
+files/data/MCD15A2.A2012289.h17v03.005.2012299194634.hdf
+files/data/MCD15A2.A2012297.h17v03.005.2012306163257.hdf
+files/data/MCD15A2.A2012305.h17v03.005.2012314140451.hdf
+files/data/MCD15A2.A2012313.h17v03.005.2012322095802.hdf
+files/data/MCD15A2.A2012321.h17v03.005.2012335133638.hdf
+files/data/MCD15A2.A2012329.h17v03.005.2012340181739.hdf
+files/data/MCD15A2.A2012337.h17v03.005.2012346165133.hdf
+files/data/MCD15A2.A2012345.h17v03.005.2012356133200.hdf
+files/data/MCD15A2.A2012353.h17v03.005.2012363125132.hdf
+files/data/MCD15A2.A2012361.h17v03.005.2013007202756.hdf
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># make sure we can load it, then plot it</span>
+<span class="kn">import</span> <span class="nn">numpy.ma</span> <span class="kn">as</span> <span class="nn">ma</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+
+<span class="c"># now plot and save images</span>
+<span class="c"># plot the data</span>
+<span class="kn">import</span> <span class="nn">pylab</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Greens</span>
+<span class="c">#plt.ioff()</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">f</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">filenames</span><span class="p">):</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">lai</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span><span class="n">interpolation</span><span class="o">=</span><span class="s">&#39;none&#39;</span><span class="p">,</span><span class="n">vmin</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span><span class="n">vmax</span><span class="o">=</span><span class="mf">6.</span><span class="p">)</span>
+    <span class="c"># remember filenames of the form</span>
+    <span class="c"># files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf&#39;</span>
+    <span class="n">file_id</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">5</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="k">print</span> <span class="n">file_id</span>
+    <span class="c"># plot a jpg</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">file_id</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s">&#39;files/images/lai_eire_</span><span class="si">%s</span><span class="s">.jpg&#39;</span><span class="o">%</span><span class="n">file_id</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">2012001</span>
+<span class="mi">2012009</span>
+<span class="mi">2012017</span>
+<span class="mi">2012025</span>
+<span class="mi">2012033</span>
+<span class="mi">2012041</span>
+<span class="mi">2012049</span>
+<span class="mi">2012057</span>
+<span class="mi">2012065</span>
+<span class="mi">2012073</span>
+<span class="mi">2012081</span>
+<span class="mi">2012089</span>
+<span class="mi">2012097</span>
+<span class="mi">2012105</span>
+<span class="mi">2012113</span>
+<span class="mi">2012121</span>
+<span class="mi">2012129</span>
+<span class="mi">2012137</span>
+<span class="mi">2012145</span>
+<span class="mi">2012153</span>
+<span class="mi">2012161</span>
+<span class="mi">2012169</span>
+<span class="mi">2012177</span>
+<span class="mi">2012185</span>
+<span class="mi">2012193</span>
+<span class="mi">2012201</span>
+<span class="mi">2012209</span>
+<span class="mi">2012217</span>
+<span class="mi">2012225</span>
+<span class="mi">2012233</span>
+<span class="mi">2012241</span>
+<span class="mi">2012249</span>
+<span class="mi">2012257</span>
+<span class="mi">2012265</span>
+<span class="mi">2012273</span>
+<span class="mi">2012281</span>
+<span class="mi">2012289</span>
+<span class="mi">2012297</span>
+<span class="mi">2012305</span>
+<span class="mi">2012313</span>
+<span class="mi">2012321</span>
+<span class="mi">2012329</span>
+<span class="mi">2012337</span>
+<span class="mi">2012345</span>
+<span class="mi">2012353</span>
+<span class="mi">2012361</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># now make a movie ...</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">cmd</span> <span class="o">=</span> <span class="s">&#39;convert -delay 100 -loop 0 files/images/lai_eire_*.jpg files/images/lai_eire.gif&#39;</span>
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">0</span>
+</pre></div>
+</div>
+<div class="figure">
+<img alt="" src="Chapter4_GDAL/files/images/lai_eire.gif" />
+</div>
+<p>It should be obvious how to adapt this to generate a similar LAI Std Dev
+dataset.</p>
+<p>An average is simply obtained:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">try</span><span class="p">:</span>
+    <span class="n">lai_mean</span> <span class="o">=</span> <span class="n">lai</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p>Though in older versions of numpy, you have to do each axis separately:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">lai</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">array</span><span class="p">([</span> <span class="mf">0.</span>        <span class="p">,</span>  <span class="mf">0.</span>        <span class="p">,</span>  <span class="mf">0.</span>        <span class="p">,</span>  <span class="mf">1.13194208</span><span class="p">,</span>  <span class="mf">0.8385127</span> <span class="p">,</span>
+        <span class="mf">0.7581951</span> <span class="p">,</span>  <span class="mf">1.62490352</span><span class="p">,</span>  <span class="mf">1.77427215</span><span class="p">,</span>  <span class="mf">1.68431605</span><span class="p">,</span>  <span class="mf">1.53881657</span><span class="p">,</span>
+        <span class="mf">2.46867764</span><span class="p">,</span>  <span class="mf">2.22713124</span><span class="p">,</span>  <span class="mf">1.97079892</span><span class="p">,</span>  <span class="mf">2.19423149</span><span class="p">,</span>  <span class="mf">1.83186409</span><span class="p">,</span>
+        <span class="mf">1.68775959</span><span class="p">,</span>  <span class="mf">2.5530641</span> <span class="p">,</span>  <span class="mf">1.82426569</span><span class="p">,</span>  <span class="mf">3.350427</span>  <span class="p">,</span>  <span class="mf">1.79795768</span><span class="p">,</span>
+        <span class="mf">2.29830478</span><span class="p">,</span>  <span class="mf">2.30001168</span><span class="p">,</span>  <span class="mf">1.86932879</span><span class="p">,</span>  <span class="mf">1.74646726</span><span class="p">,</span>  <span class="mf">2.21955</span>   <span class="p">,</span>
+        <span class="mf">2.02689304</span><span class="p">,</span>  <span class="mf">2.61823983</span><span class="p">,</span>  <span class="mf">2.63460711</span><span class="p">,</span>  <span class="mf">2.18868341</span><span class="p">,</span>  <span class="mf">2.2350088</span> <span class="p">,</span>
+        <span class="mf">2.10244737</span><span class="p">,</span>  <span class="mf">2.64785816</span><span class="p">,</span>  <span class="mf">2.38064128</span><span class="p">,</span>  <span class="mf">1.93491947</span><span class="p">,</span>  <span class="mf">2.01097991</span><span class="p">,</span>
+        <span class="mf">1.92061334</span><span class="p">,</span>  <span class="mf">1.6725845</span> <span class="p">,</span>  <span class="mf">1.83265805</span><span class="p">,</span>  <span class="mf">1.70210771</span><span class="p">,</span>  <span class="mf">0.99212715</span><span class="p">,</span>
+        <span class="mf">0.</span>        <span class="p">,</span>  <span class="mf">0.</span>        <span class="p">,</span>  <span class="mf">0.</span>        <span class="p">,</span>  <span class="mf">0.</span>        <span class="p">,</span>  <span class="mf">0.</span>        <span class="p">,</span>  <span class="mf">0.</span>        <span class="p">])</span>
+</pre></div>
+</div>
+<p>There is plenty to criticise with such an average though: it takes no
+account of the uncertainty in each data value (that is known), and it
+takes no account of data gaps.</p>
+<p>We will return to these issues next week.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">lai</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="mi">8</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">lai</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&#39;mean LAI over Eire&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&#39; index&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;LAI&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>&lt;matplotlib.text.Text at 0x6fa33490&gt;
+</pre></div>
+</div>
+<img alt="../_images/answers_65_1.png" src="../_images/answers_65_1.png" />
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+        <p class="logo"><a href="../index.html" title="index">
+          <img class="logo" src="../_static/ucl_logo.png" alt="Logo"/>
+        </a></p><div class="sphinxlocaltoc">
+    <h3><a href="../index.html">Page contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Exercise 4.1</a><ul>
+<li><a class="reference internal" href="#answer-4-1">Answer 4.1</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#exercise-4-2-a-different-dataset">Exercise 4.2: A Different Dataset</a><ul>
+<li><a class="reference internal" href="#e4-2-1-download">E4.2.1 Download</a></li>
+<li><a class="reference internal" href="#e4-2-2-explore">E4.2.2 Explore</a></li>
+<li><a class="reference internal" href="#e4-3-3-read-a-dataset">E4.3.3 Read a dataset</a></li>
+<li><a class="reference internal" href="#e4-3-4-water-mask">E4.3.4 Water mask</a></li>
+<li><a class="reference internal" href="#e4-3-5-valid-pixel-mask">E4.3.5 Valid pixel mask</a></li>
+<li><a class="reference internal" href="#e4-3-6-3d-dataset">E4.3.6 3D dataset</a></li>
+<li><a class="reference internal" href="#exercise-4-3">Exercise 4.3</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/Chapter4_GDAL/answers.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+    <li><a href="../index.html">geogg122</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2014, Prof. P. Lewis.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

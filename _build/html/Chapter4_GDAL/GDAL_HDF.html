@@ -1,0 +1,1215 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Chapter 4. Geospatial data &mdash; GeogG122: Scientific Computing v&lt;release&gt; documentation</title>
+    
+    <link rel="stylesheet" href="../_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../_static/cloud.js"></script>
+    <link rel="top" title="GeogG122: Scientific Computing v&lt;release&gt; documentation" href="../index.html" />
+    <link rel="next" title="GDAL and OGR libraries" href="GDAL_Python_bindings.html" />
+    <link rel="prev" title="3. Plotting and Numerical Python" href="../Chapter3_Scientific_Numerical_Python/Scientific_Numerical_Python.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div class="relbar-top">
+        
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="GDAL_Python_bindings.html" title="GDAL and OGR libraries"
+             accesskey="N">next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="../Chapter3_Scientific_Numerical_Python/Scientific_Numerical_Python.html" title="3. Plotting and Numerical Python"
+             accesskey="P">previous</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">geogg122</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="chapter-4-geospatial-data">
+<h1>Chapter 4. Geospatial data<a class="headerlink" href="#chapter-4-geospatial-data" title="Permalink to this headline">¶</a></h1>
+<p>In this session, we will introduced the <tt class="docutils literal"><span class="pre">gdal</span></tt> geospatial module which
+can read a wide range of scientific data formats. You will find that
+using it to read data is quite similar to the work we did last week on
+netCDF datasets.</p>
+<p>The main challenges are also much the same: very often, you need to be
+able to read data from a &#8216;stack&#8217; of image files and generate a useful 3D
+(space and time) dataset from these. Once you have the data in such a
+form, there are <em>many</em> things we can do with it, and very many of these
+are convenient to do using array-based expressions such as in numpy
+(consider the simplicity of the expression
+<tt class="docutils literal"><span class="pre">absorbed</span> <span class="pre">=</span> <span class="pre">rad</span> <span class="pre">*</span> <span class="pre">(1</span> <span class="pre">-</span> <span class="pre">albedo)</span></tt> from last week&#8217;s exercise).</p>
+<p>That said, it can sometimes be quite an effort to prepare datasets in
+this form. Last week, we developed a &#8216;valid data&#8217; mask from the
+GlobAlbedo dataset, as invalid data were stored as <tt class="docutils literal"><span class="pre">nan</span></tt>. Very often
+though, scientific datasets have more complex &#8216;Quality Control&#8217; (QC)
+information, that gives per-pixel information describing the quality of
+the product at that location (e.g. it was very cloudy so the results are
+not so good).</p>
+<p>To explore this, we will first consider the <a class="reference external" href="http://modis.gsfc.nasa.gov/data/dataprod/dataproducts.php?MOD_NUMBER=15">MODIS Leaf Area Index
+(LAI)</a>
+product taht is mapped at 1 km resolution, every 8 days from the year
+2000.</p>
+<p>We will learn how to read in these data (in <tt class="docutils literal"><span class="pre">hdf</span></tt> format) using
+<tt class="docutils literal"><span class="pre">gdal</span></tt>, and how to interpret the QC information in such products to
+produce valid data masks. As an exercise, you will wrap some code around
+that to form a 3D masked array of the dataset.</p>
+<p>Next, we will consider how to download such data. This should be a
+reinforcement of material from last week, but it is useful to know how
+to conveniently access NASA data products. A challenge in the exercise
+then is to download a different dataset (MODIS snow cover) for the UK,
+and form a masked 3D dataset from this.</p>
+<p>Finally, we will introduce vector datasets and show you python tools
+that allow you (among many other things) to build a mask in the
+projection and sampling of your spatial dataset (MODIS LAI in this
+case).</p>
+<p>There are many features and as many complexities to the Python tools we
+will deal with today, but in this material, we cover some very typical
+tasks you will want to do. They all revolve around generating masked 3D
+datasets from NASA MODIS datasets, which is a very useful form of global
+biophysical information over the last decade+. We also provide much
+material for further reading and use when you are more confident in your
+programming.</p>
+<p>A final point here is that the material we cover today is very closely
+related to what you will need to do in the first section of your
+assessed practical that we will introduce next week, so you really need
+to get to grips with this now.</p>
+<p>There is not as much &#8216;new&#8217; material as in previous weeks now, but we
+assume that you have understood, and can make use of, material from
+those lectures.</p>
+<p>First, we will examine data from a NASA MODIS product on Leaf Area Index
+(LAI).</p>
+<ul class="simple">
+<li>4.1 <a class="reference external" href="#4.1-MODIS-LAI-product">MODIS LAI product</a></li>
+<li>4.2 <a class="reference external" href="#4.2-Downloading-data">Downloading data</a></li>
+<li>4.3 <a class="reference external" href="#4.3-Vector-masking">Vector masking</a></li>
+</ul>
+<div class="section" id="modis-lai-product">
+<h2>4.1 MODIS LAI product<a class="headerlink" href="#modis-lai-product" title="Permalink to this headline">¶</a></h2>
+<p>GDAL covers a much wider set of file formats and methods than the netCDF
+library that we previously used.</p>
+<p>Basic operation involves:</p>
+<ul class="simple">
+<li>load gdal</li>
+<li>open a spatial dataset (an hdf format file here)</li>
+<li>specify which subsets you want.</li>
+</ul>
+<p>We can explore the subsets in the file with <tt class="docutils literal"><span class="pre">GetSubDatasets()</span></tt>:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># how to find out which datasets are in the file</span>
+
+<span class="kn">import</span> <span class="nn">gdal</span> <span class="c"># Import GDAL library bindings</span>
+
+<span class="c"># The file that we shall be using</span>
+<span class="c"># Needs to be on current directory</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf&#39;</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="c"># g should now be a GDAL dataset, but if the file isn&#39;t found</span>
+<span class="c"># g will be none. Let&#39;s test this:</span>
+<span class="k">if</span> <span class="n">g</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;Problem opening file </span><span class="si">%s</span><span class="s">!&quot;</span> <span class="o">%</span> <span class="n">filename</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;File </span><span class="si">%s</span><span class="s"> opened fine&quot;</span> <span class="o">%</span> <span class="n">filename</span>
+
+
+<span class="n">subdatasets</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">GetSubDatasets</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">fname</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">subdatasets</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">name</span>
+    <span class="k">print</span> <span class="s">&quot;</span><span class="se">\t</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">fname</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>File files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf opened fine
+[1200x1200] Fpar_1km MOD_Grid_MOD15A2 (8-bit unsigned integer)
+    HDF4_EOS:EOS_GRID:&quot;files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf&quot;:MOD_Grid_MOD15A2:Fpar_1km
+[1200x1200] Lai_1km MOD_Grid_MOD15A2 (8-bit unsigned integer)
+    HDF4_EOS:EOS_GRID:&quot;files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf&quot;:MOD_Grid_MOD15A2:Lai_1km
+[1200x1200] FparLai_QC MOD_Grid_MOD15A2 (8-bit unsigned integer)
+    HDF4_EOS:EOS_GRID:&quot;files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf&quot;:MOD_Grid_MOD15A2:FparLai_QC
+[1200x1200] FparExtra_QC MOD_Grid_MOD15A2 (8-bit unsigned integer)
+    HDF4_EOS:EOS_GRID:&quot;files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf&quot;:MOD_Grid_MOD15A2:FparExtra_QC
+[1200x1200] FparStdDev_1km MOD_Grid_MOD15A2 (8-bit unsigned integer)
+    HDF4_EOS:EOS_GRID:&quot;files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf&quot;:MOD_Grid_MOD15A2:FparStdDev_1km
+[1200x1200] LaiStdDev_1km MOD_Grid_MOD15A2 (8-bit unsigned integer)
+    HDF4_EOS:EOS_GRID:&quot;files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf&quot;:MOD_Grid_MOD15A2:LaiStdDev_1km
+</pre></div>
+</div>
+<p>In the previous code snippet we have done a number of different things:</p>
+<ol class="arabic simple">
+<li>Import the GDAL library</li>
+<li>Open a file with GDAL, storing a handler to the file in <tt class="docutils literal"><span class="pre">g</span></tt></li>
+<li>Test that <tt class="docutils literal"><span class="pre">g</span></tt> is not <tt class="docutils literal"><span class="pre">None</span></tt> (as this indicates failure opening
+the file. Try changing <tt class="docutils literal"><span class="pre">filename</span></tt> above to something else)</li>
+<li>We then use the <tt class="docutils literal"><span class="pre">GetSubDatasets()</span></tt> method to read out information
+on the different subdatasets available from this file (compare to the
+output of <tt class="docutils literal"><span class="pre">gdalinfo</span></tt> on the shelf earlier)</li>
+<li>Loop over the retrieved subdatasets to print the name (human-readable
+information) and the GDAL filename. This last item is the filename
+that you need to use to tell GDAL to open a particular data layer of
+the 6 layers present in this example</li>
+</ol>
+<p>Let&#8217;s say that we want to access the LAI information. By contrasting the
+output of the above code (or <tt class="docutils literal"><span class="pre">gdalinfo</span></tt>) to the contents of the
+<a class="reference external" href="https://lpdaac.usgs.gov/products/modis_products_table/leaf_area_index_fraction_of_photosynthetically_active_radiation/8_day_l4_global_1km/mod15a2">LAI/fAPAR product information
+page</a>,
+we find out that we want the layers for <tt class="docutils literal"><span class="pre">Lai_1km</span></tt>, <tt class="docutils literal"><span class="pre">FparLai_Qc</span></tt>,
+<tt class="docutils literal"><span class="pre">FparExtra_QC</span></tt> and <tt class="docutils literal"><span class="pre">LaiStdDev_1km</span></tt>.</p>
+<p>To read these individual datasets, we need to open each of them
+individually using GDAL, and the GDAL filenames used above:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># How to access specific datasets in gdal</span>
+
+<span class="c"># Let&#39;s create a list with the selected layer names</span>
+<span class="n">selected_layers</span> <span class="o">=</span> <span class="p">[</span>  <span class="s">&quot;Lai_1km&quot;</span><span class="p">,</span> <span class="s">&quot;FparLai_QC&quot;</span><span class="p">,</span> <span class="s">&quot;LaiStdDev_1km&quot;</span> <span class="p">]</span>
+
+<span class="c"># We will store the data in a dictionary</span>
+<span class="c"># Initialise an empty dictionary</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="c"># for convenience, we will use string substitution to create a</span>
+<span class="c"># template for GDAL filenames, which we&#39;ll substitute on the fly:</span>
+<span class="n">file_template</span> <span class="o">=</span> <span class="s">&#39;HDF4_EOS:EOS_GRID:&quot;</span><span class="si">%s</span><span class="s">&quot;:MOD_Grid_MOD15A2:</span><span class="si">%s</span><span class="s">&#39;</span>
+<span class="c"># This has two substitutions (the %s parts) which will refer to:</span>
+<span class="c"># - the filename</span>
+<span class="c"># - the data layer</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">layer</span> <span class="ow">in</span> <span class="nb">enumerate</span> <span class="p">(</span> <span class="n">selected_layers</span> <span class="p">):</span>
+    <span class="n">this_file</span> <span class="o">=</span> <span class="n">file_template</span> <span class="o">%</span> <span class="p">(</span> <span class="n">filename</span><span class="p">,</span> <span class="n">layer</span> <span class="p">)</span>
+    <span class="k">print</span> <span class="s">&quot;Opening Layer </span><span class="si">%d</span><span class="s">: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">this_file</span> <span class="p">)</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span> <span class="p">(</span> <span class="n">this_file</span> <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">g</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">IOError</span>
+    <span class="n">data</span><span class="p">[</span><span class="n">layer</span><span class="p">]</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&quot;</span><span class="se">\t</span><span class="s">&gt;&gt;&gt; Read </span><span class="si">%s</span><span class="s">!&quot;</span> <span class="o">%</span> <span class="n">layer</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>Opening Layer 1: HDF4_EOS:EOS_GRID:&quot;files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf&quot;:MOD_Grid_MOD15A2:Lai_1km
+    &gt;&gt;&gt; Read Lai_1km!
+Opening Layer 2: HDF4_EOS:EOS_GRID:&quot;files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf&quot;:MOD_Grid_MOD15A2:FparLai_QC
+    &gt;&gt;&gt; Read FparLai_QC!
+Opening Layer 3: HDF4_EOS:EOS_GRID:&quot;files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf&quot;:MOD_Grid_MOD15A2:LaiStdDev_1km
+    &gt;&gt;&gt; Read LaiStdDev_1km!
+</pre></div>
+</div>
+<p>In the previous code, we have seen a way of neatly creating the
+filenames required by GDAL to access the independent datasets: a
+template string that gets substituted with the <tt class="docutils literal"><span class="pre">filename</span></tt> and the
+<tt class="docutils literal"><span class="pre">layer</span></tt> name. Note that the presence of double quotes in the template
+requires us to use single quotes around it. The data is now stored in a
+dictionary, and can be accessed as e.g. <tt class="docutils literal"><span class="pre">data['Lai_1km']</span></tt> which is a
+numpy array:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;Lai_1km&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;Lai_1km&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>[[ 3  3  2 ...,  6  8 21]
+ [ 4  3  6 ...,  8 18 14]
+ [ 3 12 11 ..., 12  8  8]
+ ...,
+ [ 2  3  2 ..., 18 11 17]
+ [ 2  3  3 ..., 16 19 15]
+ [ 3  2  2 ..., 15 16 15]]
+</pre></div>
+</div>
+<p>Now we have to translate the LAI values into meaningful quantities.
+According to the
+<a class="reference external" href="https://lpdaac.usgs.gov/products/modis_products_table/leaf_area_index_fraction_of_photosynthetically_active_radiation/8_day_l4_global_1km/mod15a2">LAI</a>
+webpage, there is a scale factor of 0.1 involved for LAI and SD LAI:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">lai</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;Lai_1km&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.1</span>
+<span class="n">lai_sd</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;LaiStdDev_1km&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.1</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="s">&quot;LAI&quot;</span>
+<span class="k">print</span> <span class="n">lai</span>
+<span class="k">print</span> <span class="s">&quot;SD&quot;</span>
+<span class="k">print</span> <span class="n">lai_sd</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>LAI
+[[ 0.3  0.3  0.2 ...,  0.6  0.8  2.1]
+ [ 0.4  0.3  0.6 ...,  0.8  1.8  1.4]
+ [ 0.3  1.2  1.1 ...,  1.2  0.8  0.8]
+ ...,
+ [ 0.2  0.3  0.2 ...,  1.8  1.1  1.7]
+ [ 0.2  0.3  0.3 ...,  1.6  1.9  1.5]
+ [ 0.3  0.2  0.2 ...,  1.5  1.6  1.5]]
+SD
+[[ 0.2  0.2  0.1 ...,  0.2  0.1  0.3]
+ [ 0.2  0.2  0.2 ...,  0.2  0.3  0.2]
+ [ 0.   0.1  0.2 ...,  0.1  0.2  0.2]
+ ...,
+ [ 0.1  0.1  0.1 ...,  0.3  0.   0.1]
+ [ 0.1  0.1  0.1 ...,  0.2  0.2  0.1]
+ [ 0.1  0.1  0.1 ...,  0.1  0.2  0.1]]
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># plot the LAI</span>
+
+<span class="kn">import</span> <span class="nn">pylab</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="c"># colormap</span>
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Greens</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">lai</span><span class="p">,</span><span class="n">interpolation</span><span class="o">=</span><span class="s">&#39;none&#39;</span><span class="p">,</span><span class="n">vmin</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="n">vmax</span><span class="o">=</span><span class="mf">4.</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&#39;MODIS LAI data: DOY 185 2011&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>&lt;matplotlib.colorbar.Colorbar instance at 0x2adc680e1830&gt;
+</pre></div>
+</div>
+<img alt="../_images/GDAL_HDF_13_1.png" src="../_images/GDAL_HDF_13_1.png" />
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># plot the LAI std</span>
+
+<span class="kn">import</span> <span class="nn">pylab</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="c"># colormap</span>
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">spectral</span>
+<span class="c"># this sets the no data colour. &#39;k&#39; is black</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">lai_sd</span><span class="p">,</span><span class="n">interpolation</span><span class="o">=</span><span class="s">&#39;none&#39;</span><span class="p">,</span><span class="n">vmax</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&#39;MODIS LAI STD data: DOY 185 2011&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>&lt;matplotlib.colorbar.Colorbar instance at 0x2adc6954c098&gt;
+</pre></div>
+</div>
+<img alt="../_images/GDAL_HDF_14_1.png" src="../_images/GDAL_HDF_14_1.png" />
+<p>It is not possible to produce LAI estimates if it is persistently
+cloudy, so the dataset may contain some gaps.</p>
+<p>These are identified in the dataset using the QC (Quality Control)
+information.</p>
+<p>We should then examine this.</p>
+<p>The codes for this are also given on the LAI product page. They are
+described as bit combinations:</p>
+<table><tr><th><p>Bit No.</p>
+</th><div class="highlight-python"><div class="highlight"><pre>&lt;th&gt;Parameter Name&lt;/th&gt;&lt;th&gt; Bit Combination&lt;/th&gt;&lt;th&gt;Explanation&lt;/th&gt;
+</pre></div>
+</div>
+<tr><td><p>0</p>
+</td><td><p>MODLAND_QC bits</p>
+</td><td><p>0</p>
+</td><td><p>Good quality (main algorithm with or without saturation)</p>
+</td></tr><tr><td></td><td></td><td><p>1</p>
+</td><td><p>Other Quality (back-up algorithm or fill values)</p>
+</td></tr><tr><td><p>1</p>
+</td><td><p>Sensor</p>
+</td><td><div class="highlight-python"><div class="highlight"><pre>0&lt;/td&gt;&lt;td&gt;  TERRA&lt;/td&gt;
+</pre></div>
+</div>
+</tr><tr><td></td><td></td><td><p>1</p>
+</td><td><p>AQUA</p>
+</td></tr><tr><td><p>2</p>
+</td><td><p>DeadDetector</p>
+</td><td><p>0</p>
+</td><td><p>Detectors apparently fine for up to 50% of channels 1 2</p>
+</td></tr><tr><td></td><td></td><td><p>1</p>
+</td><td><p>Dead detectors caused &gt;50% adjacent detector retrieval</p>
+</td></tr><tr><td><p>3-4</p>
+</td><td><p>CloudState</p>
+</td><td><p>00</p>
+</td><td><p>Significant clouds NOT present (clear)</p>
+</td></tr><tr><td></td><td></td><td><p>01</p>
+</td><td><p>Significant clouds WERE present</p>
+</td></tr><tr><td></td><td></td><td><p>10</p>
+</td><td><p>Mixed clouds present on pixel</p>
+</td></tr><tr><td></td><td></td><td><p>11</p>
+</td><td><p>Cloud state not defined assumed clear</p>
+</td></tr><tr><td><p>5-7</p>
+</td><td><p>CF_QC</p>
+</td><td><p>000</p>
+</td><td><div class="highlight-python"><div class="highlight"><pre>Main (RT) method used   best result possible (no saturation)     &lt;/td&gt;
+</pre></div>
+</div>
+</tr><tr><td></td><td></td><td><p>001</p>
+</td><td><p>Main (RT) method used with saturation. Good very usable</p>
+</td></tr><tr><td></td><td></td><td><p>010</p>
+</td><td><p>Main (RT) method failed due to bad geometry empirical algorithm used</p>
+</td></tr><tr><td></td><td></td><td><p>011</p>
+</td><td><p>Main (RT) method failed due to problems other than geometry empirical
+algorithm used</p>
+</td></tr><tr><td></td><td></td><td><p>100</p>
+</td><td><p>Pixel not produced at all value coudn’t be retrieved (possible reasons:
+bad L1B data unusable MODAGAGG data)</p>
+</td></tr></table><p>In using this information, it is up to the use which data he/she wants
+to pass through for any further processing. There are clearly
+trade-offs: if you look for only the highest quality data, then the
+number of samples is likely to be lower than if you were more tolerant.
+But if you are too tolerant, you will get spurious results. You may find
+useful information on how to convert from actual QA flags to diagnostics
+in <a class="reference external" href="http://gis.cri.fmach.it/modis-ndvi-evi/">this page</a> (they focus
+on NDVI/EVI, but the theory is the same).</p>
+<p>But let&#8217;s just say that we want to use only the highest quality data.</p>
+<p>This means we want bit 0 to be 0 ...</p>
+<p>Let&#8217;s have a look at the QC data:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">qc</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;FparLai_QC&#39;</span><span class="p">]</span> <span class="c"># Get the QC data which is an unsigned 8 bit byte</span>
+<span class="k">print</span> <span class="n">qc</span> <span class="p">,</span> <span class="n">qc</span><span class="o">.</span><span class="n">dtype</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>[[2 2 0 ..., 0 2 2]
+[2 2 0 ..., 2 0 2]
+[0 2 0 ..., 0 0 0]
+...,
+[0 0 2 ..., 0 8 0]
+[0 0 0 ..., 0 0 2]
+[0 2 0 ..., 2 2 2]] uint8
+</pre></div>
+</div>
+<p>We see various byte values:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">qc</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">array</span><span class="p">([</span>  <span class="mi">0</span><span class="p">,</span>   <span class="mi">2</span><span class="p">,</span>   <span class="mi">8</span><span class="p">,</span>  <span class="mi">10</span><span class="p">,</span>  <span class="mi">16</span><span class="p">,</span>  <span class="mi">18</span><span class="p">,</span>  <span class="mi">32</span><span class="p">,</span>  <span class="mi">34</span><span class="p">,</span>  <span class="mi">40</span><span class="p">,</span>  <span class="mi">42</span><span class="p">,</span>  <span class="mi">48</span><span class="p">,</span>  <span class="mi">50</span><span class="p">,</span>  <span class="mi">97</span><span class="p">,</span>
+        <span class="mi">99</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">107</span><span class="p">,</span> <span class="mi">113</span><span class="p">,</span> <span class="mi">115</span><span class="p">,</span> <span class="mi">157</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">uint8</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># translated into binary using bin()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">qc</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">i</span><span class="p">,</span><span class="nb">bin</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>0 0b0
+2 0b10
+8 0b1000
+10 0b1010
+16 0b10000
+18 0b10010
+32 0b100000
+34 0b100010
+40 0b101000
+42 0b101010
+48 0b110000
+50 0b110010
+97 0b1100001
+99 0b1100011
+105 0b1101001
+107 0b1101011
+113 0b1110001
+115 0b1110011
+157 0b10011101
+</pre></div>
+</div>
+<p>We could try to come up with an interpretation of each of these ... or
+we could try to mask the qc bytes to see bit 0 only if that&#8217;s what we
+are interested in. This is quite possibly a new concept for most of you,
+but it is very common that when interpreting QC data in data products,
+you need to think about bit masking. You will find more details on this
+in the advanced section of Chapter 1, but we will consider the minimum
+we need right now.</p>
+<p>Byte data are formed of 8 bits, e.g.:</p>
+<p><tt class="docutils literal"><span class="pre">105</span> <span class="pre">==</span>&nbsp; <span class="pre">(1</span> <span class="pre">*</span> <span class="pre">2**6)</span> <span class="pre">+</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="pre">(1</span> <span class="pre">*</span> <span class="pre">2**5)</span> <span class="pre">+</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="pre">(0</span> <span class="pre">*</span> <span class="pre">2**4)</span> <span class="pre">+</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="pre">(1</span> <span class="pre">*</span> <span class="pre">2**3)</span> <span class="pre">+</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="pre">(0</span> <span class="pre">*</span> <span class="pre">2**2)</span> <span class="pre">+</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="pre">(0</span> <span class="pre">*</span> <span class="pre">2**1)</span> <span class="pre">+</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="pre">(1</span> <span class="pre">*</span> <span class="pre">2**0)</span></tt></p>
+<p>So, in binary, we represent the decimal number <tt class="docutils literal"><span class="pre">105</span></tt> by <tt class="docutils literal"><span class="pre">1101001</span></tt> as
+we saw above.</p>
+<p>The QC values are to be interpreted in this manner.</p>
+<p>If we want <em>only</em> bit 1, we can perform a <em>bitwise</em> operation with the
+byte data.</p>
+<p>In this case, it would be an &#8216;and&#8217; operation (<tt class="docutils literal"><span class="pre">&amp;</span></tt>) with the value
+<tt class="docutils literal"><span class="pre">1</span></tt>:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># suppose we consider the value 105</span>
+<span class="c"># which from above, we know to have</span>
+<span class="c"># bit 0 set as 1</span>
+<span class="n">test</span> <span class="o">=</span> <span class="mi">105</span>
+<span class="n">bit_zero</span> <span class="o">=</span> <span class="n">test</span> <span class="o">&amp;</span> <span class="mi">1</span>
+<span class="k">print</span> <span class="n">bit_zero</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">1</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># suppose we consider the value 104</span>
+<span class="c"># which we could work out has bit 1 as 0</span>
+<span class="n">test</span> <span class="o">=</span> <span class="mi">104</span>
+<span class="n">bit_zero</span> <span class="o">=</span> <span class="n">test</span> <span class="o">&amp;</span> <span class="mi">1</span>
+<span class="k">print</span> <span class="n">bit_zero</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">0</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># other bit fields are a &#39;little&#39; more complicated</span>
+<span class="n">tests</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">qc</span><span class="p">)</span>
+
+
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tests</span><span class="p">:</span>
+    <span class="c"># if we want bit field 5-7</span>
+    <span class="c"># we form a binary mask</span>
+    <span class="n">mask57</span> <span class="o">=</span> <span class="mi">0</span><span class="n">b11100000</span>
+    <span class="c"># but 0</span>
+    <span class="n">mask0</span> <span class="o">=</span>  <span class="mi">0</span><span class="n">b00000001</span>
+    <span class="c"># and use &amp; as before and right shift 5 (&gt;&gt; 5)</span>
+    <span class="n">qa57</span> <span class="o">=</span> <span class="p">(</span><span class="n">t</span> <span class="o">&amp;</span> <span class="n">mask57</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">5</span>
+    <span class="n">qa0</span>  <span class="o">=</span> <span class="p">(</span><span class="n">t</span> <span class="o">&amp;</span> <span class="n">mask0</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">0</span>
+    <span class="k">print</span> <span class="n">t</span><span class="p">,</span><span class="n">qa57</span><span class="p">,</span><span class="n">qa0</span><span class="p">,</span><span class="nb">bin</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>0 0 0 0b0
+2 0 0 0b10
+8 0 0 0b1000
+10 0 0 0b1010
+16 0 0 0b10000
+18 0 0 0b10010
+32 1 0 0b100000
+34 1 0 0b100010
+40 1 0 0b101000
+42 1 0 0b101010
+48 1 0 0b110000
+50 1 0 0b110010
+97 3 1 0b1100001
+99 3 1 0b1100011
+105 3 1 0b1101001
+107 3 1 0b1101011
+113 3 1 0b1110001
+115 3 1 0b1110011
+157 4 1 0b10011101
+</pre></div>
+</div>
+<p>So, for example (examining the table above) <tt class="docutils literal"><span class="pre">105</span></tt> is interpreted at
+<tt class="docutils literal"><span class="pre">0b011</span></tt> in fields 5 to 7 (which is 3 in decimal). This indicates that
+&#8216;Main (RT) method failed due to problems other than geometry empirical
+algorithm used&#8217;. Here, bit zero is set to <tt class="docutils literal"><span class="pre">1</span></tt>, so this is a &#8216;bad&#8217;
+pixel.</p>
+<p>In this case, we are only interested in bit 0, which is an easier task
+than inmterpreting all of the bits.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># the good data are where qc bit 1 is 0</span>
+
+<span class="n">qc</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;FparLai_QC&#39;</span><span class="p">]</span> <span class="c"># Get the QC data</span>
+<span class="c"># find bit 0</span>
+<span class="n">qc</span> <span class="o">=</span> <span class="n">qc</span> <span class="o">&amp;</span> <span class="mi">1</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">qc</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&#39;QC bit 1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>&lt;matplotlib.colorbar.Colorbar instance at 0xc6b71b8&gt;
+</pre></div>
+</div>
+<img alt="../_images/GDAL_HDF_26_1.png" src="../_images/GDAL_HDF_26_1.png" />
+<p>We can use this mask to generate a masked array. Masked arrays, as we
+have seen before, are like normal arrays, but they have an associated
+mask.</p>
+<p>Remember that the mask in a masked array should be <tt class="docutils literal"><span class="pre">False</span></tt> for good
+data, so we can directly use <tt class="docutils literal"><span class="pre">qc</span></tt> as defined above.</p>
+<p>We shall also choose another colormap (there are <a class="reference external" href="http://wiki.scipy.org/Cookbook/Matplotlib/Show_colormaps">lots to choose
+from</a>), and
+set values outside the 0.1 and 4 to be shown as black pixels.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># colormap</span>
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Greens</span>
+<span class="n">cmap</span><span class="o">.</span><span class="n">set_bad</span> <span class="p">(</span> <span class="s">&#39;k&#39;</span> <span class="p">)</span>
+<span class="c"># this sets the no data colour. &#39;k&#39; is black</span>
+
+<span class="c"># generate the masked array</span>
+<span class="n">laim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">array</span> <span class="p">(</span> <span class="n">lai</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">qc</span> <span class="p">)</span>
+
+<span class="c"># and plot it</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span> <span class="p">(</span> <span class="n">laim</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s">&#39;none&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>&lt;matplotlib.colorbar.Colorbar instance at 0x2adc6b8dd5a8&gt;
+</pre></div>
+</div>
+<img alt="../_images/GDAL_HDF_28_1.png" src="../_images/GDAL_HDF_28_1.png" />
+<p>Similarly, we can do a similar thing for Standard Deviation</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">spectral</span>
+<span class="n">cmap</span><span class="o">.</span><span class="n">set_bad</span> <span class="p">(</span> <span class="s">&#39;k&#39;</span> <span class="p">)</span>
+<span class="n">stdm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">array</span> <span class="p">(</span> <span class="n">lai_sd</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">qc</span> <span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span> <span class="p">(</span> <span class="n">stdm</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s">&#39;none&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>&lt;matplotlib.colorbar.Colorbar instance at 0x2adc70725878&gt;
+</pre></div>
+</div>
+<img alt="../_images/GDAL_HDF_30_1.png" src="../_images/GDAL_HDF_30_1.png" />
+<p>For convenience, we might wrap all of this up into a function:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">gdal</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">numpy.ma</span> <span class="kn">as</span> <span class="nn">ma</span>
+
+
+<span class="k">def</span> <span class="nf">getLAI</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> \
+           <span class="n">qc_layer</span> <span class="o">=</span> <span class="s">&#39;FparLai_QC&#39;</span><span class="p">,</span>\
+           <span class="n">scale</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span>\
+           <span class="n">selected_layers</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Lai_1km&quot;</span><span class="p">,</span> <span class="s">&quot;LaiStdDev_1km&quot;</span><span class="p">]):</span>
+
+    <span class="c"># get the QC layer too</span>
+    <span class="n">selected_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">qc_layer</span><span class="p">)</span>
+    <span class="n">scale</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="c"># We will store the data in a dictionary</span>
+    <span class="c"># Initialise an empty dictionary</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="c"># for convenience, we will use string substitution to create a</span>
+    <span class="c"># template for GDAL filenames, which we&#39;ll substitute on the fly:</span>
+    <span class="n">file_template</span> <span class="o">=</span> <span class="s">&#39;HDF4_EOS:EOS_GRID:&quot;</span><span class="si">%s</span><span class="s">&quot;:MOD_Grid_MOD15A2:</span><span class="si">%s</span><span class="s">&#39;</span>
+    <span class="c"># This has two substitutions (the %s parts) which will refer to:</span>
+    <span class="c"># - the filename</span>
+    <span class="c"># - the data layer</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">layer</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">selected_layers</span><span class="p">):</span>
+        <span class="n">this_file</span> <span class="o">=</span> <span class="n">file_template</span> <span class="o">%</span> <span class="p">(</span> <span class="n">filename</span><span class="p">,</span> <span class="n">layer</span> <span class="p">)</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span> <span class="p">(</span> <span class="n">this_file</span> <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">g</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">IOError</span>
+
+        <span class="n">data</span><span class="p">[</span><span class="n">layer</span><span class="p">]</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">()</span> <span class="o">*</span> <span class="n">scale</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+    <span class="n">qc</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">qc_layer</span><span class="p">]</span> <span class="c"># Get the QC data</span>
+    <span class="c"># find bit 0</span>
+    <span class="n">qc</span> <span class="o">=</span> <span class="n">qc</span> <span class="o">&amp;</span> <span class="mi">1</span>
+
+    <span class="n">odata</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">selected_layers</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="n">odata</span><span class="p">[</span><span class="n">layer</span><span class="p">]</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">layer</span><span class="p">],</span><span class="n">mask</span><span class="o">=</span><span class="n">qc</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">odata</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf&#39;</span>
+
+<span class="n">lai_data</span> <span class="o">=</span> <span class="n">getLAI</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+<span class="c"># colormap</span>
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Greens</span>
+<span class="n">cmap</span><span class="o">.</span><span class="n">set_bad</span> <span class="p">(</span> <span class="s">&#39;k&#39;</span> <span class="p">)</span>
+<span class="c"># this sets the no data colour. &#39;k&#39; is black</span>
+
+<span class="c"># and plot it</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span> <span class="p">(</span> <span class="n">lai_data</span><span class="p">[</span><span class="s">&#39;Lai_1km&#39;</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s">&#39;nearest&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>&lt;matplotlib.colorbar.Colorbar instance at 0x2adc709ffe18&gt;
+</pre></div>
+</div>
+<img alt="../_images/GDAL_HDF_33_1.png" src="../_images/GDAL_HDF_33_1.png" />
+</div>
+<div class="section" id="exercise-4-1">
+<h2>Exercise 4.1<a class="headerlink" href="#exercise-4-1" title="Permalink to this headline">¶</a></h2>
+<p>You are given the MODIS LAI data files for the year 2012 in the
+directory <tt class="docutils literal"><span class="pre">files/data</span></tt> for the UK (MODIS tile h17v03).</p>
+<p>Read these LAI datasets into a masked array, using QA bit 0 to mask the
+data (i.e. good quality data only) and generate a movie of LAI.</p>
+<p>You should end up with something like:</p>
+<div class="figure">
+<img alt="" src="Chapter4_GDAL/files/images/lai_uk02.gif" />
+</div>
+</div>
+<div class="section" id="downloading-data">
+<h2>4.2 Downloading data<a class="headerlink" href="#downloading-data" title="Permalink to this headline">¶</a></h2>
+<p>For the exercise and notes above, you were supplied with several
+datasets that had been previously downloaded.</p>
+<div class="section" id="reverb">
+<h3>4.2.1 Reverb<a class="headerlink" href="#reverb" title="Permalink to this headline">¶</a></h3>
+<p>These NASA data can be accessed in several ways (except on Wednesdays
+when they go down for maintainance (or when there is a Government
+shutdown ...)). The most direct way is to use
+<a class="reference external" href="http://reverb.echo.nasa.gov/reverb/#utf8=%E2%9C%93&amp;spatial_map=satellite&amp;spatial_type=rectangle">Reverb</a>
+to explore and access data. If you do this, you can, for example <a class="reference external" href="http://reverb.echo.nasa.gov/reverb/#utf8=%E2%9C%93&amp;spatial_map=satellite&amp;spatial_type=rectangle&amp;spatial=47.517%2C%202.813%2C%2056.907%2C%20-10.547&amp;keywords=modis%20snow%20cover%20mod10&amp;temporal_start=2013-02-21%2000%3A00%3A00&amp;temporal_end=2013-03-21%2023%3A59%3A59">search
+for MODIS snow cover MOD10 datasets covering the
+UK</a>
+for some given time period. If you follow this through, e.g. selecting
+<a class="reference external" href="http://reverb.echo.nasa.gov/reverb/granules?utf8=%E2%9C%93&amp;new_view=true&amp;spatial_map=satellite&amp;spatial_type=rectangle&amp;spatial=47.517%2C+2.813%2C+56.907%2C+-10.547&amp;keywords=modis+snow+cover+mod10&amp;temporal_start=2013-02-21+00%3A00%3A00&amp;temporal_end=2013-03-21+23%3A59%3A59&amp;datasets=C92711294-NSIDC_ECS">MODIS/Terra Snow Cover Daily L3 Global 500m SIN Grid
+V005</a>
+and then search for &#8216;granules&#8217;, you should get access to the datasets
+you want (select e.g. one of the files for gid <tt class="docutils literal"><span class="pre">h17v03</span></tt> and save to
+cart). You then view the items in your cart, click &#8216;download&#8217; and then
+&#8216;save&#8217;.</p>
+<p>This should give you a text file with some urls in it, e.g.:</p>
+<p><tt class="docutils literal"><span class="pre">ftp://n4ftl01u.ecs.nasa.gov/DP0/MOST/MOD10A1.005/2013.02.21/MOD10A1.A2013052.h17v03.005.2013054054219.hdf</span> <span class="pre">ftp://n4ftl01u.ecs.nasa.gov/DP0/MOST/MOD10A1.005/2013.02.21/MOD10A1.A2013052.h17v03.005.2013054054219.hdf.xml</span> <span class="pre">ftp://n4ftl01u.ecs.nasa.gov/DP0/BRWS/Browse.001/2013.02.23/BROWSE.MOD10A1.A2013052.h17v03.005.2013054054219.1.jpg</span> <span class="pre">http://browse.echo.nasa.gov/NSIDC_ECS/2013/02/23/:BR:Browse.001:46841269:1.BINARY</span></tt></p>
+<p>Here, we can note that one of them is a jpeg file:</p>
+<div class="figure">
+<img alt="" src="ftp://n4ftl01u.ecs.nasa.gov/DP0/BRWS/Browse.001/2013.02.23/BROWSE.MOD10A1.A2013052.h17v03.005.2013054054219.1.jpg" />
+</div>
+<p>which is the quicklook (BROWSE file) for that tile / date.</p>
+<p>The hdf dataset is, in this case
+<tt class="docutils literal"><span class="pre">ftp://n4ftl01u.ecs.nasa.gov/DP0/MOST/MOD10A1.005/2013.02.21/MOD10A1.A2013052.h17v03.005.2013054054219.hdf</span></tt>.</p>
+<p>From this, we see that the data server is <tt class="docutils literal"><span class="pre">n4ftl01u.ecs.nasa.gov</span></tt> and
+that the MODIS snow products for the MODIS Terra instrument are in the
+directory:</p>
+<p><tt class="docutils literal"><span class="pre">ftp://n4ftl01u.ecs.nasa.gov/DP0/MOST</span></tt>.</p>
+<p>If we explored that, we would find the datasets from the MODIS Aqua
+platform were in:</p>
+<p><tt class="docutils literal"><span class="pre">ftp://n4ftl01u.ecs.nasa.gov/DP0/MOSA</span></tt>.</p>
+<p>The directories below that give the date and filename.</p>
+</div>
+<div class="section" id="ftp-access">
+<h3>4.2.2 FTP access<a class="headerlink" href="#ftp-access" title="Permalink to this headline">¶</a></h3>
+<p>Now we have discovered something about the directory structure on the
+server, we could explore this to get the datasets we want (rather than
+having to go through Reverb).</p>
+<p>Some of the datasets on Reverb are acessible only through <tt class="docutils literal"><span class="pre">http</span></tt>, but
+the snow products (at present) are availble by <tt class="docutils literal"><span class="pre">ftp</span></tt>.</p>
+<p>In either case, if we want to run some &#8216;batch&#8217; process to download many
+files (e.g. all files for a year for some tile), the first thing we need
+is the set of urls for the files we want.</p>
+<p>We won&#8217;t go into detail here about how to get this, but it is covered in
+the advanced section (at the very least, you could always get the set of
+urls from Reverb).</p>
+<p>So, let&#8217;s suppose now that we have a file containing some urls that we
+want to pull:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>!head -10 &lt; files/data/robot_snow.2012.txt
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2012.01.01/MYD10A1.A2012001.h00v08.005.2012006235251.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2012.01.01/MYD10A1.A2012001.h00v09.005.2012006235244.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2012.01.01/MYD10A1.A2012001.h00v10.005.2012006234603.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2012.01.01/MYD10A1.A2012001.h01v08.005.2012006234607.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2012.01.01/MYD10A1.A2012001.h01v09.005.2012006234607.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2012.01.01/MYD10A1.A2012001.h01v10.005.2012006235245.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2012.01.01/MYD10A1.A2012001.h01v11.005.2012006234656.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2012.01.01/MYD10A1.A2012001.h02v06.005.2012006235323.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2012.01.01/MYD10A1.A2012001.h02v08.005.2012006234419.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2012.01.01/MYD10A1.A2012001.h02v09.005.2012006234416.hdf
+</pre></div>
+</div>
+<p>This is a file containing the filenames of <em>all</em> <tt class="docutils literal"><span class="pre">MOD10A1</span></tt> (daily snow
+cover) files for a given year, pulled from the ftp server. It is
+possible to do this in Python (see advanced section), but actually must
+easier and faster with an ftp script
+<a class="reference external" href="files/python/zat-snow">`files/python/zat-snow</a>. You don&#8217;t need to
+run this, as it has already been run for you and the results put in the
+files:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>ls -l files/data/robot_snow*txt
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>[0m-rw-rw-r-- 1 plewis plewis  9034752 Oct 22 09:25 [0mfiles/data/robot_snow.2000.txt[0m
+-rw-rw-r-- 1 plewis plewis 10820568 Oct 22 09:25 [0mfiles/data/robot_snow.2001.txt[0m
+-rw-rw-r-- 1 plewis plewis 16321938 Oct 22 09:25 [0mfiles/data/robot_snow.2002.txt[0m
+-rw-rw-r-- 1 plewis plewis 22423068 Oct 22 09:25 [0mfiles/data/robot_snow.2003.txt[0m
+-rw-rw-r-- 1 plewis plewis  7633374 Oct 22 09:25 [0mfiles/data/robot_snow.2004.txt[0m
+-rw-rw-r-- 1 plewis plewis 18872448 Oct 22 09:25 [0mfiles/data/robot_snow.2005.txt[0m
+-rw-rw-r-- 1 plewis plewis 11433078 Oct 22 09:25 [0mfiles/data/robot_snow.2006.txt[0m
+-rw-rw-r-- 1 plewis plewis 22663686 Oct 22 09:25 [0mfiles/data/robot_snow.2007.txt[0m
+-rw-rw-r-- 1 plewis plewis 22668990 Oct 22 09:25 [0mfiles/data/robot_snow.2008.txt[0m
+-rw-rw-r-- 1 plewis plewis 22705317 Oct 22 09:25 [0mfiles/data/robot_snow.2009.txt[0m
+-rw-rw-r-- 1 plewis plewis 22712370 Oct 22 09:25 [0mfiles/data/robot_snow.2010.txt[0m
+-rw-rw-r-- 1 plewis plewis 17129166 Oct 22 09:25 [0mfiles/data/robot_snow.2011.txt[0m
+-rw-rw-r-- 1 plewis plewis 22756824 Oct 22 09:25 [0mfiles/data/robot_snow.2012.txt[0m
+-rw-rw-r-- 1 plewis plewis 18104898 Oct 22 09:25 [0mfiles/data/robot_snow.2013.txt[0m
+[m
+</pre></div>
+</div>
+<p>We can do similar things for http, but that is a little more complicated
+(again, see advanced notes or
+<tt class="docutils literal"><span class="pre">`files/zat</span> <span class="pre">&gt;</span> <span class="pre">files/data/robot.txt</span></tt> &lt;files/zat&gt;`__ for the MODIS LAI
+product.</p>
+<div class="code python highlight-python"><div class="highlight"><pre>!head -10 &lt; files/data/robot.txt
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2002.07.04/MCD15A2.A2002185.h00v08.005.2007172150237.hdf
+http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2002.07.04/MCD15A2.A2002185.h00v09.005.2007172150920.hdf
+http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2002.07.04/MCD15A2.A2002185.h00v10.005.2007172151610.hdf
+http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2002.07.04/MCD15A2.A2002185.h01v07.005.2007172152152.hdf
+http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2002.07.04/MCD15A2.A2002185.h01v08.005.2007172150246.hdf
+http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2002.07.04/MCD15A2.A2002185.h01v09.005.2007172150923.hdf
+http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2002.07.04/MCD15A2.A2002185.h01v10.005.2007177210359.hdf
+http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2002.07.04/MCD15A2.A2002185.h01v11.005.2007172151611.hdf
+http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2002.07.04/MCD15A2.A2002185.h02v06.005.2007172144545.hdf
+http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2002.07.04/MCD15A2.A2002185.h02v08.005.2007172150221.hdf
+</pre></div>
+</div>
+<p>The file <tt class="docutils literal"><span class="pre">files/data/robot_snow.2012.txt</span></tt> contains the names for all
+tiles and all files.</p>
+<p>So if we want just e.g. tile <tt class="docutils literal"><span class="pre">h17v03</span></tt> and sensor (<tt class="docutils literal"><span class="pre">MOST</span></tt>), we can
+most easily filter this in unix:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>tile=h17v03
+year=2012
+type=MOST
+
+file=files/data/robot_snow.${year}_${type}_${tile}.txt
+
+grep $tile &lt; files/data/robot_snow.$year.txt | grep $type &gt; $file
+
+# how many files?
+wc -l &lt; $file
+
+# look at the first 10 ...
+head -10 &lt; $file
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>366
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.01/MOD10A1.A2012001.h17v03.005.2012003054416.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.02/MOD10A1.A2012002.h17v03.005.2012004061011.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.03/MOD10A1.A2012003.h17v03.005.2012005061244.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.04/MOD10A1.A2012004.h17v03.005.2012006054639.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.05/MOD10A1.A2012005.h17v03.005.2012007052708.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.06/MOD10A1.A2012006.h17v03.005.2012008070328.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.07/MOD10A1.A2012007.h17v03.005.2012011144012.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.08/MOD10A1.A2012008.h17v03.005.2012011154609.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.09/MOD10A1.A2012009.h17v03.005.2012011222125.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.10/MOD10A1.A2012010.h17v03.005.2012012062821.hdf
+</pre></div>
+</div>
+<p>With a more sensible set of urls now (only a few hundred), we can
+consider how to download them.</p>
+<p>We can (of course) do this in Python (see advanced notes), but we can
+also use unix tools such as <tt class="docutils literal"><span class="pre">curl</span></tt> or <tt class="docutils literal"><span class="pre">wget</span></tt>, which may be easier.</p>
+<p>For example, in <tt class="docutils literal"><span class="pre">bash</span></tt>:</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>tile=h17v03
+year=2012
+type=MOST
+
+file=snow_list_${tile}_${year}_${type}.txt
+
+# cd temporarily to the local directory
+pushd files/data
+# -nc : no clobber : dont download if its there already
+# -nH --cut-dirs=3 : ignore the directories
+wget -nc -i $file -nH --cut-dirs=3
+popd
+</pre></div>
+</div>
+<p>or in <tt class="docutils literal"><span class="pre">tcsh</span></tt>:</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>set tile=h17v03
+set year=2012
+set type=MOST
+
+file=snow_list_${tile}_${year}_${type}.txt
+
+# cd temporarily to the local directory
+pushd files/data
+# -nc : no clobber : dont download if its there already
+# -nH --cut-dirs=3 : ignore the directories
+wget -nc -i $file -nH --cut-dirs=3
+popd
+</pre></div>
+</div>
+<p>For the moment, let&#8217;s just pull only some of these by filtering the
+month as well:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>tile=h17v03
+year=2012
+type=MOST
+month=01
+
+file=files/data/robot_snow.${year}_${type}_${tile}_${month}.txt
+
+# the dot in the year / month grep need to be escaped
+# because dot means something special to grep
+grep $tile &lt; files/data/robot_snow.$year.txt | grep $type | grep &quot;${year}\.${month}&quot; &gt; $file
+
+# how many files?
+wc -l &lt; $file
+
+# look at the first 10 ...
+head -10 &lt; $file
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>31
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.01/MOD10A1.A2012001.h17v03.005.2012003054416.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.02/MOD10A1.A2012002.h17v03.005.2012004061011.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.03/MOD10A1.A2012003.h17v03.005.2012005061244.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.04/MOD10A1.A2012004.h17v03.005.2012006054639.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.05/MOD10A1.A2012005.h17v03.005.2012007052708.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.06/MOD10A1.A2012006.h17v03.005.2012008070328.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.07/MOD10A1.A2012007.h17v03.005.2012011144012.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.08/MOD10A1.A2012008.h17v03.005.2012011154609.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.09/MOD10A1.A2012009.h17v03.005.2012011222125.hdf
+ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.10/MOD10A1.A2012010.h17v03.005.2012012062821.hdf
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre>tile=h17v03
+year=2012
+type=MOST
+month=01
+
+file=robot_snow.${year}_${type}_${tile}_${month}.txt
+
+# cd temporarily to the local directory
+pushd files/data
+# -nc : no clobber : dont download if its there already
+# -nH --cut-dirs=3 : ignore the directories
+wget -nc -i $file -nH --cut-dirs=3
+# cd back again
+popd
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>Process is terminated.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="exercise-4-2-a-different-dataset">
+<h2>Exercise 4.2 A Different Dataset<a class="headerlink" href="#exercise-4-2-a-different-dataset" title="Permalink to this headline">¶</a></h2>
+<p>We have now dowloaded a different dataset, the <a class="reference external" href="http://www.icess.ucsb.edu/modis/SnowUsrGuide/usrguide_1dtil.html">MOD10A
+product</a>,
+which is the 500 m MODIS daily snow cover product, over the UK.</p>
+<p>This is a good opportunity to see if you can apply what was learned
+above about interpreting QC information and using <tt class="docutils literal"><span class="pre">gdal</span></tt> to examine a
+dataset.</p>
+<p>If you examine the <a class="reference external" href="http://nsidc.org/data/docs/daac/modis_v5/mod10a1_modis_terra_snow_daily_global_500m_grid.gd.html">data description
+page</a>,
+you will see that the data are in HDF EOS format (the same as the LAI
+product).</p>
+<div class="section" id="e4-2-1-download">
+<h3>E4.2.1 Download<a class="headerlink" href="#e4-2-1-download" title="Permalink to this headline">¶</a></h3>
+<p>Download the MODIS Terra daily snow product for the UK for the year 2012
+for the month of February using the urls in
+<a class="reference external" href="files/data/robot_snow.2012.txt">files/data/robot_snow.2012.txt</a> and
+put them in the directory <tt class="docutils literal"><span class="pre">files/data</span></tt>.</p>
+</div>
+<div class="section" id="e4-2-1-explore">
+<h3>E4.2.1 Explore<a class="headerlink" href="#e4-2-1-explore" title="Permalink to this headline">¶</a></h3>
+<p>Show all of the subset data layers in this dataset.</p>
+</div>
+<div class="section" id="e4-3-3-read-a-dataset">
+<h3>E4.3.3 Read a dataset<a class="headerlink" href="#e4-3-3-read-a-dataset" title="Permalink to this headline">¶</a></h3>
+<p>Suppose we are interested in the dataset <tt class="docutils literal"><span class="pre">Fractional_Snow_Cover</span></tt> over
+the land surface.</p>
+<p>Read this dataset for one of the files into a numpy array and show a
+plot of the dataset.</p>
+</div>
+<div class="section" id="e4-3-4-water-mask">
+<h3>E4.3.4 Water mask<a class="headerlink" href="#e4-3-4-water-mask" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference external" href="http://nsidc.org/data/docs/daac/modis_v5/mod10a1_modis_terra_snow_daily_global_500m_grid.gd.html">data description
+page</a>
+tells us that values of <tt class="docutils literal"><span class="pre">239</span></tt> will indicate whether the data is ocean.
+You can use this information to build the water mask.</p>
+<p>Demonstrate how to build a water mask from one of these files, setting
+the mask <tt class="docutils literal"><span class="pre">False</span></tt> for land and <tt class="docutils literal"><span class="pre">True</span></tt> for water.</p>
+<p>Produce a plot of this.</p>
+</div>
+<div class="section" id="e3-4-5-valid-pixel-mask">
+<h3>E3.4.5 Valid pixel mask<a class="headerlink" href="#e3-4-5-valid-pixel-mask" title="Permalink to this headline">¶</a></h3>
+<p>As well as having a land/water mask, we should generate a mask for valid
+pixels. For the snow dataset, values between 0 and 100 (inclusive)
+represent valid snow cover data values. Other values are not valid for
+some reason. Set the mask to <tt class="docutils literal"><span class="pre">False</span></tt> for valid pixels and <tt class="docutils literal"><span class="pre">True</span></tt> for
+others. Produce a plot of the mask.</p>
+</div>
+<div class="section" id="e4-3-6-3d-dataset">
+<h3>E4.3.6 3D dataset<a class="headerlink" href="#e4-3-6-3d-dataset" title="Permalink to this headline">¶</a></h3>
+<p>Generate a 3D masked numpy array using the valid pixel mask for masking,
+of <tt class="docutils literal"><span class="pre">Fractional_Snow_Cover</span></tt> for each day of February 2012.</p>
+<p>You might like to produce a movie of the result.</p>
+<p>Hint: you will need a list of filenames for this. You can either use
+<tt class="docutils literal"><span class="pre">glob</span></tt> as in previous exercises, or you might notice that you have the
+file <tt class="docutils literal"><span class="pre">files/data/robot_snow.2012_MOST_h17v03_02.txt</span></tt> with the urls,
+from which you should be able to derive the file names. However you get
+your list of filenames, you should probably apply a <tt class="docutils literal"><span class="pre">sort()</span></tt> to the
+result to make sure they are in the correct order.</p>
+</div>
+</div>
+<div class="section" id="vector-masking">
+<h2>4.3 Vector masking<a class="headerlink" href="#vector-masking" title="Permalink to this headline">¶</a></h2>
+<p>In this section, we will use a pre-defined function to generate a mask
+from some vector boundary data.</p>
+<p>In this case, we will generate a mask for Ireland, projected into the
+coordinate system of the MODIS LAI dataset, and use that to generate a
+new LAI data only for Ireland.</p>
+<p>Sometimes, geospatial data is acquired and recorded for particular
+geometric objects such as polygons or lines. An example is a road
+layout, where each road is represented as a geometric object (a line,
+with points given in a geographical projection), with a number of added
+<em>features</em> associated with it, such as the road name, whether it is a
+toll road, or whether it is dual-carriageway, etc. This data is quite
+different to a raster, where the entire scene is tessellated into
+pixels, and each pixel holds a value (or an array of value in the case
+of multiband rasterfiles).</p>
+<p>If you are familiar with databases, vector files are effectively a
+database, where one of the fields is a geometry object (a line in our
+previous road example, or a polygon if you consider a cadastral system).
+We can thus select different records by writing queries on the features.
+Some of these queries might be spatial (e.g. check whether a point is
+inside a particular country polygon).</p>
+<p>The most common format for vector data is the <strong>ESRI Shapfile</strong>, which
+is a multifile format (i.e., several files are needed in order to access
+the data). We&#8217;ll start by getting hold of a shapefile that contains the
+countries of the world as polygons, together with information on country
+name, capital name, population, etc. The file is available
+<a class="reference external" href="http://aprsworld.net/gisdata/world/world.zip">here</a>.</p>
+<div class="figure">
+<img alt="World" src="http://aprsworld.net/gisdata/world/political-world-aprs-small.png" />
+<p class="caption">World</p>
+</div>
+<p>We will download the file with wget (or curl if you want to), and
+uncompress it using unzip in the shell:</p>
+<div class="code python highlight-python"><div class="highlight"><pre># Downloads the data using wget
+!wget -nc http://aprsworld.net/gisdata/world/world.zip -O files/data/world.zip
+# or if you want to use curl...
+#! curl http://aprsworld.net/gisdata/world/world.zip -o world.zip
+!pushd files/data;unzip -o -x world.zip;popd
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>--2013-10-22 15:32:06--  http://aprsworld.net/gisdata/world/world.zip
+Resolving aprsworld.net... 72.251.203.219
+Connecting to aprsworld.net|72.251.203.219|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 3436277 (3.3M) [application/zip]
+Saving to: `files/data/world.zip&#39;
+
+100%[======================================&gt;] 3,436,277   3.38M/s   in 1.0s
+
+2013-10-22 15:32:07 (3.38 MB/s) - `files/data/world.zip&#39; saved [3436277/3436277]
+
+/archive/rsu_raid_0/plewis/public_html/geogg122_local/geogg122/Chapter4_GDAL/files/data /archive/rsu_raid_0/plewis/public_html/geogg122_local/geogg122/Chapter4_GDAL
+Archive:  world.zip
+  inflating: world.dbf
+  inflating: world.shp
+  inflating: world.shx
+/archive/rsu_raid_0/plewis/public_html/geogg122_local/geogg122/Chapter4_GDAL
+</pre></div>
+</div>
+<p>We need to import <tt class="docutils literal"><span class="pre">ogr</span></tt>, and then open the file. As with GDAL, we get
+a handler to the file, (<tt class="docutils literal"><span class="pre">g</span></tt> in this case). OGR files can have
+different layers, although Shapefiles only have one. We need to select
+the layer using <tt class="docutils literal"><span class="pre">GetLayer(0)</span></tt> (selecting the first layer).</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">osgeo</span> <span class="kn">import</span> <span class="n">ogr</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">ogr</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span> <span class="s">&quot;files/data/world.shp&quot;</span> <span class="p">)</span>
+<span class="n">layer</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">GetLayer</span><span class="p">(</span> <span class="mi">0</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>In order to see a field (the field <tt class="docutils literal"><span class="pre">NAME</span></tt>) we can loop over the
+features in the layer, and use the <tt class="docutils literal"><span class="pre">GetField('NAME')</span></tt> method. We&#8217;ll
+only do ten features here:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">n_feat</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="n">layer</span><span class="p">:</span>
+
+    <span class="k">print</span> <span class="n">feat</span><span class="o">.</span><span class="n">GetField</span><span class="p">(</span><span class="s">&#39;NAME&#39;</span><span class="p">)</span>
+
+    <span class="n">n_feat</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">n_feat</span> <span class="o">==</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="k">break</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>GUATEMALA
+BOLIVIA
+PARAGUAY
+URUGUAY
+SURINAME
+FRENCH GUIANA
+WESTERN SAHARA
+GAMBIA
+MOROCCO
+MALI
+</pre></div>
+</div>
+<p>If you wanted to see the different layers, we could do this using:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">layerDefinition</span> <span class="o">=</span> <span class="n">layer</span><span class="o">.</span><span class="n">GetLayerDefn</span><span class="p">()</span>
+
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">layerDefinition</span><span class="o">.</span><span class="n">GetFieldCount</span><span class="p">()):</span>
+    <span class="k">print</span> <span class="s">&quot;Field </span><span class="si">%d</span><span class="s">: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">layerDefinition</span><span class="o">.</span><span class="n">GetFieldDefn</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">GetName</span><span class="p">()</span> <span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>Field 1: NAME
+Field 2: CAPITAL
+Field 3: APPROX
+Field 4: AREA
+Field 5: SOURCETHM
+</pre></div>
+</div>
+<p>There is much more information on using <tt class="docutils literal"><span class="pre">ogr</span></tt> on the associated
+<a class="reference external" href="OGR_Python.html">notebook OGR_Python</a> that you should explore at
+some point.</p>
+<p>One thing we may often wish to dowith such vector datsets is produce a
+mask, e.g. for national boundaries. One of the complexities of this is
+changing the projection that the vector data come in to that of the
+raster dataset.</p>
+<p>This is too involved to go over in this session, so we will simply
+present you with a function to achieve this.</p>
+<p>This is available as
+<a class="reference external" href="files/python/raster_mask.py">files/python/raster_mask.py</a>.</p>
+<p>Most of the code below should be familiar from above (we make use of the
+<tt class="docutils literal"><span class="pre">getLAI()</span></tt> function we developed).</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="s">&#39;files/python&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">raster_mask</span> <span class="kn">import</span> <span class="n">raster_mask</span><span class="p">,</span><span class="n">getLAI</span>
+
+<span class="c"># test this on an LAI file</span>
+
+<span class="c"># the data file name</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;files/data/MCD15A2.A2012273.h17v03.005.2012297134400.hdf&#39;</span>
+
+<span class="c"># a layer (doesn&#39;t matter so much which: use for geometry info)</span>
+<span class="n">layer</span> <span class="o">=</span> <span class="s">&#39;Lai_1km&#39;</span>
+<span class="c"># the full dataset specification</span>
+<span class="n">file_template</span> <span class="o">=</span> <span class="s">&#39;HDF4_EOS:EOS_GRID:&quot;</span><span class="si">%s</span><span class="s">&quot;:MOD_Grid_MOD15A2:</span><span class="si">%s</span><span class="s">&#39;</span>
+<span class="n">file_spec</span> <span class="o">=</span> <span class="n">file_template</span><span class="o">%</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="n">layer</span><span class="p">)</span>
+
+<span class="c"># make a raster mask</span>
+<span class="c"># from the layer IRELAND in world.shp</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">raster_mask</span><span class="p">(</span><span class="n">file_spec</span><span class="p">,</span>\
+                   <span class="n">target_vector_file</span> <span class="o">=</span> <span class="s">&quot;files/data/world.shp&quot;</span><span class="p">,</span>\
+                   <span class="n">attribute_filter</span> <span class="o">=</span> <span class="s">&quot;NAME = &#39;IRELAND&#39;&quot;</span><span class="p">)</span>
+
+<span class="c"># get the LAI data</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">getLAI</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+<span class="c"># reset the data mask</span>
+<span class="c"># &#39;mask&#39; is True for Ireland</span>
+<span class="c"># so take the opposite</span>
+<span class="n">data</span><span class="p">[</span><span class="s">&#39;Lai_1km&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;Lai_1km&#39;</span><span class="p">],</span><span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">)</span>
+<span class="n">data</span><span class="p">[</span><span class="s">&#39;LaiStdDev_1km&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;Lai_1km&#39;</span><span class="p">],</span><span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&#39;LAI for Eire: 2012273&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;Lai_1km&#39;</span><span class="p">],</span><span class="n">vmax</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>&lt;matplotlib.colorbar.Colorbar instance at 0x7153878&gt;
+</pre></div>
+</div>
+<img alt="../_images/GDAL_HDF_65_1.png" src="../_images/GDAL_HDF_65_1.png" />
+</div>
+<div class="section" id="exercise-4-3">
+<h2>Exercise 4.3<a class="headerlink" href="#exercise-4-3" title="Permalink to this headline">¶</a></h2>
+<p>Apply the concepts above to generate a 3D masked numpy data array of LAI
+and std LAI for Eire for the year 2012.</p>
+<p>Plot your results and make a move of LAI.</p>
+<p>Plot average LAI for Eire as a function of day of year for 2012.</p>
+</div>
+</div>
+<div class="section" id="summary">
+<h1>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h1>
+<p>In this session, we have learned to use some geospatial tools using GDAL
+in Python. A good set of <a class="reference external" href="http://jgomezdans.github.io/gdal_notes/">working notes on how to use
+GDAL</a> has been developed
+that you will find useful for further reading, as well as looking at the
+<a class="reference external" href="advanced.html">advanced</a> section.</p>
+<p>We have also very briefly introduced dealing with vector datasets in
+<tt class="docutils literal"><span class="pre">ogr</span></tt>, but this was mainly through the use of a pre-defined function
+that will take an ESRI shapefile (vector dataset), warp this to the
+projection of a raster dataset, and produce a mask for a given layer in
+the vector file.</p>
+<p>If there is time in the class, we will develop some exercises to examine
+the datasets we have generated and/or to explore some different datasets
+or different locations.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+        <p class="logo"><a href="../index.html" title="index">
+          <img class="logo" src="../_static/ucl_logo.png" alt="Logo"/>
+        </a></p><div class="sphinxlocaltoc">
+    <h3><a href="../index.html">Page contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Chapter 4. Geospatial data</a><ul>
+<li><a class="reference internal" href="#modis-lai-product">4.1 MODIS LAI product</a></li>
+<li><a class="reference internal" href="#exercise-4-1">Exercise 4.1</a></li>
+<li><a class="reference internal" href="#downloading-data">4.2 Downloading data</a><ul>
+<li><a class="reference internal" href="#reverb">4.2.1 Reverb</a></li>
+<li><a class="reference internal" href="#ftp-access">4.2.2 FTP access</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#exercise-4-2-a-different-dataset">Exercise 4.2 A Different Dataset</a><ul>
+<li><a class="reference internal" href="#e4-2-1-download">E4.2.1 Download</a></li>
+<li><a class="reference internal" href="#e4-2-1-explore">E4.2.1 Explore</a></li>
+<li><a class="reference internal" href="#e4-3-3-read-a-dataset">E4.3.3 Read a dataset</a></li>
+<li><a class="reference internal" href="#e4-3-4-water-mask">E4.3.4 Water mask</a></li>
+<li><a class="reference internal" href="#e3-4-5-valid-pixel-mask">E3.4.5 Valid pixel mask</a></li>
+<li><a class="reference internal" href="#e4-3-6-3d-dataset">E4.3.6 3D dataset</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#vector-masking">4.3 Vector masking</a></li>
+<li><a class="reference internal" href="#exercise-4-3">Exercise 4.3</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#summary">Summary</a></li>
+</ul>
+
+  </div>
+  <div class="sphinxprev">
+    <h4>Previous page</h4>
+    <p class="topless"><a href="../Chapter3_Scientific_Numerical_Python/Scientific_Numerical_Python.html"
+                          title="Previous page">&larr; 3. Plotting and Numerical Python</a></p>
+  </div>
+  <div class="sphinxnext">
+    <h4>Next page</h4>
+    <p class="topless"><a href="GDAL_Python_bindings.html"
+                          title="Next page">&rarr; GDAL and OGR libraries</a></p>
+  </div>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/Chapter4_GDAL/GDAL_HDF.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="GDAL_Python_bindings.html" title="GDAL and OGR libraries"
+             >next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="../Chapter3_Scientific_Numerical_Python/Scientific_Numerical_Python.html" title="3. Plotting and Numerical Python"
+             >previous</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">geogg122</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2014, Prof. P. Lewis.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

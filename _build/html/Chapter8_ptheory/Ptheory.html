@@ -1,0 +1,352 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Recollision Probability Theory &mdash; GeogG122: Scientific Computing v&lt;release&gt; documentation</title>
+    
+    <link rel="stylesheet" href="../_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../_static/cloud.js"></script>
+    <link rel="top" title="GeogG122: Scientific Computing v&lt;release&gt; documentation" href="../index.html" />
+    <link rel="prev" title="7.0 Fire/ENSO teleconnections" href="../Chapter7_ENSO/ENSO.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div class="relbar-top">
+        
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../Chapter7_ENSO/ENSO.html" title="7.0 Fire/ENSO teleconnections"
+             accesskey="P">previous</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">geogg122</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="recollision-probability-theory">
+<h1>Recollision Probability Theory<a class="headerlink" href="#recollision-probability-theory" title="Permalink to this headline">¶</a></h1>
+<p>A useful source of information quantifying vegetation amount is the Leaf
+Area Index (LAI). To interpret LAI from satellite data, we build models
+of radiative transfer.</p>
+<p>One of the simplest such models that we can use at optical wavelengths
+uses what is known as &#8216;p theory&#8217; or &#8216;recollision probability theory&#8217;
+(Lewis and Disney, 2007; Huang et al., 2007).</p>
+<p><strong>The task today is to use p-theory to estimate LAI over some
+agricultural fields.</strong></p>
+<p>References</p>
+<ul class="simple">
+<li>P. Lewis and M. Disney (2007) Spectral invariants and scattering
+across multiple scales from within-leaf to canopy, <a class="reference external" href="http://www2.geog.ucl.ac.uk/~mdisney/papers/lewis_disney_prospect.pdf">Remote Sensing of
+Environment 109,
+196-206.</a></li>
+<li>D. Huang, Y. Knyazikhin, R.E. Dickinson, M. Rautiainen, P. Stenberg,
+M. Disney, P. Lewis, A. Cescatti, Y. Tian, W. Verhoef, and R.B.
+Myneni (2007), Canopy spectral invariants for remote sensing and
+model applications, <a class="reference external" href="http://www2.geog.ucl.ac.uk/~plewis/Huang_Spectral_Revised.pdf">Remote Sensing of Environment, 106,
+106-122</a></li>
+<li>Knyazikhin Y, Schull MA, Stenberg P, Mottus M, Rautiainen M, Yang Y,
+Marshak A, Latorre Carmona P, Kaufmann RK, Lewis P, Disney MI,
+Vanderbilt V, Davis AB, Baret F, Jacquemoud S, Lyapustin A, Myneni
+RB. (2013) Hyperspectral remote sensing of foliar nitrogen content.
+Proc Natl Acad Sci USA,
+<a class="reference external" href="http://cybele.bu.edu/download/manuscripts/knyazikhin-pnas-hypspec.pdf">10.1073/pnas.1210196109</a>.</li>
+</ul>
+</div>
+<div class="section" id="data">
+<h1>Data<a class="headerlink" href="#data" title="Permalink to this headline">¶</a></h1>
+<p>The dataset you have available is an airborne hyperspectral image
+(HYMAP) dataset for which you have a 512x512 pixel subscene taken in 125
+wavebands with a spatial resolution of 4m. The data were obtained on 17
+June 2000 over Barton Bendish Farms, Norfolk during the BNSC/NERC SHAC
+campaign.</p>
+<p>The data are available as a compressed <em>flat binary</em> file in the
+directory <tt class="docutils literal"><span class="pre">`files/data</span></tt> &lt;files/data&gt;`__.</p>
+<p>First, uncompress the dataset:</p>
+<div class="code python highlight-python"><div class="highlight"><pre># or try zcat if gzcat isnt there
+!gzcat files/data/bbHYMAP.dat.gz &gt; files/data/bbHYMAP.dat
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre>!ls -l files/data/bbHYMAP.dat
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>-rw-r--r--  1 plewis  staff  131072000 26 Nov 17:31 files/data/bbHYMAP.dat
+</pre></div>
+</div>
+<p>The file is 131072000 bytes in 32 bit floating point format:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="s">&#39;nbands =&#39;</span><span class="p">,</span><span class="mi">131072000</span><span class="o">/</span><span class="p">(</span><span class="mi">512</span><span class="o">*</span><span class="mi">512</span><span class="o">*</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">nbands</span> <span class="o">=</span> <span class="mi">125</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># we wuill use memmap to read the data in</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">memmap</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">hymap</span> <span class="o">=</span> <span class="n">memmap</span><span class="p">(</span><span class="s">&#39;files/data/bbHYMAP.dat&#39;</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span><span class="n">mode</span><span class="o">=</span><span class="s">&#39;r&#39;</span><span class="p">,</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">125</span><span class="p">,</span><span class="mi">512</span><span class="p">,</span><span class="mi">512</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">hymap</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span><span class="n">interpolation</span><span class="o">=</span><span class="s">&#39;nearest&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>&lt;matplotlib.image.AxesImage at 0x10598edd0&gt;
+</pre></div>
+</div>
+<img alt="../_images/Ptheory_10_1.png" src="../_images/Ptheory_10_1.png" />
+<p>The wavelengths associated with each band are stored in
+<tt class="docutils literal"><span class="pre">`files/data/wavebands.dat</span></tt> &lt;files/data/wavebands.dat&gt;`__.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">mean</span> <span class="o">=</span> <span class="n">hymap</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">wavelength</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s">&#39;files/data/wavebands.dat&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wavelength</span><span class="p">,</span><span class="n">mean</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>[&lt;matplotlib.lines.Line2D at 0x10f089790&gt;]
+</pre></div>
+</div>
+<img alt="../_images/Ptheory_12_1.png" src="../_images/Ptheory_12_1.png" />
+</div>
+<div class="section" id="theory">
+<h1>Theory<a class="headerlink" href="#theory" title="Permalink to this headline">¶</a></h1>
+<p>The simplest form of model in p-theory assumes that the photon
+recollision probability is constant with wavelength and scattering
+order. Under this assumption, the total scattering from the canopy,
+<span class="math">\(W\)</span> is:</p>
+<div class="math">
+\[W = i_0 \frac{(1 - p) \omega}{1 - p \omega}\]</div>
+<p>where <span class="math">\(i_0\)</span> is the canopy interception probability, <span class="math">\(\omega\)</span>
+is the leaf-level scattering (the leaf single scattering albedo) and
+<span class="math">\(p\)</span> is the recollision probability: the probability that a photon,
+having intercepted a canopy element, will recollide with another element
+rather than escape the canopy.</p>
+<p>We can develop from this a model of the canopy <em>reflectance</em>
+<span class="math">\(\rho\)</span> (i.e. that portion scattered upwards, perhaps in a
+particular direction):</p>
+<div class="math">
+\[\rho = \frac{a \omega}{1 - p \omega}\]</div>
+<p>For a closed canopy, or one with only little soil influence, this will
+describe the spectral reflectance for some given leaf single scattering
+albedo spectrum and given <span class="math">\(p\)</span>.</p>
+<p>If we know <span class="math">\(\omega\)</span> then, and have a measurement of <span class="math">\(\rho\)</span>,
+we can estimate <span class="math">\(p\)</span>. From <span class="math">\(p\)</span>, we can estimate LAI according
+to Lewis and Disney (2007) by:</p>
+<div class="math">
+\[p = 0.88 \left( 1 - exp(- 0.7 LAI^{0.75}) \right)\]</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">LAI</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="mf">0.88</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.7</span> <span class="o">*</span> <span class="n">LAI</span><span class="o">**</span><span class="mf">0.75</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">LAI</span><span class="p">,</span><span class="n">p</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;LAI&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;p&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>&lt;matplotlib.text.Text at 0x10f12f0d0&gt;
+</pre></div>
+</div>
+<img alt="../_images/Ptheory_15_1.png" src="../_images/Ptheory_15_1.png" />
+<p>There are several ways we could estimate <span class="math">\(p\)</span>. An interesting
+feature exploited by Knyazikhin et al. (2013) follows from:</p>
+<div class="math">
+\[\frac{\rho}{\omega} = \frac{a}{1 - p \omega}\]</div>
+<p>so</p>
+<div class="math">
+\[\frac{\rho}{\omega}  = a + p \rho\]</div>
+<p>So that if we plot <span class="math">\(\frac{\rho}{\omega}\)</span> as a function of
+<span class="math">\(\rho\)</span>, this theory predicts we should see a straight line.</p>
+<p>An example leaf single scattering albedo is given in
+<tt class="docutils literal"><span class="pre">`files/data/ssalbedo.dat</span></tt> &lt;files/data/ssalbedo.dat&gt;`__:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">ssalbedo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s">&#39;files/data/ssalbedo.dat&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ssalbedo</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">ssalbedo</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;wavelength / nm&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;single scattering albedo&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="n">ssalbedo</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">ssalbedo</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">(</span><span class="mf">400.0</span><span class="p">,</span> <span class="mf">2400.0</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/Ptheory_17_1.png" src="../_images/Ptheory_17_1.png" />
+<p>which is sampled every 1 nm from 400 to 2400 nm.</p>
+<p>We will clearly need to resample this to the same wavebands as the
+hyperspectral data:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">interp1d</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">linregress</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">f</span> <span class="o">=</span> <span class="n">interp1d</span><span class="p">(</span><span class="n">ssalbedo</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">ssalbedo</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">omega</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">wavelength</span><span class="p">[</span><span class="n">wavelength</span><span class="o">&lt;=</span><span class="mi">2400</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>The theory becomes more complicated when multiple absorbing constituents
+are involved, so we select here only wavelengths between 710 and 790 nm
+(on the &#8216;red edge&#8217;), where the main absorbing constituent is
+chlorophyll.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># wavelength</span>
+<span class="n">W</span> <span class="o">=</span> <span class="p">(</span><span class="n">wavelength</span> <span class="o">&gt;=</span> <span class="mi">710</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">wavelength</span> <span class="o">&lt;=</span> <span class="mi">790</span><span class="p">)</span>
+
+<span class="n">wave</span> <span class="o">=</span> <span class="n">wavelength</span><span class="p">[</span><span class="n">W</span><span class="p">]</span>
+<span class="c"># single scattering albedo</span>
+<span class="n">omega</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">wavelength</span><span class="p">[</span><span class="n">W</span><span class="p">])</span>
+<span class="c"># reflectance</span>
+<span class="n">rho</span> <span class="o">=</span> <span class="n">hymap</span><span class="p">[</span><span class="n">W</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># lets see if its a straight line!</span>
+<span class="n">mean</span> <span class="o">=</span> <span class="n">rho</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span><span class="n">mean</span><span class="o">/</span><span class="n">omega</span><span class="p">,</span><span class="s">&#39;+&#39;</span><span class="p">)</span>
+
+<span class="c"># linear fit</span>
+<span class="n">slope</span><span class="p">,</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">r_value</span><span class="p">,</span> <span class="n">p_value</span><span class="p">,</span> <span class="n">std_err</span> <span class="o">=</span> <span class="n">linregress</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span><span class="n">mean</span><span class="o">/</span><span class="n">omega</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">mean</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">mean</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">x</span><span class="o">*</span><span class="n">slope</span><span class="o">+</span><span class="n">intercept</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;slope&#39;</span><span class="p">,</span><span class="n">slope</span><span class="p">,</span><span class="s">&#39;intercept&#39;</span><span class="p">,</span><span class="n">intercept</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>slope 0.710882123721 intercept 0.125383329915
+</pre></div>
+</div>
+<img alt="../_images/Ptheory_23_1.png" src="../_images/Ptheory_23_1.png" />
+<p>So, here, <span class="math">\(p\)</span> is 0.71088</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c">#p = 0.88*(1 - np.exp(-0.7 * LAI**0.75))</span>
+<span class="n">LAI</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">slope</span><span class="o">/</span><span class="mf">0.88</span><span class="p">)</span><span class="o">/-</span><span class="mf">0.7</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mf">4.</span><span class="o">/</span><span class="mf">3.</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">LAI</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="mf">3.13529156174</span>
+</pre></div>
+</div>
+<p>Following Knyazikhin et al. (2013) we can calculate the <tt class="docutils literal"><span class="pre">DASF</span></tt>
+(Directional Area Scattering Function) from:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">DASF</span> <span class="o">=</span> <span class="n">intercept</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">slope</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">DASF</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="mf">0.43367546666</span>
+</pre></div>
+</div>
+<p>and from that, <span class="math">\(W\)</span>:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">W</span> <span class="o">=</span> <span class="n">mean</span><span class="o">/</span><span class="n">DASF</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wave</span><span class="p">,</span><span class="n">W</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wave</span><span class="p">,</span><span class="n">omega</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>[&lt;matplotlib.lines.Line2D at 0x11b5d1410&gt;]
+</pre></div>
+</div>
+<img alt="../_images/Ptheory_29_1.png" src="../_images/Ptheory_29_1.png" />
+<p>which in turn can give access to leaf biochemistry.</p>
+</div>
+<div class="section" id="the-task">
+<h1>The Task<a class="headerlink" href="#the-task" title="Permalink to this headline">¶</a></h1>
+<p>The output of this exercise should be a spatial dataset of LAI.</p>
+<p>The processing for this task is quite straightforward, and you <em>should</em>
+be able to develop a neat algorithm given the information above.</p>
+<p>You should work in teams for this exercise as in previous weeks, and
+assign tasks for people to complete after you have discussed an overall
+algorithm and defined any interfaces you will need.</p>
+<p>If you finish the task quickly, you could explore the impact of the the
+leaf single scattering albedo assumed, and/or examine the impact of
+widening the wavelength range used here.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+        <p class="logo"><a href="../index.html" title="index">
+          <img class="logo" src="../_static/ucl_logo.png" alt="Logo"/>
+        </a></p><div class="sphinxlocaltoc">
+    <h3><a href="../index.html">Page contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Recollision Probability Theory</a></li>
+<li><a class="reference internal" href="#data">Data</a></li>
+<li><a class="reference internal" href="#theory">Theory</a></li>
+<li><a class="reference internal" href="#the-task">The Task</a></li>
+</ul>
+
+  </div>
+  <div class="sphinxprev">
+    <h4>Previous page</h4>
+    <p class="topless"><a href="../Chapter7_ENSO/ENSO.html"
+                          title="Previous page">&larr; 7.0 Fire/ENSO teleconnections</a></p>
+  </div>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/Chapter8_ptheory/Ptheory.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../Chapter7_ENSO/ENSO.html" title="7.0 Fire/ENSO teleconnections"
+             >previous</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">geogg122</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2014, Prof. P. Lewis.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

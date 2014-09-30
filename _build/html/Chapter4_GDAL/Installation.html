@@ -1,0 +1,197 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>GDAL and related codes and libraries &mdash; GeogG122: Scientific Computing v&lt;release&gt; documentation</title>
+    
+    <link rel="stylesheet" href="../_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../_static/cloud.js"></script>
+    <link rel="top" title="GeogG122: Scientific Computing v&lt;release&gt; documentation" href="../index.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div class="relbar-top">
+        
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+    <li><a href="../index.html">geogg122</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="gdal-and-related-codes-and-libraries">
+<h1>GDAL and related codes and libraries<a class="headerlink" href="#gdal-and-related-codes-and-libraries" title="Permalink to this headline">¶</a></h1>
+<p>GDAL does not always come with your Python distribution.</p>
+<p>It can sometimes be a little tricky to install.</p>
+<p>Yopu <strong>do not</strong> need it for this class as you can always run things on
+the UCL Geography system via <tt class="docutils literal"><span class="pre">ssh</span></tt>, but <em>might like</em> to install it, so
+we&#8217;ll try to keep some notes up to date here on how to do that (and
+typical problems you encounter).</p>
+<p>Since it relies on libraries not written in Python, you need to get
+these libraries installed. You may also want to install the GDAL tools.</p>
+<p>There are many ways of doing this that you can find by searching on the
+internet.</p>
+<p>A good place to start is
+<a class="reference external" href="http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries">trac.osgeo.org</a>.</p>
+<p>Here, we try to give some practical guidance. (Note: I&#8217;ve note been able
+to test this under windows, so <a class="reference external" href="mailto:p&#46;lewis&#37;&#52;&#48;ucl&#46;ac&#46;uk">give me some
+feedback</a> about what works or doesn&#8217;t).</p>
+<div class="section" id="os-x">
+<h2>OS X<a class="headerlink" href="#os-x" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="pre-compiled-gdal-utilities">
+<h3>Pre-compiled GDAL utilities<a class="headerlink" href="#pre-compiled-gdal-utilities" title="Permalink to this headline">¶</a></h3>
+<p>There are several places you can download pre-compiled versions of the
+GDAL utilities from.</p>
+<p>Oner example is <a class="reference external" href="http://www.kyngchaos.com/software:frameworks">http://www.kyngchaos.com/software:frameworks</a>. If you
+install <tt class="docutils literal"><span class="pre">GDAL</span> <span class="pre">complete</span></tt> from there, you should find the GDAL utilities
+in <tt class="docutils literal"><span class="pre">/Library/Frameworks/GDAL.framework/Programs</span></tt>:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>!ls /Library/Frameworks/GDAL.framework/Programs
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>[31mepsg_tr.py[m[m         [31mgdal_fillnodata.py[m[m [31mgdalchksum.py[m[m      [31mgdaltindex[m[m
+[31mesri2wkt.py[m[m        [31mgdal_grid[m[m          [31mgdaldem[m[m            [31mgdaltransform[m[m
+[31mgcps2vec.py[m[m        [31mgdal_merge.py[m[m      [31mgdalenhance[m[m        [31mgdalwarp[m[m
+[31mgcps2wld.py[m[m        [31mgdal_polygonize.py[m[m [31mgdalident.py[m[m       [31mmkgraticule.py[m[m
+[31mgdal-config[m[m        [31mgdal_proximity.py[m[m  [31mgdalimport.py[m[m      [31mnearblack[m[m
+[31mgdal2tiles.py[m[m      [31mgdal_rasterize[m[m     [31mgdalinfo[m[m           [31mogr2ogr[m[m
+[31mgdal2xyz.py[m[m        [31mgdal_retile.py[m[m     [31mgdallocationinfo[m[m   [31mogrinfo[m[m
+[31mgdal_auth.py[m[m       [31mgdal_sieve.py[m[m      [31mgdalmanage[m[m         [31mogrtindex[m[m
+[31mgdal_calc.py[m[m       [31mgdal_translate[m[m     [31mgdalmove.py[m[m        [31mpct2rgb.py[m[m
+[31mgdal_contour[m[m       [31mgdaladdo[m[m           [31mgdalserver[m[m         [31mrgb2pct.py[m[m
+[31mgdal_edit.py[m[m       [31mgdalbuildvrt[m[m       [31mgdalsrsinfo[m[m        [31mtestepsg[m[m
+</pre></div>
+</div>
+<p>If you want this in your path, put the following line at the bottom of
+the file <tt class="docutils literal"><span class="pre">~/.bashrc</span></tt> (if using <tt class="docutils literal"><span class="pre">bash</span></tt>):</p>
+<p><tt class="docutils literal"><span class="pre">export</span> <span class="pre">PATH=/Library/Frameworks/GDAL.framework/Programs:$PATH</span></tt></p>
+<p>or, if using <tt class="docutils literal"><span class="pre">tcsh</span></tt> or <tt class="docutils literal"><span class="pre">csh</span></tt>, puth this at the end of your file
+<tt class="docutils literal"><span class="pre">~/.cshrc</span></tt>:</p>
+<p><tt class="docutils literal"><span class="pre">setenv</span> <span class="pre">PATH</span> <span class="pre">&quot;/Library/Frameworks/GDAL.framework/Programs:${PATH}&quot;</span></tt></p>
+<p>or</p>
+<p><tt class="docutils literal"><span class="pre">set</span> <span class="pre">path</span> <span class="pre">=</span> <span class="pre">(/Library/Frameworks/GDAL.framework/Programs</span> <span class="pre">$path)</span></tt></p>
+<p>and then type:</p>
+<p><tt class="docutils literal"><span class="pre">source</span> <span class="pre">~/.bashrc</span></tt></p>
+<p>or</p>
+<p><tt class="docutils literal"><span class="pre">source</span> <span class="pre">~/.cshrc</span></tt></p>
+<p>as appropriate (or open new shells).</p>
+<p>You can test that you can access the gdal commands with e.g.:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>!which gdalinfo
+!gdalinfo --version
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>/Library/Frameworks/GDAL.framework/Programs/gdalinfo
+GDAL 1.10.1, released 2013/08/26
+</pre></div>
+</div>
+</div>
+<div class="section" id="compiling-source-use-homebrew">
+<h3>Compiling source (use <tt class="docutils literal"><span class="pre">homebrew</span></tt>)<a class="headerlink" href="#compiling-source-use-homebrew" title="Permalink to this headline">¶</a></h3>
+<p>If you want to compile <tt class="docutils literal"><span class="pre">GDAL</span></tt> yourself for OS X, it is probably
+easiest to install the <a class="reference external" href="http://brew.sh/">Homebrew</a> software, type:</p>
+<p><tt class="docutils literal"><span class="pre">rehash</span></tt></p>
+<p>at the unix prompt (to update your path) and follow any instructions it
+gives you to sort out any conflicts you might have, then simply:</p>
+<p><tt class="docutils literal"><span class="pre">brew</span> <span class="pre">install</span> <span class="pre">gdal</span></tt></p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+        <p class="logo"><a href="../index.html" title="index">
+          <img class="logo" src="../_static/ucl_logo.png" alt="Logo"/>
+        </a></p><div class="sphinxlocaltoc">
+    <h3><a href="../index.html">Page contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">GDAL and related codes and libraries</a><ul>
+<li><a class="reference internal" href="#os-x">OS X</a><ul>
+<li><a class="reference internal" href="#pre-compiled-gdal-utilities">Pre-compiled GDAL utilities</a></li>
+<li><a class="reference internal" href="#compiling-source-use-homebrew">Compiling source (use <tt class="docutils literal"><span class="pre">homebrew</span></tt>)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/Chapter4_GDAL/Installation.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+    <li><a href="../index.html">geogg122</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2014, Prof. P. Lewis.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>
