@@ -326,13 +326,16 @@ You should be able to just start firefox (or another browser) and type:
 
 ``berlin% cd ~/Data/geogg122``
 
-``berlin% ipython notebook --pytlab=inline``
+``berlin% ipython notebook --pylab=inline``
 
 Then navigate to the section you want in the browser. This will allow
 you to run the sessions in the python notebook.
 
 If you only want to view the notes (in html), then navigate to the
-`course notes link <http://www.geog.ucl.ac.uk/~plewis/geogg122>`__.
+`pretty course notes
+link <http://www2.geog.ucl.ac.uk/~plewis/geogg122_current/_build/html/Chapter0_Introduction/f1_index.html>`__
+or the `simple course notes
+link <http://www.geog.ucl.ac.uk/~plewis/geogg122>`__.
 
 Other ways to access the notes
 ------------------------------
