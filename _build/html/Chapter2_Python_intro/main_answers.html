@@ -477,7 +477,7 @@ data</a>.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&#39;Plot of sqrt(x)&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>&lt;matplotlib.text.Text at 0x105ccccd0&gt;
+<div class="highlight-python"><div class="highlight"><pre>&lt;matplotlib.text.Text at 0x106501890&gt;
 </pre></div>
 </div>
 <img alt="../_images/main_answers_29_1.png" src="../_images/main_answers_29_1.png" />
@@ -539,7 +539,7 @@ a list of lines:</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&#39;Sunshine hours for Lowestoft, UK, 2012&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>&lt;matplotlib.text.Text at 0x106102c10&gt;
+<div class="highlight-python"><div class="highlight"><pre>&lt;matplotlib.text.Text at 0x106499550&gt;
 </pre></div>
 </div>
 <img alt="../_images/main_answers_38_1.png" src="../_images/main_answers_38_1.png" />
@@ -563,7 +563,7 @@ sure it is still easily readable.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&#39;Sunshine hours for Lowestoft, UK, 2012&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>&lt;matplotlib.text.Text at 0x1061ac150&gt;
+<div class="highlight-python"><div class="highlight"><pre>&lt;matplotlib.text.Text at 0x106787510&gt;
 </pre></div>
 </div>
 <img alt="../_images/main_answers_40_1.png" src="../_images/main_answers_40_1.png" />
@@ -604,7 +604,7 @@ future reference:</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&#39;Sunshine hours for Lowestoft, UK, 2012&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>&lt;matplotlib.text.Text at 0x106489450&gt;
+<div class="highlight-python"><div class="highlight"><pre>&lt;matplotlib.text.Text at 0x106855110&gt;
 </pre></div>
 </div>
 <img alt="../_images/main_answers_42_1.png" src="../_images/main_answers_42_1.png" />
@@ -1111,16 +1111,20 @@ you need to go through to achieve your aim?</p>
 <div class="code python highlight-python"><div class="highlight"><pre>!wget -O files/data/heathrowdata.txt http://www.metoffice.gov.uk/climate/uk/stationdata/heathrowdata.txt
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>--2013-10-08 22:25:14--  http://www.metoffice.gov.uk/climate/uk/stationdata/heathrowdata.txt
-Resolving www.metoffice.gov.uk... 213.123.84.66, 213.123.84.41
-Connecting to www.metoffice.gov.uk|213.123.84.66|:80... connected.
+<div class="highlight-python"><div class="highlight"><pre>--2014-09-30 11:13:08--  http://www.metoffice.gov.uk/climate/uk/stationdata/heathrowdata.txt
+Resolving www.metoffice.gov.uk... 213.120.162.233, 213.120.162.211
+Connecting to www.metoffice.gov.uk|213.120.162.233|:80... connected.
+HTTP request sent, awaiting response... 301 Moved Permanently
+Location: http://www.metoffice.gov.uk/pub/data/weather/uk/climate/stationdata/heathrowdata.txt [following]
+--2014-09-30 11:13:08--  http://www.metoffice.gov.uk/pub/data/weather/uk/climate/stationdata/heathrowdata.txt
+Reusing existing connection to www.metoffice.gov.uk:80.
 HTTP request sent, awaiting response... 200 OK
-Length: unspecified [text/plain]
-Saving to: `files/data/heathrowdata.txt&#39;
+Length: 41280 (40K) [text/plain]
+Saving to: ‘files/data/heathrowdata.txt’
 
-    [ &lt;=&gt;                                   ] 40,500      --.-K/s   in 0.01s
+100%[======================================&gt;] 41,280      --.-K/s   in 0s
 
-2013-10-08 22:25:15 (2.75 MB/s) - `files/data/heathrowdata.txt&#39; saved [40500]
+2014-09-30 11:13:09 (206 MB/s) - ‘files/data/heathrowdata.txt’ saved [41280/41280]
 </pre></div>
 </div>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="n">ifile</span> <span class="o">=</span> <span class="s">&#39;files/data/heathrowdata.txt&#39;</span>

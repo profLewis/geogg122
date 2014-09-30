@@ -19,7 +19,6 @@ Contents:
    Chapter4_GDAL/OGR_Python.rst
    Chapter5_Interpolation/Interpolation.rst
    Chapter6_ENVI/envi.rst
-   Chapter6_Practical/Practical.rst
    Chapter6a_Practical/Practical.rst
    Chapter7_ENSO/ENSO.rst
    Chapter8_ptheory/Ptheory.rst

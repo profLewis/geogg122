@@ -1749,7 +1749,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Using Python, produce a listing of the files in the subdirectory <code>data</code> of <code>geogg122/Chapter3_Scientific_Numerical_Python</code> that end with <code>.nc</code> and put this listing in a file called <code>files/data/data.dat</code> with each entry on a different line</strong></p>
+<p>Using Python, produce a listing of the files in the subdirectory <code>data</code> of <code>geogg122/Chapter3_Scientific_Numerical_Python</code> that end with <code>.nc</code> and put this listing in a file called <code>files/data/data.dat</code> with each entry on a different line</p>
 </div>
 </div>
 </div>
@@ -1787,14 +1787,14 @@ div#notebook {
 <p><code>GlobAlbedo.YYYYMM.mosaic.5.nc.gz</code></p>
 <p>where <code>YYYY</code> is the year (e.g. 2009) and MM is the month (<code>01</code> is January, <code>12</code> is December).</p>
 <p><code>XX</code> is a code which is given below.</p>
-<p>The data are in <a href="http://netcdf4-python.googlecode.com/svn/trunk/docs/netCDF4-module.html"><code>netCDF</code> format</a> which is a common binary data format.</p>
+<p>The data are in <a href="http://netcdf4-python.googlecode.com/svn/trunk/docs/netCDF4-module.html">netCDF format</a> which is a common binary data format.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[102]:
+In&nbsp;[1]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
@@ -1852,14 +1852,14 @@ http://www.globalbedo.org/GlobAlbedo56/mosaics/2009/0.5/monthly//GlobAlbedo.2009
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>You <em>could</em> download the data youself (explained in the 'advanced' section), but these files are available to you in this case in the directory <code>files/data</code> for the year 2009.</p>
+<p>You <em>could</em> download the data youself (explained in the <a href="advanced.html">advanced</a> section), but these files are available to you in this case in the directory <code>files/data</code> for the year 2009.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[103]:
+In&nbsp;[2]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
@@ -1922,7 +1922,7 @@ files/data/GlobAlbedo.201012.mosaic.5.nc
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[104]:
+In&nbsp;[3]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
@@ -1957,13 +1957,18 @@ In&nbsp;[104]:
 
 
 <div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
+<div class="output_subarea output_text output_pyerr">
 <pre>
-files/data/GlobAlbedo.200901.mosaic.5.nc
-[u&apos;lat&apos;, u&apos;lon&apos;]
-[u&apos;DHR_VIS&apos;, u&apos;DHR_NIR&apos;, u&apos;DHR_SW&apos;, u&apos;BHR_VIS&apos;, u&apos;BHR_NIR&apos;, u&apos;BHR_SW&apos;, u&apos;DHR_sigmaVIS&apos;, u&apos;DHR_sigmaNIR&apos;, u&apos;DHR_sigmaSW&apos;, u&apos;BHR_sigmaVIS&apos;, u&apos;BHR_sigmaNIR&apos;, u&apos;BHR_sigmaSW&apos;, u&apos;Weighted_Number_of_Samples&apos;, u&apos;Relative_Entropy&apos;, u&apos;Goodness_of_Fit&apos;, u&apos;Snow_Fraction&apos;, u&apos;Data_Mask&apos;, u&apos;Solar_Zenith_Angle&apos;, u&apos;lat&apos;, u&apos;lon&apos;]
+<span class="ansired">---------------------------------------------------------------------------</span>
+<span class="ansired">ImportError</span>                               Traceback (most recent call last)
+<span class="ansigreen">&lt;ipython-input-3-635e408ccbf9&gt;</span> in <span class="ansicyan">&lt;module&gt;</span><span class="ansiblue">()</span>
+<span class="ansigreen">----&gt; 1</span><span class="ansired"> </span><span class="ansigreen">from</span> netCDF4 <span class="ansigreen">import</span> Dataset<span class="ansiblue"></span>
+<span class="ansigreen">      2</span> <span class="ansiblue"></span>
+<span class="ansigreen">      3</span> root <span class="ansiblue">=</span> <span class="ansiblue">&apos;files/data/&apos;</span><span class="ansiblue"></span>
+<span class="ansigreen">      4</span> <span class="ansiblue"></span>
+<span class="ansigreen">      5</span> <span class="ansired"># example filename : use formatting string:</span><span class="ansiblue"></span><span class="ansiblue"></span>
 
-</pre>
+<span class="ansired">ImportError</span>: No module named netCDF4</pre>
 </div>
 </div>
 
@@ -18402,6 +18407,26 @@ In&nbsp;[171]:
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Advanced-and-Answers">Advanced and Answers<a class="anchor-link" href="#Advanced-and-Answers">&#182;</a></h2>
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If you feel comfortable with the contents of this session, or simply would like something a little more challenging, examine the notes in the <a href="advanced.html">advanced</a> section.</p>
+<p>Answers for the <a href="answers.html">exercises</a> in this session are available, as are the <a href="advanced_answers.html">answers for the advanced section</a>.</p>
+</div>
+</div>
 </div>
     </div>
   </div>

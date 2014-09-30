@@ -472,7 +472,7 @@ You can use the Python package ``pylab`` to simply plot data on a graph:
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x105ccccd0>
+    <matplotlib.text.Text at 0x106501890>
 
 
 
@@ -558,7 +558,7 @@ Now we just need to plot it:
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x106102c10>
+    <matplotlib.text.Text at 0x106499550>
 
 
 
@@ -592,7 +592,7 @@ sure it is still easily readable.
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x1061ac150>
+    <matplotlib.text.Text at 0x106787510>
 
 
 
@@ -644,7 +644,7 @@ future reference:
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x106489450>
+    <matplotlib.text.Text at 0x106855110>
 
 
 
@@ -1231,16 +1231,20 @@ For the first step, there are many ways you could do this.
 
 .. parsed-literal::
 
-    --2013-10-08 22:25:14--  http://www.metoffice.gov.uk/climate/uk/stationdata/heathrowdata.txt
-    Resolving www.metoffice.gov.uk... 213.123.84.66, 213.123.84.41
-    Connecting to www.metoffice.gov.uk|213.123.84.66|:80... connected.
+    --2014-09-30 11:13:08--  http://www.metoffice.gov.uk/climate/uk/stationdata/heathrowdata.txt
+    Resolving www.metoffice.gov.uk... 213.120.162.233, 213.120.162.211
+    Connecting to www.metoffice.gov.uk|213.120.162.233|:80... connected.
+    HTTP request sent, awaiting response... 301 Moved Permanently
+    Location: http://www.metoffice.gov.uk/pub/data/weather/uk/climate/stationdata/heathrowdata.txt [following]
+    --2014-09-30 11:13:08--  http://www.metoffice.gov.uk/pub/data/weather/uk/climate/stationdata/heathrowdata.txt
+    Reusing existing connection to www.metoffice.gov.uk:80.
     HTTP request sent, awaiting response... 200 OK
-    Length: unspecified [text/plain]
-    Saving to: `files/data/heathrowdata.txt'
+    Length: 41280 (40K) [text/plain]
+    Saving to: ‘files/data/heathrowdata.txt’
     
-        [ <=>                                   ] 40,500      --.-K/s   in 0.01s   
+    100%[======================================>] 41,280      --.-K/s   in 0s      
     
-    2013-10-08 22:25:15 (2.75 MB/s) - `files/data/heathrowdata.txt' saved [40500]
+    2014-09-30 11:13:09 (206 MB/s) - ‘files/data/heathrowdata.txt’ saved [41280/41280]
     
 
 

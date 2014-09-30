@@ -132,8 +132,17 @@ lecture.</p>
 interactive Python programs.</p>
 <p>You will probably want to run each session and store scripts in your
 <tt class="docutils literal"><span class="pre">Data</span></tt> (or <tt class="docutils literal"><span class="pre">DATA</span></tt>) directory.</p>
-<p>If you want to run the session directly in the notebook, you will need
-to download the course material from
+<p>If you are taking this course at UCL, the notes should already have been
+downloaded to your <tt class="docutils literal"><span class="pre">DATA</span></tt> directory.</p>
+<p>If so, then:</p>
+<div class="highlight-python"><div class="highlight"><pre>berlin% cd ~/DATA/geogg122
+berlin% git reset --hard HEAD
+berlin% git pull
+</pre></div>
+</div>
+<p>will update the notes (for any changes I make over the sessions).</p>
+<p>If you need to download the notes and want to run the session directly
+in the notebook, you will need to download the course material from
 <a class="reference external" href="https://github.com/profLewis/geogg122">github</a> and run the notebook
 with e.g.:</p>
 <div class="highlight-python"><div class="highlight"><pre>berlin% cd ~/DATA
@@ -274,6 +283,9 @@ variable is, you can use the method <tt class="docutils literal"><span class="pr
 <div class="code python highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="s">&quot;converting the string &#39;one&#39; to an integer doesn&#39;t:&quot;</span><span class="p">,</span><span class="nb">int</span><span class="p">(</span><span class="s">&#39;one&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-python"><div class="highlight"><pre>converting the string &#39;one&#39; to an integer doesn&#39;t:
+</pre></div>
+</div>
 <div class="highlight-python"><div class="highlight"><pre>---------------------------------------------------------------------------
 ValueError                                Traceback (most recent call last)
 
@@ -282,9 +294,6 @@ ValueError                                Traceback (most recent call last)
 
 
 ValueError: invalid literal for int() with base 10: &#39;one&#39;
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre>converting the string &#39;one&#39; to an integer doesn&#39;t:
 </pre></div>
 </div>
 <p>When you get an error (such as above), you will need to learn to <em>read</em>
@@ -642,11 +651,11 @@ the end, otherwise it is <em>not</em> interpreted as a tuple:</p>
 
 <span class="c"># a nested example</span>
 <span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,(</span><span class="s">&#39;2a&#39;</span><span class="p">,</span><span class="s">&#39;2b&#39;</span><span class="p">),</span><span class="mi">3</span><span class="p">)</span>
-<span class="k">print</span> <span class="s">&quot;The length of the tuple (1,2,3) is&quot;</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;The length of the tuple (1,(1,(&#39;2a&#39;,&#39;2b&#39;),3),3) is&quot;</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre>The length of the tuple (1,2,3) is 3
-The length of the tuple (1,2,3) is 3
+The length of the tuple (1,(1,(&#39;2a&#39;,&#39;2b&#39;),3),3) is 3
 </pre></div>
 </div>
 </div>
@@ -1131,8 +1140,8 @@ final <tt class="docutils literal"><span class="pre">else</span></tt> block.</p>
 </div>
 <div class="section" id="exercise-2-2">
 <h3>Exercise 2.2<a class="headerlink" href="#exercise-2-2" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="a">
-<h4>A.<a class="headerlink" href="#a" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="exercise-2-2-a">
+<h4>Exercise 2.2 A.<a class="headerlink" href="#exercise-2-2-a" title="Permalink to this headline">¶</a></h4>
 <p>A small piece of Python code that will set the variable <tt class="docutils literal"><span class="pre">today</span></tt> to be
 a string with the day of the week today is:</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="c"># This imports a module that we can use to access dates</span>
@@ -1171,8 +1180,8 @@ structure ``if .. elif ... else``.</strong></p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="b">
-<h4>B.<a class="headerlink" href="#b" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="exercise-2-2-b">
+<h4>Exercise 2.2 B.<a class="headerlink" href="#exercise-2-2-b" title="Permalink to this headline">¶</a></h4>
 <p>You could set up the basic calendar for the week in a list, with the
 first entry representing Monday, the second Tuesday etc.</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="n">my_diary</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;Spend the day practicing Python&#39;</span><span class="p">,</span>\
@@ -1350,6 +1359,9 @@ word[:6]* 3
 <span class="k">print</span> <span class="s">&quot;word.index(&#39;x&#39;)=</span><span class="se">\t</span><span class="s">&quot;</span><span class="p">,</span><span class="n">word</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-python"><div class="highlight"><pre>word.index(&#39;x&#39;)=
+</pre></div>
+</div>
 <div class="highlight-python"><div class="highlight"><pre>---------------------------------------------------------------------------
 ValueError                                Traceback (most recent call last)
 
@@ -1360,9 +1372,6 @@ ValueError                                Traceback (most recent call last)
 
 
 ValueError: substring not found
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre>word.index(&#39;x&#39;)=
 </pre></div>
 </div>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="c"># Sometimes, we might wish to use</span>
@@ -1563,7 +1572,7 @@ such cases, it is better to use generator expressions.</p>
     <span class="k">print</span> <span class="n">i</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>&lt;generator object &lt;genexpr&gt; at 0x106102e10&gt;
+<div class="highlight-python"><div class="highlight"><pre>&lt;generator object &lt;genexpr&gt; at 0x106540140&gt;
 1964
 1220
 1974
@@ -1781,7 +1790,7 @@ data</a>.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&#39;Plot of sqrt(x)&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>&lt;matplotlib.text.Text at 0x1061717d0&gt;
+<div class="highlight-python"><div class="highlight"><pre>&lt;matplotlib.text.Text at 0x1065d6590&gt;
 </pre></div>
 </div>
 <img alt="../_images/python101_185_1.png" src="../_images/python101_185_1.png" />
@@ -1989,7 +1998,7 @@ equal to 90.:</p>
 <div class="code python highlight-python"><div class="highlight"><pre>!ls -l files/data/zenith.dat
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>-rw-r--r--  1 plewis  staff  257  8 Oct 22:23 files/data/zenith.dat
+<div class="highlight-python"><div class="highlight"><pre>-rw-r--r--  1 plewis  staff  257 30 Sep 11:04 files/data/zenith.dat
 </pre></div>
 </div>
 </div>
@@ -2706,6 +2715,21 @@ learn the commands and syntax, then try to put the pieces together.</p>
 position to think about <em>algorithms</em>, i.e. how to break a problem down
 into smaller parts that you can solve with the Python that you know.</p>
 </div>
+<div class="section" id="answers">
+<h2>2.11 Answers<a class="headerlink" href="#answers" title="Permalink to this headline">¶</a></h2>
+<p>Answers to the exersises in this session are made <a class="reference external" href="main_answers.html">available to
+you</a>, though you should obviously only consult
+these when you are finished (or if you are very stuck).</p>
+</div>
+<div class="section" id="advanced">
+<h2>2.12 Advanced<a class="headerlink" href="#advanced" title="Permalink to this headline">¶</a></h2>
+<p>Once you have got to grips with the basics in this session, you might
+consider stretching yourself and going through the
+<a class="reference external" href="advanced.html">advanced</a> section.</p>
+<p>Consult the <a class="reference external" href="advanced_answers.html">answers</a> to the exercises once
+you have completed them, and come along to office hours if yoiu want to
+go through anything.</p>
+</div>
 </div>
 
 
@@ -2754,8 +2778,8 @@ into smaller parts that you can solve with the Python that you know.</p>
 </li>
 <li><a class="reference internal" href="#loops-and-conditional-statements-if-for-while">2.5 Loops and Conditional Statements: if, for, while</a><ul>
 <li><a class="reference internal" href="#exercise-2-2">Exercise 2.2</a><ul>
-<li><a class="reference internal" href="#a">A.</a></li>
-<li><a class="reference internal" href="#b">B.</a></li>
+<li><a class="reference internal" href="#exercise-2-2-a">Exercise 2.2 A.</a></li>
+<li><a class="reference internal" href="#exercise-2-2-b">Exercise 2.2 B.</a></li>
 <li><a class="reference internal" href="#for">for</a></li>
 <li><a class="reference internal" href="#xrange">xrange</a></li>
 <li><a class="reference internal" href="#enumerate">enumerate</a></li>
@@ -2803,6 +2827,8 @@ into smaller parts that you can solve with the Python that you know.</p>
 <li><a class="reference internal" href="#dictionaries">2.9 Dictionaries</a></li>
 <li><a class="reference internal" href="#exercise-2-7">Exercise 2.7</a></li>
 <li><a class="reference internal" href="#where-we-have-reached">2.10 Where we have reached</a></li>
+<li><a class="reference internal" href="#answers">2.11 Answers</a></li>
+<li><a class="reference internal" href="#advanced">2.12 Advanced</a></li>
 </ul>
 </li>
 </ul>

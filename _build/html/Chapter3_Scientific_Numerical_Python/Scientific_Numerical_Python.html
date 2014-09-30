@@ -101,10 +101,10 @@ they were.</p>
 </div>
 <div class="section" id="e3-1-exercise-listing">
 <h2>E3.1 Exercise: listing<a class="headerlink" href="#e3-1-exercise-listing" title="Permalink to this headline">¶</a></h2>
-<p><strong>Using Python, produce a listing of the files in the subdirectory
-``data`` of ``geogg122/Chapter3_Scientific_Numerical_Python`` that end
-with ``.nc`` and put this listing in a file called
-``files/data/data.dat`` with each entry on a different line</strong></p>
+<p>Using Python, produce a listing of the files in the subdirectory
+<tt class="docutils literal"><span class="pre">data</span></tt> of <tt class="docutils literal"><span class="pre">geogg122/Chapter3_Scientific_Numerical_Python</span></tt> that end
+with <tt class="docutils literal"><span class="pre">.nc</span></tt> and put this listing in a file called
+<tt class="docutils literal"><span class="pre">files/data/data.dat</span></tt> with each entry on a different line</p>
 </div>
 <div class="section" id="getting-and-plotting-some-data-netcdf-format">
 <h2>3.2 Getting and Plotting Some Data: netCDF format<a class="headerlink" href="#getting-and-plotting-some-data-netcdf-format" title="Permalink to this headline">¶</a></h2>
@@ -124,8 +124,8 @@ the global product at 0.5 degrees.</p>
 <p>where <tt class="docutils literal"><span class="pre">YYYY</span></tt> is the year (e.g. 2009) and MM is the month (<tt class="docutils literal"><span class="pre">01</span></tt> is
 January, <tt class="docutils literal"><span class="pre">12</span></tt> is December).</p>
 <p><tt class="docutils literal"><span class="pre">XX</span></tt> is a code which is given below.</p>
-<p>The data are in <tt class="docutils literal"><span class="pre">`netCDF</span></tt>
-format &lt;<a class="reference external" href="http://netcdf4-python.googlecode.com/svn/trunk/docs/netCDF4-module.html">http://netcdf4-python.googlecode.com/svn/trunk/docs/netCDF4-module.html</a>&gt;`__
+<p>The data are in <a class="reference external" href="http://netcdf4-python.googlecode.com/svn/trunk/docs/netCDF4-module.html">netCDF
+format</a>
 which is a common binary data format.</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="c"># versioning (?) codes. At present these are:</span>
 <span class="n">XX</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1998</span><span class="p">:</span><span class="mi">95</span><span class="p">,</span><span class="mi">1999</span><span class="p">:</span><span class="mi">95</span><span class="p">,</span><span class="mi">2000</span><span class="p">:</span><span class="mi">97</span><span class="p">,</span><span class="mi">2001</span><span class="p">:</span><span class="mi">97</span><span class="p">,</span><span class="mi">2002</span><span class="p">:</span><span class="mi">26</span><span class="p">,</span><span class="mi">2003</span><span class="p">:</span><span class="mi">66</span><span class="p">,</span><span class="mi">2004</span><span class="p">:</span><span class="mi">54</span><span class="p">,</span><span class="mi">2005</span><span class="p">:</span><span class="mi">54</span><span class="p">,</span>\
@@ -151,9 +151,9 @@ which is a common binary data format.</p>
 </div>
 <div class="section" id="loading-from-within-python">
 <h3>3.2.2 Loading from within Python<a class="headerlink" href="#loading-from-within-python" title="Permalink to this headline">¶</a></h3>
-<p>You <em>could</em> download the data youself (explained in the &#8216;advanced&#8217;
-section), but these files are available to you in this case in the
-directory <tt class="docutils literal"><span class="pre">files/data</span></tt> for the year 2009.</p>
+<p>You <em>could</em> download the data youself (explained in the
+<a class="reference external" href="advanced.html">advanced</a> section), but these files are available to
+you in this case in the directory <tt class="docutils literal"><span class="pre">files/data</span></tt> for the year 2009.</p>
 <div class="code python highlight-python"><div class="highlight"><pre>!ls files/data/GlobAlbedo*.nc
 </pre></div>
 </div>
@@ -206,9 +206,18 @@ files/data/GlobAlbedo.201012.mosaic.5.nc
 <span class="k">print</span> <span class="n">nc</span><span class="o">.</span><span class="n">variables</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>files/data/GlobAlbedo.200901.mosaic.5.nc
-[u&#39;lat&#39;, u&#39;lon&#39;]
-[u&#39;DHR_VIS&#39;, u&#39;DHR_NIR&#39;, u&#39;DHR_SW&#39;, u&#39;BHR_VIS&#39;, u&#39;BHR_NIR&#39;, u&#39;BHR_SW&#39;, u&#39;DHR_sigmaVIS&#39;, u&#39;DHR_sigmaNIR&#39;, u&#39;DHR_sigmaSW&#39;, u&#39;BHR_sigmaVIS&#39;, u&#39;BHR_sigmaNIR&#39;, u&#39;BHR_sigmaSW&#39;, u&#39;Weighted_Number_of_Samples&#39;, u&#39;Relative_Entropy&#39;, u&#39;Goodness_of_Fit&#39;, u&#39;Snow_Fraction&#39;, u&#39;Data_Mask&#39;, u&#39;Solar_Zenith_Angle&#39;, u&#39;lat&#39;, u&#39;lon&#39;]
+<div class="highlight-python"><div class="highlight"><pre>---------------------------------------------------------------------------
+ImportError                               Traceback (most recent call last)
+
+&lt;ipython-input-3-635e408ccbf9&gt; in &lt;module&gt;()
+----&gt; 1 from netCDF4 import Dataset
+      2
+      3 root = &#39;files/data/&#39;
+      4
+      5 # example filename : use formatting string:
+
+
+ImportError: No module named netCDF4
 </pre></div>
 </div>
 <p>Here, we will want to access <tt class="docutils literal"><span class="pre">'DHR_VIS'</span></tt>, <tt class="docutils literal"><span class="pre">'DHR_NIR'</span></tt> and
@@ -1733,6 +1742,15 @@ example:</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="advanced-and-answers">
+<h2>Advanced and Answers<a class="headerlink" href="#advanced-and-answers" title="Permalink to this headline">¶</a></h2>
+<p>If you feel comfortable with the contents of this session, or simply
+would like something a little more challenging, examine the notes in the
+<a class="reference external" href="advanced.html">advanced</a> section.</p>
+<p>Answers for the <a class="reference external" href="answers.html">exercises</a> in this session are
+available, as are the <a class="reference external" href="advanced_answers.html">answers for the advanced
+section</a>.</p>
+</div>
 </div>
 
 
@@ -1792,6 +1810,7 @@ example:</p>
 <li><a class="reference internal" href="#e3-5-exercise-solar-radiation-code-a-chance-for-you-to-get-feedback">E3.5 Exercise: Solar Radiation Code: A chance for you to get feedback</a></li>
 <li><a class="reference internal" href="#saving-and-loading-numpy-data">3.6 Saving and loading numpy data</a></li>
 <li><a class="reference internal" href="#e3-6-exercise-awkward-reading">E3.6 Exercise: awkward reading</a></li>
+<li><a class="reference internal" href="#advanced-and-answers">Advanced and Answers</a></li>
 </ul>
 </li>
 </ul>

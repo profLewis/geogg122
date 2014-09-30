@@ -45,10 +45,10 @@ they were.
 E3.1 Exercise: listing
 ----------------------
 
-**Using Python, produce a listing of the files in the subdirectory
+Using Python, produce a listing of the files in the subdirectory
 ``data`` of ``geogg122/Chapter3_Scientific_Numerical_Python`` that end
 with ``.nc`` and put this listing in a file called
-``files/data/data.dat`` with each entry on a different line**
+``files/data/data.dat`` with each entry on a different line
 
 3.2 Getting and Plotting Some Data: netCDF format
 -------------------------------------------------
@@ -79,7 +79,7 @@ January, ``12`` is December).
 
 ``XX`` is a code which is given below.
 
-The data are in ```netCDF``
+The data are in `netCDF
 format <http://netcdf4-python.googlecode.com/svn/trunk/docs/netCDF4-module.html>`__
 which is a common binary data format.
 
@@ -110,9 +110,9 @@ which is a common binary data format.
 3.2.2 Loading from within Python
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You *could* download the data youself (explained in the 'advanced'
-section), but these files are available to you in this case in the
-directory ``files/data`` for the year 2009.
+You *could* download the data youself (explained in the
+`advanced <advanced.html>`__ section), but these files are available to
+you in this case in the directory ``files/data`` for the year 2009.
 
 .. code:: python
 
@@ -171,11 +171,21 @@ We use the ``netCDF4`` module to read netCDF data:
     # and variables also as a dictionary
     print nc.variables.keys()
 
-.. parsed-literal::
+::
 
-    files/data/GlobAlbedo.200901.mosaic.5.nc
-    [u'lat', u'lon']
-    [u'DHR_VIS', u'DHR_NIR', u'DHR_SW', u'BHR_VIS', u'BHR_NIR', u'BHR_SW', u'DHR_sigmaVIS', u'DHR_sigmaNIR', u'DHR_sigmaSW', u'BHR_sigmaVIS', u'BHR_sigmaNIR', u'BHR_sigmaSW', u'Weighted_Number_of_Samples', u'Relative_Entropy', u'Goodness_of_Fit', u'Snow_Fraction', u'Data_Mask', u'Solar_Zenith_Angle', u'lat', u'lon']
+
+    ---------------------------------------------------------------------------
+    ImportError                               Traceback (most recent call last)
+
+    <ipython-input-3-635e408ccbf9> in <module>()
+    ----> 1 from netCDF4 import Dataset
+          2 
+          3 root = 'files/data/'
+          4 
+          5 # example filename : use formatting string:
+
+
+    ImportError: No module named netCDF4
 
 
 Here, we will want to access ``'DHR_VIS'``, ``'DHR_NIR'`` and
@@ -2131,3 +2141,13 @@ example:
     # translation ... just for column 1 here
     # you'd need to define your own for column 2
     trans = {0 : col0}
+Advanced and Answers
+--------------------
+
+If you feel comfortable with the contents of this session, or simply
+would like something a little more challenging, examine the notes in the
+`advanced <advanced.html>`__ section.
+
+Answers for the `exercises <answers.html>`__ in this session are
+available, as are the `answers for the advanced
+section <advanced_answers.html>`__.

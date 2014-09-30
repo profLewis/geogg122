@@ -87,8 +87,21 @@ interactive Python programs.
 You will probably want to run each session and store scripts in your
 ``Data`` (or ``DATA``) directory.
 
-If you want to run the session directly in the notebook, you will need
-to download the course material from
+If you are taking this course at UCL, the notes should already have been
+downloaded to your ``DATA`` directory.
+
+If so, then:
+
+::
+
+    berlin% cd ~/DATA/geogg122
+    berlin% git reset --hard HEAD
+    berlin% git pull
+
+will update the notes (for any changes I make over the sessions).
+
+If you need to download the notes and want to run the session directly
+in the notebook, you will need to download the course material from
 `github <https://github.com/profLewis/geogg122>`__ and run the notebook
 with e.g.:
 
@@ -274,6 +287,10 @@ but only when it makes sense:
 
     print "converting the string 'one' to an integer doesn't:",int('one')
 
+.. parsed-literal::
+
+    converting the string 'one' to an integer doesn't:
+
 ::
 
 
@@ -286,10 +303,6 @@ but only when it makes sense:
 
     ValueError: invalid literal for int() with base 10: 'one'
 
-
-.. parsed-literal::
-
-    converting the string 'one' to an integer doesn't:
 
 When you get an error (such as above), you will need to learn to *read*
 the error message to work out what you did wrong.
@@ -718,12 +731,12 @@ len
     
     # a nested example
     t = (1,('2a','2b'),3)
-    print "The length of the tuple (1,2,3) is",len(t)
+    print "The length of the tuple (1,(1,('2a','2b'),3),3) is",len(t)
 
 .. parsed-literal::
 
     The length of the tuple (1,2,3) is 3
-    The length of the tuple (1,2,3) is 3
+    The length of the tuple (1,(1,('2a','2b'),3),3) is 3
 
 
 slice
@@ -1317,8 +1330,8 @@ final ``else`` block.
 Exercise 2.2
 ~~~~~~~~~~~~
 
-A.
-^^
+Exercise 2.2 A.
+^^^^^^^^^^^^^^^
 
 A small piece of Python code that will set the variable ``today`` to be
 a string with the day of the week today is:
@@ -1365,8 +1378,8 @@ structure ``if .. elif ... else``.**
     get some sleep
 
 
-B.
-^^
+Exercise 2.2 B.
+^^^^^^^^^^^^^^^
 
 You could set up the basic calendar for the week in a list, with the
 first entry representing Monday, the second Tuesday etc.
@@ -1583,6 +1596,10 @@ As a recap, with some slightly more complicated examples:
     print "word.index('x')=\t",word.index('x')
 
 
+.. parsed-literal::
+
+    word.index('x')=	
+
 ::
 
 
@@ -1597,10 +1614,6 @@ As a recap, with some slightly more complicated examples:
 
     ValueError: substring not found
 
-
-.. parsed-literal::
-
-    word.index('x')=	
 
 .. code:: python
 
@@ -1851,7 +1864,7 @@ These look much like listcomps but use ``()`` rather than ``[]``
 
 .. parsed-literal::
 
-    <generator object <genexpr> at 0x106102e10>
+    <generator object <genexpr> at 0x106540140>
     1964
     1220
     1974
@@ -2111,7 +2124,7 @@ You can use the Python package ``pylab`` to simply plot data on a graph:
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x1061717d0>
+    <matplotlib.text.Text at 0x1065d6590>
 
 
 
@@ -2385,7 +2398,7 @@ We could check the output file from unix:
 
 .. parsed-literal::
 
-    -rw-r--r--  1 plewis  staff  257  8 Oct 22:23 files/data/zenith.dat
+    -rw-r--r--  1 plewis  staff  257 30 Sep 11:04 files/data/zenith.dat
 
 
 Exercise 2.4
@@ -3280,3 +3293,21 @@ learn the commands and syntax, then try to put the pieces together.
 Once you have learned the basic tools, you will be in a much better
 position to think about *algorithms*, i.e. how to break a problem down
 into smaller parts that you can solve with the Python that you know.
+
+2.11 Answers
+------------
+
+Answers to the exersises in this session are made `available to
+you <main_answers.html>`__, though you should obviously only consult
+these when you are finished (or if you are very stuck).
+
+2.12 Advanced
+-------------
+
+Once you have got to grips with the basics in this session, you might
+consider stretching yourself and going through the
+`advanced <advanced.html>`__ section.
+
+Consult the `answers <advanced_answers.html>`__ to the exercises once
+you have completed them, and come along to office hours if yoiu want to
+go through anything.

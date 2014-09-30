@@ -317,6 +317,26 @@ Notes] <../Chapter8_ptheory/Ptheory.html>`__
 Using these notes
 -----------------
 
+These notes and all associated files should be directly available for
+you in the directory ``~/DATA/geogg122``.
+
+You should be able to just start firefox (or another browser) and type:
+
+``berlin% firefox &``
+
+``berlin% cd ~/Data/geogg122``
+
+``berlin% ipython notebook --pytlab=inline``
+
+Then navigate to the section you want in the browser. This will allow
+you to run the sessions in the python notebook.
+
+If you only want to view the notes (in html), then navigate to the
+`course notes link <http://www.geog.ucl.ac.uk/~plewis/geogg122>`__.
+
+Other ways to access the notes
+------------------------------
+
 There are several ways you can access this course material.
 
 These notes are created in `ipython
@@ -375,10 +395,9 @@ To download the whole course, you can:
 |  Create a place on the system that you want to work in (N.B., don't
 type ``berlin%``: that represents the command line prompt), e.g.:
 
-| ``berlin% mkdir -p ~/Data/msc``
-|  ``berlin% cd ~/Data/msc``
+| ``berlin% cd ~/DATA``
 |  ``berlin% git clone https://github.com/profLewis/geogg122.git``
-|  ``berlin% cd ~/Data/msc/geogg122``
+|  ``berlin% cd ~/Data/geogg122``
 
 This will create a directory ``~/Data/msc/geogg122`` which has the
 current versions of the notebooks for the course and associated files.
