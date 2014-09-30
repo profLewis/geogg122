@@ -538,7 +538,7 @@ vectors processing tools.
 
 Follow these on:
 
--  `gdal <GDAL_Python_bindings.ipynb>`__
+-  `gdal <GDAL_Python_bindings.html>`__
 -  `ogr <OGR_Python>`__
 
 There are no explicit advanced exercises this week. Instead, you should

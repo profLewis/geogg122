@@ -1885,7 +1885,7 @@ If you wanted to see the different layers, we could do this using:
 
 
 There is much more information on using ``ogr`` on the associated
-`notebook OGR\_Python <OGR_Python.ipynb>`__ that you should explore at
+`notebook OGR\_Python <OGR_Python.html>`__ that you should explore at
 some point.
 
 One thing we may often wish to dowith such vector datsets is produce a
@@ -1967,7 +1967,7 @@ In this session, we have learned to use some geospatial tools using GDAL
 in Python. A good set of `working notes on how to use
 GDAL <http://jgomezdans.github.io/gdal_notes/>`__ has been developed
 that you will find useful for further reading, as well as looking at the
-`advanced <advanced.ipynb>`__ section.
+`advanced <advanced.html>`__ section.
 
 We have also very briefly introduced dealing with vector datasets in
 ``ogr``, but this was mainly through the use of a pre-defined function

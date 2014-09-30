@@ -111,6 +111,10 @@ paper form and electronically via Moodle. See the `Moodle
 page <http://moodle.ucl.ac.uk/course/view.php?id=13891>`__ for more
 details.
 
+Information on the assessment is directly available `in a later section
+of the
+notes <..//Chapter6a_Practical/Practical.html>`__.
+
 Useful links
 ------------
 
@@ -128,7 +132,7 @@ Detailed Struucture of the Course
 A brief overview of the course (these notes):
 
 `[Introductory
-notes] <http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter0_Introduction/f1_index.ipynb>`__
+notes] <../Chapter0_Introduction/f1_index.html>`__
 
 An introduction to some of the basics of the Unix operating system. The
 aim is to enable students to understand the directory structure and
@@ -139,9 +143,9 @@ operations such as text editing.
 we will not be going through them in class (unless requested).
 
 `[Unix
-notes] <http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter1_Unix/f3_1_unix_intro.ipynb>`__
+notes] <../Chapter1_Unix/f3_1_unix_intro.html>`__
 `[Unix
-exercises] <http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter1_Unix/f3_1a_unix_intro_answers.ipynb>`__
+exercises] <../Chapter1_Unix/f3_1a_unix_intro_answers.html>`__
 
 **1.0 Python 101**
 
@@ -162,11 +166,11 @@ more detail and complications. This too has a set of exercises with
 worked examples.
 
 `[Course
-Notes] <http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter2_Python_intro/python101.ipynb>`__
-`[Answers] <http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter2_Python_intro/main_answers.ipynb>`__
-`[Advanced] <http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter2_Python_intro/advanced.ipynb>`__
+Notes] <../Chapter2_Python_intro/python101.html>`__
+`[Answers] <../Chapter2_Python_intro/main_answers.html>`__
+`[Advanced] <../Chapter2_Python_intro/advanced.html>`__
 `[Advanced
-Answers] <http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter2_Python_intro/advanced_answers.ipynb>`__
+Answers] <../Chapter2_Python_intro/advanced_answers.html>`__
 
 **2.0 Plotting and Numerical Python**
 
@@ -184,9 +188,9 @@ We will also introduce some additional programming concepts, and set an
 exercise that you can do and get feedback on.
 
 `[Course
-Notes] <http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter3_Scientific_Numerical_Python/Scientific_Numerical_Python.ipynb>`__
-`[Answers] <http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter3_Scientific_Numerical_Python/answers.ipynb>`__
-`[Advanced] <http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter3_Scientific_Numerical_Python/advanced.ipynb>`__
+Notes] <../Chapter3_Scientific_Numerical_Python/Scientific_Numerical_Python.html>`__
+`[Answers] <../Chapter3_Scientific_Numerical_Python/answers.html>`__
+`[Advanced] <../Chapter3_Scientific_Numerical_Python/advanced.html>`__
 
 **3.0 Geospatial Data**
 
@@ -249,9 +253,9 @@ assume that you have understood, and can make use of, material from
 those lectures.
 
 `[Course
-Notes] <http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter4_GDAL/GDAL_HDF.ipynb>`__
-`[Answers] <http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter4_GDAL/answers.ipynb>`__
-`[Advanced] <http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter4_GDAL/advanced.ipynb>`__
+Notes] <../Chapter4_GDAL/GDAL_HDF.html>`__
+`[Answers] <../Chapter4_GDAL/answers.html>`__
+`[Advanced] <../Chapter4_GDAL/advanced.html>`__
 
 **4.0 Interpolation**
 
@@ -266,7 +270,7 @@ Finally, we will look at fitting models to datasets, in this case a
 model describing LAI phenology.
 
 `[Course
-Notes] <http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter5_Interpolation/Interpolation.ipynb>`__
+Notes] <../Chapter5_Interpolation/Interpolation.html>`__
 
 **4a ENVI**
 
@@ -276,7 +280,7 @@ environment (ENVI). This is an *unsupervised* session, that takes place
 during UCL Reading Week in Term 1.
 
 `[Course
-Notes] <http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master//Chapter6_ENVI/envi.ipynb>`__
+Notes] <..//Chapter6_ENVI/envi.html>`__
 
 **5.0 Practical**
 
@@ -284,7 +288,7 @@ This section describes the coursework you are to submit for assessment
 for this course.
 
 `[Practical for
-assessment] <http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master//Chapter6a_Practical/Practical.ipynb>`__
+assessment] <..//Chapter6a_Practical/Practical.html>`__
 
 **6.0 ENSO**
 
@@ -296,7 +300,7 @@ predictive model for the number of fires per unit area per year driven
 by Sea Surface Temperature anomaly data.
 
 `[Course
-Notes] <http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter7_ENSO/ENSO.ipynb>`__
+Notes] <../Chapter7_ENSO/ENSO.html>`__
 
 **7.0 P Theory**
 
@@ -308,7 +312,7 @@ Using hyperspectral image data over an agricultural area, use photon
 recollision theory to produce a map of Leaf Area Index.
 
 `[Course
-Notes] <http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter8_ptheory/Ptheory.ipynb>`__
+Notes] <../Chapter8_ptheory/Ptheory.html>`__
 
 Using these notes
 -----------------
@@ -333,8 +337,8 @@ Another option is to access individual notebooks online through the
 `IPython Notebook Viewer <http://nbviewer.ipython.org/>`__.
 
 For example, to view the notebook
-``Chapter0_Introduction/f2_intro.ipynb``, you use a `link to the github
-file <http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter0_Introduction/f2_intro.ipynb>`__.
+``Chapter0_Introduction/f2_intro.html``, you use a `link to the github
+file <../Chapter0_Introduction/f2_intro.html>`__.
 
 From these viewers, you can download the notebook if you like, using the
 *Download Notebook* button (top right of the page).
@@ -345,7 +349,7 @@ and a few other tools such as
 `pandoc <http://johnmacfarlane.net/pandoc/installing.html>`__ you can
 convert your own notebooks to other formats using ``ipython``, e.g.:
 
-``berlin% ipython nbconvert --to html f2_intro.ipynb``
+``berlin% ipython nbconvert --to html f2_intro.html``
 
 You can also convert the notebooks to other
 `formats <http://ipython.org/ipython-doc/rel-1.0.0/interactive/nbconvert.html>`__
@@ -354,7 +358,7 @@ working copy of ``LaTeX`` on your system (e.g.
 `MacTeX <http://tug.org/mactex/downloading.html>`__ on OS X), you can
 convert the notebooks to pdf format:
 
-``berlin% ipython nbconvert --to latex --post PDF f2_intro.ipynb``
+``berlin% ipython nbconvert --to latex --post PDF f2_intro.html``
 
 Obtaining the course material
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -434,7 +438,7 @@ have available.
 
 To load a *specific* notebook, you can type e.g.:
 
-``berlin% ipython notebook f1_index.ipynb``
+``berlin% ipython notebook f1_index.html``
 
 Python
 ~~~~~~

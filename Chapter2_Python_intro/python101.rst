@@ -123,7 +123,7 @@ early on in the ``PATH``.
 To go to the directory for this session:
 
 | ``berlin% cd ~/Data/geogg122/Chapter2_Python_intro``
-| ``berlin% ipython notebook python101.ipynb --pylab=inline``
+| ``berlin% ipython notebook python101.html --pylab=inline``
 
 You quit an ``ipython`` notebook session with ``^C`` (``Control C``).
 
