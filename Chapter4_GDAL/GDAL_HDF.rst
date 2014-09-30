@@ -324,407 +324,672 @@ described as bit combinations:
 .. raw:: html
 
    <table>
+
+.. raw:: html
+
    <tr>
+
+.. raw:: html
+
    <th>
 
 Bit No.
 
 .. raw:: html
 
-   </th>    <th>
-
-Parameter Name
-
-.. raw:: html
-
-   </th><th> 
-
-Bit Combination
-
-.. raw:: html
-
-   </th><th>
-
-Explanation
-
-.. raw:: html
-
    </th>
+
+::
+
+    <th>Parameter Name</th><th> Bit Combination</th><th>Explanation</th>
+
+.. raw:: html
+
    <tr>
+
+.. raw:: html
+
    <td>
 
 0
 
 .. raw:: html
 
-   </td><td>
+   </td>
+
+.. raw:: html
+
+   <td>
 
 MODLAND\_QC bits
 
 .. raw:: html
 
-   </td><td>   
+   </td>
+
+.. raw:: html
+
+   <td>
 
 0
 
 .. raw:: html
 
-   </td><td>  
+   </td>
+
+.. raw:: html
+
+   <td>
 
 Good quality (main algorithm with or without saturation)
 
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    </tr>
+
+.. raw:: html
+
    <tr>
+
+.. raw:: html
+
    <td>
 
  
 
 .. raw:: html
 
-   </td><td>
+   </td>
+
+.. raw:: html
+
+   <td>
 
  
 
 .. raw:: html
 
-   </td><td>  
+   </td>
+
+.. raw:: html
+
+   <td>
 
 1
 
 .. raw:: html
 
-   </td><td>
+   </td>
+
+.. raw:: html
+
+   <td>
 
 Other Quality (back-up algorithm or fill values)
 
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    </tr>
 
+.. raw:: html
+
    <tr>
+
+.. raw:: html
+
    <td>
 
 1
 
 .. raw:: html
 
-   </td><td>
+   </td>
+
+.. raw:: html
+
+   <td>
 
 Sensor
 
 .. raw:: html
 
-   </td><td>    
-
-0
-
-.. raw:: html
-
-   </td><td>  
-
-TERRA
-
-.. raw:: html
-
    </td>
+
+.. raw:: html
+
+   <td>
+
+::
+
+    0</td><td>  TERRA</td>
+
+.. raw:: html
+
    </tr>
+
+.. raw:: html
+
    <tr>
+
+.. raw:: html
+
    <td>
 
  
 
 .. raw:: html
 
-   </td><td>
+   </td>
+
+.. raw:: html
+
+   <td>
 
  
 
 .. raw:: html
 
-   </td><td>  
+   </td>
+
+.. raw:: html
+
+   <td>
 
 1
 
 .. raw:: html
 
-   </td><td>
+   </td>
+
+.. raw:: html
+
+   <td>
 
 AQUA
 
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    </tr>
 
+.. raw:: html
+
    <tr>
+
+.. raw:: html
+
    <td>
 
 2
 
 .. raw:: html
 
-   </td><td>
+   </td>
+
+.. raw:: html
+
+   <td>
 
 DeadDetector
 
 .. raw:: html
 
-   </td><td>  
+   </td>
+
+.. raw:: html
+
+   <td>
 
 0
 
 .. raw:: html
 
-   </td><td>  
+   </td>
+
+.. raw:: html
+
+   <td>
 
 Detectors apparently fine for up to 50% of channels 1 2
 
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    </tr>
+
+.. raw:: html
+
    <tr>
+
+.. raw:: html
+
    <td>
 
  
 
 .. raw:: html
 
-   </td><td>
+   </td>
+
+.. raw:: html
+
+   <td>
 
  
 
 .. raw:: html
 
-   </td><td>  
+   </td>
+
+.. raw:: html
+
+   <td>
 
 1
 
 .. raw:: html
 
-   </td><td>
+   </td>
+
+.. raw:: html
+
+   <td>
 
 Dead detectors caused >50% adjacent detector retrieval
 
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    </tr>
 
+.. raw:: html
+
    <tr>
+
+.. raw:: html
+
    <td>
 
 3-4
 
 .. raw:: html
 
-   </td><td>
+   </td>
+
+.. raw:: html
+
+   <td>
 
 CloudState
 
 .. raw:: html
 
-   </td><td> 
+   </td>
+
+.. raw:: html
+
+   <td>
 
 00
 
 .. raw:: html
 
-   </td><td> 
+   </td>
+
+.. raw:: html
+
+   <td>
 
 Significant clouds NOT present (clear)
 
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    </tr>
+
+.. raw:: html
+
    <tr>
+
+.. raw:: html
+
    <td>
 
  
 
 .. raw:: html
 
-   </td><td>
+   </td>
+
+.. raw:: html
+
+   <td>
 
  
 
 .. raw:: html
 
-   </td><td>  
+   </td>
+
+.. raw:: html
+
+   <td>
 
 01
 
 .. raw:: html
 
-   </td><td>
+   </td>
+
+.. raw:: html
+
+   <td>
 
 Significant clouds WERE present
 
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    </tr>
+
+.. raw:: html
+
    <tr>
+
+.. raw:: html
+
    <td>
 
  
 
 .. raw:: html
 
-   </td><td>
+   </td>
+
+.. raw:: html
+
+   <td>
 
  
 
 .. raw:: html
 
-   </td><td>  
+   </td>
+
+.. raw:: html
+
+   <td>
 
 10
 
 .. raw:: html
 
-   </td><td>
+   </td>
+
+.. raw:: html
+
+   <td>
 
 Mixed clouds present on pixel
 
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    </tr>
+
+.. raw:: html
+
    <tr>
+
+.. raw:: html
+
    <td>
 
  
 
 .. raw:: html
 
-   </td><td>
+   </td>
+
+.. raw:: html
+
+   <td>
 
  
 
 .. raw:: html
 
-   </td><td>  
+   </td>
+
+.. raw:: html
+
+   <td>
 
 11
 
 .. raw:: html
 
-   </td><td>
+   </td>
+
+.. raw:: html
+
+   <td>
 
 Cloud state not defined assumed clear
 
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    </tr>
 
+.. raw:: html
+
    <tr>
+
+.. raw:: html
+
    <td>
 
 5-7
 
 .. raw:: html
 
-   </td><td>
+   </td>
+
+.. raw:: html
+
+   <td>
 
 CF\_QC
 
 .. raw:: html
 
-   </td><td>  
+   </td>
+
+.. raw:: html
+
+   <td>
 
 000
 
 .. raw:: html
 
-   </td><td>    
-
-Main (RT) method used best result possible (no saturation)
+   </td>
 
 .. raw:: html
 
-   </td>
+   <td>
+
+::
+
+    Main (RT) method used   best result possible (no saturation)     </td>
+
+.. raw:: html
+
    </tr>
+
+.. raw:: html
+
    <tr>
+
+.. raw:: html
+
    <td>
 
  
 
 .. raw:: html
 
-   </td><td>
+   </td>
+
+.. raw:: html
+
+   <td>
 
  
 
 .. raw:: html
 
-   </td><td>  
+   </td>
+
+.. raw:: html
+
+   <td>
 
 001
 
 .. raw:: html
 
-   </td><td>
+   </td>
+
+.. raw:: html
+
+   <td>
 
 Main (RT) method used with saturation. Good very usable
 
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    </tr>
+
+.. raw:: html
+
    <tr>
+
+.. raw:: html
+
    <td>
 
  
 
 .. raw:: html
 
-   </td><td>
+   </td>
+
+.. raw:: html
+
+   <td>
 
  
 
 .. raw:: html
 
-   </td><td>  
+   </td>
+
+.. raw:: html
+
+   <td>
 
 010
 
 .. raw:: html
 
-   </td><td>
+   </td>
+
+.. raw:: html
+
+   <td>
 
 Main (RT) method failed due to bad geometry empirical algorithm used
 
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    </tr>
+
+.. raw:: html
+
    <tr>
+
+.. raw:: html
+
    <td>
 
  
 
 .. raw:: html
 
-   </td><td>
+   </td>
+
+.. raw:: html
+
+   <td>
 
  
 
 .. raw:: html
 
-   </td><td>  
+   </td>
+
+.. raw:: html
+
+   <td>
 
 011
 
 .. raw:: html
 
-   </td><td> 
+   </td>
+
+.. raw:: html
+
+   <td>
 
 Main (RT) method failed due to problems other than geometry empirical
 algorithm used
@@ -732,27 +997,48 @@ algorithm used
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    </tr>
+
+.. raw:: html
+
    <tr>
+
+.. raw:: html
+
    <td>
 
  
 
 .. raw:: html
 
-   </td><td>
+   </td>
+
+.. raw:: html
+
+   <td>
 
  
 
 .. raw:: html
 
-   </td><td>  
+   </td>
+
+.. raw:: html
+
+   <td>
 
 100
 
 .. raw:: html
 
-   </td><td> 
+   </td>
+
+.. raw:: html
+
+   <td>
 
 Pixel not produced at all value coudn’t be retrieved (possible reasons:
 bad L1B data unusable MODAGAGG data)
@@ -760,7 +1046,13 @@ bad L1B data unusable MODAGAGG data)
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    </tr>
+
+.. raw:: html
+
    </table>
 
 In using this information, it is up to the use which data he/she wants

@@ -2,7 +2,7 @@
 foreach f (Ch*)
   cd $f
   rm -f files
-  ln -s files .
+  ln -s . files
   cd ..
 end
 

@@ -5053,184 +5053,214 @@ HLjNyZzMyXtS/j/ndKux+IIrlwAAAABJRU5ErkJggg==
 <tr>
 <th>
 Bit No.
-</th>    <th>
-Parameter Name
-</th><th> 
-Bit Combination
-</th><th>
-Explanation
 </th>
+<pre><code>&lt;th&gt;Parameter Name&lt;/th&gt;&lt;th&gt; Bit Combination&lt;/th&gt;&lt;th&gt;Explanation&lt;/th&gt;</code></pre>
 <tr>
 <td>
 0
-</td><td>
+</td>
+<td>
 MODLAND_QC bits
-</td><td>   
+</td>
+<td>
 0
-</td><td>  
+</td>
+<td>
 Good quality (main algorithm with or without saturation)
 </td>
 </tr>
 <tr>
 <td>
  
-</td><td>
+</td>
+<td>
  
-</td><td>  
+</td>
+<td>
 1
-</td><td>
+</td>
+<td>
 Other Quality (back-up algorithm or fill values)
 </td>
 </tr>
-
 <tr>
 <td>
 1
-</td><td>
-Sensor
-</td><td>    
-0
-</td><td>  
-TERRA
 </td>
+<td>
+Sensor
+</td>
+<td>
+<pre><code>0&lt;/td&gt;&lt;td&gt;  TERRA&lt;/td&gt;</code></pre>
 </tr>
 <tr>
 <td>
  
-</td><td>
+</td>
+<td>
  
-</td><td>  
+</td>
+<td>
 1
-</td><td>
+</td>
+<td>
 AQUA
 </td>
 </tr>
-
 <tr>
 <td>
 2
-</td><td>
+</td>
+<td>
 DeadDetector
-</td><td>  
+</td>
+<td>
 0
-</td><td>  
+</td>
+<td>
 Detectors apparently fine for up to 50% of channels 1 2
 </td>
 </tr>
 <tr>
 <td>
  
-</td><td>
+</td>
+<td>
  
-</td><td>  
+</td>
+<td>
 1
-</td><td>
+</td>
+<td>
 Dead detectors caused &gt;50% adjacent detector retrieval
 </td>
 </tr>
-
 <tr>
 <td>
 3-4
-</td><td>
+</td>
+<td>
 CloudState
-</td><td> 
+</td>
+<td>
 00
-</td><td> 
+</td>
+<td>
 Significant clouds NOT present (clear)
 </td>
 </tr>
 <tr>
 <td>
  
-</td><td>
+</td>
+<td>
  
-</td><td>  
+</td>
+<td>
 01
-</td><td>
+</td>
+<td>
 Significant clouds WERE present
 </td>
 </tr>
 <tr>
 <td>
  
-</td><td>
+</td>
+<td>
  
-</td><td>  
+</td>
+<td>
 10
-</td><td>
+</td>
+<td>
 Mixed clouds present on pixel
 </td>
 </tr>
 <tr>
 <td>
  
-</td><td>
+</td>
+<td>
  
-</td><td>  
+</td>
+<td>
 11
-</td><td>
+</td>
+<td>
 Cloud state not defined assumed clear
 </td>
 </tr>
-
 <tr>
 <td>
 5-7
-</td><td>
-CF_QC
-</td><td>  
-000
-</td><td>    
-Main (RT) method used best result possible (no saturation)
 </td>
+<td>
+CF_QC
+</td>
+<td>
+000
+</td>
+<td>
+<pre><code>Main (RT) method used   best result possible (no saturation)     &lt;/td&gt;</code></pre>
 </tr>
 <tr>
 <td>
  
-</td><td>
+</td>
+<td>
  
-</td><td>  
+</td>
+<td>
 001
-</td><td>
+</td>
+<td>
 Main (RT) method used with saturation. Good very usable
 </td>
 </tr>
 <tr>
 <td>
  
-</td><td>
+</td>
+<td>
  
-</td><td>  
+</td>
+<td>
 010
-</td><td>
+</td>
+<td>
 Main (RT) method failed due to bad geometry empirical algorithm used
 </td>
 </tr>
 <tr>
 <td>
  
-</td><td>
+</td>
+<td>
  
-</td><td>  
+</td>
+<td>
 011
-</td><td> 
+</td>
+<td>
 Main (RT) method failed due to problems other than geometry empirical algorithm used
 </td>
 </tr>
 <tr>
 <td>
  
-</td><td>
+</td>
+<td>
  
-</td><td>  
+</td>
+<td>
 100
-</td><td> 
+</td>
+<td>
 Pixel not produced at all value coudn’t be retrieved (possible reasons: bad L1B data unusable MODAGAGG data)
 </td>
 </tr>
 </table>
-
 <p>In using this information, it is up to the use which data he/she wants to pass through for any further processing. There are clearly trade-offs: if you look for only the highest quality data, then the number of samples is likely to be lower than if you were more tolerant. But if you are too tolerant, you will get spurious results. You may find useful information on how to convert from actual QA flags to diagnostics in <a href="http://gis.cri.fmach.it/modis-ndvi-evi/">this page</a> (they focus on NDVI/EVI, but the theory is the same).</p>
 </div>
 </div>
@@ -10882,7 +10912,7 @@ Process is terminated.
 <p>This is a good opportunity to see if you can apply what was learned above about interpreting QC information and using <code>gdal</code> to examine a dataset.</p>
 <p>If you examine the <a href="http://nsidc.org/data/docs/daac/modis_v5/mod10a1_modis_terra_snow_daily_global_500m_grid.gd.html">data description page</a>, you will see that the data are in HDF EOS format (the same as the LAI product).</p>
 <h3 id="e4.2.1-download">E4.2.1 Download</h3>
-<p>Download the MODIS Terra daily snow product for the UK for the year 2012 for the month of February using the urls in <a href="data/robot_snow.2012.txt">files/data/robot_snow.2012.txt</a> and put them in the directory <code>files/data</code>.</p>
+<p>Download the MODIS Terra daily snow product for the UK for the year 2012 for the month of February using the urls in <a href="data/robot_snow.2012.txt" class="uri">files/data/robot_snow.2012.txt</a> and put them in the directory <code>files/data</code>.</p>
 <h3 id="e4.2.1-explore">E4.2.1 Explore</h3>
 <p>Show all of the subset data layers in this dataset.</p>
 <h3 id="e4.3.3-read-a-dataset">E4.3.3 Read a dataset</h3>
@@ -11151,7 +11181,7 @@ Field 5: SOURCETHM
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This is available as <a href="python/raster_mask.py">files/python/raster_mask.py</a>.</p>
+<p>This is available as <a href="python/raster_mask.py" class="uri">files/python/raster_mask.py</a>.</p>
 <p>Most of the code below should be familiar from above (we make use of the <code>getLAI()</code> function we developed).</p>
 </div>
 </div>

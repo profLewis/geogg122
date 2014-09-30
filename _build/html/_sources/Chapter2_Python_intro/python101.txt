@@ -829,106 +829,21 @@ The set of operations we can perform on tuples includes:
 .. raw:: html
 
    <table>
-       <tr><td>
 
-Name
+::
 
-.. raw:: html
-
-   </td><td>
-
-Example
-
-.. raw:: html
-
-   </td><td>
-
-Result
+    <tr><td><b>Name</b></td><td><b>Example</b></td><td><b>Result</b></td><td><b>Meaning</b></td></tr>
+    <tr><td><pre>len()</pre></td><td><pre>len((1,2,(3,4))</pre></td><td><pre>3</pre></td><td>Length</td></tr>
+    <tr><td><pre>+</pre></td><td><pre>(1,2) + (3,4,5)</pre></td><td><pre>(1,2,3,4,5)</pre></td><td>Concatenate (join)</td></tr>
+    <tr><td><pre>\*</pre></td><td><pre>(1,2) * 3</pre></td><td><pre>(1, 2, 1, 2, 1, 2, 1, 2)</pre></td><td>Repetition</td></tr>
+    <tr><td><pre>in</pre></td><td><pre>2 in (1,2,3,4)</pre></td><td><pre>True</pre></td><td>Membership</td></tr>
+    <tr><td><pre>index</pre></td><td><pre>('a','b','c','d').index('c')</pre></td><td><pre>2</pre></td><td><p>Index</p><p>T.index(value, [start, [stop]]) -> integer -- return first index of value.</p><p>Raises ValueError if the value is not present</p></td></tr>    
+    <tr><td><pre>count</pre></td><td><pre>('a','b','c','c','d','c').count('c')</pre></td><td><pre>3</pre></td><td><p>Count</p><p>T.count(value) -> integer -- return number of occurrences of value</p></td></tr>    
+    <tr><td><pre>min(), max()</pre></td><td><p><pre>min(('a','b','c'))</pre></p><p><pre>max((3,4,1))</pre></p></td><td><p><pre>'a'</pre></p><p><pre>4</pre></p></td><td>Minimum, maximum</td></tr>
+    <tr><td><pre>tuple()</pre></td><td><p><pre>tuple([1,2,3])</pre></p><p><pre>tuple('hello')</pre></p><p><pre>tuple({1:'one',2:'two'})</pre></p></td><td><p><pre>(1,2,3)</pre></p><p><pre>('h', 'e', 'l', 'l', 'o')</pre></p><p><pre>(1,2)</pre></p></td><td>Convert to tuple</td></tr>
 
 .. raw:: html
 
-   </td><td>
-
-Meaning
-
-.. raw:: html
-
-   </td></tr>
-       <tr><td><pre>len()</pre></td><td><pre>len((1,2,(3,4))</pre></td><td><pre>3</pre></td><td>
-
-Length
-
-.. raw:: html
-
-   </td></tr>
-       <tr><td><pre>+</pre></td><td><pre>(1,2) + (3,4,5)</pre></td><td><pre>(1,2,3,4,5)</pre></td><td>
-
-Concatenate (join)
-
-.. raw:: html
-
-   </td></tr>
-       <tr><td><pre>\*</pre></td><td><pre>(1,2) * 3</pre></td><td><pre>(1, 2, 1, 2, 1, 2, 1, 2)</pre></td><td>
-
-Repetition
-
-.. raw:: html
-
-   </td></tr>
-       <tr><td><pre>in</pre></td><td><pre>2 in (1,2,3,4)</pre></td><td><pre>True</pre></td><td>
-
-Membership
-
-.. raw:: html
-
-   </td></tr>
-       <tr><td><pre>index</pre></td><td><pre>('a','b','c','d').index('c')</pre></td><td><pre>2</pre></td><td><p>
-
-Index
-
-.. raw:: html
-
-   </p><p>
-
-T.index(value, [start, [stop]]) -> integer -- return first index of
-value.
-
-.. raw:: html
-
-   </p><p>
-
-Raises ValueError if the value is not present
-
-.. raw:: html
-
-   </p></td></tr>    
-       <tr><td><pre>count</pre></td><td><pre>('a','b','c','c','d','c').count('c')</pre></td><td><pre>3</pre></td><td><p>
-
-Count
-
-.. raw:: html
-
-   </p><p>
-
-T.count(value) -> integer -- return number of occurrences of value
-
-.. raw:: html
-
-   </p></td></tr>    
-       <tr><td><pre>min(), max()</pre></td><td><p><pre>min(('a','b','c'))</pre></p><p><pre>max((3,4,1))</pre></p></td><td><p><pre>'a'</pre></p><p><pre>4</pre></p></td><td>
-
-Minimum, maximum
-
-.. raw:: html
-
-   </td></tr>
-       <tr><td><pre>tuple()</pre></td><td><p><pre>tuple([1,2,3])</pre></p><p><pre>tuple('hello')</pre></p><p><pre>tuple({1:'one',2:'two'})</pre></p></td><td><p><pre>(1,2,3)</pre></p><p><pre>('h', 'e', 'l', 'l', 'o')</pre></p><p><pre>(1,2)</pre></p></td><td>
-
-Convert to tuple
-
-.. raw:: html
-
-   </td></tr>
    </table>
 
 You will find that these basic operators work with any of the group

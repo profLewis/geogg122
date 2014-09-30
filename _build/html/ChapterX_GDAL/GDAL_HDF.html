@@ -53,12 +53,7 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <table border="" width=100% cellpadding=0><tr>
-<td bgcolor="#232323" border=""></td>
-</tr>
-<td bgcolor="#9ABAE2" border="">
-</td>
-</table><div class="section" id="read-and-use-some-different-file-formats">
+  <table border width="100%" cellpadding="0"><tr><td bgcolor="#232323" border></td></tr><td bgcolor="#9ABAE2" border></td></table><div class="section" id="read-and-use-some-different-file-formats">
 <h1>Read and use some different file formats<a class="headerlink" href="#read-and-use-some-different-file-formats" title="Permalink to this headline">¶</a></h1>
 <p>In this session, we will learn to use some geospatial tools using GDAL
 in Python. A good set of working notes on how to use GDAL has been
@@ -756,105 +751,56 @@ SD
 We should then examine the QC (Quality Control) information. The codes
 for this are also given on the LAI product page. They are described as
 bit combinations:</p>
-<table>
-<tr>
-<th><p>Bit No.</p>
-</th>    <th><p>Parameter Name</p>
-</th><th><p>Bit Combination</p>
-</th><th><p>Explanation</p>
-</th>
-<tr>
-<td><p>0</p>
+<table><tr><th><p>Bit No.</p>
+</th><div class="highlight-python"><div class="highlight"><pre>&lt;th&gt;Parameter Name&lt;/th&gt;&lt;th&gt; Bit Combination&lt;/th&gt;&lt;th&gt;Explanation&lt;/th&gt;
+</pre></div>
+</div>
+<tr><td><p>0</p>
 </td><td><p>MODLAND_QC bits</p>
 </td><td><p>0</p>
 </td><td><p>Good quality (main algorithm with or without saturation)</p>
-</td>
-</tr>
-<tr>
-<td></td><td></td><td><p>1</p>
+</td></tr><tr><td></td><td></td><td><p>1</p>
 </td><td><p>Other Quality (back-up algorithm or fill values)</p>
-</td>
-</tr>
-
-<tr>
-<td><p>1</p>
+</td></tr><tr><td><p>1</p>
 </td><td><p>Sensor</p>
-</td><td><p>0</p>
-</td><td><p>TERRA</p>
-</td>
-</tr>
-<tr>
-<td></td><td></td><td><p>1</p>
+</td><td><div class="highlight-python"><div class="highlight"><pre>0&lt;/td&gt;&lt;td&gt;  TERRA&lt;/td&gt;
+</pre></div>
+</div>
+</tr><tr><td></td><td></td><td><p>1</p>
 </td><td><p>AQUA</p>
-</td>
-</tr>
-
-<tr>
-<td><p>2</p>
+</td></tr><tr><td><p>2</p>
 </td><td><p>DeadDetector</p>
 </td><td><p>0</p>
 </td><td><p>Detectors apparently fine for up to 50% of channels 1 2</p>
-</td>
-</tr>
-<tr>
-<td></td><td></td><td><p>1</p>
+</td></tr><tr><td></td><td></td><td><p>1</p>
 </td><td><p>Dead detectors caused &gt;50% adjacent detector retrieval</p>
-</td>
-</tr>
-
-<tr>
-<td><p>3-4</p>
+</td></tr><tr><td><p>3-4</p>
 </td><td><p>CloudState</p>
 </td><td><p>00</p>
 </td><td><p>Significant clouds NOT present (clear)</p>
-</td>
-</tr>
-<tr>
-<td></td><td></td><td><p>01</p>
+</td></tr><tr><td></td><td></td><td><p>01</p>
 </td><td><p>Significant clouds WERE present</p>
-</td>
-</tr>
-<tr>
-<td></td><td></td><td><p>10</p>
+</td></tr><tr><td></td><td></td><td><p>10</p>
 </td><td><p>Mixed clouds present on pixel</p>
-</td>
-</tr>
-<tr>
-<td></td><td></td><td><p>11</p>
+</td></tr><tr><td></td><td></td><td><p>11</p>
 </td><td><p>Cloud state not defined assumed clear</p>
-</td>
-</tr>
-
-<tr>
-<td><p>5-7</p>
+</td></tr><tr><td><p>5-7</p>
 </td><td><p>CF_QC</p>
 </td><td><p>000</p>
-</td><td><p>Main (RT) method used best result possible (no saturation)</p>
-</td>
-</tr>
-<tr>
-<td></td><td></td><td><p>001</p>
+</td><td><div class="highlight-python"><div class="highlight"><pre>Main (RT) method used   best result possible (no saturation)     &lt;/td&gt;
+</pre></div>
+</div>
+</tr><tr><td></td><td></td><td><p>001</p>
 </td><td><p>Main (RT) method used with saturation. Good very usable</p>
-</td>
-</tr>
-<tr>
-<td></td><td></td><td><p>010</p>
+</td></tr><tr><td></td><td></td><td><p>010</p>
 </td><td><p>Main (RT) method failed due to bad geometry empirical algorithm used</p>
-</td>
-</tr>
-<tr>
-<td></td><td></td><td><p>011</p>
+</td></tr><tr><td></td><td></td><td><p>011</p>
 </td><td><p>Main (RT) method failed due to problems other than geometry empirical
 algorithm used</p>
-</td>
-</tr>
-<tr>
-<td></td><td></td><td><p>100</p>
+</td></tr><tr><td></td><td></td><td><p>100</p>
 </td><td><p>Pixel not produced at all value coudn’t be retrieved (possible reasons:
 bad L1B data unusable MODAGAGG data)</p>
-</td>
-</tr>
-</table><p>In using this information, it is up to the use which data he/she wants
+</td></tr></table><p>In using this information, it is up to the use which data he/she wants
 to pass through for any further processing. There are clearly
 trade-offs: if you look for only the highest quality data, then the
 number of samples is likely to be lower than if you were more tolerant.
@@ -937,108 +883,59 @@ mask accordingly.</p>
 </pre></div>
 </div>
 <p>The data values in FparExtra_QC are:</p>
-<table>
-<tr>
-<th><p>Bit No.</p>
-</th>    <th><p>Parameter Name</p>
-</th><th><p>Bit Combination</p>
-</th><th><p>Explanation</p>
-</th>
-<tr>
-<td><p>0-1</p>
+<table><tr><th><p>Bit No.</p>
+</th><div class="highlight-python"><div class="highlight"><pre>&lt;th&gt;Parameter Name&lt;/th&gt;&lt;th&gt; Bit Combination&lt;/th&gt;&lt;th&gt;Explanation&lt;/th&gt;
+</pre></div>
+</div>
+<tr><td><p>0-1</p>
 </td><td><p>LandSea</p>
 </td><td><p>00</p>
 </td><td><p>Land</p>
-</td>
-</tr>
-<tr>
-<td></td><td></td><td><p>01</p>
+</td></tr><tr><td></td><td></td><td><p>01</p>
 </td><td><p>Shore</p>
-</td>
-</tr>
-<tr>
-<td></td><td></td><td><p>10</p>
+</td></tr><tr><td></td><td></td><td><p>10</p>
 </td><td><p>Freshwater</p>
-</td>
-</tr>
-<tr>
-<td></td><td></td><td><p>11</p>
+</td></tr><tr><td></td><td></td><td><p>11</p>
 </td><td><p>Ocean</p>
-</td>
-</tr>
-<tr>
-<td><p>2</p>
+</td></tr><tr><td><p>2</p>
 </td><td><p>Snow/Ice</p>
 </td><td><p>0</p>
 </td><td><p>No snow/ice detected</p>
-</td>
-</tr>
-<tr>
-<td></td><td></td><td><p>1</p>
+</td></tr><tr><td></td><td></td><td><p>1</p>
 </td><td><p>Snow/ice detected</p>
-</td>
-</tr>
-<tr>
-<td><p>3</p>
+</td></tr><tr><td><p>3</p>
 </td><td><p>Aerosol</p>
 </td><td><p>0</p>
 </td><td><p>No or low atmospheric aerosol levels detected</p>
-</td>
-</tr>
-<tr>
-<td></td><td></td><td><p>1</p>
+</td></tr><tr><td></td><td></td><td><p>1</p>
 </td><td><p>Average or high atmospheric aerosol levels detected</p>
-</td>
-</tr>
-<tr>
-<td><p>4</p>
+</td></tr><tr><td><p>4</p>
 </td><td><p>Cirrus</p>
-</td><td><p>0</p>
-</td><td><p>No cirrus detected</p>
-</td>
-</tr>
-<tr>
-<td></td><td></td><td><p>1</p>
+</td><td><div class="highlight-python"><div class="highlight"><pre>0&lt;/td&gt;&lt;td&gt;No cirrus detected&lt;/td&gt;
+</pre></div>
+</div>
+</tr><tr><td></td><td></td><td><p>1</p>
 </td><td><p>Cirrus detected</p>
-</td>
-</tr>
-<tr>
-<td><p>5</p>
+</td></tr><tr><td><p>5</p>
 </td><td><p>Cloud</p>
 </td><td><p>0</p>
 </td><td><p>No cloud detected</p>
-</td>
-</tr>
-<tr>
-<td></td><td></td><td><p>1</p>
+</td></tr><tr><td></td><td></td><td><p>1</p>
 </td><td><p>Cloud detected</p>
-</td>
-</tr>
-<tr>
-<td><p>6</p>
+</td></tr><tr><td><p>6</p>
 </td><td><p>Cloud shadow</p>
 </td><td><p>0</p>
 </td><td><p>No cloud shadow detected</p>
-</td>
-</tr>
-<tr>
-<td></td><td></td><td><p>1</p>
+</td></tr><tr><td></td><td></td><td><p>1</p>
 </td><td><p>Cloud shadowdetected</p>
-</td>
-</tr>
-<tr>
-<td><p>7</p>
+</td></tr><tr><td><p>7</p>
 </td><td><p>Biome_mask</p>
-</td><td><p>0</p>
-</td><td><p>Biome outside interval 1-4</p>
-</td>
-</tr>
-<tr>
-<td></td><td></td><td><p>1</p>
+</td><td><div class="highlight-python"><div class="highlight"><pre>0&lt;/td&gt;&lt;td&gt;Biome outside interval 1-4&lt;/td&gt;
+</pre></div>
+</div>
+</tr><tr><td></td><td></td><td><p>1</p>
 </td><td><p>Biome in interval 1-4</p>
-</td>
-</tr>
-</table><p>Use this QC dataset to make sure that <strong>only</strong> Land pixels are passed in
+</td></tr></table><p>Use this QC dataset to make sure that <strong>only</strong> Land pixels are passed in
 the mask, and apply other data quality measures as appropriate.</p>
 <p><em>Hint</em> this is much the same as the exercise above, but looking at a
 different QC dataset. The key to doing this is to identify the bit codes
@@ -1187,7 +1084,7 @@ pwd: error retrieving current directory: getcwd: cannot access parent directorie
 
     <div class="footer">
         &copy; Copyright 2014, Prof. P. Lewis.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

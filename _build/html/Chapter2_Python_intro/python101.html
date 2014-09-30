@@ -731,32 +731,17 @@ b: awoke
 </pre></div>
 </div>
 <p>The set of operations we can perform on tuples includes:</p>
-<table>
-    <tr><td><p>Name</p>
-</td><td><p>Example</p>
-</td><td><p>Result</p>
-</td><td><p>Meaning</p>
-</td></tr>
-    <tr><td><pre>len()</pre></td><td><pre>len((1,2,(3,4))</pre></td><td><pre>3</pre></td><td><p>Length</p>
-</td></tr>
-    <tr><td><pre>+</pre></td><td><pre>(1,2) + (3,4,5)</pre></td><td><pre>(1,2,3,4,5)</pre></td><td><p>Concatenate (join)</p>
-</td></tr>
-    <tr><td><pre>\*</pre></td><td><pre>(1,2) * 3</pre></td><td><pre>(1, 2, 1, 2, 1, 2, 1, 2)</pre></td><td><p>Repetition</p>
-</td></tr>
-    <tr><td><pre>in</pre></td><td><pre>2 in (1,2,3,4)</pre></td><td><pre>True</pre></td><td><p>Membership</p>
-</td></tr>
-    <tr><td><pre>index</pre></td><td><pre>('a','b','c','d').index('c')</pre></td><td><pre>2</pre></td><td><p><p>Index</p>
-</p><p><p>T.index(value, [start, [stop]]) -&gt; integer &#8211; return first index of
-value.</p>
-</p><p><p>Raises ValueError if the value is not present</p>
-</p></td></tr>
-    <tr><td><pre>count</pre></td><td><pre>('a','b','c','c','d','c').count('c')</pre></td><td><pre>3</pre></td><td><p><p>Count</p>
-</p><p><p>T.count(value) -&gt; integer &#8211; return number of occurrences of value</p>
-</p></td></tr>
-    <tr><td><pre>min(), max()</pre></td><td><p><pre>min(('a','b','c'))</pre></p><p><pre>max((3,4,1))</pre></p></td><td><p><pre>'a'</pre></p><p><pre>4</pre></p></td><td><p>Minimum, maximum</p>
-</td></tr>
-    <tr><td><pre>tuple()</pre></td><td><p><pre>tuple([1,2,3])</pre></p><p><pre>tuple('hello')</pre></p><p><pre>tuple({1:'one',2:'two'})</pre></p></td><td><p><pre>(1,2,3)</pre></p><p><pre>('h', 'e', 'l', 'l', 'o')</pre></p><p><pre>(1,2)</pre></p></td><td><p>Convert to tuple</p>
-</td></tr>
+<table><div class="highlight-python"><div class="highlight"><pre>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Name&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Example&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Result&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Meaning&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;pre&gt;len()&lt;/pre&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;len((1,2,(3,4))&lt;/pre&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;3&lt;/pre&gt;&lt;/td&gt;&lt;td&gt;Length&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;pre&gt;+&lt;/pre&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;(1,2) + (3,4,5)&lt;/pre&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;(1,2,3,4,5)&lt;/pre&gt;&lt;/td&gt;&lt;td&gt;Concatenate (join)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;pre&gt;\*&lt;/pre&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;(1,2) * 3&lt;/pre&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;(1, 2, 1, 2, 1, 2, 1, 2)&lt;/pre&gt;&lt;/td&gt;&lt;td&gt;Repetition&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;pre&gt;in&lt;/pre&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;2 in (1,2,3,4)&lt;/pre&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;True&lt;/pre&gt;&lt;/td&gt;&lt;td&gt;Membership&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;pre&gt;index&lt;/pre&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;(&#39;a&#39;,&#39;b&#39;,&#39;c&#39;,&#39;d&#39;).index(&#39;c&#39;)&lt;/pre&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;2&lt;/pre&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Index&lt;/p&gt;&lt;p&gt;T.index(value, [start, [stop]]) -&gt; integer -- return first index of value.&lt;/p&gt;&lt;p&gt;Raises ValueError if the value is not present&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;pre&gt;count&lt;/pre&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;(&#39;a&#39;,&#39;b&#39;,&#39;c&#39;,&#39;c&#39;,&#39;d&#39;,&#39;c&#39;).count(&#39;c&#39;)&lt;/pre&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;3&lt;/pre&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Count&lt;/p&gt;&lt;p&gt;T.count(value) -&gt; integer -- return number of occurrences of value&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;pre&gt;min(), max()&lt;/pre&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;&lt;pre&gt;min((&#39;a&#39;,&#39;b&#39;,&#39;c&#39;))&lt;/pre&gt;&lt;/p&gt;&lt;p&gt;&lt;pre&gt;max((3,4,1))&lt;/pre&gt;&lt;/p&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;&lt;pre&gt;&#39;a&#39;&lt;/pre&gt;&lt;/p&gt;&lt;p&gt;&lt;pre&gt;4&lt;/pre&gt;&lt;/p&gt;&lt;/td&gt;&lt;td&gt;Minimum, maximum&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;pre&gt;tuple()&lt;/pre&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;&lt;pre&gt;tuple([1,2,3])&lt;/pre&gt;&lt;/p&gt;&lt;p&gt;&lt;pre&gt;tuple(&#39;hello&#39;)&lt;/pre&gt;&lt;/p&gt;&lt;p&gt;&lt;pre&gt;tuple({1:&#39;one&#39;,2:&#39;two&#39;})&lt;/pre&gt;&lt;/p&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;&lt;pre&gt;(1,2,3)&lt;/pre&gt;&lt;/p&gt;&lt;p&gt;&lt;pre&gt;(&#39;h&#39;, &#39;e&#39;, &#39;l&#39;, &#39;l&#39;, &#39;o&#39;)&lt;/pre&gt;&lt;/p&gt;&lt;p&gt;&lt;pre&gt;(1,2)&lt;/pre&gt;&lt;/p&gt;&lt;/td&gt;&lt;td&gt;Convert to tuple&lt;/td&gt;&lt;/tr&gt;
+</pre></div>
+</div>
 </table><p>You will find that these basic operators work with any of the group
 types, so you should make sure you are aware of them.</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="c"># some examples</span>
@@ -2877,7 +2862,7 @@ into smaller parts that you can solve with the Python that you know.</p>
 
     <div class="footer">
         &copy; Copyright 2014, Prof. P. Lewis.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

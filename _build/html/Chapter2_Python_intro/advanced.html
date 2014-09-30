@@ -448,149 +448,52 @@ A&gt;&gt;3:   0b1000010011000         4248
 Area Index
 (LAI)</a>
 product:</p>
-<table>
-<tr>
-<td><p>Bit number</p>
-</td>
-<td><p>Parameter Name</p>
-</td>
-<td><p>Bit combination</p>
-</td>
-<td><p>Interpretation</p>
-</td>
-</tr><tr>
-
-<td><p>0</p>
-</td>
-<td><p>MODLAND_QC bits</p>
-</td>
-<td><p>0</p>
-</td>
-<td><p>Good quality (main algorithm with or without saturation)</p>
-</td>
-</tr><tr>
-
-<td></td>
-<td></td>
-<td><p>1</p>
-</td>
-<td><p>Other Quality (back-up algorithm or fill values)</p>
-</td>
-</tr><tr>
-
-<td><p>1</p>
-</td>
-<td><p>Sensor</p>
-</td>
-<td><p>0</p>
-</td>
-<td><p>Terra</p>
-</td>
-</tr><tr>
-
-<td></td>
-<td></td>
-<td><p>1</p>
-</td>
-<td><p>Aqua</p>
-</td>
-</tr><tr>
-
-<td><p>2</p>
-</td>
-<td><p>DeadDetector</p>
-</td>
-<td><p>0</p>
-</td>
-<td><p>Detectors apparently fine for up to 50% of channels</p>
-</td>
-</tr><tr>
-
-<td></td>
-<td></td>
-<td><p>1</p>
-</td>
-<td><p>Dead detectors caused &gt;50% adjacent detector retrieval</p>
-</td>
-</tr><tr>
-
-<td><p>3-4</p>
-</td>
-<td><p>CloudState</p>
-</td>
-<td><p>00</p>
-</td>
-<td><p>Significant clouds NOT present (clear)</p>
-</td>
-</tr><tr>
-
-<td></td>
-<td></td>
-<td><p>01</p>
-</td>
-<td><p>Significant clouds WERE present</p>
-</td>
-</tr><tr>
-
-<td></td>
-<td></td>
-<td><p>10</p>
-</td>
-<td><p>Mixed cloud present on pixel</p>
-</td>
-</tr><tr>
-
-<td></td>
-<td></td>
-<td><p>11</p>
-</td>
-<td><p>Cloud state not defined (assumed clear)</p>
-</td>
-</tr><tr>
-
-<td><p>5-7</p>
-</td>
-<td><p>CF_QC</p>
-</td>
-<td><p>000</p>
-</td>
-<td><p>Main (RT) method used (best result possible (no saturation))</p>
-</td>
-</tr><tr>
-
-<td></td>
-<td></td>
-<td><p>001</p>
-</td>
-<td><p>Main (RT) method used with saturation. (usable)</p>
-</td>
-</tr><tr>
-
-<td></td>
-<td></td>
-<td><p>010</p>
-</td>
-<td><p>Main (RT) method failed due to bad geometry (empirical algorithm used)</p>
-</td>
-</tr><tr>
-
-<td></td>
-<td></td>
-<td><p>010</p>
-</td>
-<td><p>Main (RT) method failed due to problems other than geometry (empirical
+<table><tr><td><p>Bit number</p>
+</td><td><p>Parameter Name</p>
+</td><td><p>Bit combination</p>
+</td><td><p>Interpretation</p>
+</td></tr><tr><td><p>0</p>
+</td><td><p>MODLAND_QC bits</p>
+</td><td><p>0</p>
+</td><td><p>Good quality (main algorithm with or without saturation)</p>
+</td></tr><tr><td></td><td></td><td><p>1</p>
+</td><td><p>Other Quality (back-up algorithm or fill values)</p>
+</td></tr><tr><td><p>1</p>
+</td><td><p>Sensor</p>
+</td><td><p>0</p>
+</td><td><p>Terra</p>
+</td></tr><tr><td></td><td></td><td><p>1</p>
+</td><td><p>Aqua</p>
+</td></tr><tr><td><p>2</p>
+</td><td><p>DeadDetector</p>
+</td><td><p>0</p>
+</td><td><p>Detectors apparently fine for up to 50% of channels</p>
+</td></tr><tr><td></td><td></td><td><p>1</p>
+</td><td><p>Dead detectors caused &gt;50% adjacent detector retrieval</p>
+</td></tr><tr><td><p>3-4</p>
+</td><td><p>CloudState</p>
+</td><td><p>00</p>
+</td><td><p>Significant clouds NOT present (clear)</p>
+</td></tr><tr><td></td><td></td><td><p>01</p>
+</td><td><p>Significant clouds WERE present</p>
+</td></tr><tr><td></td><td></td><td><p>10</p>
+</td><td><p>Mixed cloud present on pixel</p>
+</td></tr><tr><td></td><td></td><td><p>11</p>
+</td><td><p>Cloud state not defined (assumed clear)</p>
+</td></tr><tr><td><p>5-7</p>
+</td><td><p>CF_QC</p>
+</td><td><p>000</p>
+</td><td><p>Main (RT) method used (best result possible (no saturation))</p>
+</td></tr><tr><td></td><td></td><td><p>001</p>
+</td><td><p>Main (RT) method used with saturation. (usable)</p>
+</td></tr><tr><td></td><td></td><td><p>010</p>
+</td><td><p>Main (RT) method failed due to bad geometry (empirical algorithm used)</p>
+</td></tr><tr><td></td><td></td><td><p>010</p>
+</td><td><p>Main (RT) method failed due to problems other than geometry (empirical
 algorithm used)</p>
-</td>
-</tr><tr>
-
-<td></td>
-<td></td>
-<td><p>010</p>
-</td>
-<td><p>Pixel not produced at all.</p>
-</td>
-</tr>
-</table><p>So, the MODIS LAI QA information is contained in one byte (8 bits),
+</td></tr><tr><td></td><td></td><td><p>010</p>
+</td><td><p>Pixel not produced at all.</p>
+</td></tr></table><p>So, the MODIS LAI QA information is contained in one byte (8 bits),
 which encodes data about five different categories of QA information.</p>
 <p>When using such data, we need to make choices about what quality of data
 we are willing to accept.</p>
@@ -1501,7 +1404,7 @@ just starting coding to follow.</p>
 
     <div class="footer">
         &copy; Copyright 2014, Prof. P. Lewis.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

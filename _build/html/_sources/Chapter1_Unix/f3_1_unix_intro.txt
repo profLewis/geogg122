@@ -547,9 +547,12 @@ The unix command to give a listing of files or directories is ``ls``
 
 .. parsed-literal::
 
-    [35mCUDA-4.0[m[m@     [34mcuda[m[m/         [34minclude[m[m/      [34mlib[m[m/          [34mshare[m[m/
-    [34mbin[m[m/          [34metc[m[m/          [34minfo[m[m/         [34mlibexec[m[m/      [34mtexlive[m[m/
-    [34mboost_1_53_0[m[m/ [34mgit[m[m/          [35mitt[m[m@          [34mman[m[m/
+    CONTRIBUTING.md  SUPPORTERS.md    [34mgit[m[m/             [34mman[m[m/
+    [35mCUDA-4.0[m[m@        [34mbin[m[m/             [34minclude[m[m/         [34mopt[m[m/
+    [34mCellar[m[m/          [34mboost_1_53_0[m[m/    [34minfo[m[m/            [34mshare[m[m/
+    [34mLibrary[m[m/         [34mcuda[m[m/            [35mitt[m[m@             [34mtexlive[m[m/
+    [34mQt[m[m/              [34metc[m[m/             [34mlib[m[m/
+    README.md        [34mgfortran[m[m/        [34mlibexec[m[m/
 
 
 This tells us that in the system directory ``/usr/local/`` there are (on
@@ -564,8 +567,10 @@ We could have a look to see what is in those direcories e.g.:
 
 .. parsed-literal::
 
-    [34mdoc[m[m/         [34mgcc-4.8.0[m[m/   [34mghostscript[m[m/ [34mgraphviz[m[m/    [34mlocale[m[m/      [34mmplayer[m[m/
-    [34memacs[m[m/       [34mgdal[m[m/        [34mgnuplot[m[m/     [34minfo[m[m/        [34mman[m[m/
+    [35mImageMagick-6[m[m@ [34memacs[m[m/         [34mghostscript[m[m/   [35mlibtool[m[m@       [35mproj[m[m@
+    [34maclocal[m[m/       [35mepsg_csv[m[m@      [34mgnuplot[m[m/       [30m[43mlocale[m[m/
+    [35mawk[m[m@           [34mgcc-4.8.0[m[m/     [34mgraphviz[m[m/      [34mman[m[m/
+    [34mdoc[m[m/           [35mgcc-4.9.0[m[m@     [34minfo[m[m/          [34mmplayer[m[m/
 
 
 so we find some more sub-directories.
@@ -578,9 +583,12 @@ Note that just typing:
 
 .. parsed-literal::
 
-    [35mCUDA-4.0[m[m@     [34mcuda[m[m/         [34minclude[m[m/      [34mlib[m[m/          [34mshare[m[m/
-    [34mbin[m[m/          [34metc[m[m/          [34minfo[m[m/         [34mlibexec[m[m/      [34mtexlive[m[m/
-    [34mboost_1_53_0[m[m/ [34mgit[m[m/          [35mitt[m[m@          [34mman[m[m/
+    CONTRIBUTING.md  SUPPORTERS.md    [34mgit[m[m/             [34mman[m[m/
+    [35mCUDA-4.0[m[m@        [34mbin[m[m/             [34minclude[m[m/         [34mopt[m[m/
+    [34mCellar[m[m/          [34mboost_1_53_0[m[m/    [34minfo[m[m/            [34mshare[m[m/
+    [34mLibrary[m[m/         [34mcuda[m[m/            [35mitt[m[m@             [34mtexlive[m[m/
+    [34mQt[m[m/              [34metc[m[m/             [34mlib[m[m/
+    README.md        [34mgfortran[m[m/        [34mlibexec[m[m/
 
 
 has the same effect as typing:
@@ -591,9 +599,12 @@ has the same effect as typing:
 
 .. parsed-literal::
 
-    [35mCUDA-4.0[m[m@     [34mcuda[m[m/         [34minclude[m[m/      [34mlib[m[m/          [34mshare[m[m/
-    [34mbin[m[m/          [34metc[m[m/          [34minfo[m[m/         [34mlibexec[m[m/      [34mtexlive[m[m/
-    [34mboost_1_53_0[m[m/ [34mgit[m[m/          [35mitt[m[m@          [34mman[m[m/
+    CONTRIBUTING.md  SUPPORTERS.md    [34mgit[m[m/             [34mman[m[m/
+    [35mCUDA-4.0[m[m@        [34mbin[m[m/             [34minclude[m[m/         [34mopt[m[m/
+    [34mCellar[m[m/          [34mboost_1_53_0[m[m/    [34minfo[m[m/            [34mshare[m[m/
+    [34mLibrary[m[m/         [34mcuda[m[m/            [35mitt[m[m@             [34mtexlive[m[m/
+    [34mQt[m[m/              [34metc[m[m/             [34mlib[m[m/
+    README.md        [34mgfortran[m[m/        [34mlibexec[m[m/
 
 
 1.6 Exercise Unix-1
@@ -651,18 +662,18 @@ concepts to start to give you more control of your environment.
 | [```*?`` <#Wildcards>`__\ ] : wildcards
 
 If you run through this exercise multiple times, you will probably want
-to delete the directories ``~/Data/bar``, ``~/Data/foo`` and
-``~/Data/testCp`` and their contents before starting:
+to delete the directories ``~/DATA/bar``, ``~/DATA/foo`` and
+``~/DATA/testCp`` and their contents before starting:
 
 .. code:: python
 
-    rm -rf ~/Data/foo
+    rm -rf ~/DATA/foo
 .. code:: python
 
-    rm -rf ~/Data/testCp
+    rm -rf ~/DATA/testCp
 .. code:: python
 
-    rm -rf ~/Data/bar
+    rm -rf ~/DATA/bar
 2.1 Making and removing directories
 -----------------------------------
 
@@ -683,11 +694,11 @@ Lets first move to the data directory:
 
 .. code:: python
 
-    cd ~/Data
+    cd ~/DATA
 
 .. parsed-literal::
 
-    /Users/plewis/Data
+    /Users/plewis/DATA
 
 
 and check where we are:
@@ -700,7 +711,7 @@ and check where we are:
 
 .. parsed-literal::
 
-    u'/Users/plewis/Data'
+    u'/Users/plewis/DATA'
 
 
 
@@ -716,18 +727,18 @@ change directory) into it:
 
 .. parsed-literal::
 
-    /Users/plewis/Data/foo
+    /Users/plewis/DATA/foo
 
 
 or alternatively, to go straight there:
 
 .. code:: python
 
-    cd ~/Data/foo
+    cd ~/DATA/foo
 
 .. parsed-literal::
 
-    /Users/plewis/Data/foo
+    /Users/plewis/DATA/foo
 
 
 .. code:: python
@@ -740,11 +751,11 @@ that already exists:
 
 .. code:: python
 
-    mkdir ~/Data/foo
+    mkdir ~/DATA/foo
 
 .. parsed-literal::
 
-    mkdir: /Users/plewis/Data/foo: File exists
+    mkdir: /Users/plewis/DATA/foo: File exists
 
 
 So, the command *complains* that the file already exists.
@@ -755,7 +766,7 @@ just leave it if it already does, we can use the *command line option*
 
 .. code:: python
 
-    mkdir -p ~/Data/foo
+    mkdir -p ~/DATA/foo
 Command line options (that are normally preceeded by a ``-`` character
 or ``--`` in some cases) change the behaviour of a command.
 
@@ -781,18 +792,10 @@ Its not a good idea to try to remove the directory we are in, so let's
 
 .. code:: python
 
-    rmdir ~/Data/foo
+    rmdir ~/DATA/foo
 .. code:: python
 
-    ls ~/Data/
-
-.. parsed-literal::
-
-    brdf_WW_1_A_1.kernelFiltered.dat  [34moutput[m[m/
-    [34mmeris[m[m/                            [34mplots[m[m/
-    [34mmsc[m[m/                              [34munix[m[m/
-
-
+    ls ~/DATA
 | Using the command ``ls`` we should be able to confirm that the
 directory has gone.
 | Again, it is instructive to see what happens if things 'go wrong', so
@@ -801,14 +804,14 @@ delete it:
 
 .. code:: python
 
-    mkdir -p ~/Data/foo/bar
+    mkdir -p ~/DATA/foo/bar
 We can see that another use of the ``-p`` option in ``mkdir`` is to
 allow us to create a hierarchy of directories at one shot, so now, in
-the directory ``~/Data/foo`` we have a sub-directory \`~/Data/foo/bar':
+the directory ``~/DATA/foo`` we have a sub-directory \`~/DATA/foo/bar':
 
 .. code:: python
 
-    ls ~/Data/foo
+    ls ~/DATA/foo
 
 .. parsed-literal::
 
@@ -817,11 +820,11 @@ the directory ``~/Data/foo`` we have a sub-directory \`~/Data/foo/bar':
 
 .. code:: python
 
-    rmdir ~/Data/foo
+    rmdir ~/DATA/foo
 
 .. parsed-literal::
 
-    rmdir: /Users/plewis/Data/foo: Directory not empty
+    rmdir: /Users/plewis/DATA/foo: Directory not empty
 
 
 So, ``rmdir`` complains that the directory is not empty, and so doesn't
@@ -888,16 +891,16 @@ The command for copying a file is ``cp`` (copy), e.g.:
 
 .. code:: python
 
-    mkdir -p ~/Data/foo
+    mkdir -p ~/DATA/foo
 .. code:: python
 
-    cp -n ~plewis/msc/hello.dat ~/Data/foo
+    cp -n ~plewis/msc/hello.dat ~/DATA/foo
 First, we created the directory ~/Data/foo, then we used the command cp
-to copy a file from ~plewis/msc/hello.dat to the directory ~/Data/foo.
+to copy a file from ~plewis/msc/hello.dat to the directory ~/DATA/foo.
 
 Usually you will be able to simply type:
 
-cp ~plewis/msc/hello.dat ~/Data/foo
+cp ~plewis/msc/hello.dat ~/DATA/foo
 
 i.e. without the -n option we have put here, but on some systems /
 setups you will find that cp might complain if one or more of the files
@@ -943,9 +946,9 @@ names:
 
 .. code:: python
 
-    cp -n ~plewis/msc/hello.dat ~plewis/msc/helloWorld.dat ~/Data/foo
+    cp -n ~plewis/msc/hello.dat ~plewis/msc/helloWorld.dat ~/DATA/foo
 In this case, the command has three arguments. The final argument
-(``~/Data/foo``) is interpreted as the place we want to copy the files
+(``~/DATA/foo``) is interpreted as the place we want to copy the files
 *to*, and everything before that is a list of files we want to copy
 there
 
@@ -954,13 +957,13 @@ simply type:
 
 .. code:: python
 
-    cp -n ~plewis/msc/h*.dat ~/Data/foo
+    cp -n ~plewis/msc/h*.dat ~/DATA/foo
 Again, after you have done this, check to see what files are in the
-directory ``~/Data/foo``.
+directory ``~/DATA/foo``.
 
 .. code:: python
 
-    ls ~/Data/foo
+    ls ~/DATA/foo
 
 .. parsed-literal::
 
@@ -972,13 +975,13 @@ and everything below it, e.g.:
 
 .. code:: python
 
-    mkdir -p ~/Data/testCp
+    mkdir -p ~/DATA/testCp
 .. code:: python
 
-    cp -Rf ~plewis/msc ~/Data/testCp
+    cp -Rf ~plewis/msc ~/DATA/testCp
 .. code:: python
 
-    ls ~/Data/testCp
+    ls ~/DATA/testCp
 
 .. parsed-literal::
 
@@ -987,7 +990,7 @@ and everything below it, e.g.:
 
 .. code:: python
 
-    ls ~/Data/testCp/msc
+    ls ~/DATA/testCp/msc
 
 .. parsed-literal::
 
@@ -1009,10 +1012,10 @@ illustrate here.
 
 .. code:: python
 
-    rm -f ~/Data/foo/header.dat
+    rm -f ~/DATA/foo/header.dat
 .. code:: python
 
-    ls ~/Data/foo
+    ls ~/DATA/foo
 
 .. parsed-literal::
 
@@ -1025,15 +1028,15 @@ so we see the file has gone from that directory.
 should probably avoid using the ``-f`` option to ``rm``.
 
 As an exercise, use ``rm`` and wildcards to delete all of the files in
-``~/Data/foo`` that start with ``hel`` and end in ``.dat``, and confirm
+``~/DATA/foo`` that start with ``hel`` and end in ``.dat``, and confirm
 that what you wanted to happen actually has.
 
 .. code:: python
 
-    rm -f ~/Data/foo/hel*.dat
+    rm -f ~/DATA/foo/hel*.dat
 .. code:: python
 
-    ls ~/Data/foo
+    ls ~/DATA/foo
 
 .. parsed-literal::
 
@@ -1048,22 +1051,19 @@ This can be rather a dangerous command to use, as you might (if you are
 not careful) delete everything on your system, but of course it is of
 great practical use.
 
-But we will use it here to delete the directory ``~/Data/foo`` and all
+But we will use it here to delete the directory ``~/DATA/foo`` and all
 of its contents.
 
 .. code:: python
 
-    rm -Rf ~/Data/foo
+    rm -Rf ~/DATA/foo
 .. code:: python
 
-    ls  ~/Data/
+    ls  ~/DATA/
 
 .. parsed-literal::
 
-    brdf_WW_1_A_1.kernelFiltered.dat  [34mplots[m[m/
-    [34mmeris[m[m/                            [34mtestCp[m[m/
-    [34mmsc[m[m/                              [34munix[m[m/
-    [34moutput[m[m/
+    [34mtestCp[m[m/
 
 
 so now its gone.
@@ -1074,21 +1074,21 @@ mv
 If we want to *move* files or directories or *rename* them, then you
 should use the ``mv`` (move) command.
 
-Let's make a new directories ``~/Data/bar``, ``~/Data/foo`` and copy
-some files into ``~/Data/bar``:
+Let's make a new directories ``~/DATA/bar``, ``~/DATA/foo`` and copy
+some files into ``~/DATA/bar``:
 
 .. code:: python
 
-    mkdir -p ~/Data/bar ~/Data/foo
+    mkdir -p ~/DATA/bar ~/DATA/foo
 .. code:: python
 
-    cp -n ~plewis/msc/h*dat ~/Data/bar
-You should check that the files you expect to see in ``~/Data/bar`` are
+    cp -n ~plewis/msc/h*dat ~/DATA/bar
+You should check that the files you expect to see in ``~/DATA/bar`` are
 there:
 
 .. code:: python
 
-    ls ~/Data/bar
+    ls ~/DATA/bar
 
 .. parsed-literal::
 
@@ -1096,21 +1096,21 @@ there:
 
 
 Now, let's move the files ``hello.dat`` and ``helloWorld.dat`` into a
-directory ``~/Data/foo`` (using wildcards):
+directory ``~/DATA/foo`` (using wildcards):
 
 .. code:: python
 
-    mv -n ~/Data/bar/hello*dat ~/Data/foo
+    mv -n ~/DATA/bar/hello*dat ~/DATA/foo
 .. code:: python
 
-    ls ~/Data/bar ~/Data/foo
+    ls ~/DATA/bar ~/DATA/foo
 
 .. parsed-literal::
 
-    /Users/plewis/Data/bar:
+    /Users/plewis/DATA/bar:
     head.dat    header.dat
     
-    /Users/plewis/Data/foo:
+    /Users/plewis/DATA/foo:
     hello.dat       helloWorld.dat
 
 
@@ -1119,10 +1119,10 @@ file of a different name:
 
 .. code:: python
 
-    mv ~/Data/bar/head.dat ~/Data/bar/tail.dat
+    mv ~/DATA/bar/head.dat ~/DATA/bar/tail.dat
 .. code:: python
 
-    ls ~/Data/bar
+    ls ~/DATA/bar
 
 .. parsed-literal::
 
@@ -1148,7 +1148,7 @@ when using the command at the unix prompt. e.g.:
 
 .. code:: python
 
-    !ls ~/Data/foo
+    !ls ~/DATA/foo
 
 .. parsed-literal::
 
@@ -1159,7 +1159,7 @@ You can also run shell commands by invoking the ``bash`` shell:
 
 .. code:: python
 
-    ls ~/Data/foo
+    ls ~/DATA/foo
 
 .. parsed-literal::
 
@@ -1195,11 +1195,6 @@ you would usually use the ``-v`` option:
 .. parsed-literal::
 
     Disk quotas for user plewis (uid 501): none
-
-
-.. parsed-literal::
-
-    dyld: DYLD_ environment variables being ignored because main executable (/usr/bin/quota) is setuid or setgid
 
 
 If you happen to be on a system where no quota is set (e.g. your own
@@ -1260,17 +1255,17 @@ there is, and how much is used. It is generally of value to use the
 
 .. code:: python
 
-    df -h ~/Data
+    df -h ~/DATA
 
 .. parsed-literal::
 
     Filesystem     Size   Used  Avail Capacity   iused    ifree %iused  Mounted on
-    /dev/disk0s2  931Gi  847Gi   83Gi    92% 222117307 21863435   91%   /
+    /dev/disk0s2  931Gi  794Gi  137Gi    86% 208138006 35842736   85%   /
 
 
 The output of this command is also of value to you if you need to know
 the actual device name of some disk area. For example, what you see on
-the file system as e.g. ``~/Data`` may be physically on a device called
+the file system as e.g. ``~/DATA`` may be physically on a device called
 ``/dev/disk0s2``. Mostly, you won't need to know that level of detail
 about the system, but occasionally, and as you become more expert in
 using unix, you will so it is good to have these things at the back of
@@ -1286,15 +1281,15 @@ that gives the results in 'human readable' form e.g.:
 
 .. code:: python
 
-    du -sh ~/Data
+    du -sh ~/DATA
 
 .. parsed-literal::
 
-    4.7M	/Users/plewis/Data
+    656K	/Users/plewis/DATA
 
 
 This summary disk usage information tells us (here in human readbale
-form) how much disk space is used in the directory ``~/Data`` and its
+form) how much disk space is used in the directory ``~/DATA`` and its
 subdirectories.
 
 ls -l
@@ -1306,25 +1301,25 @@ listing of directory contents.
 A useful option for the command ``ls`` that gives you a *long* (verbose)
 listing of files or directories is ``ls -l`` (long listing).
 
-We will first make move the directory ``~/Data/bar`` into the directory
-``~/Data/foo``, then look at a long listing of what there is in
-``~/Data/foo``:
+We will first make move the directory ``~/DATA/bar`` into the directory
+``~/DATA/foo``, then look at a long listing of what there is in
+``~/DATA/foo``:
 
 .. code:: python
 
-    mv ~/Data/bar ~/Data/foo
-    ls -l ~/Data/foo
+    mv ~/DATA/bar ~/DATA/foo
+    ls -l ~/DATA/foo
 
 .. parsed-literal::
 
     total 16
-    drwxr-xr-x  4 plewis  staff  136  1 Oct 14:53 bar
-    -rw-r--r--  1 plewis  staff   14  1 Oct 14:53 hello.dat
-    -rw-r--r--  1 plewis  staff   13  1 Oct 14:53 helloWorld.dat
+    drwxr-xr-x  4 plewis  staff  136 30 Sep 08:54 bar
+    -rw-r--r--  1 plewis  staff   14 30 Sep 08:54 hello.dat
+    -rw-r--r--  1 plewis  staff   13 30 Sep 08:54 helloWorld.dat
 
 
 The long listing displays information on the owner of a file (``plewis``
-here), the size of the file (e.g. ~/Data/foo/hello.dat is 14 bytes), and
+here), the size of the file (e.g. ~/DATA/foo/hello.dat is 14 bytes), and
 when it was last modified (26 Sep 17:05). The first field that you see
 (e.g. ``drwxr-xr-x``) is a series of codes that tells you about what
 type of file it is (d in the first element means that it is a directory)
@@ -1345,14 +1340,14 @@ understand):
 
 .. code:: python
 
-    ls -lh ~/Data/foo
+    ls -lh ~/DATA/foo
 
 .. parsed-literal::
 
     total 16
-    drwxr-xr-x  4 plewis  staff   136B  1 Oct 14:53 bar
-    -rw-r--r--  1 plewis  staff    14B  1 Oct 14:53 hello.dat
-    -rw-r--r--  1 plewis  staff    13B  1 Oct 14:53 helloWorld.dat
+    drwxr-xr-x  4 plewis  staff   136B 30 Sep 08:54 bar
+    -rw-r--r--  1 plewis  staff    14B 30 Sep 08:54 hello.dat
+    -rw-r--r--  1 plewis  staff    13B 30 Sep 08:54 helloWorld.dat
 
 
 where the ``B`` at the end of the size field tells us the size is in
@@ -1375,33 +1370,33 @@ write permission for other users on some shared piece of work, using the
 command ``chmod`` (change mode).
 
 If you have followed the material above, you should have a file called
-``hello.dat`` in the directory ``~/Data/foo`` (check that this is the
+``hello.dat`` in the directory ``~/DATA/foo`` (check that this is the
 case) and we will make a new sub-directory in there called ``foobar``
 from which we will *remove* all write permissions.
 
 .. code:: python
 
-    mkdir -p ~/Data/foo/foobar
-    ls -l ~/Data/foo
-    chmod uog-w ~/Data/foo/foobar
-    ls -l ~/Data/foo
+    mkdir -p ~/DATA/foo/foobar
+    ls -l ~/DATA/foo
+    chmod uog-w ~/DATA/foo/foobar
+    ls -l ~/DATA/foo
 
 .. parsed-literal::
 
     total 16
-    drwxr-xr-x  4 plewis  staff  136  1 Oct 14:53 bar
-    drwxr-xr-x  2 plewis  staff   68  1 Oct 14:53 foobar
-    -rw-r--r--  1 plewis  staff   14  1 Oct 14:53 hello.dat
-    -rw-r--r--  1 plewis  staff   13  1 Oct 14:53 helloWorld.dat
+    drwxr-xr-x  4 plewis  staff  136 30 Sep 08:54 bar
+    drwxr-xr-x  2 plewis  staff   68 30 Sep 08:56 foobar
+    -rw-r--r--  1 plewis  staff   14 30 Sep 08:54 hello.dat
+    -rw-r--r--  1 plewis  staff   13 30 Sep 08:54 helloWorld.dat
     total 16
-    drwxr-xr-x  4 plewis  staff  136  1 Oct 14:53 bar
-    dr-xr-xr-x  2 plewis  staff   68  1 Oct 14:53 foobar
-    -rw-r--r--  1 plewis  staff   14  1 Oct 14:53 hello.dat
-    -rw-r--r--  1 plewis  staff   13  1 Oct 14:53 helloWorld.dat
+    drwxr-xr-x  4 plewis  staff  136 30 Sep 08:54 bar
+    dr-xr-xr-x  2 plewis  staff   68 30 Sep 08:56 foobar
+    -rw-r--r--  1 plewis  staff   14 30 Sep 08:54 hello.dat
+    -rw-r--r--  1 plewis  staff   13 30 Sep 08:54 helloWorld.dat
 
 
 From which we see that the ``w`` bit on the directory
-``~/Data/foo/foobar`` has been removed (unset). The ``uog`` part refers
+``~/DATA/foo/foobar`` has been removed (unset). The ``uog`` part refers
 to *user*, *group* and *other*. The ``-`` part means *remove* and the
 ``w`` part refers to the write bit.
 
@@ -1410,11 +1405,11 @@ would expect it to fail:
 
 .. code:: python
 
-    cp -f ~/Data/foo/hello.dat ~/Data/foo/foobar
+    cp -f ~/DATA/foo/hello.dat ~/DATA/foo/foobar
 
 .. parsed-literal::
 
-    cp: /Users/plewis/Data/foo/foobar/hello.dat: Permission denied
+    cp: /Users/plewis/DATA/foo/foobar/hello.dat: Permission denied
 
 
 2.5 Exercise
@@ -1435,10 +1430,10 @@ likely reasons are: (i) you typed something wrong (so, check carefully);
 (ii) if you can't get in at the desktop, then probably you have gone
 over your quota. The most likely reason for going over quota is that you
 have put too many large files in your home area, instead of putting them
-in your *Data* area as you are supposed to. To fix that, log in as given
+in your *DATA* area as you are supposed to. To fix that, log in as given
 above and delete the files from your home area until you are below
-quota, *or* (better) move them into the *Data* area (or better still,
-put them in the *Data* area in the first place and avoid this problem).
+quota, *or* (better) move them into the *DATA* area (or better still,
+put them in the *DATA* area in the first place and avoid this problem).
 
 2.6 Summary
 -----------
@@ -1474,12 +1469,12 @@ The previous sections dealt with the basic tools of Unix. Now, we will
 look at a few useful tools you have access to and some slightly more
 advanced concepts that again enable you to do more with the computer.
 
-Before starting this section, let's create a directory in your ``Data``
+Before starting this section, let's create a directory in your ``DATA``
 area called ``unix``:
 
 .. code:: python
 
-    mkdir -p ~/Data/unix
+    mkdir -p ~/DATA/unix
 Remember that commands below that start with ``!`` (bang) should not
 have this symbol when you type them at the unix prompt: it is only
 because we are going through a python interpreter in these notes.
@@ -1574,20 +1569,20 @@ allows us to redirect it, e.g. to a file:
 
 .. code:: python
 
-    echo "hello world" > ~/Data/unix/hello.dat
+    echo "hello world" > ~/DATA/unix/hello.dat
 Now, nothing should have appeared in the terminal ... the text resulting
 from the ``echo`` command went instead to the file
-``~/Data/unix/hello.dat``.
+``~/DATA/unix/hello.dat``.
 
 We can check to see how big this file is to see if that makes sense:
 
 .. code:: python
 
-    ls -lh ~/Data/unix/hello.dat
+    ls -lh ~/DATA/unix/hello.dat
 
 .. parsed-literal::
 
-    -rw-r--r--  1 plewis  staff    12B  1 Oct 14:53 /Users/plewis/Data/unix/hello.dat
+    -rw-r--r--  1 plewis  staff    12B 30 Sep 08:57 /Users/plewis/DATA/unix/hello.dat
 
 
 We see that the file *exists* and is of size 12 bytes.
@@ -1613,7 +1608,7 @@ a file. In unix, we can use the command ``wc`` (word count):
 
 .. code:: python
 
-    wc < ~/Data/unix/hello.dat
+    wc < ~/DATA/unix/hello.dat
 
 .. parsed-literal::
 
@@ -1627,7 +1622,7 @@ Useful modifcations of behaviour are e.g.:
 
 .. code:: python
 
-    wc -l < ~/Data/unix/hello.dat
+    wc -l < ~/DATA/unix/hello.dat
 
 .. parsed-literal::
 
@@ -1641,7 +1636,7 @@ stdin
 ^^^^^
 
 You may have noticed that we used the ``stdin`` symbol ``<`` here, which
-redirects the contents of the file ``~/Data/unix/hello.dat`` *into* the
+redirects the contents of the file ``~/DATA/unix/hello.dat`` *into* the
 command ``wc``.
 
 pipe
@@ -1778,18 +1773,18 @@ date
 
 .. code:: python
 
-    date | cat - ~/Data/unix/hello.dat ~/Data/unix/hello2.dat 
+    date | cat - ~/DATA/unix/hello.dat ~/DATA/unix/hello2.dat 
 
 .. parsed-literal::
 
-    Tue  1 Oct 2013 14:53:22 BST
+    Tue 30 Sep 2014 08:57:54 BST
     hello plewis
     welcome to the world of unix
 
 
 Here, we ran the command ``date`` that prints the current date (time) to
-``stdout``, concatenated the files ``~/Data/unix/hello.dat`` and
-``~/Data/unix/hello2.dat`` to the end of this and sent the result to
+``stdout``, concatenated the files ``~/DATA/unix/hello.dat`` and
+``~/DATA/unix/hello2.dat`` to the end of this and sent the result to
 ``stdout`` (the terminal).
 
 If we wanted to send this to another file, we would simply redirect the
@@ -1797,18 +1792,18 @@ output:
 
 .. code:: python
 
-    date | cat - ~/Data/unix/hello.dat ~/Data/unix/hello2.dat > ~/Data/unix/helloWorld.dat
+    date | cat - ~/DATA/unix/hello.dat ~/DATA/unix/hello2.dat > ~/DATA/unix/helloWorld.dat
 We can also use the command ``cat`` to simply put the contents of its
 ``stdin`` channel to ``stdout``, which is one way to display the
 contents of an ASCII file at the terminal.
 
 .. code:: python
 
-    cat < ~/Data/unix/helloWorld.dat
+    cat < ~/DATA/unix/helloWorld.dat
 
 .. parsed-literal::
 
-    Tue  1 Oct 2013 14:53:23 BST
+    Tue 30 Sep 2014 08:58:08 BST
     hello plewis
     welcome to the world of unix
 
@@ -1822,10 +1817,10 @@ exist:
 
 .. code:: python
 
-    echo "Now you see me" > ~/Data/unix/test.dat
-    cat ~/Data/unix/test.dat
-    echo "now you don't" > ~/Data/unix/test.dat
-    cat ~/Data/unix/test.dat
+    echo "Now you see me" > ~/DATA/unix/test.dat
+    cat ~/DATA/unix/test.dat
+    echo "now you don't" > ~/DATA/unix/test.dat
+    cat ~/DATA/unix/test.dat
 
 .. parsed-literal::
 
@@ -1838,9 +1833,9 @@ contents, you can use the ``>>`` symbol:
 
 .. code:: python
 
-    echo "Now you see me" > ~/Data/unix/test.dat
-    echo "now you still see me" >> ~/Data/unix/test.dat
-    cat ~/Data/unix/test.dat
+    echo "Now you see me" > ~/DATA/unix/test.dat
+    echo "now you still see me" >> ~/DATA/unix/test.dat
+    cat ~/DATA/unix/test.dat
 
 .. parsed-literal::
 
@@ -1852,8 +1847,8 @@ and you can continue adding lines in this way:
 
 .. code:: python
 
-    echo "ad nauseam" >> ~/Data/unix/test.dat
-    cat ~/Data/unix/test.dat
+    echo "ad nauseam" >> ~/DATA/unix/test.dat
+    cat ~/DATA/unix/test.dat
 
 .. parsed-literal::
 
@@ -1874,26 +1869,47 @@ First, let's create a long file:
 
 .. code:: python
 
-    echo "this is the start of file" > ~/Data/unix/test2.dat
-    cat ~/Data/unix/test.dat >> ~/Data/unix/test2.dat
-    cat ~/Data/unix/test.dat >> ~/Data/unix/test2.dat
-    cat ~/Data/unix/test.dat >> ~/Data/unix/test2.dat
-    cat ~/Data/unix/test.dat >> ~/Data/unix/test2.dat
-    cat ~/Data/unix/test.dat >> ~/Data/unix/test2.dat
-    cat ~/Data/unix/test.dat >> ~/Data/unix/test2.dat
-    cat ~/Data/unix/test.dat >> ~/Data/unix/test2.dat
-    cat ~/Data/unix/test.dat >> ~/Data/unix/test2.dat
-    cat ~/Data/unix/test.dat >> ~/Data/unix/test2.dat
-    cat ~/Data/unix/test.dat >> ~/Data/unix/test2.dat
-    cat ~/Data/unix/test.dat >> ~/Data/unix/test2.dat
-    cat ~/Data/unix/test.dat >> ~/Data/unix/test2.dat
-    cat ~/Data/unix/test.dat >> ~/Data/unix/test2.dat
-    echo "this is the end of file" >> ~/Data/unix/test2.dat
-    cat ~/Data/unix/test2.dat
+    echo "this is the start of file" > ~/DATA/unix/test2.dat
+    cat ~/DATA/unix/test.dat >> ~/DATA/unix/test2.dat
+    cat ~/DATA/unix/test.dat >> ~/DATA/unix/test2.dat
+    cat ~/DATA/unix/test.dat >> ~/DATA/unix/test2.dat
+    cat ~/DATA/unix/test.dat >> ~/DATA/unix/test2.dat
+    cat ~/DATA/unix/test.dat >> ~/DATA/unix/test2.dat
+    cat ~/DATA/unix/test.dat >> ~/DATA/unix/test2.dat
+    cat ~/DATA/unix/test.dat >> ~/DATA/unix/test2.dat
+    cat ~/DATA/unix/test.dat >> ~/DATA/unix/test2.dat
+    cat ~/DATA/unix/test.dat >> ~/DATA/unix/test2.dat
+    cat ~/DATA/unix/test.dat >> ~/DATA/unix/test2.dat
+    cat ~/DATA/unix/test.dat >> ~/DATA/unix/test2.dat
+    cat ~/DATA/unix/test.dat >> ~/DATA/unix/test2.dat
+    cat ~/DATA/unix/test.dat >> ~/DATA/unix/test2.dat
+    cat ~/DATA/unix/test.dat >> ~/DATA/unix/test2.dat
+    cat ~/DATA/unix/test.dat >> ~/DATA/unix/test2.dat
+    cat ~/DATA/unix/test.dat >> ~/DATA/unix/test2.dat
+    cat ~/DATA/unix/test.dat >> ~/DATA/unix/test2.dat
+    cat ~/DATA/unix/test.dat >> ~/DATA/unix/test2.dat
+    
+    echo "this is the end of file" >> ~/DATA/unix/test2.dat
+    cat ~/DATA/unix/test2.dat
 
 .. parsed-literal::
 
     this is the start of file
+    Now you see me
+    now you still see me
+    ad nauseam
+    Now you see me
+    now you still see me
+    ad nauseam
+    Now you see me
+    now you still see me
+    ad nauseam
+    Now you see me
+    now you still see me
+    ad nauseam
+    Now you see me
+    now you still see me
+    ad nauseam
     Now you see me
     now you still see me
     ad nauseam
@@ -1946,11 +1962,26 @@ line 3, ``/end`` to search for the string ``end``, etc.)
 
 .. code:: python
 
-    more ~/Data/unix/test2.dat
+    more ~/DATA/unix/test2.dat
 
 .. parsed-literal::
 
     this is the start of file
+    Now you see me
+    now you still see me
+    ad nauseam
+    Now you see me
+    now you still see me
+    ad nauseam
+    Now you see me
+    now you still see me
+    ad nauseam
+    Now you see me
+    now you still see me
+    ad nauseam
+    Now you see me
+    now you still see me
+    ad nauseam
     Now you see me
     now you still see me
     ad nauseam
@@ -2000,11 +2031,26 @@ In some ways better that ``more`` is ``less``. Try that on the file now.
 
 .. code:: python
 
-    less ~/Data/unix/test2.dat
+    less ~/DATA/unix/test2.dat
 
 .. parsed-literal::
 
     this is the start of file
+    Now you see me
+    now you still see me
+    ad nauseam
+    Now you see me
+    now you still see me
+    ad nauseam
+    Now you see me
+    now you still see me
+    ad nauseam
+    Now you see me
+    now you still see me
+    ad nauseam
+    Now you see me
+    now you still see me
+    ad nauseam
     Now you see me
     now you still see me
     ad nauseam
@@ -2056,7 +2102,7 @@ file that match some pattern. E.g.:
 
 .. code:: python
 
-    grep see < ~/Data/unix/test.dat
+    grep see < ~/DATA/unix/test.dat
 
 .. parsed-literal::
 
@@ -2075,7 +2121,7 @@ lower case or upper case):
 
 .. code:: python
 
-    grep now < ~/Data/unix/test.dat
+    grep now < ~/DATA/unix/test.dat
 
 .. parsed-literal::
 
@@ -2084,7 +2130,7 @@ lower case or upper case):
 
 .. code:: python
 
-    grep -i now < ~/Data/unix/test.dat
+    grep -i now < ~/DATA/unix/test.dat
 
 .. parsed-literal::
 
@@ -2097,7 +2143,7 @@ the ``-v`` option:
 
 .. code:: python
 
-    grep -v see < ~/Data/unix/test.dat
+    grep -v see < ~/DATA/unix/test.dat
 
 .. parsed-literal::
 
@@ -2159,9 +2205,9 @@ is also going to the terminal on ``stdout``.
 If you wanted to type information that will go into a file, you can
 redirect the output of ``cat`` to a file:
 
-``%berlin cat > ~/Data/unix/gettysburg.dat The world will little note,  nor long remember what we say here,  but it can never forget what they did here. ^D``
+``%berlin cat > ~/DATA/unix/gettysburg.dat The world will little note,  nor long remember what we say here,  but it can never forget what they did here. ^D``
 
-This will now be stored in the file ``~/Data/unix/gettysburg.dat``.
+This will now be stored in the file ``~/DATA/unix/gettysburg.dat``.
 
 That's all very well, and often you will use this methbod to create some
 text in a file, but if you make a mistake, you will find that you can't
@@ -2255,10 +2301,10 @@ until you hit ``ESC``. ``x`` - delete current character
 
 Use vi now to edit a file you have created, e.g.
 
-``berlin% vi ~/Data/unix/gettysburg.dat``
+``berlin% vi ~/DATA/unix/gettysburg.dat``
 
 Practice adding some more lines, changing the words etc., and save your
-edited file to ``~/Data/unix/myGettysburg.dat``
+edited file to ``~/DATA/unix/myGettysburg.dat``
 
 3.3 Process control
 -------------------
@@ -2557,7 +2603,7 @@ Sometimes, it is convenient to use ``scp``, a secure copy command that
 you can use over digfferent machines on the network when they do not
 have common disk access. The syntax is of the form:
 
-``scp plewis@shankly.geog.ucl.ac.uk:///home/plewis/msc/hello.dat ~/Data/helloLewis.dat``
+``scp plewis@shankly.geog.ucl.ac.uk:///home/plewis/msc/hello.dat ~/DATA/helloLewis.dat``
 
 ssh
 ^^^

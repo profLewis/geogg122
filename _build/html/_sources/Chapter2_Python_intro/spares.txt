@@ -40,7 +40,13 @@ product:
 .. raw:: html
 
    <table>
+
+.. raw:: html
+
    <tr>
+
+.. raw:: html
+
    <td>
 
 Bit number
@@ -48,6 +54,9 @@ Bit number
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    <td>
 
 Parameter Name
@@ -55,6 +64,9 @@ Parameter Name
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    <td>
 
 Bit combination
@@ -62,6 +74,9 @@ Bit combination
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    <td>
 
 Interpretation
@@ -69,7 +84,16 @@ Interpretation
 .. raw:: html
 
    </td>
-   </tr><tr>
+
+.. raw:: html
+
+   </tr>
+
+.. raw:: html
+
+   <tr>
+
+.. raw:: html
 
    <td>
 
@@ -78,6 +102,9 @@ Interpretation
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    <td>
 
 MODLAND\_QC bits
@@ -85,6 +112,9 @@ MODLAND\_QC bits
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    <td>
 
 0
@@ -92,6 +122,9 @@ MODLAND\_QC bits
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    <td>
 
 Good quality (main algorithm with or without saturation)
@@ -99,10 +132,33 @@ Good quality (main algorithm with or without saturation)
 .. raw:: html
 
    </td>
-   </tr><tr>
 
-   <td></td>
-   <td></td>
+.. raw:: html
+
+   </tr>
+
+.. raw:: html
+
+   <tr>
+
+.. raw:: html
+
+   <td>
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
    <td>
 
 1
@@ -110,6 +166,9 @@ Good quality (main algorithm with or without saturation)
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    <td>
 
 Other Quality (back-up algorithm or fill values)
@@ -117,7 +176,16 @@ Other Quality (back-up algorithm or fill values)
 .. raw:: html
 
    </td>
-   </tr><tr>
+
+.. raw:: html
+
+   </tr>
+
+.. raw:: html
+
+   <tr>
+
+.. raw:: html
 
    <td>
 
@@ -126,6 +194,9 @@ Other Quality (back-up algorithm or fill values)
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    <td>
 
 Sensor
@@ -133,6 +204,9 @@ Sensor
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    <td>
 
 0
@@ -140,6 +214,9 @@ Sensor
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    <td>
 
 Terra
@@ -147,10 +224,33 @@ Terra
 .. raw:: html
 
    </td>
-   </tr><tr>
 
-   <td></td>
-   <td></td>
+.. raw:: html
+
+   </tr>
+
+.. raw:: html
+
+   <tr>
+
+.. raw:: html
+
+   <td>
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
    <td>
 
 1
@@ -158,6 +258,9 @@ Terra
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    <td>
 
 Aqua
@@ -165,7 +268,16 @@ Aqua
 .. raw:: html
 
    </td>
-   </tr><tr>
+
+.. raw:: html
+
+   </tr>
+
+.. raw:: html
+
+   <tr>
+
+.. raw:: html
 
    <td>
 
@@ -174,6 +286,9 @@ Aqua
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    <td>
 
 DeadDetector
@@ -181,6 +296,9 @@ DeadDetector
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    <td>
 
 0
@@ -188,6 +306,9 @@ DeadDetector
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    <td>
 
 Detectors apparently fine for up to 50% of channels
@@ -195,10 +316,33 @@ Detectors apparently fine for up to 50% of channels
 .. raw:: html
 
    </td>
-   </tr><tr>
 
-   <td></td>
-   <td></td>
+.. raw:: html
+
+   </tr>
+
+.. raw:: html
+
+   <tr>
+
+.. raw:: html
+
+   <td>
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
    <td>
 
 1
@@ -206,6 +350,9 @@ Detectors apparently fine for up to 50% of channels
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    <td>
 
 Dead detectors caused >50% adjacent detector retrieval
@@ -213,7 +360,16 @@ Dead detectors caused >50% adjacent detector retrieval
 .. raw:: html
 
    </td>
-   </tr><tr>
+
+.. raw:: html
+
+   </tr>
+
+.. raw:: html
+
+   <tr>
+
+.. raw:: html
 
    <td>
 
@@ -222,6 +378,9 @@ Dead detectors caused >50% adjacent detector retrieval
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    <td>
 
 CloudState
@@ -229,6 +388,9 @@ CloudState
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    <td>
 
 00
@@ -236,6 +398,9 @@ CloudState
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    <td>
 
 Significant clouds NOT present (clear)
@@ -243,10 +408,33 @@ Significant clouds NOT present (clear)
 .. raw:: html
 
    </td>
-   </tr><tr>
 
-   <td></td>
-   <td></td>
+.. raw:: html
+
+   </tr>
+
+.. raw:: html
+
+   <tr>
+
+.. raw:: html
+
+   <td>
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
    <td>
 
 01
@@ -254,6 +442,9 @@ Significant clouds NOT present (clear)
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    <td>
 
 Significant clouds WERE present
@@ -261,10 +452,33 @@ Significant clouds WERE present
 .. raw:: html
 
    </td>
-   </tr><tr>
 
-   <td></td>
-   <td></td>
+.. raw:: html
+
+   </tr>
+
+.. raw:: html
+
+   <tr>
+
+.. raw:: html
+
+   <td>
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
    <td>
 
 10
@@ -272,6 +486,9 @@ Significant clouds WERE present
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    <td>
 
 Mixed cloud present on pixel
@@ -279,10 +496,33 @@ Mixed cloud present on pixel
 .. raw:: html
 
    </td>
-   </tr><tr>
 
-   <td></td>
-   <td></td>
+.. raw:: html
+
+   </tr>
+
+.. raw:: html
+
+   <tr>
+
+.. raw:: html
+
+   <td>
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
    <td>
 
 11
@@ -290,6 +530,9 @@ Mixed cloud present on pixel
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    <td>
 
 Cloud state not defined (assumed clear)
@@ -297,7 +540,16 @@ Cloud state not defined (assumed clear)
 .. raw:: html
 
    </td>
-   </tr><tr>
+
+.. raw:: html
+
+   </tr>
+
+.. raw:: html
+
+   <tr>
+
+.. raw:: html
 
    <td>
 
@@ -306,6 +558,9 @@ Cloud state not defined (assumed clear)
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    <td>
 
 CF\_QC
@@ -313,6 +568,9 @@ CF\_QC
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    <td>
 
 000
@@ -320,6 +578,9 @@ CF\_QC
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    <td>
 
 Main (RT) method used (best result possible (no saturation))
@@ -327,10 +588,33 @@ Main (RT) method used (best result possible (no saturation))
 .. raw:: html
 
    </td>
-   </tr><tr>
 
-   <td></td>
-   <td></td>
+.. raw:: html
+
+   </tr>
+
+.. raw:: html
+
+   <tr>
+
+.. raw:: html
+
+   <td>
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
    <td>
 
 001
@@ -338,6 +622,9 @@ Main (RT) method used (best result possible (no saturation))
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    <td>
 
 Main (RT) method used with saturation. (usable)
@@ -345,10 +632,33 @@ Main (RT) method used with saturation. (usable)
 .. raw:: html
 
    </td>
-   </tr><tr>
 
-   <td></td>
-   <td></td>
+.. raw:: html
+
+   </tr>
+
+.. raw:: html
+
+   <tr>
+
+.. raw:: html
+
+   <td>
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
    <td>
 
 010
@@ -356,6 +666,9 @@ Main (RT) method used with saturation. (usable)
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    <td>
 
 Main (RT) method failed due to bad geometry (empirical algorithm used)
@@ -363,10 +676,33 @@ Main (RT) method failed due to bad geometry (empirical algorithm used)
 .. raw:: html
 
    </td>
-   </tr><tr>
 
-   <td></td>
-   <td></td>
+.. raw:: html
+
+   </tr>
+
+.. raw:: html
+
+   <tr>
+
+.. raw:: html
+
+   <td>
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
    <td>
 
 010
@@ -374,6 +710,9 @@ Main (RT) method failed due to bad geometry (empirical algorithm used)
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    <td>
 
 Main (RT) method failed due to problems other than geometry (empirical
@@ -382,10 +721,33 @@ algorithm used)
 .. raw:: html
 
    </td>
-   </tr><tr>
 
-   <td></td>
-   <td></td>
+.. raw:: html
+
+   </tr>
+
+.. raw:: html
+
+   <tr>
+
+.. raw:: html
+
+   <td>
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
    <td>
 
 010
@@ -393,6 +755,9 @@ algorithm used)
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    <td>
 
 Pixel not produced at all.
@@ -400,7 +765,13 @@ Pixel not produced at all.
 .. raw:: html
 
    </td>
+
+.. raw:: html
+
    </tr>
+
+.. raw:: html
+
    </table>
 
 So, the MODIS LAI QA information is contained in one byte (8 bits),

@@ -493,9 +493,12 @@ run the command below, then chack again to see where you are).</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="n">ls</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>[35mCUDA-4.0[m[m@     [34mcuda[m[m/         [34minclude[m[m/      [34mlib[m[m/          [34mshare[m[m/
-[34mbin[m[m/          [34metc[m[m/          [34minfo[m[m/         [34mlibexec[m[m/      [34mtexlive[m[m/
-[34mboost_1_53_0[m[m/ [34mgit[m[m/          [35mitt[m[m@          [34mman[m[m/
+<div class="highlight-python"><div class="highlight"><pre>CONTRIBUTING.md  SUPPORTERS.md    [34mgit[m[m/             [34mman[m[m/
+[35mCUDA-4.0[m[m@        [34mbin[m[m/             [34minclude[m[m/         [34mopt[m[m/
+[34mCellar[m[m/          [34mboost_1_53_0[m[m/    [34minfo[m[m/            [34mshare[m[m/
+[34mLibrary[m[m/         [34mcuda[m[m/            [35mitt[m[m@             [34mtexlive[m[m/
+[34mQt[m[m/              [34metc[m[m/             [34mlib[m[m/
+README.md        [34mgfortran[m[m/        [34mlibexec[m[m/
 </pre></div>
 </div>
 <p>This tells us that in the system directory <tt class="docutils literal"><span class="pre">/usr/local/</span></tt> there are (on
@@ -505,8 +508,10 @@ and so on.</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="n">ls</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">share</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>[34mdoc[m[m/         [34mgcc-4.8.0[m[m/   [34mghostscript[m[m/ [34mgraphviz[m[m/    [34mlocale[m[m/      [34mmplayer[m[m/
-[34memacs[m[m/       [34mgdal[m[m/        [34mgnuplot[m[m/     [34minfo[m[m/        [34mman[m[m/
+<div class="highlight-python"><div class="highlight"><pre>[35mImageMagick-6[m[m@ [34memacs[m[m/         [34mghostscript[m[m/   [35mlibtool[m[m@       [35mproj[m[m@
+[34maclocal[m[m/       [35mepsg_csv[m[m@      [34mgnuplot[m[m/       [30m[43mlocale[m[m/
+[35mawk[m[m@           [34mgcc-4.8.0[m[m/     [34mgraphviz[m[m/      [34mman[m[m/
+[34mdoc[m[m/           [35mgcc-4.9.0[m[m@     [34minfo[m[m/          [34mmplayer[m[m/
 </pre></div>
 </div>
 <p>so we find some more sub-directories.</p>
@@ -514,18 +519,24 @@ and so on.</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="n">ls</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>[35mCUDA-4.0[m[m@     [34mcuda[m[m/         [34minclude[m[m/      [34mlib[m[m/          [34mshare[m[m/
-[34mbin[m[m/          [34metc[m[m/          [34minfo[m[m/         [34mlibexec[m[m/      [34mtexlive[m[m/
-[34mboost_1_53_0[m[m/ [34mgit[m[m/          [35mitt[m[m@          [34mman[m[m/
+<div class="highlight-python"><div class="highlight"><pre>CONTRIBUTING.md  SUPPORTERS.md    [34mgit[m[m/             [34mman[m[m/
+[35mCUDA-4.0[m[m@        [34mbin[m[m/             [34minclude[m[m/         [34mopt[m[m/
+[34mCellar[m[m/          [34mboost_1_53_0[m[m/    [34minfo[m[m/            [34mshare[m[m/
+[34mLibrary[m[m/         [34mcuda[m[m/            [35mitt[m[m@             [34mtexlive[m[m/
+[34mQt[m[m/              [34metc[m[m/             [34mlib[m[m/
+README.md        [34mgfortran[m[m/        [34mlibexec[m[m/
 </pre></div>
 </div>
 <p>has the same effect as typing:</p>
 <div class="code python highlight-python"><div class="highlight"><pre>ls .
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>[35mCUDA-4.0[m[m@     [34mcuda[m[m/         [34minclude[m[m/      [34mlib[m[m/          [34mshare[m[m/
-[34mbin[m[m/          [34metc[m[m/          [34minfo[m[m/         [34mlibexec[m[m/      [34mtexlive[m[m/
-[34mboost_1_53_0[m[m/ [34mgit[m[m/          [35mitt[m[m@          [34mman[m[m/
+<div class="highlight-python"><div class="highlight"><pre>CONTRIBUTING.md  SUPPORTERS.md    [34mgit[m[m/             [34mman[m[m/
+[35mCUDA-4.0[m[m@        [34mbin[m[m/             [34minclude[m[m/         [34mopt[m[m/
+[34mCellar[m[m/          [34mboost_1_53_0[m[m/    [34minfo[m[m/            [34mshare[m[m/
+[34mLibrary[m[m/         [34mcuda[m[m/            [35mitt[m[m@             [34mtexlive[m[m/
+[34mQt[m[m/              [34metc[m[m/             [34mlib[m[m/
+README.md        [34mgfortran[m[m/        [34mlibexec[m[m/
 </pre></div>
 </div>
 </div>
@@ -585,15 +596,15 @@ concepts to start to give you more control of your environment.</p>
 <div class="line">[<tt class="docutils literal"><span class="pre">`*?</span></tt> &lt;#Wildcards&gt;`__] : wildcards</div>
 </div>
 <p>If you run through this exercise multiple times, you will probably want
-to delete the directories <tt class="docutils literal"><span class="pre">~/Data/bar</span></tt>, <tt class="docutils literal"><span class="pre">~/Data/foo</span></tt> and
-<tt class="docutils literal"><span class="pre">~/Data/testCp</span></tt> and their contents before starting:</p>
-<div class="code python highlight-python"><div class="highlight"><pre>rm -rf ~/Data/foo
+to delete the directories <tt class="docutils literal"><span class="pre">~/DATA/bar</span></tt>, <tt class="docutils literal"><span class="pre">~/DATA/foo</span></tt> and
+<tt class="docutils literal"><span class="pre">~/DATA/testCp</span></tt> and their contents before starting:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>rm -rf ~/DATA/foo
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre>rm -rf ~/Data/testCp
+<div class="code python highlight-python"><div class="highlight"><pre>rm -rf ~/DATA/testCp
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre>rm -rf ~/Data/bar
+<div class="code python highlight-python"><div class="highlight"><pre>rm -rf ~/DATA/bar
 </pre></div>
 </div>
 </div>
@@ -610,17 +621,17 @@ use to put large exercises and data. Note that this disk is not so
 regularly backed up as your home directory, but it is much larger (and
 does not have a quota, as your home area does).</p>
 <p>Lets first move to the data directory:</p>
-<div class="code python highlight-python"><div class="highlight"><pre>cd ~/Data
+<div class="code python highlight-python"><div class="highlight"><pre>cd ~/DATA
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>/Users/plewis/Data
+<div class="highlight-python"><div class="highlight"><pre>/Users/plewis/DATA
 </pre></div>
 </div>
 <p>and check where we are:</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="n">pwd</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="s">u&#39;/Users/plewis/Data&#39;</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="s">u&#39;/Users/plewis/DATA&#39;</span>
 </pre></div>
 </div>
 <p>Now let&#8217;s create a directory that we might call foo, and move (i.e.
@@ -631,14 +642,14 @@ change directory) into it:</p>
 <div class="code python highlight-python"><div class="highlight"><pre>cd foo
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>/Users/plewis/Data/foo
+<div class="highlight-python"><div class="highlight"><pre>/Users/plewis/DATA/foo
 </pre></div>
 </div>
 <p>or alternatively, to go straight there:</p>
-<div class="code python highlight-python"><div class="highlight"><pre>cd ~/Data/foo
+<div class="code python highlight-python"><div class="highlight"><pre>cd ~/DATA/foo
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>/Users/plewis/Data/foo
+<div class="highlight-python"><div class="highlight"><pre>/Users/plewis/DATA/foo
 </pre></div>
 </div>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="n">ls</span>
@@ -647,17 +658,17 @@ change directory) into it:</p>
 <p>There should be no files in this new directory, so ls will tell us that.</p>
 <p>It is instructive to see what happens if we try to create a directory
 that already exists:</p>
-<div class="code python highlight-python"><div class="highlight"><pre>mkdir ~/Data/foo
+<div class="code python highlight-python"><div class="highlight"><pre>mkdir ~/DATA/foo
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>mkdir: /Users/plewis/Data/foo: File exists
+<div class="highlight-python"><div class="highlight"><pre>mkdir: /Users/plewis/DATA/foo: File exists
 </pre></div>
 </div>
 <p>So, the command <em>complains</em> that the file already exists.</p>
 <p>If we want to avoid this behaviour and create it is it doesn&#8217;t exist or
 just leave it if it already does, we can use the <em>command line option</em>
 <tt class="docutils literal"><span class="pre">-p</span></tt> for <tt class="docutils literal"><span class="pre">mkdir</span></tt>:</p>
-<div class="code python highlight-python"><div class="highlight"><pre>mkdir -p ~/Data/foo
+<div class="code python highlight-python"><div class="highlight"><pre>mkdir -p ~/DATA/foo
 </pre></div>
 </div>
 <p>Command line options (that are normally preceeded by a <tt class="docutils literal"><span class="pre">-</span></tt> character
@@ -676,15 +687,10 @@ directory).</p>
 <div class="highlight-python"><div class="highlight"><pre>/Users/plewis
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre>rmdir ~/Data/foo
+<div class="code python highlight-python"><div class="highlight"><pre>rmdir ~/DATA/foo
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre>ls ~/Data/
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre>brdf_WW_1_A_1.kernelFiltered.dat  [34moutput[m[m/
-[34mmeris[m[m/                            [34mplots[m[m/
-[34mmsc[m[m/                              [34munix[m[m/
+<div class="code python highlight-python"><div class="highlight"><pre>ls ~/DATA
 </pre></div>
 </div>
 <div class="line-block">
@@ -694,22 +700,22 @@ directory).</p>
 | Again, it is instructive to see what happens if things &#8216;go wrong&#8217;, so
 let&#8217;s create a directory that is not empty, and try to use rmdir to
 delete it:</p>
-<div class="code python highlight-python"><div class="highlight"><pre>mkdir -p ~/Data/foo/bar
+<div class="code python highlight-python"><div class="highlight"><pre>mkdir -p ~/DATA/foo/bar
 </pre></div>
 </div>
 <p>We can see that another use of the <tt class="docutils literal"><span class="pre">-p</span></tt> option in <tt class="docutils literal"><span class="pre">mkdir</span></tt> is to
 allow us to create a hierarchy of directories at one shot, so now, in
-the directory <tt class="docutils literal"><span class="pre">~/Data/foo</span></tt> we have a sub-directory `~/Data/foo/bar&#8217;:</p>
-<div class="code python highlight-python"><div class="highlight"><pre>ls ~/Data/foo
+the directory <tt class="docutils literal"><span class="pre">~/DATA/foo</span></tt> we have a sub-directory `~/DATA/foo/bar&#8217;:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>ls ~/DATA/foo
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre>[34mbar[m[m/
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre>rmdir ~/Data/foo
+<div class="code python highlight-python"><div class="highlight"><pre>rmdir ~/DATA/foo
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>rmdir: /Users/plewis/Data/foo: Directory not empty
+<div class="highlight-python"><div class="highlight"><pre>rmdir: /Users/plewis/DATA/foo: Directory not empty
 </pre></div>
 </div>
 <p>So, <tt class="docutils literal"><span class="pre">rmdir</span></tt> complains that the directory is not empty, and so doesn&#8217;t
@@ -758,16 +764,16 @@ and <tt class="docutils literal"><span class="pre">?</span></tt>.</p>
 <div class="section" id="cp">
 <h3>cp<a class="headerlink" href="#cp" title="Permalink to this headline">¶</a></h3>
 <p>The command for copying a file is <tt class="docutils literal"><span class="pre">cp</span></tt> (copy), e.g.:</p>
-<div class="code python highlight-python"><div class="highlight"><pre>mkdir -p ~/Data/foo
+<div class="code python highlight-python"><div class="highlight"><pre>mkdir -p ~/DATA/foo
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre>cp -n ~plewis/msc/hello.dat ~/Data/foo
+<div class="code python highlight-python"><div class="highlight"><pre>cp -n ~plewis/msc/hello.dat ~/DATA/foo
 </pre></div>
 </div>
 <p>First, we created the directory ~/Data/foo, then we used the command cp
-to copy a file from ~plewis/msc/hello.dat to the directory ~/Data/foo.</p>
+to copy a file from ~plewis/msc/hello.dat to the directory ~/DATA/foo.</p>
 <p>Usually you will be able to simply type:</p>
-<p>cp ~plewis/msc/hello.dat ~/Data/foo</p>
+<p>cp ~plewis/msc/hello.dat ~/DATA/foo</p>
 <p>i.e. without the -n option we have put here, but on some systems /
 setups you will find that cp might complain if one or more of the files
 you are trying to copy to already exist (this is a safety mechanism to
@@ -798,21 +804,21 @@ two arguments.</p>
 </div>
 <p>To copy multiple files to the same place then, we could simply list the
 names:</p>
-<div class="code python highlight-python"><div class="highlight"><pre>cp -n ~plewis/msc/hello.dat ~plewis/msc/helloWorld.dat ~/Data/foo
+<div class="code python highlight-python"><div class="highlight"><pre>cp -n ~plewis/msc/hello.dat ~plewis/msc/helloWorld.dat ~/DATA/foo
 </pre></div>
 </div>
 <p>In this case, the command has three arguments. The final argument
-(<tt class="docutils literal"><span class="pre">~/Data/foo</span></tt>) is interpreted as the place we want to copy the files
+(<tt class="docutils literal"><span class="pre">~/DATA/foo</span></tt>) is interpreted as the place we want to copy the files
 <em>to</em>, and everything before that is a list of files we want to copy
 there</p>
 <p>If we knew we&#8217;d want all of the files <tt class="docutils literal"><span class="pre">h*.dat</span></tt>, then we can more
 simply type:</p>
-<div class="code python highlight-python"><div class="highlight"><pre>cp -n ~plewis/msc/h*.dat ~/Data/foo
+<div class="code python highlight-python"><div class="highlight"><pre>cp -n ~plewis/msc/h*.dat ~/DATA/foo
 </pre></div>
 </div>
 <p>Again, after you have done this, check to see what files are in the
-directory <tt class="docutils literal"><span class="pre">~/Data/foo</span></tt>.</p>
-<div class="code python highlight-python"><div class="highlight"><pre>ls ~/Data/foo
+directory <tt class="docutils literal"><span class="pre">~/DATA/foo</span></tt>.</p>
+<div class="code python highlight-python"><div class="highlight"><pre>ls ~/DATA/foo
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre>[34mbar[m[m/            head.dat        header.dat      hello.dat       helloWorld.dat
@@ -820,19 +826,19 @@ directory <tt class="docutils literal"><span class="pre">~/Data/foo</span></tt>.
 </div>
 <p>You can use the option -R to do a recursive copy, i.e. copy a directory
 and everything below it, e.g.:</p>
-<div class="code python highlight-python"><div class="highlight"><pre>mkdir -p ~/Data/testCp
+<div class="code python highlight-python"><div class="highlight"><pre>mkdir -p ~/DATA/testCp
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre>cp -Rf ~plewis/msc ~/Data/testCp
+<div class="code python highlight-python"><div class="highlight"><pre>cp -Rf ~plewis/msc ~/DATA/testCp
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre>ls ~/Data/testCp
+<div class="code python highlight-python"><div class="highlight"><pre>ls ~/DATA/testCp
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre>[34mmsc[m[m/
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre>ls ~/Data/testCp/msc
+<div class="code python highlight-python"><div class="highlight"><pre>ls ~/DATA/testCp/msc
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre>atm.dat         forest.dat      hello.dat       listing.dat     popden.dat
@@ -849,10 +855,10 @@ called an <em>alias</em>) to <tt class="docutils literal"><span class="pre">rm</
 whether they <em>really</em> wanted to delete that file.</p>
 <p>The opposite of this (i.e. force a delete) is <tt class="docutils literal"><span class="pre">rm</span> <span class="pre">-f</span></tt> that we will
 illustrate here.</p>
-<div class="code python highlight-python"><div class="highlight"><pre>rm -f ~/Data/foo/header.dat
+<div class="code python highlight-python"><div class="highlight"><pre>rm -f ~/DATA/foo/header.dat
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre>ls ~/Data/foo
+<div class="code python highlight-python"><div class="highlight"><pre>ls ~/DATA/foo
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre>[34mbar[m[m/            head.dat        hello.dat       helloWorld.dat
@@ -862,12 +868,12 @@ illustrate here.</p>
 <p><em>Normally</em>, especially when you are just starting to use unix, you
 should probably avoid using the <tt class="docutils literal"><span class="pre">-f</span></tt> option to <tt class="docutils literal"><span class="pre">rm</span></tt>.</p>
 <p>As an exercise, use <tt class="docutils literal"><span class="pre">rm</span></tt> and wildcards to delete all of the files in
-<tt class="docutils literal"><span class="pre">~/Data/foo</span></tt> that start with <tt class="docutils literal"><span class="pre">hel</span></tt> and end in <tt class="docutils literal"><span class="pre">.dat</span></tt>, and confirm
+<tt class="docutils literal"><span class="pre">~/DATA/foo</span></tt> that start with <tt class="docutils literal"><span class="pre">hel</span></tt> and end in <tt class="docutils literal"><span class="pre">.dat</span></tt>, and confirm
 that what you wanted to happen actually has.</p>
-<div class="code python highlight-python"><div class="highlight"><pre>rm -f ~/Data/foo/hel*.dat
+<div class="code python highlight-python"><div class="highlight"><pre>rm -f ~/DATA/foo/hel*.dat
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre>ls ~/Data/foo
+<div class="code python highlight-python"><div class="highlight"><pre>ls ~/DATA/foo
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre>[34mbar[m[m/      head.dat
@@ -879,18 +885,15 @@ downwards.</p>
 <p>This can be rather a dangerous command to use, as you might (if you are
 not careful) delete everything on your system, but of course it is of
 great practical use.</p>
-<p>But we will use it here to delete the directory <tt class="docutils literal"><span class="pre">~/Data/foo</span></tt> and all
+<p>But we will use it here to delete the directory <tt class="docutils literal"><span class="pre">~/DATA/foo</span></tt> and all
 of its contents.</p>
-<div class="code python highlight-python"><div class="highlight"><pre>rm -Rf ~/Data/foo
+<div class="code python highlight-python"><div class="highlight"><pre>rm -Rf ~/DATA/foo
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre>ls  ~/Data/
+<div class="code python highlight-python"><div class="highlight"><pre>ls  ~/DATA/
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>brdf_WW_1_A_1.kernelFiltered.dat  [34mplots[m[m/
-[34mmeris[m[m/                            [34mtestCp[m[m/
-[34mmsc[m[m/                              [34munix[m[m/
-[34moutput[m[m/
+<div class="highlight-python"><div class="highlight"><pre>[34mtestCp[m[m/
 </pre></div>
 </div>
 <p>so now its gone.</p>
@@ -899,43 +902,43 @@ of its contents.</p>
 <h3>mv<a class="headerlink" href="#mv" title="Permalink to this headline">¶</a></h3>
 <p>If we want to <em>move</em> files or directories or <em>rename</em> them, then you
 should use the <tt class="docutils literal"><span class="pre">mv</span></tt> (move) command.</p>
-<p>Let&#8217;s make a new directories <tt class="docutils literal"><span class="pre">~/Data/bar</span></tt>, <tt class="docutils literal"><span class="pre">~/Data/foo</span></tt> and copy
-some files into <tt class="docutils literal"><span class="pre">~/Data/bar</span></tt>:</p>
-<div class="code python highlight-python"><div class="highlight"><pre>mkdir -p ~/Data/bar ~/Data/foo
+<p>Let&#8217;s make a new directories <tt class="docutils literal"><span class="pre">~/DATA/bar</span></tt>, <tt class="docutils literal"><span class="pre">~/DATA/foo</span></tt> and copy
+some files into <tt class="docutils literal"><span class="pre">~/DATA/bar</span></tt>:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>mkdir -p ~/DATA/bar ~/DATA/foo
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre>cp -n ~plewis/msc/h*dat ~/Data/bar
+<div class="code python highlight-python"><div class="highlight"><pre>cp -n ~plewis/msc/h*dat ~/DATA/bar
 </pre></div>
 </div>
-<p>You should check that the files you expect to see in <tt class="docutils literal"><span class="pre">~/Data/bar</span></tt> are
+<p>You should check that the files you expect to see in <tt class="docutils literal"><span class="pre">~/DATA/bar</span></tt> are
 there:</p>
-<div class="code python highlight-python"><div class="highlight"><pre>ls ~/Data/bar
+<div class="code python highlight-python"><div class="highlight"><pre>ls ~/DATA/bar
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre>head.dat        header.dat      hello.dat       helloWorld.dat
 </pre></div>
 </div>
 <p>Now, let&#8217;s move the files <tt class="docutils literal"><span class="pre">hello.dat</span></tt> and <tt class="docutils literal"><span class="pre">helloWorld.dat</span></tt> into a
-directory <tt class="docutils literal"><span class="pre">~/Data/foo</span></tt> (using wildcards):</p>
-<div class="code python highlight-python"><div class="highlight"><pre>mv -n ~/Data/bar/hello*dat ~/Data/foo
+directory <tt class="docutils literal"><span class="pre">~/DATA/foo</span></tt> (using wildcards):</p>
+<div class="code python highlight-python"><div class="highlight"><pre>mv -n ~/DATA/bar/hello*dat ~/DATA/foo
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre>ls ~/Data/bar ~/Data/foo
+<div class="code python highlight-python"><div class="highlight"><pre>ls ~/DATA/bar ~/DATA/foo
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>/Users/plewis/Data/bar:
+<div class="highlight-python"><div class="highlight"><pre>/Users/plewis/DATA/bar:
 head.dat    header.dat
 
-/Users/plewis/Data/foo:
+/Users/plewis/DATA/foo:
 hello.dat       helloWorld.dat
 </pre></div>
 </div>
 <p>To use <tt class="docutils literal"><span class="pre">mv</span></tt> to rename a file is in effect the same as moving it to a
 file of a different name:</p>
-<div class="code python highlight-python"><div class="highlight"><pre>mv ~/Data/bar/head.dat ~/Data/bar/tail.dat
+<div class="code python highlight-python"><div class="highlight"><pre>mv ~/DATA/bar/head.dat ~/DATA/bar/tail.dat
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre>ls ~/Data/bar
+<div class="code python highlight-python"><div class="highlight"><pre>ls ~/DATA/bar
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre>header.dat  tail.dat
@@ -956,14 +959,14 @@ commands from a python prompt involves putting an exclamation mark
 (<tt class="docutils literal"><span class="pre">!</span></tt>, known as <em>&#8216;bang&#8217;</em>) in front of the command. In these notes then,
 where you see <em>bang</em> (<tt class="docutils literal"><span class="pre">!</span></tt>) in front of a command, you leave that out
 when using the command at the unix prompt. e.g.:</p>
-<div class="code python highlight-python"><div class="highlight"><pre>!ls ~/Data/foo
+<div class="code python highlight-python"><div class="highlight"><pre>!ls ~/DATA/foo
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre>hello.dat      helloWorld.dat
 </pre></div>
 </div>
 <p>You can also run shell commands by invoking the <tt class="docutils literal"><span class="pre">bash</span></tt> shell:</p>
-<div class="code python highlight-python"><div class="highlight"><pre>ls ~/Data/foo
+<div class="code python highlight-python"><div class="highlight"><pre>ls ~/DATA/foo
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">hello</span><span class="o">.</span><span class="n">dat</span>
@@ -991,9 +994,6 @@ you would usually use the <tt class="docutils literal"><span class="pre">-v</spa
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre>Disk quotas for user plewis (uid 501): none
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre>dyld: DYLD_ environment variables being ignored because main executable (/usr/bin/quota) is setuid or setgid
 </pre></div>
 </div>
 <p>If you happen to be on a system where no quota is set (e.g. your own
@@ -1039,16 +1039,16 @@ time.</p>
 <p>The command <tt class="docutils literal"><span class="pre">df</span></tt> (disk free) will also tell you how much disk space
 there is, and how much is used. It is generally of value to use the
 <tt class="docutils literal"><span class="pre">-h</span></tt> option that gives the results in &#8216;human readable&#8217; form e.g.:</p>
-<div class="code python highlight-python"><div class="highlight"><pre>df -h ~/Data
+<div class="code python highlight-python"><div class="highlight"><pre>df -h ~/DATA
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre>Filesystem     Size   Used  Avail Capacity   iused    ifree %iused  Mounted on
-/dev/disk0s2  931Gi  847Gi   83Gi    92% 222117307 21863435   91%   /
+/dev/disk0s2  931Gi  794Gi  137Gi    86% 208138006 35842736   85%   /
 </pre></div>
 </div>
 <p>The output of this command is also of value to you if you need to know
 the actual device name of some disk area. For example, what you see on
-the file system as e.g. <tt class="docutils literal"><span class="pre">~/Data</span></tt> may be physically on a device called
+the file system as e.g. <tt class="docutils literal"><span class="pre">~/DATA</span></tt> may be physically on a device called
 <tt class="docutils literal"><span class="pre">/dev/disk0s2</span></tt>. Mostly, you won&#8217;t need to know that level of detail
 about the system, but occasionally, and as you become more expert in
 using unix, you will so it is good to have these things at the back of
@@ -1060,14 +1060,14 @@ your mind.</p>
 (disk usage). Often, you would use this with the option <tt class="docutils literal"><span class="pre">-s</span></tt> which
 produces a summary. Again, it is often of value to use the <tt class="docutils literal"><span class="pre">-h</span></tt> option
 that gives the results in &#8216;human readable&#8217; form e.g.:</p>
-<div class="code python highlight-python"><div class="highlight"><pre>du -sh ~/Data
+<div class="code python highlight-python"><div class="highlight"><pre>du -sh ~/DATA
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>4.7M        /Users/plewis/Data
+<div class="highlight-python"><div class="highlight"><pre>656K        /Users/plewis/DATA
 </pre></div>
 </div>
 <p>This summary disk usage information tells us (here in human readbale
-form) how much disk space is used in the directory <tt class="docutils literal"><span class="pre">~/Data</span></tt> and its
+form) how much disk space is used in the directory <tt class="docutils literal"><span class="pre">~/DATA</span></tt> and its
 subdirectories.</p>
 </div>
 <div class="section" id="ls-l">
@@ -1076,21 +1076,21 @@ subdirectories.</p>
 listing of directory contents.</p>
 <p>A useful option for the command <tt class="docutils literal"><span class="pre">ls</span></tt> that gives you a <em>long</em> (verbose)
 listing of files or directories is <tt class="docutils literal"><span class="pre">ls</span> <span class="pre">-l</span></tt> (long listing).</p>
-<p>We will first make move the directory <tt class="docutils literal"><span class="pre">~/Data/bar</span></tt> into the directory
-<tt class="docutils literal"><span class="pre">~/Data/foo</span></tt>, then look at a long listing of what there is in
-<tt class="docutils literal"><span class="pre">~/Data/foo</span></tt>:</p>
-<div class="code python highlight-python"><div class="highlight"><pre>mv ~/Data/bar ~/Data/foo
-ls -l ~/Data/foo
+<p>We will first make move the directory <tt class="docutils literal"><span class="pre">~/DATA/bar</span></tt> into the directory
+<tt class="docutils literal"><span class="pre">~/DATA/foo</span></tt>, then look at a long listing of what there is in
+<tt class="docutils literal"><span class="pre">~/DATA/foo</span></tt>:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>mv ~/DATA/bar ~/DATA/foo
+ls -l ~/DATA/foo
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre>total 16
-drwxr-xr-x  4 plewis  staff  136  1 Oct 14:53 bar
--rw-r--r--  1 plewis  staff   14  1 Oct 14:53 hello.dat
--rw-r--r--  1 plewis  staff   13  1 Oct 14:53 helloWorld.dat
+drwxr-xr-x  4 plewis  staff  136 30 Sep 08:54 bar
+-rw-r--r--  1 plewis  staff   14 30 Sep 08:54 hello.dat
+-rw-r--r--  1 plewis  staff   13 30 Sep 08:54 helloWorld.dat
 </pre></div>
 </div>
 <p>The long listing displays information on the owner of a file (<tt class="docutils literal"><span class="pre">plewis</span></tt>
-here), the size of the file (e.g. ~/Data/foo/hello.dat is 14 bytes), and
+here), the size of the file (e.g. ~/DATA/foo/hello.dat is 14 bytes), and
 when it was last modified (26 Sep 17:05). The first field that you see
 (e.g. <tt class="docutils literal"><span class="pre">drwxr-xr-x</span></tt>) is a series of codes that tells you about what
 type of file it is (d in the first element means that it is a directory)
@@ -1106,13 +1106,13 @@ that.</p>
 <p>A useful additional option to <tt class="docutils literal"><span class="pre">ls</span></tt> is the <tt class="docutils literal"><span class="pre">-h</span></tt> option, that gives
 file sizes in &#8216;human readable&#8217; format (i.e. something easier to
 understand):</p>
-<div class="code python highlight-python"><div class="highlight"><pre>ls -lh ~/Data/foo
+<div class="code python highlight-python"><div class="highlight"><pre>ls -lh ~/DATA/foo
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre>total 16
-drwxr-xr-x  4 plewis  staff   136B  1 Oct 14:53 bar
--rw-r--r--  1 plewis  staff    14B  1 Oct 14:53 hello.dat
--rw-r--r--  1 plewis  staff    13B  1 Oct 14:53 helloWorld.dat
+drwxr-xr-x  4 plewis  staff   136B 30 Sep 08:54 bar
+-rw-r--r--  1 plewis  staff    14B 30 Sep 08:54 hello.dat
+-rw-r--r--  1 plewis  staff    13B 30 Sep 08:54 helloWorld.dat
 </pre></div>
 </div>
 <p>where the <tt class="docutils literal"><span class="pre">B</span></tt> at the end of the size field tells us the size is in
@@ -1132,37 +1132,37 @@ permission for some secure piece of work we are doing, or to open up
 write permission for other users on some shared piece of work, using the
 command <tt class="docutils literal"><span class="pre">chmod</span></tt> (change mode).</p>
 <p>If you have followed the material above, you should have a file called
-<tt class="docutils literal"><span class="pre">hello.dat</span></tt> in the directory <tt class="docutils literal"><span class="pre">~/Data/foo</span></tt> (check that this is the
+<tt class="docutils literal"><span class="pre">hello.dat</span></tt> in the directory <tt class="docutils literal"><span class="pre">~/DATA/foo</span></tt> (check that this is the
 case) and we will make a new sub-directory in there called <tt class="docutils literal"><span class="pre">foobar</span></tt>
 from which we will <em>remove</em> all write permissions.</p>
-<div class="code python highlight-python"><div class="highlight"><pre>mkdir -p ~/Data/foo/foobar
-ls -l ~/Data/foo
-chmod uog-w ~/Data/foo/foobar
-ls -l ~/Data/foo
+<div class="code python highlight-python"><div class="highlight"><pre>mkdir -p ~/DATA/foo/foobar
+ls -l ~/DATA/foo
+chmod uog-w ~/DATA/foo/foobar
+ls -l ~/DATA/foo
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre>total 16
-drwxr-xr-x  4 plewis  staff  136  1 Oct 14:53 bar
-drwxr-xr-x  2 plewis  staff   68  1 Oct 14:53 foobar
--rw-r--r--  1 plewis  staff   14  1 Oct 14:53 hello.dat
--rw-r--r--  1 plewis  staff   13  1 Oct 14:53 helloWorld.dat
+drwxr-xr-x  4 plewis  staff  136 30 Sep 08:54 bar
+drwxr-xr-x  2 plewis  staff   68 30 Sep 08:56 foobar
+-rw-r--r--  1 plewis  staff   14 30 Sep 08:54 hello.dat
+-rw-r--r--  1 plewis  staff   13 30 Sep 08:54 helloWorld.dat
 total 16
-drwxr-xr-x  4 plewis  staff  136  1 Oct 14:53 bar
-dr-xr-xr-x  2 plewis  staff   68  1 Oct 14:53 foobar
--rw-r--r--  1 plewis  staff   14  1 Oct 14:53 hello.dat
--rw-r--r--  1 plewis  staff   13  1 Oct 14:53 helloWorld.dat
+drwxr-xr-x  4 plewis  staff  136 30 Sep 08:54 bar
+dr-xr-xr-x  2 plewis  staff   68 30 Sep 08:56 foobar
+-rw-r--r--  1 plewis  staff   14 30 Sep 08:54 hello.dat
+-rw-r--r--  1 plewis  staff   13 30 Sep 08:54 helloWorld.dat
 </pre></div>
 </div>
 <p>From which we see that the <tt class="docutils literal"><span class="pre">w</span></tt> bit on the directory
-<tt class="docutils literal"><span class="pre">~/Data/foo/foobar</span></tt> has been removed (unset). The <tt class="docutils literal"><span class="pre">uog</span></tt> part refers
+<tt class="docutils literal"><span class="pre">~/DATA/foo/foobar</span></tt> has been removed (unset). The <tt class="docutils literal"><span class="pre">uog</span></tt> part refers
 to <em>user</em>, <em>group</em> and <em>other</em>. The <tt class="docutils literal"><span class="pre">-</span></tt> part means <em>remove</em> and the
 <tt class="docutils literal"><span class="pre">w</span></tt> part refers to the write bit.</p>
 <p>So, if we now try to copy or move a file into the <tt class="docutils literal"><span class="pre">bar</span></tt> directory, we
 would expect it to fail:</p>
-<div class="code python highlight-python"><div class="highlight"><pre>cp -f ~/Data/foo/hello.dat ~/Data/foo/foobar
+<div class="code python highlight-python"><div class="highlight"><pre>cp -f ~/DATA/foo/hello.dat ~/DATA/foo/foobar
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>cp: /Users/plewis/Data/foo/foobar/hello.dat: Permission denied
+<div class="highlight-python"><div class="highlight"><pre>cp: /Users/plewis/DATA/foo/foobar/hello.dat: Permission denied
 </pre></div>
 </div>
 </div>
@@ -1183,10 +1183,10 @@ likely reasons are: (i) you typed something wrong (so, check carefully);
 (ii) if you can&#8217;t get in at the desktop, then probably you have gone
 over your quota. The most likely reason for going over quota is that you
 have put too many large files in your home area, instead of putting them
-in your <em>Data</em> area as you are supposed to. To fix that, log in as given
+in your <em>DATA</em> area as you are supposed to. To fix that, log in as given
 above and delete the files from your home area until you are below
-quota, <em>or</em> (better) move them into the <em>Data</em> area (or better still,
-put them in the <em>Data</em> area in the first place and avoid this problem).</p>
+quota, <em>or</em> (better) move them into the <em>DATA</em> area (or better still,
+put them in the <em>DATA</em> area in the first place and avoid this problem).</p>
 </div>
 <div class="section" id="id5">
 <h2>2.6 Summary<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
@@ -1220,9 +1220,9 @@ control what is going on in the unix environment a little more.</p>
 <p>The previous sections dealt with the basic tools of Unix. Now, we will
 look at a few useful tools you have access to and some slightly more
 advanced concepts that again enable you to do more with the computer.</p>
-<p>Before starting this section, let&#8217;s create a directory in your <tt class="docutils literal"><span class="pre">Data</span></tt>
+<p>Before starting this section, let&#8217;s create a directory in your <tt class="docutils literal"><span class="pre">DATA</span></tt>
 area called <tt class="docutils literal"><span class="pre">unix</span></tt>:</p>
-<div class="code python highlight-python"><div class="highlight"><pre>mkdir -p ~/Data/unix
+<div class="code python highlight-python"><div class="highlight"><pre>mkdir -p ~/DATA/unix
 </pre></div>
 </div>
 <p>Remember that commands below that start with <tt class="docutils literal"><span class="pre">!</span></tt> (bang) should not
@@ -1290,17 +1290,17 @@ quotes, but a single quote <tt class="docutils literal"><span class="pre">'</spa
 command appears in the terminal we are using.</p>
 <p>In fact, it is directed to the standard output channel <tt class="docutils literal"><span class="pre">stdout</span></tt>, which
 allows us to redirect it, e.g. to a file:</p>
-<div class="code python highlight-python"><div class="highlight"><pre>echo &quot;hello world&quot; &gt; ~/Data/unix/hello.dat
+<div class="code python highlight-python"><div class="highlight"><pre>echo &quot;hello world&quot; &gt; ~/DATA/unix/hello.dat
 </pre></div>
 </div>
 <p>Now, nothing should have appeared in the terminal ... the text resulting
 from the <tt class="docutils literal"><span class="pre">echo</span></tt> command went instead to the file
-<tt class="docutils literal"><span class="pre">~/Data/unix/hello.dat</span></tt>.</p>
+<tt class="docutils literal"><span class="pre">~/DATA/unix/hello.dat</span></tt>.</p>
 <p>We can check to see how big this file is to see if that makes sense:</p>
-<div class="code python highlight-python"><div class="highlight"><pre>ls -lh ~/Data/unix/hello.dat
+<div class="code python highlight-python"><div class="highlight"><pre>ls -lh ~/DATA/unix/hello.dat
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>-rw-r--r--  1 plewis  staff    12B  1 Oct 14:53 /Users/plewis/Data/unix/hello.dat
+<div class="highlight-python"><div class="highlight"><pre>-rw-r--r--  1 plewis  staff    12B 30 Sep 08:57 /Users/plewis/DATA/unix/hello.dat
 </pre></div>
 </div>
 <p>We see that the file <em>exists</em> and is of size 12 bytes.</p>
@@ -1320,7 +1320,7 @@ called the end of file marker or more properly, end of transmission
 in the <a class="reference external" href="http://en.wikipedia.org/wiki/ASCII">ASCII character set</a>.</p>
 <p>Sometimes it&#8217;s too much effort to count up the characters in a string or
 a file. In unix, we can use the command <tt class="docutils literal"><span class="pre">wc</span></tt> (word count):</p>
-<div class="code python highlight-python"><div class="highlight"><pre>wc &lt; ~/Data/unix/hello.dat
+<div class="code python highlight-python"><div class="highlight"><pre>wc &lt; ~/DATA/unix/hello.dat
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre>1       2      12
@@ -1329,7 +1329,7 @@ a file. In unix, we can use the command <tt class="docutils literal"><span class
 <p>By default, this displays the number of <em>lines</em> (<tt class="docutils literal"><span class="pre">1</span></tt> here), <em>words</em>
 (<tt class="docutils literal"><span class="pre">2</span></tt> here) and <em>bytes</em> (<tt class="docutils literal"><span class="pre">12</span></tt> here) in the file.</p>
 <p>Useful modifcations of behaviour are e.g.:</p>
-<div class="code python highlight-python"><div class="highlight"><pre>wc -l &lt; ~/Data/unix/hello.dat
+<div class="code python highlight-python"><div class="highlight"><pre>wc -l &lt; ~/DATA/unix/hello.dat
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre><span class="mi">1</span>
@@ -1341,7 +1341,7 @@ a file. In unix, we can use the command <tt class="docutils literal"><span class
 <div class="section" id="stdin">
 <h3>stdin<a class="headerlink" href="#stdin" title="Permalink to this headline">¶</a></h3>
 <p>You may have noticed that we used the <tt class="docutils literal"><span class="pre">stdin</span></tt> symbol <tt class="docutils literal"><span class="pre">&lt;</span></tt> here, which
-redirects the contents of the file <tt class="docutils literal"><span class="pre">~/Data/unix/hello.dat</span></tt> <em>into</em> the
+redirects the contents of the file <tt class="docutils literal"><span class="pre">~/DATA/unix/hello.dat</span></tt> <em>into</em> the
 command <tt class="docutils literal"><span class="pre">wc</span></tt>.</p>
 </div>
 <div class="section" id="pipe">
@@ -1443,30 +1443,30 @@ echo &quot;welcome to the world of unix&quot; &gt; ~/Data/unix/hello2.dat
 </div>
 <div class="section" id="date">
 <h3>date<a class="headerlink" href="#date" title="Permalink to this headline">¶</a></h3>
-<div class="code python highlight-python"><div class="highlight"><pre>date | cat - ~/Data/unix/hello.dat ~/Data/unix/hello2.dat
+<div class="code python highlight-python"><div class="highlight"><pre>date | cat - ~/DATA/unix/hello.dat ~/DATA/unix/hello2.dat
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>Tue  1 Oct 2013 14:53:22 BST
+<div class="highlight-python"><div class="highlight"><pre>Tue 30 Sep 2014 08:57:54 BST
 hello plewis
 welcome to the world of unix
 </pre></div>
 </div>
 <p>Here, we ran the command <tt class="docutils literal"><span class="pre">date</span></tt> that prints the current date (time) to
-<tt class="docutils literal"><span class="pre">stdout</span></tt>, concatenated the files <tt class="docutils literal"><span class="pre">~/Data/unix/hello.dat</span></tt> and
-<tt class="docutils literal"><span class="pre">~/Data/unix/hello2.dat</span></tt> to the end of this and sent the result to
+<tt class="docutils literal"><span class="pre">stdout</span></tt>, concatenated the files <tt class="docutils literal"><span class="pre">~/DATA/unix/hello.dat</span></tt> and
+<tt class="docutils literal"><span class="pre">~/DATA/unix/hello2.dat</span></tt> to the end of this and sent the result to
 <tt class="docutils literal"><span class="pre">stdout</span></tt> (the terminal).</p>
 <p>If we wanted to send this to another file, we would simply redirect the
 output:</p>
-<div class="code python highlight-python"><div class="highlight"><pre>date | cat - ~/Data/unix/hello.dat ~/Data/unix/hello2.dat &gt; ~/Data/unix/helloWorld.dat
+<div class="code python highlight-python"><div class="highlight"><pre>date | cat - ~/DATA/unix/hello.dat ~/DATA/unix/hello2.dat &gt; ~/DATA/unix/helloWorld.dat
 </pre></div>
 </div>
 <p>We can also use the command <tt class="docutils literal"><span class="pre">cat</span></tt> to simply put the contents of its
 <tt class="docutils literal"><span class="pre">stdin</span></tt> channel to <tt class="docutils literal"><span class="pre">stdout</span></tt>, which is one way to display the
 contents of an ASCII file at the terminal.</p>
-<div class="code python highlight-python"><div class="highlight"><pre>cat &lt; ~/Data/unix/helloWorld.dat
+<div class="code python highlight-python"><div class="highlight"><pre>cat &lt; ~/DATA/unix/helloWorld.dat
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>Tue  1 Oct 2013 14:53:23 BST
+<div class="highlight-python"><div class="highlight"><pre>Tue 30 Sep 2014 08:58:08 BST
 hello plewis
 welcome to the world of unix
 </pre></div>
@@ -1477,10 +1477,10 @@ welcome to the world of unix
 <p>When we redirect <tt class="docutils literal"><span class="pre">stdout</span></tt> using the <tt class="docutils literal"><span class="pre">&gt;</span></tt> symbol, this will create a
 file if it doesn&#8217;t already exist, but will overwrite one if it does
 exist:</p>
-<div class="code python highlight-python"><div class="highlight"><pre>echo &quot;Now you see me&quot; &gt; ~/Data/unix/test.dat
-cat ~/Data/unix/test.dat
-echo &quot;now you don&#39;t&quot; &gt; ~/Data/unix/test.dat
-cat ~/Data/unix/test.dat
+<div class="code python highlight-python"><div class="highlight"><pre>echo &quot;Now you see me&quot; &gt; ~/DATA/unix/test.dat
+cat ~/DATA/unix/test.dat
+echo &quot;now you don&#39;t&quot; &gt; ~/DATA/unix/test.dat
+cat ~/DATA/unix/test.dat
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre>Now you see me
@@ -1489,9 +1489,9 @@ now you don&#39;t
 </div>
 <p>If you want to <em>append</em> to a file, rather than writing over the
 contents, you can use the <tt class="docutils literal"><span class="pre">&gt;&gt;</span></tt> symbol:</p>
-<div class="code python highlight-python"><div class="highlight"><pre>echo &quot;Now you see me&quot; &gt; ~/Data/unix/test.dat
-echo &quot;now you still see me&quot; &gt;&gt; ~/Data/unix/test.dat
-cat ~/Data/unix/test.dat
+<div class="code python highlight-python"><div class="highlight"><pre>echo &quot;Now you see me&quot; &gt; ~/DATA/unix/test.dat
+echo &quot;now you still see me&quot; &gt;&gt; ~/DATA/unix/test.dat
+cat ~/DATA/unix/test.dat
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre>Now you see me
@@ -1499,8 +1499,8 @@ now you still see me
 </pre></div>
 </div>
 <p>and you can continue adding lines in this way:</p>
-<div class="code python highlight-python"><div class="highlight"><pre>echo &quot;ad nauseam&quot; &gt;&gt; ~/Data/unix/test.dat
-cat ~/Data/unix/test.dat
+<div class="code python highlight-python"><div class="highlight"><pre>echo &quot;ad nauseam&quot; &gt;&gt; ~/DATA/unix/test.dat
+cat ~/DATA/unix/test.dat
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre>Now you see me
@@ -1515,25 +1515,46 @@ ad nauseam
 off the screen, which can be a bit frustrating.</p>
 <p>The unix command <tt class="docutils literal"><span class="pre">more</span></tt> lets you view a file one page at a time.</p>
 <p>First, let&#8217;s create a long file:</p>
-<div class="code python highlight-python"><div class="highlight"><pre>echo &quot;this is the start of file&quot; &gt; ~/Data/unix/test2.dat
-cat ~/Data/unix/test.dat &gt;&gt; ~/Data/unix/test2.dat
-cat ~/Data/unix/test.dat &gt;&gt; ~/Data/unix/test2.dat
-cat ~/Data/unix/test.dat &gt;&gt; ~/Data/unix/test2.dat
-cat ~/Data/unix/test.dat &gt;&gt; ~/Data/unix/test2.dat
-cat ~/Data/unix/test.dat &gt;&gt; ~/Data/unix/test2.dat
-cat ~/Data/unix/test.dat &gt;&gt; ~/Data/unix/test2.dat
-cat ~/Data/unix/test.dat &gt;&gt; ~/Data/unix/test2.dat
-cat ~/Data/unix/test.dat &gt;&gt; ~/Data/unix/test2.dat
-cat ~/Data/unix/test.dat &gt;&gt; ~/Data/unix/test2.dat
-cat ~/Data/unix/test.dat &gt;&gt; ~/Data/unix/test2.dat
-cat ~/Data/unix/test.dat &gt;&gt; ~/Data/unix/test2.dat
-cat ~/Data/unix/test.dat &gt;&gt; ~/Data/unix/test2.dat
-cat ~/Data/unix/test.dat &gt;&gt; ~/Data/unix/test2.dat
-echo &quot;this is the end of file&quot; &gt;&gt; ~/Data/unix/test2.dat
-cat ~/Data/unix/test2.dat
+<div class="code python highlight-python"><div class="highlight"><pre>echo &quot;this is the start of file&quot; &gt; ~/DATA/unix/test2.dat
+cat ~/DATA/unix/test.dat &gt;&gt; ~/DATA/unix/test2.dat
+cat ~/DATA/unix/test.dat &gt;&gt; ~/DATA/unix/test2.dat
+cat ~/DATA/unix/test.dat &gt;&gt; ~/DATA/unix/test2.dat
+cat ~/DATA/unix/test.dat &gt;&gt; ~/DATA/unix/test2.dat
+cat ~/DATA/unix/test.dat &gt;&gt; ~/DATA/unix/test2.dat
+cat ~/DATA/unix/test.dat &gt;&gt; ~/DATA/unix/test2.dat
+cat ~/DATA/unix/test.dat &gt;&gt; ~/DATA/unix/test2.dat
+cat ~/DATA/unix/test.dat &gt;&gt; ~/DATA/unix/test2.dat
+cat ~/DATA/unix/test.dat &gt;&gt; ~/DATA/unix/test2.dat
+cat ~/DATA/unix/test.dat &gt;&gt; ~/DATA/unix/test2.dat
+cat ~/DATA/unix/test.dat &gt;&gt; ~/DATA/unix/test2.dat
+cat ~/DATA/unix/test.dat &gt;&gt; ~/DATA/unix/test2.dat
+cat ~/DATA/unix/test.dat &gt;&gt; ~/DATA/unix/test2.dat
+cat ~/DATA/unix/test.dat &gt;&gt; ~/DATA/unix/test2.dat
+cat ~/DATA/unix/test.dat &gt;&gt; ~/DATA/unix/test2.dat
+cat ~/DATA/unix/test.dat &gt;&gt; ~/DATA/unix/test2.dat
+cat ~/DATA/unix/test.dat &gt;&gt; ~/DATA/unix/test2.dat
+cat ~/DATA/unix/test.dat &gt;&gt; ~/DATA/unix/test2.dat
+
+echo &quot;this is the end of file&quot; &gt;&gt; ~/DATA/unix/test2.dat
+cat ~/DATA/unix/test2.dat
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre>this is the start of file
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
 Now you see me
 now you still see me
 ad nauseam
@@ -1581,10 +1602,25 @@ this is the end of file
 <p>You can use the <tt class="docutils literal"><span class="pre">space</span> <span class="pre">bar</span></tt> to go down one page at a time, or
 <tt class="docutils literal"><span class="pre">return</span></tt> for a line at a time (also <tt class="docutils literal"><span class="pre">b</span></tt> to go back, <tt class="docutils literal"><span class="pre">:3</span></tt> to go to
 line 3, <tt class="docutils literal"><span class="pre">/end</span></tt> to search for the string <tt class="docutils literal"><span class="pre">end</span></tt>, etc.)</p>
-<div class="code python highlight-python"><div class="highlight"><pre>more ~/Data/unix/test2.dat
+<div class="code python highlight-python"><div class="highlight"><pre>more ~/DATA/unix/test2.dat
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre>this is the start of file
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
 Now you see me
 now you still see me
 ad nauseam
@@ -1631,10 +1667,25 @@ this is the end of file
 <div class="section" id="less">
 <h3>less<a class="headerlink" href="#less" title="Permalink to this headline">¶</a></h3>
 <p>In some ways better that <tt class="docutils literal"><span class="pre">more</span></tt> is <tt class="docutils literal"><span class="pre">less</span></tt>. Try that on the file now.</p>
-<div class="code python highlight-python"><div class="highlight"><pre>less ~/Data/unix/test2.dat
+<div class="code python highlight-python"><div class="highlight"><pre>less ~/DATA/unix/test2.dat
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre>this is the start of file
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
+Now you see me
+now you still see me
+ad nauseam
 Now you see me
 now you still see me
 ad nauseam
@@ -1683,7 +1734,7 @@ this is the end of file
 <p>Another very useful utility is grep (&#8216;globally search a regular
 expression and print&#8217;). You will commonly use this to find lines in a
 file that match some pattern. E.g.:</p>
-<div class="code python highlight-python"><div class="highlight"><pre>grep see &lt; ~/Data/unix/test.dat
+<div class="code python highlight-python"><div class="highlight"><pre>grep see &lt; ~/DATA/unix/test.dat
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre>Now you see me
@@ -1696,13 +1747,13 @@ contain the string <tt class="docutils literal"><span class="pre">see</span></tt
 different from <tt class="docutils literal"><span class="pre">now</span></tt>).</p>
 <p>We can use the <tt class="docutils literal"><span class="pre">-v</span></tt> option to ignore the case (i.e. whether it is
 lower case or upper case):</p>
-<div class="code python highlight-python"><div class="highlight"><pre>grep now &lt; ~/Data/unix/test.dat
+<div class="code python highlight-python"><div class="highlight"><pre>grep now &lt; ~/DATA/unix/test.dat
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre>now you still see me
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre>grep -i now &lt; ~/Data/unix/test.dat
+<div class="code python highlight-python"><div class="highlight"><pre>grep -i now &lt; ~/DATA/unix/test.dat
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre>Now you see me
@@ -1711,7 +1762,7 @@ now you still see me
 </div>
 <p>Usefully, we can also return lines that <em>don&#8217;t</em> match the pattern using
 the <tt class="docutils literal"><span class="pre">-v</span></tt> option:</p>
-<div class="code python highlight-python"><div class="highlight"><pre>grep -v see &lt; ~/Data/unix/test.dat
+<div class="code python highlight-python"><div class="highlight"><pre>grep -v see &lt; ~/DATA/unix/test.dat
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre>ad nauseam
@@ -1755,8 +1806,8 @@ terminal so you can see what you are typing) on <tt class="docutils literal"><sp
 is also going to the terminal on <tt class="docutils literal"><span class="pre">stdout</span></tt>.</p>
 <p>If you wanted to type information that will go into a file, you can
 redirect the output of <tt class="docutils literal"><span class="pre">cat</span></tt> to a file:</p>
-<p><tt class="docutils literal"><span class="pre">%berlin</span> <span class="pre">cat</span> <span class="pre">&gt;</span> <span class="pre">~/Data/unix/gettysburg.dat</span> <span class="pre">The</span> <span class="pre">world</span> <span class="pre">will</span> <span class="pre">little</span> <span class="pre">note,</span>&nbsp; <span class="pre">nor</span> <span class="pre">long</span> <span class="pre">remember</span> <span class="pre">what</span> <span class="pre">we</span> <span class="pre">say</span> <span class="pre">here,</span>&nbsp; <span class="pre">but</span> <span class="pre">it</span> <span class="pre">can</span> <span class="pre">never</span> <span class="pre">forget</span> <span class="pre">what</span> <span class="pre">they</span> <span class="pre">did</span> <span class="pre">here.</span> <span class="pre">^D</span></tt></p>
-<p>This will now be stored in the file <tt class="docutils literal"><span class="pre">~/Data/unix/gettysburg.dat</span></tt>.</p>
+<p><tt class="docutils literal"><span class="pre">%berlin</span> <span class="pre">cat</span> <span class="pre">&gt;</span> <span class="pre">~/DATA/unix/gettysburg.dat</span> <span class="pre">The</span> <span class="pre">world</span> <span class="pre">will</span> <span class="pre">little</span> <span class="pre">note,</span>&nbsp; <span class="pre">nor</span> <span class="pre">long</span> <span class="pre">remember</span> <span class="pre">what</span> <span class="pre">we</span> <span class="pre">say</span> <span class="pre">here,</span>&nbsp; <span class="pre">but</span> <span class="pre">it</span> <span class="pre">can</span> <span class="pre">never</span> <span class="pre">forget</span> <span class="pre">what</span> <span class="pre">they</span> <span class="pre">did</span> <span class="pre">here.</span> <span class="pre">^D</span></tt></p>
+<p>This will now be stored in the file <tt class="docutils literal"><span class="pre">~/DATA/unix/gettysburg.dat</span></tt>.</p>
 <p>That&#8217;s all very well, and often you will use this methbod to create some
 text in a file, but if you make a mistake, you will find that you can&#8217;t
 easily edit it, which can be rather inconvenient.</p>
@@ -1824,9 +1875,9 @@ until you hit <tt class="docutils literal"><span class="pre">ESC</span></tt>. <t
 <div class="section" id="id7">
 <h4>3.2.3 Exercise<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
 <p>Use vi now to edit a file you have created, e.g.</p>
-<p><tt class="docutils literal"><span class="pre">berlin%</span> <span class="pre">vi</span> <span class="pre">~/Data/unix/gettysburg.dat</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">berlin%</span> <span class="pre">vi</span> <span class="pre">~/DATA/unix/gettysburg.dat</span></tt></p>
 <p>Practice adding some more lines, changing the words etc., and save your
-edited file to <tt class="docutils literal"><span class="pre">~/Data/unix/myGettysburg.dat</span></tt></p>
+edited file to <tt class="docutils literal"><span class="pre">~/DATA/unix/myGettysburg.dat</span></tt></p>
 </div>
 </div>
 </div>
@@ -2047,7 +2098,7 @@ file from the remote machine, use <tt class="docutils literal"><span class="pre"
 <p>Sometimes, it is convenient to use <tt class="docutils literal"><span class="pre">scp</span></tt>, a secure copy command that
 you can use over digfferent machines on the network when they do not
 have common disk access. The syntax is of the form:</p>
-<p><tt class="docutils literal"><span class="pre">scp</span> <span class="pre">plewis&#64;shankly.geog.ucl.ac.uk:///home/plewis/msc/hello.dat</span> <span class="pre">~/Data/helloLewis.dat</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">scp</span> <span class="pre">plewis&#64;shankly.geog.ucl.ac.uk:///home/plewis/msc/hello.dat</span> <span class="pre">~/DATA/helloLewis.dat</span></tt></p>
 </div>
 <div class="section" id="id8">
 <h3>ssh<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
@@ -2430,7 +2481,7 @@ reference as you explore what you can do with the operating system.</p>
 
     <div class="footer">
         &copy; Copyright 2014, Prof. P. Lewis.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>
