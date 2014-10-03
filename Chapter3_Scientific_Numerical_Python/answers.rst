@@ -2,42 +2,53 @@
 E3 Answers to Exercise
 ======================
 
-E3.2 Exercise: listing
+E3.1 Exercise: listing
 ----------------------
 
 **Using Python, produce a listing of the files in the subdirectory
 ``data`` of ``geogg122/Chapter3_Scientific_Numerical_Python`` that end
-with ``.nc`` and put this listing in a file called
-``files/data/data.dat`` with each entry on a different line**
+with ``.nc`` and put this listing in a file called ``data/data.dat``
+with each entry on a different line**
 
-A3.2 Answer: listing
+A3.1 Answer: listing
 --------------------
 
 Hopefully, you should already be in the directory
 ``geogg122/Chapter3_Scientific_Numerical_Python``, if not, you may like
 to go there before starting this exercise.
 
-If you were to do this from unix, you would getr the listing with:
+If you were to do this from unix, you would get the listing with:
 
 .. code:: python
 
-    !ls -l data/*.nc
+    ls -l data/*.nc
 
 .. parsed-literal::
 
-    -rw-r--r--  1 plewis  staff  115202868 11 Oct 09:53 data/GlobAlbedo.1998145.h17v03.nc
-    -rw-r--r--  1 plewis  staff   18669672 11 Oct 20:07 data/GlobAlbedo.200901.mosaic.5.nc
-    -rw-r--r--  1 plewis  staff   18669672 11 Oct 20:07 data/GlobAlbedo.200902.mosaic.5.nc
-    -rw-r--r--  1 plewis  staff   18669672 11 Oct 20:08 data/GlobAlbedo.200903.mosaic.5.nc
-    -rw-r--r--  1 plewis  staff   18669672 11 Oct 20:08 data/GlobAlbedo.200904.mosaic.5.nc
-    -rw-r--r--  1 plewis  staff   18669672 11 Oct 20:08 data/GlobAlbedo.200905.mosaic.5.nc
-    -rw-r--r--  1 plewis  staff   18669672 11 Oct 20:08 data/GlobAlbedo.200906.mosaic.5.nc
-    -rw-r--r--  1 plewis  staff   18758652 11 Oct 20:08 data/GlobAlbedo.200907.mosaic.5.nc
-    -rw-r--r--  1 plewis  staff   18669672 11 Oct 20:08 data/GlobAlbedo.200908.mosaic.5.nc
-    -rw-r--r--  1 plewis  staff   18669672 11 Oct 20:08 data/GlobAlbedo.200909.mosaic.5.nc
-    -rw-r--r--  1 plewis  staff   18669672 11 Oct 20:08 data/GlobAlbedo.200910.mosaic.5.nc
-    -rw-r--r--  1 plewis  staff   18669672 11 Oct 20:08 data/GlobAlbedo.200911.mosaic.5.nc
-    -rw-r--r--  1 plewis  staff   18669672 11 Oct 20:08 data/GlobAlbedo.200912.mosaic.5.nc
+    -rw-rw-r--. 1 plewis plewis 18669672 Sep 30 11:56 data/GlobAlbedo.200901.mosaic.5.nc
+    -rw-rw-r--. 1 plewis plewis 18669672 Sep 30 11:56 data/GlobAlbedo.200902.mosaic.5.nc
+    -rw-rw-r--. 1 plewis plewis 18669672 Sep 30 11:56 data/GlobAlbedo.200903.mosaic.5.nc
+    -rw-rw-r--. 1 plewis plewis 18669672 Sep 30 11:56 data/GlobAlbedo.200904.mosaic.5.nc
+    -rw-rw-r--. 1 plewis plewis 18669672 Sep 30 11:56 data/GlobAlbedo.200905.mosaic.5.nc
+    -rw-rw-r--. 1 plewis plewis 18669672 Sep 30 11:56 data/GlobAlbedo.200906.mosaic.5.nc
+    -rw-rw-r--. 1 plewis plewis 18758652 Sep 30 11:56 data/GlobAlbedo.200907.mosaic.5.nc
+    -rw-rw-r--. 1 plewis plewis 18669672 Sep 30 11:56 data/GlobAlbedo.200908.mosaic.5.nc
+    -rw-rw-r--. 1 plewis plewis 18669672 Sep 30 11:56 data/GlobAlbedo.200909.mosaic.5.nc
+    -rw-rw-r--. 1 plewis plewis 18669672 Sep 30 11:56 data/GlobAlbedo.200910.mosaic.5.nc
+    -rw-rw-r--. 1 plewis plewis 18669672 Sep 30 11:56 data/GlobAlbedo.200911.mosaic.5.nc
+    -rw-rw-r--. 1 plewis plewis 18669672 Sep 30 11:56 data/GlobAlbedo.200912.mosaic.5.nc
+    -rw-rw-r--. 1 plewis plewis 18758652 Sep 30 11:56 data/GlobAlbedo.201001.mosaic.5.nc
+    -rw-rw-r--. 1 plewis plewis 18669672 Sep 30 11:56 data/GlobAlbedo.201002.mosaic.5.nc
+    -rw-rw-r--. 1 plewis plewis 18669672 Sep 30 11:56 data/GlobAlbedo.201003.mosaic.5.nc
+    -rw-rw-r--. 1 plewis plewis 18669672 Sep 30 11:56 data/GlobAlbedo.201004.mosaic.5.nc
+    -rw-rw-r--. 1 plewis plewis 18669672 Sep 30 11:56 data/GlobAlbedo.201005.mosaic.5.nc
+    -rw-rw-r--. 1 plewis plewis 18669672 Sep 30 11:56 data/GlobAlbedo.201006.mosaic.5.nc
+    -rw-rw-r--. 1 plewis plewis 18669672 Sep 30 11:56 data/GlobAlbedo.201007.mosaic.5.nc
+    -rw-rw-r--. 1 plewis plewis 18758652 Sep 30 11:56 data/GlobAlbedo.201008.mosaic.5.nc
+    -rw-rw-r--. 1 plewis plewis 18669672 Sep 30 11:56 data/GlobAlbedo.201009.mosaic.5.nc
+    -rw-rw-r--. 1 plewis plewis 18669672 Sep 30 11:56 data/GlobAlbedo.201010.mosaic.5.nc
+    -rw-rw-r--. 1 plewis plewis 18669672 Sep 30 11:56 data/GlobAlbedo.201011.mosaic.5.nc
+    -rw-rw-r--. 1 plewis plewis 18669672 Sep 30 11:56 data/GlobAlbedo.201012.mosaic.5.nc
 
 
 or similar.
@@ -53,18 +64,18 @@ To do this in Python, you should use ``glob``, and the same 'pattern':
 
 .. parsed-literal::
 
-    ['data/GlobAlbedo.1998145.h17v03.nc', 'data/GlobAlbedo.200901.mosaic.5.nc', 'data/GlobAlbedo.200902.mosaic.5.nc', 'data/GlobAlbedo.200903.mosaic.5.nc', 'data/GlobAlbedo.200904.mosaic.5.nc', 'data/GlobAlbedo.200905.mosaic.5.nc', 'data/GlobAlbedo.200906.mosaic.5.nc', 'data/GlobAlbedo.200907.mosaic.5.nc', 'data/GlobAlbedo.200908.mosaic.5.nc', 'data/GlobAlbedo.200909.mosaic.5.nc', 'data/GlobAlbedo.200910.mosaic.5.nc', 'data/GlobAlbedo.200911.mosaic.5.nc', 'data/GlobAlbedo.200912.mosaic.5.nc']
+    ['data/GlobAlbedo.201008.mosaic.5.nc', 'data/GlobAlbedo.200903.mosaic.5.nc', 'data/GlobAlbedo.200905.mosaic.5.nc', 'data/GlobAlbedo.201007.mosaic.5.nc', 'data/GlobAlbedo.201011.mosaic.5.nc', 'data/GlobAlbedo.200902.mosaic.5.nc', 'data/GlobAlbedo.201006.mosaic.5.nc', 'data/GlobAlbedo.201004.mosaic.5.nc', 'data/GlobAlbedo.200904.mosaic.5.nc', 'data/GlobAlbedo.200911.mosaic.5.nc', 'data/GlobAlbedo.201012.mosaic.5.nc', 'data/GlobAlbedo.201005.mosaic.5.nc', 'data/GlobAlbedo.200912.mosaic.5.nc', 'data/GlobAlbedo.201003.mosaic.5.nc', 'data/GlobAlbedo.200907.mosaic.5.nc', 'data/GlobAlbedo.200909.mosaic.5.nc', 'data/GlobAlbedo.201001.mosaic.5.nc', 'data/GlobAlbedo.201009.mosaic.5.nc', 'data/GlobAlbedo.201010.mosaic.5.nc', 'data/GlobAlbedo.200906.mosaic.5.nc', 'data/GlobAlbedo.201002.mosaic.5.nc', 'data/GlobAlbedo.200908.mosaic.5.nc', 'data/GlobAlbedo.200901.mosaic.5.nc', 'data/GlobAlbedo.200910.mosaic.5.nc']
 
 
 This is a list. We want to write this to a file called
-``files/data/data.dat``.
+``data/data.dat``.
 
 First we open it, then simply use ``writelines`` to write the list of
 strings, the close the file.
 
 .. code:: python
 
-    filename = 'files/data/data.dat'
+    filename = 'data/data.dat'
     
     # open in write mode
     fp = open(filename,'w')
@@ -74,11 +85,11 @@ Hopefully, that all worked well, but just to check from unix:
 
 .. code:: python
 
-    !cat files/data/data.dat
+    cat data/data.dat
 
 .. parsed-literal::
 
-    data/GlobAlbedo.1998145.h17v03.ncdata/GlobAlbedo.200901.mosaic.5.ncdata/GlobAlbedo.200902.mosaic.5.ncdata/GlobAlbedo.200903.mosaic.5.ncdata/GlobAlbedo.200904.mosaic.5.ncdata/GlobAlbedo.200905.mosaic.5.ncdata/GlobAlbedo.200906.mosaic.5.ncdata/GlobAlbedo.200907.mosaic.5.ncdata/GlobAlbedo.200908.mosaic.5.ncdata/GlobAlbedo.200909.mosaic.5.ncdata/GlobAlbedo.200910.mosaic.5.ncdata/GlobAlbedo.200911.mosaic.5.ncdata/GlobAlbedo.200912.mosaic.5.nc
+    data/GlobAlbedo.201008.mosaic.5.ncdata/GlobAlbedo.200903.mosaic.5.ncdata/GlobAlbedo.200905.mosaic.5.ncdata/GlobAlbedo.201007.mosaic.5.ncdata/GlobAlbedo.201011.mosaic.5.ncdata/GlobAlbedo.200902.mosaic.5.ncdata/GlobAlbedo.201006.mosaic.5.ncdata/GlobAlbedo.201004.mosaic.5.ncdata/GlobAlbedo.200904.mosaic.5.ncdata/GlobAlbedo.200911.mosaic.5.ncdata/GlobAlbedo.201012.mosaic.5.ncdata/GlobAlbedo.201005.mosaic.5.ncdata/GlobAlbedo.200912.mosaic.5.ncdata/GlobAlbedo.201003.mosaic.5.ncdata/GlobAlbedo.200907.mosaic.5.ncdata/GlobAlbedo.200909.mosaic.5.ncdata/GlobAlbedo.201001.mosaic.5.ncdata/GlobAlbedo.201009.mosaic.5.ncdata/GlobAlbedo.201010.mosaic.5.ncdata/GlobAlbedo.200906.mosaic.5.ncdata/GlobAlbedo.201002.mosaic.5.ncdata/GlobAlbedo.200908.mosaic.5.ncdata/GlobAlbedo.200901.mosaic.5.ncdata/GlobAlbedo.200910.mosaic.5.nc
 
 which isn't quite what we wanted: we need to insert a newline character
 at the end of each string before writing.
@@ -95,7 +106,7 @@ There are several ways to do this, e.g.:
 
 .. parsed-literal::
 
-    ['data/GlobAlbedo.1998145.h17v03.nc\n', 'data/GlobAlbedo.200901.mosaic.5.nc\n', 'data/GlobAlbedo.200902.mosaic.5.nc\n', 'data/GlobAlbedo.200903.mosaic.5.nc\n', 'data/GlobAlbedo.200904.mosaic.5.nc\n', 'data/GlobAlbedo.200905.mosaic.5.nc\n', 'data/GlobAlbedo.200906.mosaic.5.nc\n', 'data/GlobAlbedo.200907.mosaic.5.nc\n', 'data/GlobAlbedo.200908.mosaic.5.nc\n', 'data/GlobAlbedo.200909.mosaic.5.nc\n', 'data/GlobAlbedo.200910.mosaic.5.nc\n', 'data/GlobAlbedo.200911.mosaic.5.nc\n', 'data/GlobAlbedo.200912.mosaic.5.nc\n']
+    ['data/GlobAlbedo.201008.mosaic.5.nc\n', 'data/GlobAlbedo.200903.mosaic.5.nc\n', 'data/GlobAlbedo.200905.mosaic.5.nc\n', 'data/GlobAlbedo.201007.mosaic.5.nc\n', 'data/GlobAlbedo.201011.mosaic.5.nc\n', 'data/GlobAlbedo.200902.mosaic.5.nc\n', 'data/GlobAlbedo.201006.mosaic.5.nc\n', 'data/GlobAlbedo.201004.mosaic.5.nc\n', 'data/GlobAlbedo.200904.mosaic.5.nc\n', 'data/GlobAlbedo.200911.mosaic.5.nc\n', 'data/GlobAlbedo.201012.mosaic.5.nc\n', 'data/GlobAlbedo.201005.mosaic.5.nc\n', 'data/GlobAlbedo.200912.mosaic.5.nc\n', 'data/GlobAlbedo.201003.mosaic.5.nc\n', 'data/GlobAlbedo.200907.mosaic.5.nc\n', 'data/GlobAlbedo.200909.mosaic.5.nc\n', 'data/GlobAlbedo.201001.mosaic.5.nc\n', 'data/GlobAlbedo.201009.mosaic.5.nc\n', 'data/GlobAlbedo.201010.mosaic.5.nc\n', 'data/GlobAlbedo.200906.mosaic.5.nc\n', 'data/GlobAlbedo.201002.mosaic.5.nc\n', 'data/GlobAlbedo.200908.mosaic.5.nc\n', 'data/GlobAlbedo.200901.mosaic.5.nc\n', 'data/GlobAlbedo.200910.mosaic.5.nc\n']
 
 
 .. code:: python
@@ -109,7 +120,7 @@ There are several ways to do this, e.g.:
 
 .. parsed-literal::
 
-    ['data/GlobAlbedo.1998145.h17v03.nc\n', 'data/GlobAlbedo.200901.mosaic.5.nc\n', 'data/GlobAlbedo.200902.mosaic.5.nc\n', 'data/GlobAlbedo.200903.mosaic.5.nc\n', 'data/GlobAlbedo.200904.mosaic.5.nc\n', 'data/GlobAlbedo.200905.mosaic.5.nc\n', 'data/GlobAlbedo.200906.mosaic.5.nc\n', 'data/GlobAlbedo.200907.mosaic.5.nc\n', 'data/GlobAlbedo.200908.mosaic.5.nc\n', 'data/GlobAlbedo.200909.mosaic.5.nc\n', 'data/GlobAlbedo.200910.mosaic.5.nc\n', 'data/GlobAlbedo.200911.mosaic.5.nc\n', 'data/GlobAlbedo.200912.mosaic.5.nc\n']
+    ['data/GlobAlbedo.201008.mosaic.5.nc\n', 'data/GlobAlbedo.200903.mosaic.5.nc\n', 'data/GlobAlbedo.200905.mosaic.5.nc\n', 'data/GlobAlbedo.201007.mosaic.5.nc\n', 'data/GlobAlbedo.201011.mosaic.5.nc\n', 'data/GlobAlbedo.200902.mosaic.5.nc\n', 'data/GlobAlbedo.201006.mosaic.5.nc\n', 'data/GlobAlbedo.201004.mosaic.5.nc\n', 'data/GlobAlbedo.200904.mosaic.5.nc\n', 'data/GlobAlbedo.200911.mosaic.5.nc\n', 'data/GlobAlbedo.201012.mosaic.5.nc\n', 'data/GlobAlbedo.201005.mosaic.5.nc\n', 'data/GlobAlbedo.200912.mosaic.5.nc\n', 'data/GlobAlbedo.201003.mosaic.5.nc\n', 'data/GlobAlbedo.200907.mosaic.5.nc\n', 'data/GlobAlbedo.200909.mosaic.5.nc\n', 'data/GlobAlbedo.201001.mosaic.5.nc\n', 'data/GlobAlbedo.201009.mosaic.5.nc\n', 'data/GlobAlbedo.201010.mosaic.5.nc\n', 'data/GlobAlbedo.200906.mosaic.5.nc\n', 'data/GlobAlbedo.201002.mosaic.5.nc\n', 'data/GlobAlbedo.200908.mosaic.5.nc\n', 'data/GlobAlbedo.200901.mosaic.5.nc\n', 'data/GlobAlbedo.200910.mosaic.5.nc\n']
 
 
 .. code:: python
@@ -122,7 +133,7 @@ There are several ways to do this, e.g.:
 
 .. parsed-literal::
 
-    ['data/GlobAlbedo.1998145.h17v03.nc\n', 'data/GlobAlbedo.200901.mosaic.5.nc\n', 'data/GlobAlbedo.200902.mosaic.5.nc\n', 'data/GlobAlbedo.200903.mosaic.5.nc\n', 'data/GlobAlbedo.200904.mosaic.5.nc\n', 'data/GlobAlbedo.200905.mosaic.5.nc\n', 'data/GlobAlbedo.200906.mosaic.5.nc\n', 'data/GlobAlbedo.200907.mosaic.5.nc\n', 'data/GlobAlbedo.200908.mosaic.5.nc\n', 'data/GlobAlbedo.200909.mosaic.5.nc\n', 'data/GlobAlbedo.200910.mosaic.5.nc\n', 'data/GlobAlbedo.200911.mosaic.5.nc\n', 'data/GlobAlbedo.200912.mosaic.5.nc\n']
+    ['data/GlobAlbedo.201008.mosaic.5.nc\n', 'data/GlobAlbedo.200903.mosaic.5.nc\n', 'data/GlobAlbedo.200905.mosaic.5.nc\n', 'data/GlobAlbedo.201007.mosaic.5.nc\n', 'data/GlobAlbedo.201011.mosaic.5.nc\n', 'data/GlobAlbedo.200902.mosaic.5.nc\n', 'data/GlobAlbedo.201006.mosaic.5.nc\n', 'data/GlobAlbedo.201004.mosaic.5.nc\n', 'data/GlobAlbedo.200904.mosaic.5.nc\n', 'data/GlobAlbedo.200911.mosaic.5.nc\n', 'data/GlobAlbedo.201012.mosaic.5.nc\n', 'data/GlobAlbedo.201005.mosaic.5.nc\n', 'data/GlobAlbedo.200912.mosaic.5.nc\n', 'data/GlobAlbedo.201003.mosaic.5.nc\n', 'data/GlobAlbedo.200907.mosaic.5.nc\n', 'data/GlobAlbedo.200909.mosaic.5.nc\n', 'data/GlobAlbedo.201001.mosaic.5.nc\n', 'data/GlobAlbedo.201009.mosaic.5.nc\n', 'data/GlobAlbedo.201010.mosaic.5.nc\n', 'data/GlobAlbedo.200906.mosaic.5.nc\n', 'data/GlobAlbedo.201002.mosaic.5.nc\n', 'data/GlobAlbedo.200908.mosaic.5.nc\n', 'data/GlobAlbedo.200901.mosaic.5.nc\n', 'data/GlobAlbedo.200910.mosaic.5.nc\n']
 
 
 or several other ways ...
@@ -135,7 +146,7 @@ Putting this together:
     
     files = [file + '\n' for file in glob.glob('data/*.nc')]
     
-    filename = 'files/data/data.dat'
+    filename = 'data/data.dat'
     
     # open in write mode
     fp = open(filename,'w')
@@ -145,26 +156,357 @@ then checking:
 
 .. code:: python
 
-    !cat files/data/data.dat
+    cat data/data.dat
 
 .. parsed-literal::
 
-    data/GlobAlbedo.1998145.h17v03.nc
-    data/GlobAlbedo.200901.mosaic.5.nc
-    data/GlobAlbedo.200902.mosaic.5.nc
+    data/GlobAlbedo.201008.mosaic.5.nc
     data/GlobAlbedo.200903.mosaic.5.nc
-    data/GlobAlbedo.200904.mosaic.5.nc
     data/GlobAlbedo.200905.mosaic.5.nc
-    data/GlobAlbedo.200906.mosaic.5.nc
-    data/GlobAlbedo.200907.mosaic.5.nc
-    data/GlobAlbedo.200908.mosaic.5.nc
-    data/GlobAlbedo.200909.mosaic.5.nc
-    data/GlobAlbedo.200910.mosaic.5.nc
+    data/GlobAlbedo.201007.mosaic.5.nc
+    data/GlobAlbedo.201011.mosaic.5.nc
+    data/GlobAlbedo.200902.mosaic.5.nc
+    data/GlobAlbedo.201006.mosaic.5.nc
+    data/GlobAlbedo.201004.mosaic.5.nc
+    data/GlobAlbedo.200904.mosaic.5.nc
     data/GlobAlbedo.200911.mosaic.5.nc
+    data/GlobAlbedo.201012.mosaic.5.nc
+    data/GlobAlbedo.201005.mosaic.5.nc
     data/GlobAlbedo.200912.mosaic.5.nc
+    data/GlobAlbedo.201003.mosaic.5.nc
+    data/GlobAlbedo.200907.mosaic.5.nc
+    data/GlobAlbedo.200909.mosaic.5.nc
+    data/GlobAlbedo.201001.mosaic.5.nc
+    data/GlobAlbedo.201009.mosaic.5.nc
+    data/GlobAlbedo.201010.mosaic.5.nc
+    data/GlobAlbedo.200906.mosaic.5.nc
+    data/GlobAlbedo.201002.mosaic.5.nc
+    data/GlobAlbedo.200908.mosaic.5.nc
+    data/GlobAlbedo.200901.mosaic.5.nc
+    data/GlobAlbedo.200910.mosaic.5.nc
 
 
 which *is* what we wanted.
+
+E3.2 Read Image Data into 3D List
+---------------------------------
+
+Write some python code that directly reads the data layers
+``'DHR_VIS','DHR_NIR','DHR_SW'`` into a list for a given month and year.
+
+A3.2 Read Image Data into 3D List
+---------------------------------
+
+We start off with the code from the class and attempt to modify this for
+our purposes:
+
+.. code:: python
+
+    import gdal
+    
+    # form a generic string of the form
+    # NETCDF:"data/GlobAlbedo.200901.mosaic.5.nc":DHR_VIS
+    
+    file_template = 'NETCDF:"%s":%s'
+    
+    # now make a list of the datset names we want
+    # so we can loop over this 
+    
+    selected_layers = ['DHR_VIS','DHR_NIR','DHR_SW']
+    
+    # ----------------------------------
+    
+    # try it out:
+    
+    
+    root = 'data/'
+    
+    # example filename : use formatting string:
+    # %d%02d
+    year = 2009
+    month = 1
+    filename = root + 'GlobAlbedo.%d%02d.mosaic.5.nc'%(year,month)
+    print filename
+    
+    
+    # set up an empty dictionary to load the data into
+    data = {}
+    
+    # use enumerate here to loop over
+    # the list selected_layers and also have
+    # access to an index i
+    
+    for i, layer in enumerate ( selected_layers ):
+        this_file = file_template % ( filename, layer )
+        print "Opening Layer %d: %s" % (i, this_file )
+        g = gdal.Open ( this_file )
+        
+        # test that the opening worked
+        # and raise an error otherwise
+        
+        if g is None:
+            raise IOError
+        data[layer] = g.ReadAsArray() 
+        print "\t>>> Read %s!" % layer
+    
+    
+    # post-hoc load into array called albedo
+    albedo = [data[f] for f in selected_layers]
+
+
+.. parsed-literal::
+
+    data/GlobAlbedo.200901.mosaic.5.nc
+    Opening Layer 0: NETCDF:"data/GlobAlbedo.200901.mosaic.5.nc":DHR_VIS
+    	>>> Read DHR_VIS!
+    Opening Layer 1: NETCDF:"data/GlobAlbedo.200901.mosaic.5.nc":DHR_NIR
+    	>>> Read DHR_NIR!
+    Opening Layer 2: NETCDF:"data/GlobAlbedo.200901.mosaic.5.nc":DHR_SW
+    	>>> Read DHR_SW!
+
+
+Now, instead of loading the data into a dictionary ``{}``, we simply
+append onto a list:
+
+.. code:: python
+
+    import gdal
+    
+    # NETCDF:"data/GlobAlbedo.200901.mosaic.5.nc":DHR_VIS
+    file_template = 'NETCDF:"%s":%s'
+    
+    selected_layers = ['DHR_VIS','DHR_NIR','DHR_SW']
+    
+    root = 'data/'
+    
+    # example filename : use formatting string:
+    # %d%02d
+    year = 2009
+    month = 1
+    filename = root + 'GlobAlbedo.%d%02d.mosaic.5.nc'%(year,month)
+    
+    
+    # set up an empty list to load the data into
+    data = []
+    
+    # loop over
+    # the list selected_layers 
+    
+    for layer in ( selected_layers ):
+        this_file = file_template % ( filename, layer )
+        g = gdal.Open ( this_file )
+        
+        # test that the opening worked
+        # and raise an error otherwise
+        
+        if g is None:
+            raise IOError
+            
+        # it is a list, so we will just append the entry here
+        data.append(g.ReadAsArray()) 
+        
+    # check it workwed
+    print 'previously, we had:',albedo
+    print '...... we now have:',data
+
+.. parsed-literal::
+
+    previously, we had: [array([[        nan,         nan,         nan, ...,         nan,
+                    nan,         nan],
+           [        nan,         nan,         nan, ...,         nan,
+                    nan,         nan],
+           [        nan,         nan,         nan, ...,         nan,
+                    nan,         nan],
+           ..., 
+           [ 0.69980866,  0.69980866,  0.69980866, ...,  0.70370543,
+             0.70370543,  0.70370543],
+           [ 0.69980866,  0.69980866,  0.69980866, ...,  0.70370543,
+             0.70370543,  0.70370543],
+           [ 0.69980866,  0.69980866,  0.69980866, ...,  0.70370543,
+             0.70370543,  0.70370543]], dtype=float32), array([[        nan,         nan,         nan, ...,         nan,
+                    nan,         nan],
+           [        nan,         nan,         nan, ...,         nan,
+                    nan,         nan],
+           [        nan,         nan,         nan, ...,         nan,
+                    nan,         nan],
+           ..., 
+           [ 0.45321581,  0.45321581,  0.45321581, ...,  0.46333486,
+             0.46333486,  0.46333486],
+           [ 0.45321581,  0.45321581,  0.45321581, ...,  0.46333486,
+             0.46333486,  0.46333486],
+           [ 0.45321581,  0.45321581,  0.45321581, ...,  0.46333486,
+             0.46333486,  0.46333486]], dtype=float32), array([[        nan,         nan,         nan, ...,         nan,
+                    nan,         nan],
+           [        nan,         nan,         nan, ...,         nan,
+                    nan,         nan],
+           [        nan,         nan,         nan, ...,         nan,
+                    nan,         nan],
+           ..., 
+           [ 0.57224423,  0.57224423,  0.57224423, ...,  0.57901061,
+             0.57901061,  0.57901061],
+           [ 0.57224423,  0.57224423,  0.57224423, ...,  0.57901061,
+             0.57901061,  0.57901061],
+           [ 0.57224423,  0.57224423,  0.57224423, ...,  0.57901061,
+             0.57901061,  0.57901061]], dtype=float32)]
+    ...... we now have: [array([[        nan,         nan,         nan, ...,         nan,
+                    nan,         nan],
+           [        nan,         nan,         nan, ...,         nan,
+                    nan,         nan],
+           [        nan,         nan,         nan, ...,         nan,
+                    nan,         nan],
+           ..., 
+           [ 0.69980866,  0.69980866,  0.69980866, ...,  0.70370543,
+             0.70370543,  0.70370543],
+           [ 0.69980866,  0.69980866,  0.69980866, ...,  0.70370543,
+             0.70370543,  0.70370543],
+           [ 0.69980866,  0.69980866,  0.69980866, ...,  0.70370543,
+             0.70370543,  0.70370543]], dtype=float32), array([[        nan,         nan,         nan, ...,         nan,
+                    nan,         nan],
+           [        nan,         nan,         nan, ...,         nan,
+                    nan,         nan],
+           [        nan,         nan,         nan, ...,         nan,
+                    nan,         nan],
+           ..., 
+           [ 0.45321581,  0.45321581,  0.45321581, ...,  0.46333486,
+             0.46333486,  0.46333486],
+           [ 0.45321581,  0.45321581,  0.45321581, ...,  0.46333486,
+             0.46333486,  0.46333486],
+           [ 0.45321581,  0.45321581,  0.45321581, ...,  0.46333486,
+             0.46333486,  0.46333486]], dtype=float32), array([[        nan,         nan,         nan, ...,         nan,
+                    nan,         nan],
+           [        nan,         nan,         nan, ...,         nan,
+                    nan,         nan],
+           [        nan,         nan,         nan, ...,         nan,
+                    nan,         nan],
+           ..., 
+           [ 0.57224423,  0.57224423,  0.57224423, ...,  0.57901061,
+             0.57901061,  0.57901061],
+           [ 0.57224423,  0.57224423,  0.57224423, ...,  0.57901061,
+             0.57901061,  0.57901061],
+           [ 0.57224423,  0.57224423,  0.57224423, ...,  0.57901061,
+             0.57901061,  0.57901061]], dtype=float32)]
+
+
+E3.3 Read More Image Data into a 4D List
+----------------------------------------
+
+You should now have some code that reads the 3 albedo datasets into a 3D
+list (3 x 360 x 720) for a given month and year.
+
+Put a loop around this code to make a 4D list dataset (12 x 3 x 360 x
+720) for all months in a given year.
+
+A3.3 Read More Image Data into a 4D List
+----------------------------------------
+
+Let's start from the code we have above:
+
+.. code:: python
+
+    import gdal
+    
+    # NETCDF:"data/GlobAlbedo.200901.mosaic.5.nc":DHR_VIS
+    file_template = 'NETCDF:"%s":%s'
+    
+    selected_layers = ['DHR_VIS','DHR_NIR','DHR_SW']
+    
+    root = 'data/'
+    
+    # example filename : use formatting string:
+    # %d%02d
+    year = 2009
+    month = 1
+    filename = root + 'GlobAlbedo.%d%02d.mosaic.5.nc'%(year,month)
+    
+    
+    # set up an empty list to load the data into
+    data = []
+    
+    # loop over
+    # the list selected_layers 
+    
+    for layer in ( selected_layers ):
+        this_file = file_template % ( filename, layer )
+        g = gdal.Open ( this_file )
+        
+        # test that the opening worked
+        # and raise an error otherwise
+        
+        if g is None:
+            raise IOError
+            
+        # it is a list, so we will just append the entry here
+        data.append(g.ReadAsArray()) 
+All we really need to do is to replace where it sets ``month = 1`` by a
+(``for``) loop, remembering to indent the code appropriately, and put an
+'outer' list (called ``alldata`` here) which we put each of the ``data``
+lists into.
+
+.. code:: python
+
+    import gdal
+    
+    # NETCDF:"data/GlobAlbedo.200901.mosaic.5.nc":DHR_VIS
+    file_template = 'NETCDF:"%s":%s'
+    
+    selected_layers = ['DHR_VIS','DHR_NIR','DHR_SW']
+    
+    root = 'data/'
+    
+    # example filename : use formatting string:
+    # %d%02d
+    year = 2009
+    
+    # important to put the alldata empty list
+    # setup outside of the loop, ie before
+    # we start looping over month
+    
+    alldata = []
+    
+    for month in range(1,13):
+      print "I'm reading month",month,"of year",year
+      filename = root + 'GlobAlbedo.%d%02d.mosaic.5.nc'%(year,month)
+       
+      # just the data for this month in the list data  
+      data = []
+    
+      for layer in ( selected_layers ):
+        this_file = file_template % ( filename, layer )
+        g = gdal.Open ( this_file )
+        
+        # test that the opening worked
+        # and raise an error otherwise
+        
+        if g is None:
+            raise IOError
+            
+        # it is a list, so we will just append the entry here
+        data.append(g.ReadAsArray()) 
+      # now (note indentation!!)
+      # append to the alldata list
+      alldata.append(data)
+        
+    # now check how big ...
+    
+    print 'dataset dimensions',len(alldata),'x',len(alldata[0]),'x',\
+                    len(alldata[0][0]),'x',len(alldata[0][0][0])
+
+.. parsed-literal::
+
+    I'm reading month 1 of year 2009
+    I'm reading month 2 of year 2009
+    I'm reading month 3 of year 2009
+    I'm reading month 4 of year 2009
+    I'm reading month 5 of year 2009
+    I'm reading month 6 of year 2009
+    I'm reading month 7 of year 2009
+    I'm reading month 8 of year 2009
+    I'm reading month 9 of year 2009
+    I'm reading month 10 of year 2009
+    I'm reading month 11 of year 2009
+    I'm reading month 12 of year 2009
+    dataset dimensions 12 x 3 x 360 x 720
+
 
 E3.2 Exercise: Making Movies
 ----------------------------
@@ -198,20 +540,20 @@ from the unix command line:
 .. code:: bash
 
     berlin% cd ~/Data/geogg122/Chapter3_Scientific_Numerical_Python  
-    berlin% convert files/data/albedo.jpg files/data/albedo.gif  
+    berlin% convert data/albedo.jpg files/data/albedo.gif  
 
 or from within a notebook:
 
 .. code:: python
 
-    !convert files/data/albedo.jpg files/data/albedo.gif
+    !convert data/albedo.jpg data/albedo.gif
 Or, more practically here, you can run a unix command directly from
 Python:
 
 .. code:: python
 
     import os
-    cmd = 'convert files/data/albedo.jpg files/data/albedo.gif'
+    cmd = 'convert data/albedo.jpg data/albedo.gif'
     os.system(cmd)
 
 
@@ -222,8 +564,8 @@ Python:
 
 
 
-This will convert the file ``files/data/albedo.jpg`` (in jpeg format) to
-``files/data/albedo.gif`` (in gif format).
+This will convert the file ``data/albedo.jpg`` (in jpeg format) to
+``data/albedo.gif`` (in gif format).
 
 .. figure:: files/data/albedo.gif
    :alt: albedo
@@ -242,53 +584,60 @@ format, but to recap for ``BHR_VIS``:
 
 .. code:: python
 
-    from netCDF4 import Dataset
+    import gdal
     import pylab as plt
     import os
+    import calendar
     
-    root = 'files/data/'
+    layer = 'BHR_VIS'
     
-    month_list = ['January','February','March','April','May','June',\
-                  'July','August','September','October','November','December']
-    # make a dictionary from 2 lists
-    month_dict = dict(zip(range(1,13),month_list))
+    # form a generic string of the form
+    # NETCDF:"data/GlobAlbedo.200901.mosaic.5.nc":DHR_VIS
+    
+    file_template = 'NETCDF:"%s":%s'
+    
+    root = 'data/'
     
     # example filename : use formatting string:
     # %d%02d
     year = 2009
     
-    
-    # set the month
+    # set the month (1-based, i.e. 1 == January)
     month = 1
     
-    ''' Read the data '''
-    local_file = root + 'GlobAlbedo.%d%02d.mosaic.5.nc'%(year,month)
-    # load the netCDF data from the file f.filename
-    nc = Dataset(local_file,'r')
-    band = nc.variables['DHR_VIS']
+    filename = root + 'GlobAlbedo.%d%02d.mosaic.5.nc'%(year,month)
+    
+    g = gdal.Open (  file_template % ( filename, layer ) )
+    
+    if g is None:
+      raise IOError
+    data = g.ReadAsArray()
+    
     
     ''' Plot the data and save as picture jpeg format '''
     # make a string with the output file name
     out_file = root + 'GlobAlbedo.%d%02d.jpg'%(year,month)
     # plot
-    plt.figure(figsize=(10, 5))
+    plt.figure(figsize=(10,4))
     plt.clf()
-    # %9s forces the string to be 9 characters long
-    plt.title('VIS BHR albedo for %9s %d'%(month_dict[month],year))
+    # %9s forces the string to be 8 characters long
+    plt.title('VIS BHR albedo for %8s %d'%(calendar.month_name[month],year))
     # use nearest neighbour interpolation
-    plt.imshow(band,interpolation='nearest',cmap=plt.get_cmap('Spectral'),vmin=0.0,vmax=1.0)
+    # load the array data 
+    plt.imshow(data,interpolation='nearest',cmap=plt.get_cmap('Spectral'),vmin=0.0,vmax=1.0)
     # show a colour bar 
     plt.colorbar()
     plt.savefig(out_file)
     
-    ''' Convert the file to gif '''
-    # set up the unix command which is of the form 
+    # convert to gif
+    # set up the unix command which is of the form
     # convert input output
     # Here input will be out_file
     # and output we can get with out_file.replace('.jpg','.gif')
     # i.e. replacing where it says .jpg with .gif
     cmd = 'convert %s %s'%(out_file,out_file.replace('.jpg','.gif'))
     os.system(cmd)
+
 
 
 
@@ -299,7 +648,7 @@ format, but to recap for ``BHR_VIS``:
 
 
 
-.. image:: answers_files/answers_32_1.png
+.. image:: answers_files/answers_46_1.png
 
 
 **Modify the code above to loop over each month, so that it generates a
@@ -311,25 +660,23 @@ which is Oct 10 2013).
 
 .. code:: python
 
-    ls -l files/data/GlobAlbedo*gif
+    ls -l data/GlobAlbedo.??????.gif
 
 .. parsed-literal::
 
-    -rw-r--r--  1 plewis  staff  340658 11 Oct 20:00 files/data/GlobAlbedo.2009.SW.1.gif
-    -rw-r--r--  1 plewis  staff  340658 11 Oct 19:59 files/data/GlobAlbedo.2009.SW.gif
-    -rw-r--r--  1 plewis  staff   55299 11 Oct 20:21 files/data/GlobAlbedo.200901.gif
-    -rw-r--r--  1 plewis  staff   28139 11 Oct 19:59 files/data/GlobAlbedo.200902.gif
-    -rw-r--r--  1 plewis  staff   28259 11 Oct 19:59 files/data/GlobAlbedo.200903.gif
-    -rw-r--r--  1 plewis  staff   28249 11 Oct 19:59 files/data/GlobAlbedo.200904.gif
-    -rw-r--r--  1 plewis  staff   28468 11 Oct 19:59 files/data/GlobAlbedo.200905.gif
-    -rw-r--r--  1 plewis  staff   28672 11 Oct 19:59 files/data/GlobAlbedo.200906.gif
-    -rw-r--r--  1 plewis  staff   28656 11 Oct 19:59 files/data/GlobAlbedo.200907.gif
-    -rw-r--r--  1 plewis  staff   28275 11 Oct 19:59 files/data/GlobAlbedo.200908.gif
-    -rw-r--r--  1 plewis  staff   28952 11 Oct 19:59 files/data/GlobAlbedo.200909.gif
-    -rw-r--r--  1 plewis  staff   28450 11 Oct 19:59 files/data/GlobAlbedo.200910.gif
-    -rw-r--r--  1 plewis  staff   28570 11 Oct 19:59 files/data/GlobAlbedo.200911.gif
-    -rw-r--r--  1 plewis  staff   28438 11 Oct 19:59 files/data/GlobAlbedo.200912.gif
-
+    -rw-rw-r--. 1 plewis plewis 50845 Oct  3 12:13 [0m[01;35mdata/GlobAlbedo.200901.gif[0m
+    -rw-rw-r--. 1 plewis plewis 28139 Sep 30 11:56 [01;35mdata/GlobAlbedo.200902.gif[0m
+    -rw-rw-r--. 1 plewis plewis 28259 Sep 30 11:56 [01;35mdata/GlobAlbedo.200903.gif[0m
+    -rw-rw-r--. 1 plewis plewis 28249 Sep 30 11:56 [01;35mdata/GlobAlbedo.200904.gif[0m
+    -rw-rw-r--. 1 plewis plewis 28468 Sep 30 11:56 [01;35mdata/GlobAlbedo.200905.gif[0m
+    -rw-rw-r--. 1 plewis plewis 28672 Sep 30 11:56 [01;35mdata/GlobAlbedo.200906.gif[0m
+    -rw-rw-r--. 1 plewis plewis 28656 Sep 30 11:56 [01;35mdata/GlobAlbedo.200907.gif[0m
+    -rw-rw-r--. 1 plewis plewis 28275 Sep 30 11:56 [01;35mdata/GlobAlbedo.200908.gif[0m
+    -rw-rw-r--. 1 plewis plewis 28952 Sep 30 11:56 [01;35mdata/GlobAlbedo.200909.gif[0m
+    -rw-rw-r--. 1 plewis plewis 28450 Sep 30 11:56 [01;35mdata/GlobAlbedo.200910.gif[0m
+    -rw-rw-r--. 1 plewis plewis 28570 Sep 30 11:56 [01;35mdata/GlobAlbedo.200911.gif[0m
+    -rw-rw-r--. 1 plewis plewis 28438 Sep 30 11:56 [01;35mdata/GlobAlbedo.200912.gif[0m
+    [m
 
 A3.2.2 Answer: Looping over a set of images
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -342,113 +689,241 @@ e.g. using:
 and then make sure that all of the code below is in that loop (i.e.
 indented) as below.
 
-One additional thing is to make sure you select the waveband you were
-supposed to (shortwave albedo)
-
-``band = nc.variables['DHR_SW']``
-
-and finally, make sure you change the title:
+and finally, make sure you change the title
 
 You should *also* however, go through the code above line by line,
 making sure you appreciate what is going on at each stage and why we
-have done these things (in this oroder).
+have done these things (in this order).
 
 .. code:: python
 
-    from netCDF4 import Dataset
+    # lets try something out to see how we can loop easily in this case
+    # we know that the mionth names are contained in calendar.month_name
+    # so we might try to just loop over that
+    
+    import calendar
+    
+    for month_name in calendar.month_name:
+      print month_name
+
+.. parsed-literal::
+
+    
+    January
+    February
+    March
+    April
+    May
+    June
+    July
+    August
+    September
+    October
+    November
+    December
+
+
+.. code:: python
+
+    # but we might also want access to the month index, so we might use
+    # enumerate
+    
+    import calendar
+    
+    for month,month_name in enumerate(calendar.month_name):
+      print month,month_name
+
+.. parsed-literal::
+
+    0 
+    1 January
+    2 February
+    3 March
+    4 April
+    5 May
+    6 June
+    7 July
+    8 August
+    9 September
+    10 October
+    11 November
+    12 December
+
+
+.. code:: python
+
+    # but thats not quite right ... we don't want
+    # the blank zero entry so we only
+    # loop over the slice [1:] in month_name
+    
+    import calendar
+    
+    for month,month_name in enumerate(calendar.month_name[1:]):
+      print month,month_name
+
+.. parsed-literal::
+
+    0 January
+    1 February
+    2 March
+    3 April
+    4 May
+    5 June
+    6 July
+    7 August
+    8 September
+    9 October
+    10 November
+    11 December
+
+
+.. code:: python
+
+    # but now we have a zero index for January
+    # which isnt what we want
+    # we could just add one to this when we use it
+    # but that is a bit ugly ...
+    # so instead, use a feature of enumerate()
+    
+    import calendar
+    
+    for month,month_name in enumerate(calendar.month_name[1:],start=1):
+      print month,month_name
+
+.. parsed-literal::
+
+    1 January
+    2 February
+    3 March
+    4 April
+    5 May
+    6 June
+    7 July
+    8 August
+    9 September
+    10 October
+    11 November
+    12 December
+
+
+So, lets put that together with the other code:
+
+.. code:: python
+
+    import gdal
     import pylab as plt
     import os
+    import calendar
     
-    root = 'files/data/'
+    # set the layer we want
+    layer = 'BHR_SW'
     
-    month_list = ['January','February','March','April','May','June',\
-                  'July','August','September','October','November','December']
-    # make a dictionary from 2 lists
-    month_dict = dict(zip(range(1,13),month_list))
+    # form a generic string of the form
+    # NETCDF:"data/GlobAlbedo.200901.mosaic.5.nc":BHR_SW
+    
+    file_template = 'NETCDF:"%s":%s'
+    
+    root = 'data/'
     
     # example filename : use formatting string:
     # %d%02d
     year = 2009
     
+    # set the month (1-based, i.e. 1 == January)
+    # its a good idea to use enumerate here 
+    # but we want the numbers to start at 1
+    # so we set start=1 in the enumerate call
+    for month,month_name in enumerate(calendar.month_name[1:],start=1):
+      '''
+      Loop over each month
+      
+      setting month = 1,2,..12
+              month_name= 'January', ... 'December'
+              (unless we change the locale!)
+      '''
+        
+      filename = root + 'GlobAlbedo.%d%02d.mosaic.5.nc'%(year,month)
+      g = gdal.Open (  file_template % ( filename, layer ) )
     
-    # set the month
-    for month in range(1,13):
-        ''' Read the data '''
-        local_file = root + 'GlobAlbedo.%d%02d.mosaic.5.nc'%(year,month)
-        # load the netCDF data from the file f.filename
-        nc = Dataset(local_file,'r')
-        # select which band we want
-        band = nc.variables['DHR_SW']
-        
-        ''' Plot the data and save as picture jpeg format '''
-        # make a string with the output file name
-        out_file = root + 'GlobAlbedo.%d%02d.jpg'%(year,month)
-        # plot
-        plt.figure()
-        plt.clf()
-        # %9s forces the string to be 9 characters long
-        plt.title('SW BHR albedo for %9s %d'%(month_dict[month],year))
-        # use nearest neighbour interpolation
-        plt.imshow(band,interpolation='nearest',cmap=plt.get_cmap('Spectral'),vmin=0.0,vmax=1.0)
-        # show a colour bar 
-        plt.colorbar()
-        plt.savefig(out_file)
-        
-        ''' Convert the file to gif '''
-        # set up the unix command which is of the form 
-        # convert input output
-        # Here input will be out_file
-        # and output we can get with out_file.replace('.jpg','.gif')
-        # i.e. replacing where it says .jpg with .gif
-        cmd = 'convert %s %s'%(out_file,out_file.replace('.jpg','.gif'))
-        os.system(cmd)
-
-
-.. image:: answers_files/answers_37_0.png
+      if g is None:
+       raise IOError
+       
+      # note that we are re-using the varioable data
+      # each time in the loop as we haver no need to store it as yet
+            
+      data = g.ReadAsArray()
+    
+      ''' Plot the data and save as picture jpeg format '''
+      # make a string with the output file name
+      out_file = root + 'GlobAlbedo.%d%02d.jpg'%(year,month)
+      # plot  
+      plt.figure(figsize=(10,4))
+      plt.clf()
+      # %9s forces the string to be 8 characters long
+      plt.title('SW BHR albedo for %8s %d'%(month_name,year))
+      # use nearest neighbour interpolation
+      # load the array data 
+      plt.imshow(data,interpolation='nearest',cmap=plt.get_cmap('Spectral'),vmin=0.0,vmax=1.0)
+      # show a colour bar 
+      plt.colorbar()
+      plt.savefig(out_file)
+    
+      # convert to gif
+      # set up the unix command which is of the form
+      # convert input output
+      # Here input will be out_file
+      # and output we can get with out_file.replace('.jpg','.gif')
+      # i.e. replacing where it says .jpg with .gif
+      cmd = 'convert %s %s'%(out_file,out_file.replace('.jpg','.gif')) 
+      os.system(cmd)
 
 
 
-.. image:: answers_files/answers_37_1.png
+.. image:: answers_files/answers_56_0.png
 
 
 
-.. image:: answers_files/answers_37_2.png
+.. image:: answers_files/answers_56_1.png
 
 
 
-.. image:: answers_files/answers_37_3.png
+.. image:: answers_files/answers_56_2.png
 
 
 
-.. image:: answers_files/answers_37_4.png
+.. image:: answers_files/answers_56_3.png
 
 
 
-.. image:: answers_files/answers_37_5.png
+.. image:: answers_files/answers_56_4.png
 
 
 
-.. image:: answers_files/answers_37_6.png
+.. image:: answers_files/answers_56_5.png
 
 
 
-.. image:: answers_files/answers_37_7.png
+.. image:: answers_files/answers_56_6.png
 
 
 
-.. image:: answers_files/answers_37_8.png
+.. image:: answers_files/answers_56_7.png
 
 
 
-.. image:: answers_files/answers_37_9.png
+.. image:: answers_files/answers_56_8.png
 
 
 
-.. image:: answers_files/answers_37_10.png
+.. image:: answers_files/answers_56_9.png
 
 
 
-.. image:: answers_files/answers_37_11.png
+.. image:: answers_files/answers_56_10.png
+
+
+
+.. image:: answers_files/answers_56_11.png
 
 
 E3.2.3 Make the movie
@@ -458,7 +933,7 @@ The unix command to convert these files to an animated gif is:
 
 .. code:: bash
 
-    convert -delay 100 -loop 0 files/data/GlobAlbedo.2009??.gif files/data/GlobAlbedo.2009.SW.gif
+    convert -delay 100 -loop 0 data/GlobAlbedo.2009??.gif data/GlobAlbedo.2009.SW.gif
 
 **Run this (ideally, from within Python) to create the animated gif
 GlobAlbedo.2009.SW.gif**
@@ -468,12 +943,12 @@ version you downloaded):
 
 .. code:: python
 
-    ls -l files/data/GlobAlbedo.2009.SW.gif
+    ls -l data/GlobAlbedo.2009.SW.gif
 
 .. parsed-literal::
 
-    -rw-r--r--  1 plewis  staff  340658 11 Oct 19:59 files/data/GlobAlbedo.2009.SW.gif
-
+    -rw-rw-r--. 1 plewis plewis 340658 Sep 30 11:56 [0m[01;35mdata/GlobAlbedo.2009.SW.gif[0m
+    [m
 
 A3.2.3 Answer: Make the movie
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -486,8 +961,8 @@ using a ``system`` call from within Python, e.g.:
     import os
     
     # this is quite a neat way of generating the string for the input files
-    out_file = 'files/data/GlobAlbedo.%d.SW.1.gif'%year
-    in_files = out_file.replace('.SW.1.gif','??.gif')
+    out_file = 'data/GlobAlbedo.%d.SW.gif'%year
+    in_files = out_file.replace('.SW.gif','??.gif')
     
     cmd = 'convert -delay 100 -loop 0 %s %s'%(in_files,out_file)
     # check the cmd is ok
@@ -495,7 +970,7 @@ using a ``system`` call from within Python, e.g.:
 
 .. parsed-literal::
 
-    convert -delay 100 -loop 0 files/data/GlobAlbedo.2009??.gif files/data/GlobAlbedo.2009.SW.1.gif
+    convert -delay 100 -loop 0 data/GlobAlbedo.2009??.gif data/GlobAlbedo.2009.SW.gif
 
 
 .. code:: python
@@ -511,10 +986,11 @@ using a ``system`` call from within Python, e.g.:
 
 
 
-.. figure:: files/data/GlobAlbedo.2009.SW.1.gif
+.. figure:: files/data/GlobAlbedo.2009.SW1.gif
    :alt: 
 
-To view the animated gif you have generated, open it in a browser.
+To view the animated gif you have generated, open it in a browser (or
+view in the notebook):
 
 E3.3 Exercise: 3D Masked Array
 ------------------------------

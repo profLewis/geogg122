@@ -1,34 +1,15 @@
 
 .. raw:: html
 
-   <table border width="100%" cellpadding="0">
-
-.. raw:: html
-
-   <tr>
-
-.. raw:: html
-
-   <td bgcolor="#232323" border>
+   <table border="" width=100% cellpadding=0><tr>
+   <td bgcolor="#232323" border="">
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
-   <td bgcolor="#9ABAE2" border>
-
-.. raw:: html
-
+   <td bgcolor="#9ABAE2" border="">
    </td>
-
-.. raw:: html
-
    </table>
 
 Read and use some different file formats
@@ -772,672 +753,407 @@ bit combinations:
 .. raw:: html
 
    <table>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <th>
 
 Bit No.
 
 .. raw:: html
 
+   </th>    <th>
+
+Parameter Name
+
+.. raw:: html
+
+   </th><th> 
+
+Bit Combination
+
+.. raw:: html
+
+   </th><th>
+
+Explanation
+
+.. raw:: html
+
    </th>
-
-::
-
-    <th>Parameter Name</th><th> Bit Combination</th><th>Explanation</th>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
 0
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 MODLAND\_QC bits
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>   
 
 0
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>  
 
 Good quality (main algorithm with or without saturation)
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>  
 
 1
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 Other Quality (back-up algorithm or fill values)
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
 
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
 1
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 Sensor
 
 .. raw:: html
 
+   </td><td>    
+
+0
+
+.. raw:: html
+
+   </td><td>  
+
+TERRA
+
+.. raw:: html
+
    </td>
-
-.. raw:: html
-
-   <td>
-
-::
-
-    0</td><td>  TERRA</td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>  
 
 1
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 AQUA
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
 
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
 2
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 DeadDetector
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>  
 
 0
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>  
 
 Detectors apparently fine for up to 50% of channels 1 2
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>  
 
 1
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 Dead detectors caused >50% adjacent detector retrieval
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
 
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
 3-4
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 CloudState
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td> 
 
 00
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td> 
 
 Significant clouds NOT present (clear)
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>  
 
 01
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 Significant clouds WERE present
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>  
 
 10
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 Mixed clouds present on pixel
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>  
 
 11
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 Cloud state not defined assumed clear
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
 
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
 5-7
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 CF\_QC
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>  
 
 000
 
 .. raw:: html
 
+   </td><td>    
+
+Main (RT) method used best result possible (no saturation)
+
+.. raw:: html
+
    </td>
-
-.. raw:: html
-
-   <td>
-
-::
-
-    Main (RT) method used   best result possible (no saturation)     </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>  
 
 001
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 Main (RT) method used with saturation. Good very usable
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>  
 
 010
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 Main (RT) method failed due to bad geometry empirical algorithm used
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>  
 
 011
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td> 
 
 Main (RT) method failed due to problems other than geometry empirical
 algorithm used
@@ -1445,48 +1161,27 @@ algorithm used
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>  
 
 100
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td> 
 
 Pixel not produced at all value coudn’t be retrieved (possible reasons:
 bad L1B data unusable MODAGAGG data)
@@ -1494,13 +1189,7 @@ bad L1B data unusable MODAGAGG data)
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    </table>
 
 In using this information, it is up to the use which data he/she wants
@@ -1627,771 +1316,464 @@ The data values in FparExtra\_QC are:
 .. raw:: html
 
    <table>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <th>
 
 Bit No.
 
 .. raw:: html
 
+   </th>    <th>
+
+Parameter Name
+
+.. raw:: html
+
+   </th><th> 
+
+Bit Combination
+
+.. raw:: html
+
+   </th><th>
+
+Explanation
+
+.. raw:: html
+
    </th>
-
-::
-
-    <th>Parameter Name</th><th> Bit Combination</th><th>Explanation</th>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
 0-1
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 LandSea
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>   
 
 00
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td> 
 
 Land
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>  
 
 01
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 Shore
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>  
 
 10
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 Freshwater
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>  
 
 11
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 Ocean
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
 2
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 Snow/Ice
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>  
 
 0
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 No snow/ice detected
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>  
 
 1
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 Snow/ice detected
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
 3
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 Aerosol
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>   
 
 0
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 No or low atmospheric aerosol levels detected
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>  
 
 1
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 Average or high atmospheric aerosol levels detected
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
 4
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 Cirrus
 
 .. raw:: html
 
+   </td><td>    
+
+0
+
+.. raw:: html
+
+   </td><td>
+
+No cirrus detected
+
+.. raw:: html
+
    </td>
-
-.. raw:: html
-
-   <td>
-
-::
-
-    0</td><td>No cirrus detected</td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>  
 
 1
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 Cirrus detected
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
 5
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 Cloud
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td> 
 
 0
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 No cloud detected
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>  
 
 1
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 Cloud detected
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
 6
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 Cloud shadow
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>  
 
 0
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 No cloud shadow detected
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>  
 
 1
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 Cloud shadowdetected
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
 7
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 Biome\_mask
 
 .. raw:: html
 
+   </td><td>    
+
+0
+
+.. raw:: html
+
+   </td><td>
+
+Biome outside interval 1-4
+
+.. raw:: html
+
    </td>
-
-.. raw:: html
-
-   <td>
-
-::
-
-    0</td><td>Biome outside interval 1-4</td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
  
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>  
 
 1
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 Biome in interval 1-4
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    </table>
 
 Use this QC dataset to make sure that **only** Land pixels are passed in

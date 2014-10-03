@@ -3,9 +3,9 @@
 # update all files and upload to github
 
 
-fixMe
+./fixMe
 make html
-fixMeBack
+./fixMeBack
 
 set here = `pwd`
 

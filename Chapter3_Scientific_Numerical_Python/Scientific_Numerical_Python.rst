@@ -26,14 +26,14 @@ download or update your material for this course.
 If you haven't previously downloaded the course, type the following at
 the unix prompt (illustrated by ``berlin%`` here):
 
-| ``berlin% cd Data``
+| ``berlin% cd DATA``
 | ``berlin% git clone https://github.com/profLewis/geogg122.git``
 | ``berlin% cd geogg122/Chapter3_Scientific_Numerical_Python``
 
 If you already have a clone of the course repository (which you should
 have from last week):
 
-| ``berlin% cd Data/geogg122``
+| ``berlin% cd DATA/geogg122``
 | ``berlin% git reset --hard HEAD``
 | ``berlin% git pull``
 | ``berlin% cd Chapter3_Scientific_Numerical_Python``
@@ -47,8 +47,8 @@ E3.1 Exercise: listing
 
 Using Python, produce a listing of the files in the subdirectory
 ``data`` of ``geogg122/Chapter3_Scientific_Numerical_Python`` that end
-with ``.nc`` and put this listing in a file called
-``files/data/data.dat`` with each entry on a different line
+with ``.nc`` and put this listing in a file called ``data/data.dat``
+with each entry on a different line
 
 3.2 Getting and Plotting Some Data: netCDF format
 -------------------------------------------------
@@ -116,94 +116,239 @@ you in this case in the directory ``files/data`` for the year 2009.
 
 .. code:: python
 
-    !ls files/data/GlobAlbedo*.nc
+    ls data/GlobAlbedo*.nc
 
 .. parsed-literal::
 
-    files/data/GlobAlbedo.200901.mosaic.5.nc
-    files/data/GlobAlbedo.200902.mosaic.5.nc
-    files/data/GlobAlbedo.200903.mosaic.5.nc
-    files/data/GlobAlbedo.200904.mosaic.5.nc
-    files/data/GlobAlbedo.200905.mosaic.5.nc
-    files/data/GlobAlbedo.200906.mosaic.5.nc
-    files/data/GlobAlbedo.200907.mosaic.5.nc
-    files/data/GlobAlbedo.200908.mosaic.5.nc
-    files/data/GlobAlbedo.200909.mosaic.5.nc
-    files/data/GlobAlbedo.200910.mosaic.5.nc
-    files/data/GlobAlbedo.200911.mosaic.5.nc
-    files/data/GlobAlbedo.200912.mosaic.5.nc
-    files/data/GlobAlbedo.201001.mosaic.5.nc
-    files/data/GlobAlbedo.201002.mosaic.5.nc
-    files/data/GlobAlbedo.201003.mosaic.5.nc
-    files/data/GlobAlbedo.201004.mosaic.5.nc
-    files/data/GlobAlbedo.201005.mosaic.5.nc
-    files/data/GlobAlbedo.201006.mosaic.5.nc
-    files/data/GlobAlbedo.201007.mosaic.5.nc
-    files/data/GlobAlbedo.201008.mosaic.5.nc
-    files/data/GlobAlbedo.201009.mosaic.5.nc
-    files/data/GlobAlbedo.201010.mosaic.5.nc
-    files/data/GlobAlbedo.201011.mosaic.5.nc
-    files/data/GlobAlbedo.201012.mosaic.5.nc
+    data/GlobAlbedo.200901.mosaic.5.nc  data/GlobAlbedo.201001.mosaic.5.nc
+    data/GlobAlbedo.200902.mosaic.5.nc  data/GlobAlbedo.201002.mosaic.5.nc
+    data/GlobAlbedo.200903.mosaic.5.nc  data/GlobAlbedo.201003.mosaic.5.nc
+    data/GlobAlbedo.200904.mosaic.5.nc  data/GlobAlbedo.201004.mosaic.5.nc
+    data/GlobAlbedo.200905.mosaic.5.nc  data/GlobAlbedo.201005.mosaic.5.nc
+    data/GlobAlbedo.200906.mosaic.5.nc  data/GlobAlbedo.201006.mosaic.5.nc
+    data/GlobAlbedo.200907.mosaic.5.nc  data/GlobAlbedo.201007.mosaic.5.nc
+    data/GlobAlbedo.200908.mosaic.5.nc  data/GlobAlbedo.201008.mosaic.5.nc
+    data/GlobAlbedo.200909.mosaic.5.nc  data/GlobAlbedo.201009.mosaic.5.nc
+    data/GlobAlbedo.200910.mosaic.5.nc  data/GlobAlbedo.201010.mosaic.5.nc
+    data/GlobAlbedo.200911.mosaic.5.nc  data/GlobAlbedo.201011.mosaic.5.nc
+    data/GlobAlbedo.200912.mosaic.5.nc  data/GlobAlbedo.201012.mosaic.5.nc
 
 
-We use the ``netCDF4`` module to read netCDF data:
+We use the ``gdal`` module to read netCDF data:
 
 .. code:: python
 
-    from netCDF4 import Dataset
-    
-    root = 'files/data/'
+    import gdal
+    root = 'data/'
     
     # example filename : use formatting string:
     # %d%02d
     year = 2009
     month = 1
-    local_file = root + 'GlobAlbedo.%d%02d.mosaic.5.nc'%(year,month)
-    print local_file
+    filename = root + 'GlobAlbedo.%d%02d.mosaic.5.nc'%(year,month)
+    print filename
     
-    # load the netCDF data from the file local_file
-    nc = Dataset(local_file,'r')
-    
-    # the netCDF file has dimensions
-    # stored as a dictionary
-    print nc.dimensions.keys()
-    
-    # and variables also as a dictionary
-    print nc.variables.keys()
-
-::
-
-
-    ---------------------------------------------------------------------------
-    ImportError                               Traceback (most recent call last)
-
-    <ipython-input-3-635e408ccbf9> in <module>()
-    ----> 1 from netCDF4 import Dataset
-          2 
-          3 root = 'files/data/'
-          4 
-          5 # example filename : use formatting string:
+    g = gdal.Open(filename)
+    # g should now be a GDAL dataset, but if the file isn't found
+    # g will be none. Let's test this:
+    if g is None:
+        print "Problem opening file %s!" % filename
+    else:
+        print "File %s opened fine" % filename
+        
+        
+    subdatasets = g.GetSubDatasets()
+    for fname, name in subdatasets:
+        print name
+        print "\t", fname
 
 
-    ImportError: No module named netCDF4
+.. parsed-literal::
+
+    data/GlobAlbedo.200901.mosaic.5.nc
+    File data/GlobAlbedo.200901.mosaic.5.nc opened fine
+    [360x720] DHR_VIS (32-bit floating-point)
+    	NETCDF:"data/GlobAlbedo.200901.mosaic.5.nc":DHR_VIS
+    [360x720] DHR_NIR (32-bit floating-point)
+    	NETCDF:"data/GlobAlbedo.200901.mosaic.5.nc":DHR_NIR
+    [360x720] DHR_SW (32-bit floating-point)
+    	NETCDF:"data/GlobAlbedo.200901.mosaic.5.nc":DHR_SW
+    [360x720] BHR_VIS (32-bit floating-point)
+    	NETCDF:"data/GlobAlbedo.200901.mosaic.5.nc":BHR_VIS
+    [360x720] BHR_NIR (32-bit floating-point)
+    	NETCDF:"data/GlobAlbedo.200901.mosaic.5.nc":BHR_NIR
+    [360x720] BHR_SW (32-bit floating-point)
+    	NETCDF:"data/GlobAlbedo.200901.mosaic.5.nc":BHR_SW
+    [360x720] DHR_sigmaVIS (32-bit floating-point)
+    	NETCDF:"data/GlobAlbedo.200901.mosaic.5.nc":DHR_sigmaVIS
+    [360x720] DHR_sigmaNIR (32-bit floating-point)
+    	NETCDF:"data/GlobAlbedo.200901.mosaic.5.nc":DHR_sigmaNIR
+    [360x720] DHR_sigmaSW (32-bit floating-point)
+    	NETCDF:"data/GlobAlbedo.200901.mosaic.5.nc":DHR_sigmaSW
+    [360x720] BHR_sigmaVIS (32-bit floating-point)
+    	NETCDF:"data/GlobAlbedo.200901.mosaic.5.nc":BHR_sigmaVIS
+    [360x720] BHR_sigmaNIR (32-bit floating-point)
+    	NETCDF:"data/GlobAlbedo.200901.mosaic.5.nc":BHR_sigmaNIR
+    [360x720] BHR_sigmaSW (32-bit floating-point)
+    	NETCDF:"data/GlobAlbedo.200901.mosaic.5.nc":BHR_sigmaSW
+    [360x720] Weighted_Number_of_Samples (32-bit floating-point)
+    	NETCDF:"data/GlobAlbedo.200901.mosaic.5.nc":Weighted_Number_of_Samples
+    [360x720] Relative_Entropy (32-bit floating-point)
+    	NETCDF:"data/GlobAlbedo.200901.mosaic.5.nc":Relative_Entropy
+    [360x720] Goodness_of_Fit (32-bit floating-point)
+    	NETCDF:"data/GlobAlbedo.200901.mosaic.5.nc":Goodness_of_Fit
+    [360x720] Snow_Fraction (32-bit floating-point)
+    	NETCDF:"data/GlobAlbedo.200901.mosaic.5.nc":Snow_Fraction
+    [360x720] Data_Mask (32-bit floating-point)
+    	NETCDF:"data/GlobAlbedo.200901.mosaic.5.nc":Data_Mask
+    [360x720] Solar_Zenith_Angle (32-bit floating-point)
+    	NETCDF:"data/GlobAlbedo.200901.mosaic.5.nc":Solar_Zenith_Angle
 
 
 Here, we will want to access ``'DHR_VIS'``, ``'DHR_NIR'`` and
 ``'DHR_SW'``, which are the bihemispherical reflectance (DHR: 'black sky
 albedo' -- the albedo under directional illumination conditions) for
-visible, near infrared and total shortwave wavebands:
+visible, near infrared and total shortwave wavebands.
+
+From the information printed in the loop above, we note that the field
+of information we need to access is of the form:
+
+``NETCDF:"data/GlobAlbedo.200901.mosaic.5.nc":DHR_VIS``
+
+The way we do this in ``gdal`` is to use ``gdal.Open(f)`` where ``f`` is
+the *full* data layer specification (in this case e.g.
+``NETCDF:"data/GlobAlbedo.200901.mosaic.5.nc":DHR_VIS``) to open a
+particular dataset within the file.
+
+We then *read* the (raster) data into an array with
+``g.Open(f).ReadAsArray()``
+
+for example then:
 
 .. code:: python
 
-    # explicitly as:
-    albedo = [nc.variables['DHR_VIS'],nc.variables['DHR_NIR'],nc.variables['DHR_SW']]
+    f = 'NETCDF:"data/GlobAlbedo.200901.mosaic.5.nc":DHR_VIS'
+    
+    data = gdal.Open(f).ReadAsArray()
+    
+    print data
+
+.. parsed-literal::
+
+    [[        nan         nan         nan ...,         nan         nan
+              nan]
+     [        nan         nan         nan ...,         nan         nan
+              nan]
+     [        nan         nan         nan ...,         nan         nan
+              nan]
+     ..., 
+     [ 0.69980866  0.69980866  0.69980866 ...,  0.70370543  0.70370543
+       0.70370543]
+     [ 0.69980866  0.69980866  0.69980866 ...,  0.70370543  0.70370543
+       0.70370543]
+     [ 0.69980866  0.69980866  0.69980866 ...,  0.70370543  0.70370543
+       0.70370543]]
+
+
+We can make this more flexible by building the string ``f`` from the
+*specific* pieces of information we require.
+
+In this case, it helps to use a form of *template* for the string we
+need:
+
 .. code:: python
 
-    # or more neatly as:
+    # form a generic string of the form
+    # NETCDF:"data/GlobAlbedo.200901.mosaic.5.nc":DHR_VIS
     
-    data_fields = ['DHR_VIS','DHR_NIR','DHR_SW']
+    file_template = 'NETCDF:"%s":%s'
     
-    albedo = [nc.variables[f] for f in data_fields]
+    # now make a list of the datset names we want
+    # so we can loop over this 
+    
+    selected_layers = ['DHR_VIS','DHR_NIR','DHR_SW']
+    
+    # ----------------------------------
+    
+    # try it out:
+    
+    
+    root = 'data/'
+    
+    # example filename : use formatting string:
+    # %d%02d
+    year = 2009
+    month = 1
+    filename = root + 'GlobAlbedo.%d%02d.mosaic.5.nc'%(year,month)
+    print filename
+    
+    
+    # set up an empty dictionary to load the data into
+    data = {}
+    
+    # use enumerate here to loop over
+    # the list selected_layers and also have
+    # access to an index i
+    
+    for i, layer in enumerate ( selected_layers ):
+        this_file = file_template % ( filename, layer )
+        print "Opening Layer %d: %s" % (i, this_file )
+        g = gdal.Open ( this_file )
+        
+        # test that the opening worked
+        # and raise an error otherwise
+        
+        if g is None:
+            raise IOError
+        data[layer] = g.ReadAsArray() 
+        print "\t>>> Read %s!" % layer
+
+
+.. parsed-literal::
+
+    data/GlobAlbedo.200901.mosaic.5.nc
+    Opening Layer 0: NETCDF:"data/GlobAlbedo.200901.mosaic.5.nc":DHR_VIS
+    	>>> Read DHR_VIS!
+    Opening Layer 1: NETCDF:"data/GlobAlbedo.200901.mosaic.5.nc":DHR_NIR
+    	>>> Read DHR_NIR!
+    Opening Layer 2: NETCDF:"data/GlobAlbedo.200901.mosaic.5.nc":DHR_SW
+    	>>> Read DHR_SW!
+
+
+If we really want the data in a single (3D) array, we could then create
+this from the dictionary entries:
+
+.. code:: python
+
+    # here, we just make a *list*
+    # as we will see below, a list might be a bit limited for these purposes and 
+    # we would normally use a numpy array
+    
+    albedo = [data[f] for f in selected_layers]
+    
+    # print some information about the list we have made
+    print len(albedo),len(albedo[0]),len(albedo[0][0]),size(albedo)
+
+.. parsed-literal::
+
+    3 360 720 777600
+
+
+Exercise E3.2 Read Image Data into 3D List
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Write some python code that directly reads the data layers
+``'DHR_VIS','DHR_NIR','DHR_SW'`` into a list for a given month and year.
+
+Exercise E3.3 Read More Image Data into a 4D List
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You should now have some code that reads the 3 albedo datasets into a 3D
+list (3 x 360 x 720) for a given month and year.
+
+Put a loop around this code to make a 4D list dataset (12 x 3 x 360 x
+720) for all months in a given year.
+
 3.2.3 Plotting an image
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -224,18 +369,21 @@ The basic function for plotting an image is ``plt.imshow``:
 
     import pylab as plt
     
+    # declare a new figure and its size
+    plt.figure(figsize=(10,4))
+    
     plt.imshow(albedo[0])
 
 
 
 .. parsed-literal::
 
-    <matplotlib.image.AxesImage at 0x2b05430059d0>
+    <matplotlib.image.AxesImage at 0x7f27c5551cd0>
 
 
 
 
-.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_21_1.png
+.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_28_1.png
 
 
 Thats fine, but we might apply a few modifications to make a better
@@ -246,7 +394,7 @@ plot:
     import pylab as plt
     
     # change the figure size
-    plt.figure(figsize=(10, 5))
+    plt.figure(figsize=(10,4))
     
     # use nearest neighbour interpolation
     plt.imshow(albedo[0],interpolation='nearest')
@@ -258,12 +406,12 @@ plot:
 
 .. parsed-literal::
 
-    <matplotlib.colorbar.Colorbar instance at 0x10bccb90>
+    <matplotlib.colorbar.Colorbar instance at 0x7f27c541c2d8>
 
 
 
 
-.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_23_1.png
+.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_30_1.png
 
 
 Albedo should lie between 0 and 1, so there are clearly a few 'funnies'
@@ -280,10 +428,10 @@ another <http://wiki.scipy.org/Cookbook/Matplotlib/Show_colormaps>`__:
     import pylab as plt
     
     # change the figure size
-    plt.figure(figsize=(10,5))
+    plt.figure(figsize=(10,4))
     
-    # use nearest neighbour interpolation
-    plt.imshow(albedo[0],interpolation='nearest',cmap=plt.get_cmap('binary'),vmin=0.0,vmax=1.0)
+    # no interpolation
+    plt.imshow(albedo[0],interpolation='none',cmap=plt.get_cmap('binary'),vmin=0.0,vmax=1.0)
     
     # show a colour bar 
     plt.colorbar()
@@ -292,12 +440,184 @@ another <http://wiki.scipy.org/Cookbook/Matplotlib/Show_colormaps>`__:
 
 .. parsed-literal::
 
-    <matplotlib.colorbar.Colorbar instance at 0x1172e5a8>
+    <matplotlib.colorbar.Colorbar instance at 0x7f27c52fa560>
 
 
 
 
-.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_25_1.png
+.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_32_1.png
+
+
+If we want to make use of strings to label each month, we might consider
+makeing a 'month' dictionary:
+
+.. code:: python
+
+    # set up a month dictionary
+    # 
+    # notice how we lay this out for clarity
+    #
+    months  =    {1:'January',\
+                  2:'February',\
+                  3:'March',\
+                  4:'April',\
+                  5:'May',\
+                  6:'June',\
+                  7:'July',\
+                  8:'August',\
+                  9:'September',\
+                  10:'October',\
+                  11:'November',\
+                  12:'December'}
+    # test it
+    m = 3
+    
+    print 'month',m,'is',months[m]
+
+.. parsed-literal::
+
+    month 3 is March
+
+
+There are other (and in some ways neater) ways of achieving this, e.g.:
+
+.. code:: python
+
+    num_list   = range(1,13)
+    month_list = ['January','February','March','April','May',\
+                  'June','July','August','September','October','November',\
+                  'December']
+    
+    print 'numbers',num_list
+    print 'months',month_list
+    
+    
+    # make a dictionary from 2 lists
+    month_dict = dict(zip(num_list,month_list))
+    
+    print month_dict
+    
+    # test it
+    m = 3
+    
+    print '\n\tmonth',m,'is',month_dict[m]
+
+.. parsed-literal::
+
+    numbers [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    months ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    {1: 'January', 2: 'February', 3: 'March', 4: 'April', 5: 'May', 6: 'June', 7: 'July', 8: 'August', 9: 'September', 10: 'October', 11: 'November', 12: 'December'}
+    
+    	month 3 is March
+
+
+But as you might expect, this is quite a common task, so we might use
+the python package calendar for this:
+
+.. code:: python
+
+    import calendar
+    
+    m = 3
+    
+    print '\n\tmonth',m,'is',calendar.month_name[m],'\n\n'
+    
+    # or:
+    
+    for m,n in enumerate(calendar.month_name):
+        # check its a valid string
+        # why do this???
+        if len(n) > 0:
+          print 'month',m,'is',n
+
+.. parsed-literal::
+
+    
+    	month 3 is March 
+    
+    
+    month 1 is January
+    month 2 is February
+    month 3 is March
+    month 4 is April
+    month 5 is May
+    month 6 is June
+    month 7 is July
+    month 8 is August
+    month 9 is September
+    month 10 is October
+    month 11 is November
+    month 12 is December
+
+
+As a **slight aside** ... one advantage of using standard methods for
+accessing e.g. month names is that if we change the locale (the language
+settings etc.), we would expect to be able to do this in different
+languages automatically.
+
+.. code:: python
+
+    # after http://stackoverflow.com/questions/13037370/python-calendar-day-month-names-in-specific-locale
+    # Note how I reference where I found an example of this on the web ...
+    
+    import locale
+    # get the default
+    def_locale = locale.getdefaultlocale()
+    
+    
+    # set to e.g. Galician
+    # see e.g.
+    # http://svn.python.org/projects/python/trunk/Lib/locale.py
+    locale.setlocale(locale.LC_ALL,'gl_ES')
+    
+    for m,n in enumerate(calendar.month_name):
+        # check its valid string
+        # why do this???
+        if len(n) > 0:
+          print 'month',m,'is',n
+
+.. parsed-literal::
+
+    month 1 is Xaneiro
+    month 2 is Febreiro
+    month 3 is Marzo
+    month 4 is Abril
+    month 5 is Maio
+    month 6 is Xu�o
+    month 7 is Xullo
+    month 8 is Agosto
+    month 9 is Setembro
+    month 10 is Outubro
+    month 11 is Novembro
+    month 12 is Decembro
+
+
+.. code:: python
+
+    # set it back again
+    
+    locale.setlocale(locale.LC_ALL, def_locale)
+    
+    for m,n in enumerate(calendar.month_name):
+        # check its valid string
+        # why do this???
+        if len(n) > 0:
+          print 'month',m,'is',n
+
+.. parsed-literal::
+
+    month 1 is January
+    month 2 is February
+    month 3 is March
+    month 4 is April
+    month 5 is May
+    month 6 is June
+    month 7 is July
+    month 8 is August
+    month 9 is September
+    month 10 is October
+    month 11 is November
+    month 12 is December
 
 
 If we wanted to save the plot and put a title on:
@@ -305,28 +625,27 @@ If we wanted to save the plot and put a title on:
 .. code:: python
 
     import pylab as plt
-    
-    # set up a month dictionary
-    month_list = ['January','February','March','April','May','June',\
-                  'July','August','September','October','November','December']
-    # make a dictionary from 2 lists
-    month_dict = dict(zip(range(1,13),month_list))
+    import calendar
     
     # change the figure size
-    plt.figure(figsize=(10,5))
+    plt.figure(figsize=(10,4))
     # plt.clf(): clear the figure in case anything in it before
     plt.clf()
     
-    plt.title('VIS BHR albedo for %s %d'%(month_dict[month],year))
+    month = 1
+    
+    plt.title('VIS BHR albedo for %s %d'%(calendar.month_name[month],year))
     # use nearest neighbour interpolation
     plt.imshow(albedo[0],interpolation='nearest',cmap=plt.get_cmap('Spectral'),vmin=0.0,vmax=1.0)
     
     # show a colour bar 
     plt.colorbar()
-    plt.savefig('files/data/albedo.jpg')
+    
+    # save the plot to a jpeg image file
+    plt.savefig('data/albedo.jpg')
 
 
-.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_27_0.png
+.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_43_0.png
 
 
 E3.2 Exercise: Making Movies
@@ -360,21 +679,21 @@ from the unix command line:
 
 .. code:: bash
 
-    berlin% cd ~/Data/geogg122/Chapter3_Scientific_Numerical_Python  
-    berlin% convert files/data/albedo.jpg files/data/albedo.gif  
+    berlin% cd ~/DATA/geogg122/Chapter3_Scientific_Numerical_Python  
+    berlin% convert data/albedo.jpg data/albedo.gif  
 
 or from within a notebook:
 
 .. code:: python
 
-    !convert files/data/albedo.jpg files/data/albedo.gif
+    !convert data/albedo.jpg data/albedo.gif
 Or, more practically here, you can run a unix command directly from
 Python:
 
 .. code:: python
 
     import os
-    cmd = 'convert files/data/albedo.jpg files/data/albedo.gif'
+    cmd = 'convert data/albedo.jpg data/albedo.gif'
     os.system(cmd)
 
 
@@ -405,47 +724,53 @@ format, but to recap for ``BHR_VIS``:
 
 .. code:: python
 
-    from netCDF4 import Dataset
+    import gdal
     import pylab as plt
     import os
+    import calendar
     
-    root = 'files/data/'
+    layer = 'BHR_VIS'
     
-    month_list = ['January','February','March','April','May','June',\
-                  'July','August','September','October','November','December']
-    # make a dictionary from 2 lists
-    month_dict = dict(zip(range(1,13),month_list))
+    # form a generic string of the form
+    # NETCDF:"data/GlobAlbedo.200901.mosaic.5.nc":DHR_VIS
+    
+    file_template = 'NETCDF:"%s":%s'
+    
+    root = 'data/'
     
     # example filename : use formatting string:
     # %d%02d
     year = 2009
     
-    
-    # set the month
+    # set the month (1-based, i.e. 1 == January)
     month = 1
     
-    ''' Read the data '''
-    local_file = root + 'GlobAlbedo.%d%02d.mosaic.5.nc'%(year,month)
-    # load the netCDF data from the file f.filename
-    nc = Dataset(local_file,'r')
-    band = nc.variables['DHR_VIS']
+    filename = root + 'GlobAlbedo.%d%02d.mosaic.5.nc'%(year,month)
+    
+    g = gdal.Open (  file_template % ( filename, layer ) )
+    
+    if g is None:
+      raise IOError
+    data = g.ReadAsArray()
+    
     
     ''' Plot the data and save as picture jpeg format '''
     # make a string with the output file name
     out_file = root + 'GlobAlbedo.%d%02d.jpg'%(year,month)
     # plot
-    plt.figure()
+    plt.figure(figsize=(10,4))
     plt.clf()
     # %9s forces the string to be 8 characters long
-    plt.title('VIS BHR albedo for %8s %d'%(month_dict[month],year))
+    plt.title('VIS BHR albedo for %8s %d'%(calendar.month_name[month],year))
     # use nearest neighbour interpolation
-    plt.imshow(band,interpolation='nearest',cmap=plt.get_cmap('Spectral'),vmin=0.0,vmax=1.0)
+    # load the array data 
+    plt.imshow(data,interpolation='nearest',cmap=plt.get_cmap('Spectral'),vmin=0.0,vmax=1.0)
     # show a colour bar 
     plt.colorbar()
     plt.savefig(out_file)
     
-    ''' Convert the file to gif '''
-    # set up the unix command which is of the form 
+    # convert to gif
+    # set up the unix command which is of the form
     # convert input output
     # Here input will be out_file
     # and output we can get with out_file.replace('.jpg','.gif')
@@ -463,7 +788,7 @@ format, but to recap for ``BHR_VIS``:
 
 
 
-.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_39_1.png
+.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_55_1.png
 
 
 **Modify the code above to loop over each month, so that it generates a
@@ -475,24 +800,22 @@ which is Oct 10 2013).
 
 .. code:: python
 
-    ls -l files/data/GlobAlbedo*gif
+    ls -l data/GlobAlbedo.2009??.gif
 
 .. parsed-literal::
 
-    [0m-rw-rw-r-- 1 plewis plewis 340658 Oct 11 20:04 [0mfiles/data/GlobAlbedo.2009.SW.1.gif[0m
-    -rw-rw-r-- 1 plewis plewis 340658 Oct 11 20:04 [0mfiles/data/GlobAlbedo.2009.SW.gif[0m
-    -rw-rw-r-- 1 plewis plewis  26593 Oct 14 11:54 [0mfiles/data/GlobAlbedo.200901.gif[0m
-    -rw-rw-r-- 1 plewis plewis  28139 Oct 11 20:04 [0mfiles/data/GlobAlbedo.200902.gif[0m
-    -rw-rw-r-- 1 plewis plewis  28259 Oct 11 20:04 [0mfiles/data/GlobAlbedo.200903.gif[0m
-    -rw-rw-r-- 1 plewis plewis  28249 Oct 11 20:04 [0mfiles/data/GlobAlbedo.200904.gif[0m
-    -rw-rw-r-- 1 plewis plewis  28468 Oct 11 20:04 [0mfiles/data/GlobAlbedo.200905.gif[0m
-    -rw-rw-r-- 1 plewis plewis  28672 Oct 11 20:04 [0mfiles/data/GlobAlbedo.200906.gif[0m
-    -rw-rw-r-- 1 plewis plewis  28656 Oct 11 20:04 [0mfiles/data/GlobAlbedo.200907.gif[0m
-    -rw-rw-r-- 1 plewis plewis  28275 Oct 11 20:04 [0mfiles/data/GlobAlbedo.200908.gif[0m
-    -rw-rw-r-- 1 plewis plewis  28952 Oct 11 20:04 [0mfiles/data/GlobAlbedo.200909.gif[0m
-    -rw-rw-r-- 1 plewis plewis  28450 Oct 11 20:04 [0mfiles/data/GlobAlbedo.200910.gif[0m
-    -rw-rw-r-- 1 plewis plewis  28570 Oct 11 20:04 [0mfiles/data/GlobAlbedo.200911.gif[0m
-    -rw-rw-r-- 1 plewis plewis  28438 Oct 11 20:04 [0mfiles/data/GlobAlbedo.200912.gif[0m
+    -rw-rw-r--. 1 plewis plewis 53103 Oct  3 12:06 [0m[01;35mdata/GlobAlbedo.200901.gif[0m
+    -rw-rw-r--. 1 plewis plewis 28139 Sep 30 11:56 [01;35mdata/GlobAlbedo.200902.gif[0m
+    -rw-rw-r--. 1 plewis plewis 28259 Sep 30 11:56 [01;35mdata/GlobAlbedo.200903.gif[0m
+    -rw-rw-r--. 1 plewis plewis 28249 Sep 30 11:56 [01;35mdata/GlobAlbedo.200904.gif[0m
+    -rw-rw-r--. 1 plewis plewis 28468 Sep 30 11:56 [01;35mdata/GlobAlbedo.200905.gif[0m
+    -rw-rw-r--. 1 plewis plewis 28672 Sep 30 11:56 [01;35mdata/GlobAlbedo.200906.gif[0m
+    -rw-rw-r--. 1 plewis plewis 28656 Sep 30 11:56 [01;35mdata/GlobAlbedo.200907.gif[0m
+    -rw-rw-r--. 1 plewis plewis 28275 Sep 30 11:56 [01;35mdata/GlobAlbedo.200908.gif[0m
+    -rw-rw-r--. 1 plewis plewis 28952 Sep 30 11:56 [01;35mdata/GlobAlbedo.200909.gif[0m
+    -rw-rw-r--. 1 plewis plewis 28450 Sep 30 11:56 [01;35mdata/GlobAlbedo.200910.gif[0m
+    -rw-rw-r--. 1 plewis plewis 28570 Sep 30 11:56 [01;35mdata/GlobAlbedo.200911.gif[0m
+    -rw-rw-r--. 1 plewis plewis 28438 Sep 30 11:56 [01;35mdata/GlobAlbedo.200912.gif[0m
     [m
 
 E3.2.3 Make the movie
@@ -512,14 +835,14 @@ version you downloaded):
 
 .. code:: python
 
-    ls -l files/data/GlobAlbedo.2009.SW.gif
+    ls -l data/GlobAlbedo.2009.SW.gif
 
 .. parsed-literal::
 
-    [0m-rw-rw-r-- 1 plewis plewis 340658 Oct 11 20:04 [0mfiles/data/GlobAlbedo.2009.SW.gif[0m
+    -rw-rw-r--. 1 plewis plewis 340658 Sep 30 11:56 [0m[01;35mdata/GlobAlbedo.2009.SW.gif[0m
     [m
 
-.. figure:: files/data/GlobAlbedo.2009.SW.gif
+.. figure:: files/data/GlobAlbedo.2009.SW1.gif
    :alt: 
 
 3.3 Numpy
@@ -1480,7 +1803,7 @@ code above), we can do some interesting things with it with numpy
 
 
 
-.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_132_1.png
+.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_148_1.png
 
 
 .. code:: python
@@ -1506,7 +1829,7 @@ code above), we can do some interesting things with it with numpy
 
 
 
-.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_133_1.png
+.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_149_1.png
 
 
 We can see form this that most of the intra-annual variation in total
@@ -1574,23 +1897,23 @@ min, max
 
 
 
-.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_139_0.png
+.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_155_0.png
 
 
 
-.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_139_1.png
+.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_155_1.png
 
 
 
-.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_139_2.png
+.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_155_2.png
 
 
 
-.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_139_3.png
+.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_155_3.png
 
 
 
-.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_139_4.png
+.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_155_4.png
 
 
 The mean and max NDVI is pretty much what you would expect (MODIS NDVI,
@@ -1670,7 +1993,7 @@ We have the latitude associated with the dataset from:
 
 
 
-.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_145_1.png
+.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_161_1.png
 
 
 for day of year ``N`` then, we have a formula for solar declination.
@@ -1716,7 +2039,7 @@ we can approximate the solar declination as:
 
 
 
-.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_150_1.png
+.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_166_1.png
 
 
 Although we might think the formulae a little complicated, the
@@ -1890,11 +2213,11 @@ copy
 
 
 
-.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_169_1.png
+.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_185_1.png
 
 
 
-.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_169_2.png
+.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_185_2.png
 
 
 This sort of application really shows the power of manipulating arrays.
@@ -2071,7 +2394,7 @@ That said, we can deal with some awkward issues in a dataset:
 
 
 
-.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_182_2.png
+.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_198_2.png
 
 
 We can save this to a text file with:

@@ -2557,8 +2557,8 @@ Bit combination
 <td>
 Interpretation
 </td>
-</tr>
-<tr>
+</tr><tr>
+
 <td>
 0
 </td>
@@ -2571,20 +2571,18 @@ MODLAND_QC bits
 <td>
 Good quality (main algorithm with or without saturation)
 </td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
+</tr><tr>
+
+<td></td>
+<td></td>
 <td>
 1
 </td>
 <td>
 Other Quality (back-up algorithm or fill values)
 </td>
-</tr>
-<tr>
+</tr><tr>
+
 <td>
 1
 </td>
@@ -2597,20 +2595,18 @@ Sensor
 <td>
 Terra
 </td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
+</tr><tr>
+
+<td></td>
+<td></td>
 <td>
 1
 </td>
 <td>
 Aqua
 </td>
-</tr>
-<tr>
+</tr><tr>
+
 <td>
 2
 </td>
@@ -2623,20 +2619,18 @@ DeadDetector
 <td>
 Detectors apparently fine for up to 50% of channels
 </td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
+</tr><tr>
+
+<td></td>
+<td></td>
 <td>
 1
 </td>
 <td>
 Dead detectors caused &gt;50% adjacent detector retrieval
 </td>
-</tr>
-<tr>
+</tr><tr>
+
 <td>
 3-4
 </td>
@@ -2649,44 +2643,38 @@ CloudState
 <td>
 Significant clouds NOT present (clear)
 </td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
+</tr><tr>
+
+<td></td>
+<td></td>
 <td>
 01
 </td>
 <td>
 Significant clouds WERE present
 </td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
+</tr><tr>
+
+<td></td>
+<td></td>
 <td>
 10
 </td>
 <td>
 Mixed cloud present on pixel
 </td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
+</tr><tr>
+
+<td></td>
+<td></td>
 <td>
 11
 </td>
 <td>
 Cloud state not defined (assumed clear)
 </td>
-</tr>
-<tr>
+</tr><tr>
+
 <td>
 5-7
 </td>
@@ -2699,48 +2687,40 @@ CF_QC
 <td>
 Main (RT) method used (best result possible (no saturation))
 </td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
+</tr><tr>
+
+<td></td>
+<td></td>
 <td>
 001
 </td>
 <td>
 Main (RT) method used with saturation. (usable)
 </td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
+</tr><tr>
+
+<td></td>
+<td></td>
 <td>
 010
 </td>
 <td>
 Main (RT) method failed due to bad geometry (empirical algorithm used)
 </td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
+</tr><tr>
+
+<td></td>
+<td></td>
 <td>
 010
 </td>
 <td>
 Main (RT) method failed due to problems other than geometry (empirical algorithm used)
 </td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
+</tr><tr>
+
+<td></td>
+<td></td>
 <td>
 010
 </td>
@@ -11717,12 +11697,12 @@ D8iyAth9sat2AAAAAElFTkSuQmCC
 <p>A few things that make this a bit more complicated are:</p>
 <ol style="list-style-type: decimal">
 <li><p>When we read the data line by line from the file, we have it stored as data[line][sample], i.e. each data[line] is the data for that line. When we want to load it into the dictionary, we want the data the other way around. This is a bit tricky with lists, and we have to use the following, which is a general statement, so you can use it for similar rotations, but its a bit dense.</p>
-<pre class="sourceCode python"><code class="sourceCode python">rdata = [[data[j][i] <span class="kw">for</span> j in <span class="dt">xrange</span>(<span class="dt">len</span>(data))] <span class="kw">for</span> i in <span class="dt">xrange</span>(<span class="dt">len</span>(data[<span class="dv">0</span>]))]</code></pre></li>
+<pre class="sourceCode python"><code class="sourceCode python">    rdata = [[data[j][i] <span class="kw">for</span> j in <span class="dt">xrange</span>(<span class="dt">len</span>(data))] <span class="kw">for</span> i in <span class="dt">xrange</span>(<span class="dt">len</span>(data[<span class="dv">0</span>]))]</code></pre></li>
 <li>When parsing the file, we have to deal with some awkward aspects, such as the presence of <code>#</code> symbols here and there and the fact that <code>'---'</code> is used to indicate no data. Here, we replace these awkward fields with more convenient numerical values (that won't break the conversion to <code>float</code>), or get rid of them as appropriate (using <code>replace()</code> on the strings).</li>
 <li><p>When we come to plot the data, we have to confront the fact that we used <code>-999</code> to indicate no data, and have to filter these values out before plotting. This is easy enough to do in a listcomp for the <code>y</code> values by using a conditional statement:</p>
-<pre class="sourceCode python"><code class="sourceCode python">y = [i <span class="kw">for</span> i in items[label] <span class="kw">if</span> i != -<span class="dv">999</span>]</code></pre>
+<pre class="sourceCode python"><code class="sourceCode python">    y = [i <span class="kw">for</span> i in items[label] <span class="kw">if</span> i != -<span class="dv">999</span>]</code></pre>
 <p>But for the x values, we have to filter these based on a test with the <code>y</code> values ... and so we use a more complex statement:</p>
-<pre class="sourceCode python"><code class="sourceCode python">x = [time[j] <span class="kw">for</span> j,i in <span class="dt">enumerate</span>(items[label]) <span class="kw">if</span> i != -<span class="dv">999</span>]</code></pre></li>
+<pre class="sourceCode python"><code class="sourceCode python">    x = [time[j] <span class="kw">for</span> j,i in <span class="dt">enumerate</span>(items[label]) <span class="kw">if</span> i != -<span class="dv">999</span>]</code></pre></li>
 <li><p>Finally, lists are not very convenient for numerical operations on the lists ... we can't simply add [0.1,0.2] to [3.0,4.0] to get [3.1,4.2], because <code>+</code> is a concatenation operator for lists. Instead, we have to loop over all of the items in the lists:</p>
 <pre class="sourceCode python"><code class="sourceCode python">time = [items[<span class="st">&#39;year&#39;</span>][i] + items[<span class="st">&#39;month&#39;</span>][i]/<span class="dv">12</span>. <span class="kw">for</span> i in <span class="dt">xrange</span>(<span class="dt">len</span>(items[<span class="st">&#39;year&#39;</span>]))]</code></pre>
 <p>We will see next time that there are more convenient modules for doing this sort of thing, but it's of value to know how you can do it if you only have lists.</p></li>
