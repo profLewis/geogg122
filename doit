@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 ipython profile create nbserver
 
 export pass=$(python -c "from IPython.lib import passwd;print passwd('a good password')")
