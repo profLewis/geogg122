@@ -120,18 +120,12 @@ you in this case in the directory ``files/data`` for the year 2009.
 
 .. parsed-literal::
 
-    data/GlobAlbedo.200901.mosaic.5.nc  data/GlobAlbedo.201001.mosaic.5.nc
-    data/GlobAlbedo.200902.mosaic.5.nc  data/GlobAlbedo.201002.mosaic.5.nc
-    data/GlobAlbedo.200903.mosaic.5.nc  data/GlobAlbedo.201003.mosaic.5.nc
-    data/GlobAlbedo.200904.mosaic.5.nc  data/GlobAlbedo.201004.mosaic.5.nc
-    data/GlobAlbedo.200905.mosaic.5.nc  data/GlobAlbedo.201005.mosaic.5.nc
-    data/GlobAlbedo.200906.mosaic.5.nc  data/GlobAlbedo.201006.mosaic.5.nc
-    data/GlobAlbedo.200907.mosaic.5.nc  data/GlobAlbedo.201007.mosaic.5.nc
-    data/GlobAlbedo.200908.mosaic.5.nc  data/GlobAlbedo.201008.mosaic.5.nc
-    data/GlobAlbedo.200909.mosaic.5.nc  data/GlobAlbedo.201009.mosaic.5.nc
-    data/GlobAlbedo.200910.mosaic.5.nc  data/GlobAlbedo.201010.mosaic.5.nc
-    data/GlobAlbedo.200911.mosaic.5.nc  data/GlobAlbedo.201011.mosaic.5.nc
-    data/GlobAlbedo.200912.mosaic.5.nc  data/GlobAlbedo.201012.mosaic.5.nc
+    data/GlobAlbedo.200901.mosaic.5.nc  data/GlobAlbedo.200907.mosaic.5.nc  data/GlobAlbedo.201001.mosaic.5.nc  data/GlobAlbedo.201007.mosaic.5.nc
+    data/GlobAlbedo.200902.mosaic.5.nc  data/GlobAlbedo.200908.mosaic.5.nc  data/GlobAlbedo.201002.mosaic.5.nc  data/GlobAlbedo.201008.mosaic.5.nc
+    data/GlobAlbedo.200903.mosaic.5.nc  data/GlobAlbedo.200909.mosaic.5.nc  data/GlobAlbedo.201003.mosaic.5.nc  data/GlobAlbedo.201009.mosaic.5.nc
+    data/GlobAlbedo.200904.mosaic.5.nc  data/GlobAlbedo.200910.mosaic.5.nc  data/GlobAlbedo.201004.mosaic.5.nc  data/GlobAlbedo.201010.mosaic.5.nc
+    data/GlobAlbedo.200905.mosaic.5.nc  data/GlobAlbedo.200911.mosaic.5.nc  data/GlobAlbedo.201005.mosaic.5.nc  data/GlobAlbedo.201011.mosaic.5.nc
+    data/GlobAlbedo.200906.mosaic.5.nc  data/GlobAlbedo.200912.mosaic.5.nc  data/GlobAlbedo.201006.mosaic.5.nc  data/GlobAlbedo.201012.mosaic.5.nc
 
 
 We use the ``gdal`` module to read netCDF data:
@@ -327,11 +321,11 @@ this from the dictionary entries:
     albedo = [data[f] for f in selected_layers]
     
     # print some information about the list we have made
-    print len(albedo),len(albedo[0]),len(albedo[0][0]),size(albedo)
+    print len(albedo),len(albedo[0]),len(albedo[0][0])
 
 .. parsed-literal::
 
-    3 360 720 777600
+    3 360 720
 
 
 Exercise E3.2 Read Image Data into 3D List
@@ -378,7 +372,7 @@ The basic function for plotting an image is ``plt.imshow``:
 
 .. parsed-literal::
 
-    <matplotlib.image.AxesImage at 0x7f27c5551cd0>
+    <matplotlib.image.AxesImage at 0x7f8124bc5c90>
 
 
 
@@ -406,7 +400,7 @@ plot:
 
 .. parsed-literal::
 
-    <matplotlib.colorbar.Colorbar instance at 0x7f27c541c2d8>
+    <matplotlib.colorbar.Colorbar instance at 0x7f8119ef3320>
 
 
 
@@ -440,7 +434,7 @@ another <http://wiki.scipy.org/Cookbook/Matplotlib/Show_colormaps>`__:
 
 .. parsed-literal::
 
-    <matplotlib.colorbar.Colorbar instance at 0x7f27c52fa560>
+    <matplotlib.colorbar.Colorbar instance at 0x7f8119d9a200>
 
 
 
@@ -804,18 +798,18 @@ which is Oct 10 2013).
 
 .. parsed-literal::
 
-    -rw-rw-r--. 1 plewis plewis 53103 Oct  3 12:06 [0m[01;35mdata/GlobAlbedo.200901.gif[0m
-    -rw-rw-r--. 1 plewis plewis 28139 Sep 30 11:56 [01;35mdata/GlobAlbedo.200902.gif[0m
-    -rw-rw-r--. 1 plewis plewis 28259 Sep 30 11:56 [01;35mdata/GlobAlbedo.200903.gif[0m
-    -rw-rw-r--. 1 plewis plewis 28249 Sep 30 11:56 [01;35mdata/GlobAlbedo.200904.gif[0m
-    -rw-rw-r--. 1 plewis plewis 28468 Sep 30 11:56 [01;35mdata/GlobAlbedo.200905.gif[0m
-    -rw-rw-r--. 1 plewis plewis 28672 Sep 30 11:56 [01;35mdata/GlobAlbedo.200906.gif[0m
-    -rw-rw-r--. 1 plewis plewis 28656 Sep 30 11:56 [01;35mdata/GlobAlbedo.200907.gif[0m
-    -rw-rw-r--. 1 plewis plewis 28275 Sep 30 11:56 [01;35mdata/GlobAlbedo.200908.gif[0m
-    -rw-rw-r--. 1 plewis plewis 28952 Sep 30 11:56 [01;35mdata/GlobAlbedo.200909.gif[0m
-    -rw-rw-r--. 1 plewis plewis 28450 Sep 30 11:56 [01;35mdata/GlobAlbedo.200910.gif[0m
-    -rw-rw-r--. 1 plewis plewis 28570 Sep 30 11:56 [01;35mdata/GlobAlbedo.200911.gif[0m
-    -rw-rw-r--. 1 plewis plewis 28438 Sep 30 11:56 [01;35mdata/GlobAlbedo.200912.gif[0m
+    -rw-rw-r--. 1 plewis plewis 51195 Oct  7  2014 [0m[38;5;13mdata/GlobAlbedo.200901.gif[0m
+    -rw-rw-r--. 1 plewis plewis 45450 Oct  3 12:51 [38;5;13mdata/GlobAlbedo.200902.gif[0m
+    -rw-rw-r--. 1 plewis plewis 37857 Oct  3 12:51 [38;5;13mdata/GlobAlbedo.200903.gif[0m
+    -rw-rw-r--. 1 plewis plewis 34722 Oct  3 12:51 [38;5;13mdata/GlobAlbedo.200904.gif[0m
+    -rw-rw-r--. 1 plewis plewis 33199 Oct  3 12:51 [38;5;13mdata/GlobAlbedo.200905.gif[0m
+    -rw-rw-r--. 1 plewis plewis 34251 Oct  3 12:51 [38;5;13mdata/GlobAlbedo.200906.gif[0m
+    -rw-rw-r--. 1 plewis plewis 34969 Oct  3 12:51 [38;5;13mdata/GlobAlbedo.200907.gif[0m
+    -rw-rw-r--. 1 plewis plewis 34854 Oct  3 12:51 [38;5;13mdata/GlobAlbedo.200908.gif[0m
+    -rw-rw-r--. 1 plewis plewis 36803 Oct  3 12:51 [38;5;13mdata/GlobAlbedo.200909.gif[0m
+    -rw-rw-r--. 1 plewis plewis 38035 Oct  3 12:51 [38;5;13mdata/GlobAlbedo.200910.gif[0m
+    -rw-rw-r--. 1 plewis plewis 39616 Oct  3 12:51 [38;5;13mdata/GlobAlbedo.200911.gif[0m
+    -rw-rw-r--. 1 plewis plewis 40297 Oct  3 12:51 [38;5;13mdata/GlobAlbedo.200912.gif[0m
     [m
 
 E3.2.3 Make the movie
@@ -839,7 +833,7 @@ version you downloaded):
 
 .. parsed-literal::
 
-    -rw-rw-r--. 1 plewis plewis 340658 Sep 30 11:56 [0m[01;35mdata/GlobAlbedo.2009.SW.gif[0m
+    -rw-rw-r--. 1 plewis plewis 625640 Oct  3 12:38 [0m[38;5;13mdata/GlobAlbedo.2009.SW.gif[0m
     [m
 
 .. figure:: files/data/GlobAlbedo.2009.SW1.gif
@@ -873,21 +867,31 @@ We will start with just one month of data:
 
 .. code:: python
 
-    from netCDF4 import Dataset
+    import gdal
     import numpy as np
     
-    root = 'files/data/'
-    year = 2009
+    #  first, we write a method to read
+    # the GA type files
+    
+    def readGA(root='data/',year=2009,month=1,layer = 'BHR_VIS'):
+        '''
+        Method to read a GlobAlbedo file
+        '''
+        file_template = 'NETCDF:"%s":%s'
+    
+        filename = root + 'GlobAlbedo.%d%02d.mosaic.5.nc'%(year,month)
+    
+        g = gdal.Open (  file_template % ( filename, layer ) )
+    
+        if g is None:
+          raise IOError
+        data = g.ReadAsArray()
+        
+        # return a numpy array
+        return(np.array(data))
     
     
-    # set the month
-    month = 1
-    
-    ''' Read the data '''
-    local_file = root + 'GlobAlbedo.%d%02d.mosaic.5.nc'%(year,month)
-    # load the netCDF data from the file f.filename
-    nc = Dataset(local_file,'r')
-    band = np.array(nc.variables['DHR_SW'])
+    band = readGA(month=2)
     
     # some interesting things about numpy arrays
     print "the array type is now",type(band)
@@ -920,7 +924,7 @@ to a numpy array with:
 
 ::
 
-    band = np.array(nc.variables['DHR_SW'])
+    return np.array(data)
 
 so this is one way to convert from other data types to numpy
 representation (e.g. ``np.array([1,2,3])`` for a conversion from a
@@ -981,8 +985,8 @@ different is that we set up a slice of each dimension, e.g.:
 
 .. parsed-literal::
 
-    [[ 0.65842855  0.57553321  0.8013677   0.80455124]
-     [ 0.66181606  0.66181606  0.6632846   0.58462834]]
+    [[ 0.63276225  0.6558162   0.6557712   0.65737408]
+     [ 0.6311323   0.6311323   0.63627392  0.65473425]]
     (2, 4)
     2
 
@@ -1028,6 +1032,12 @@ arithmetic:
     so 1./0. = inf
 
 
+.. parsed-literal::
+
+    -c:3: RuntimeWarning: divide by zero encountered in divide
+    -c:3: RuntimeWarning: invalid value encountered in divide
+
+
 ``inf`` here means 'infinity', which is what anything other than zero
 divided by zero is.
 
@@ -1035,11 +1045,13 @@ We can check to see if some value is ``nan`` or ``inf`` e.g:
 
 .. code:: python
 
+    print c
     print 'is c nan?',np.isnan(c)
     print 'is c inf?',np.isinf(c)
 
 .. parsed-literal::
 
+    [ nan  inf]
     is c nan? [ True False]
     is c inf? [False  True]
 
@@ -1101,6 +1113,24 @@ the data are valid.
 
 We might guess that we could simply type:
 
+.. code:: python
+
+    valid_data = ~np.isnan(band)
+    print valid_data
+
+.. parsed-literal::
+
+    [[False False False ..., False False False]
+     [False False False ..., False False False]
+     [False False False ..., False False False]
+     ..., 
+     [ True  True  True ...,  True  True  True]
+     [ True  True  True ...,  True  True  True]
+     [ True  True  True ...,  True  True  True]]
+
+
+where ``~`` means a logical ``NOT``.
+
 masked array
 ^^^^^^^^^^^^
 
@@ -1142,12 +1172,12 @@ In this case, we want to set the mask to ``True`` where the data are
      [-- -- -- ..., -- -- --]
      [-- -- -- ..., -- -- --]
      ..., 
-     [0.5722442269325256 0.5722442269325256 0.5722442269325256 ...,
-      0.5790106058120728 0.5790106058120728 0.5790106058120728]
-     [0.5722442269325256 0.5722442269325256 0.5722442269325256 ...,
-      0.5790106058120728 0.5790106058120728 0.5790106058120728]
-     [0.5722442269325256 0.5722442269325256 0.5722442269325256 ...,
-      0.5790106058120728 0.5790106058120728 0.5790106058120728]]
+     [0.651062548160553 0.651062548160553 0.651062548160553 ...,
+      0.6595190763473511 0.6595190763473511 0.6595190763473511]
+     [0.651062548160553 0.651062548160553 0.651062548160553 ...,
+      0.6595190763473511 0.6595190763473511 0.6595190763473511]
+     [0.651062548160553 0.651062548160553 0.651062548160553 ...,
+      0.6595190763473511 0.6595190763473511 0.6595190763473511]]
     
     with a mask
     [[ True  True  True ...,  True  True  True]
@@ -1170,11 +1200,29 @@ from the example above.
 
 .. code:: python
 
-    from netCDF4 import Dataset
+    import gdal
     import numpy as np
     
-    root = 'files/data/'
-    year = 2009
+    # define the basic reading method as above
+    
+    def readGA(root='data/',year=2009,month=1,layer = 'BHR_VIS'):
+        '''
+        Method to read a GlobAlbedo file
+        '''
+        file_template = 'NETCDF:"%s":%s'
+    
+        filename = root + 'GlobAlbedo.%d%02d.mosaic.5.nc'%(year,month)
+    
+        g = gdal.Open (  file_template % ( filename, layer ) )
+    
+        if g is None:
+          raise IOError
+        data = g.ReadAsArray()
+        
+        # return a numpy array
+        return(np.array(data))
+    
+    
     
     # which months?
     months = xrange(1,13)
@@ -1188,14 +1236,9 @@ from the example above.
     # set the variable month to be 
     # months[0]
     i = 0
-    month = months[i]
     
-    # this then is the file we want
-    local_file = root + 'GlobAlbedo.%d%02d.mosaic.5.nc'%(year,month)
-    
-    # load the netCDF data from the file local_file
-    nc = Dataset(local_file,'r')
-    band = np.array(nc.variables['DHR_SW'])
+    band = readGA(month=months[i],layer='DHR_SW')
+
 Looking at what would happen when we read the first file, we can see
 that we don't actually know how large the whole dataset will be until we
 have read our first file.
@@ -1207,7 +1250,7 @@ with:
 
 ::
 
-    band = np.array(nc.variables['DHR_SW'])
+    band = readGA(month=months[i],layer='DHR_SW')
 
 we don't know how many rows or columns the dataset has (well, we might
 do ... but we want to try to design flexible code, where if the size of
@@ -1291,7 +1334,7 @@ we can control the ``dtype`` of the array with a ``dtype`` option. e.g.:
     empty and ones
     ------------------------------
     np.empty((1,2)):
-    [[  0.00000000e+000   1.56900585e-315]]
+    [[ 0.  0.]]
     np.ones((1,2)):
     [[ 1.  1.]]
     
@@ -1301,13 +1344,13 @@ we can control the ``dtype`` of the array with a ``dtype`` option. e.g.:
     np.ones((1,2),dtype=int):
     [[1 1]]
     np.empty((1,2),dtype=int):
-    [[        0 225037488]]
+    [[1 1]]
     np.ones((1,2),dtype=bool):
     [[ True  True]]
     np.zeros((1,2),dtype=bool):
     [[False False]]
     np.empty((1,2),dtype=bool):
-    [[ True  True]]
+    [[False False]]
     
     ------------------------------
     Note that we can have a string array
@@ -1330,11 +1373,31 @@ So, once we have read one band, we could write:
 
 .. code:: python
 
-    from netCDF4 import Dataset
+    import gdal
     import numpy as np
     
-    root = 'files/data/'
-    year = 2009
+    # define the basic reading method as above
+    
+    def readGA(root='data/',year=2009,month=1,layer = 'BHR_VIS'\
+               ,filename=None):
+        '''
+        Method to read a GlobAlbedo file
+        '''
+        file_template = 'NETCDF:"%s":%s'
+    
+        # what does this do???
+        filename = filename or root + 'GlobAlbedo.%d%02d.mosaic.5.nc'%(year,month)
+    
+        g = gdal.Open (  file_template % ( filename, layer ) )
+    
+        if g is None:
+          raise IOError
+        data = g.ReadAsArray()
+        
+        # return a numpy array
+        return(np.array(data))
+    
+    
     
     # which months?
     months = xrange(1,13)
@@ -1347,15 +1410,12 @@ So, once we have read one band, we could write:
     # set i as index counter
     # set the variable month to be 
     # months[0]
+    
     i = 0
-    month = months[i]
+    month=months[i]
     
-    # this then is the file we want
-    local_file = root + 'GlobAlbedo.%d%02d.mosaic.5.nc'%(year,month)
+    band = readGA(month=month,layer='DHR_SW')
     
-    # load the netCDF data from the file local_file
-    nc = Dataset(local_file,'r')
-    band = np.array(nc.variables['DHR_SW'])
     if i == 0:  # first band read
         # set up a tuple (or list) saying what shape we want the data
         shape = (len(months),) + band.shape
@@ -1391,8 +1451,8 @@ Putting this all together then:
     local_file = root + 'GlobAlbedo.%d%02d.mosaic.5.nc'%(year,month)
     
     # load the netCDF data from the file local_file
-    nc = Dataset(local_file,'r')
-    band = np.array(nc.variables['DHR_SW'])
+    band = readGA(filename=local_file,layer='DHR_SW')
+    
     if i == 0:  # first band read
         # set up a tuple (or list) saying what shape we want the data
         shape = (len(months),) + band.shape
@@ -1404,10 +1464,10 @@ And setting the loop around this:
 
 .. code:: python
 
-    from netCDF4 import Dataset
     import numpy as np
+    import calendar
     
-    root = 'files/data/'
+    root = 'data/'
     year = 2009
     
     # which months?
@@ -1415,13 +1475,13 @@ And setting the loop around this:
     
     # loop over month
     # use enumerate so we have an index counter
-    for i,month in enumerate(months):
+    for i,month in enumerate(calendar.month_name[1:]):
         # this then is the file we want
-        local_file = root + 'GlobAlbedo.%d%02d.mosaic.5.nc'%(year,month)
+        local_file = root + 'GlobAlbedo.%d%02d.mosaic.5.nc'%(year,i+1)
         
         # load the netCDF data from the file local_file
-        nc = Dataset(local_file,'r')
-        band = np.array(nc.variables['DHR_SW'])
+        band = readGA(filename=local_file,layer='DHR_SW')
+        
         if i == 0:  # first band read
             # set up a tuple (or list) saying what shape we want the data
             shape = (len(months),) + band.shape
@@ -1437,14 +1497,14 @@ to the list each time we read a new band.
 
 .. code:: python
 
-    from netCDF4 import Dataset
     import numpy as np
+    import calendar
     
-    root = 'files/data/'
+    root = 'data/'
     year = 2009
     
     # which months?
-    months = xrange(1,13)
+    months = calendar.month_name[1:]
     
     # empty list
     data = []
@@ -1453,20 +1513,152 @@ to the list each time we read a new band.
     # use enumerate so we have an index counter
     for i,month in enumerate(months):
         # this then is the file we want
-        local_file = root + 'GlobAlbedo.%d%02d.mosaic.5.nc'%(year,month)
+        local_file = root + 'GlobAlbedo.%d%02d.mosaic.5.nc'%(year,i+1)
         
         # load the netCDF data from the file local_file
-        nc = Dataset(local_file,'r')
+        band = readGA(filename=local_file,layer='DHR_SW')
         # append what we read to the list called data
-        data.append(np.array(nc.variables['DHR_SW']))
+        data.append(np.array(band))
         
     # convert data to a numpy array (its a list of arrays at the moment)
     data = np.array(data)
+    print 'shape',data.shape
+
+.. parsed-literal::
+
+    shape (12, 360, 720)
+
+
 In many ways, this is a simpler and 'cleaner' way of setting up a 3-D
 array from reading multiple 2-D arrays. If the array is *very* large, it
 can be less efficient (you have to convert a huge list to an array at
 the end), but that is not normally something to worry about and this
 approach is often preferable.
+
+In fact, if we know how many entries (in time) we are expecting, we can
+simply set up the storage array before going into the loop:
+
+.. code:: python
+
+    import gdal
+    import numpy as np
+    
+    # define the basic reading method as above
+    
+    def readGA(root='data/',year=2009,month=1,layer = 'BHR_VIS'\
+               ,filename=None):
+        '''
+        Method to read a GlobAlbedo file
+        '''
+        file_template = 'NETCDF:"%s":%s'
+    
+        # what does this do???
+        filename = filename or root + 'GlobAlbedo.%d%02d.mosaic.5.nc'%(year,month)
+    
+        g = gdal.Open (  file_template % ( filename, layer ) )
+    
+        if g is None:
+          raise IOError
+        data = g.ReadAsArray()
+        
+        # return a numpy array
+        return(np.array(data))
+    
+    
+    root = 'data/'
+    year = 2009
+    
+    # which months?
+    months = np.array(calendar.month_name[1:])
+    
+    # get the image size by reading the first image
+    # this is a bit wasteful, but makes things
+    # neater in the long run
+    local_file = root + 'GlobAlbedo.%d%02d.mosaic.5.nc'%(year,i+1)
+    shape = readGA(filename=local_file,layer='DHR_SW').shape
+    
+    # empty list of required *full* shape
+    data = np.zeros((len(months),)+shape)
+    
+    # loop over month
+    # use enumerate so we have an index counter
+    for i,month in enumerate(months):
+        # this then is the file we want
+        local_file = root + 'GlobAlbedo.%d%02d.mosaic.5.nc'%(year,i+1)
+        
+        # load the netCDF data from the file local_file
+        band = readGA(filename=local_file,layer='DHR_SW')
+        
+        # insert into list in index i
+        data[i] = np.array(band)
+    
+    # convert to proper 3D array
+    data = np.array(data)
+        
+    print data.shape
+
+.. parsed-literal::
+
+    (12, 360, 720)
+
+
+.. code:: python
+
+    # we could wrap all of this up into the reading method:
+    
+    def readGA(root='data/',years=[2009],months=[],\
+                layers = ['BHR_VIS']):
+        '''
+        Method to read GlobAlbedo files
+        '''
+        file_template = 'NETCDF:"%s":%s'
+        
+        if len(months) == 0:
+            months = xrange(1,13)
+        
+        
+        first = True
+        shape = None
+        
+        i = 0
+        for year in years:
+            for month in months:
+                for layer in layers:
+    
+                    # what does this do???
+                    filename = root + 'GlobAlbedo.%d%02d.mosaic.5.nc'%(year,month)
+    
+                    g = gdal.Open (  file_template % ( filename, layer ) )
+    
+                    if g is None:
+                      raise IOError
+                    data_ = g.ReadAsArray()
+                    
+                    # if first time
+                    if first:
+                        first = False
+                        # get the shape
+                        shape = data_.shape
+                        # set up the big array to return
+                        shape = (len(months) * len(years) * len(layers),)+shape
+                        data = np.zeros(shape)  
+                    data[i] = data_
+                    # increment counter
+                    i += 1
+        return(np.array(data))
+    
+    
+    # which months?
+    months = np.array(calendar.month_name[1:])
+    
+    data = readGA(years=[year],months=np.arange(1,13))
+    
+    print data.shape
+
+.. parsed-literal::
+
+    (12, 360, 720)
+
 
 sum
 ^^^
@@ -1565,8 +1757,8 @@ change this into a ``valid`` array:
 
 .. parsed-literal::
 
-    [ 0.69403636  0.74866891  0.80311614 ...,  0.58878124  0.58878124
-      0.58878124]
+    [ 0.70465302  0.77435672  0.79079205 ...,  0.68589932  0.68589932
+      0.68589932]
 
 
 Now, the array is a 1-D array. It has fewer elements that the original
@@ -1596,7 +1788,7 @@ This is however, one way we can use ``np.sum`` to add up the values in
 
 .. parsed-literal::
 
-    446890.0
+    438888.418459
 
 
 mean
@@ -1622,7 +1814,7 @@ but selecting only the values that are valid:
 
 .. parsed-literal::
 
-    0.429546835711 0.30692650158
+    0.421855577655 0.382216115949
 
 
 we get what we might expect.
@@ -1733,16 +1925,18 @@ the GlobAlbedo dataset for the year 2009.**
 If you run the exercise above, ``data`` should now be a masked array.
 
 If you haven't (e.g. when going through this in the class), you can run
-a function in the file
-```files/python/masked.py`` <files/python/masked.py>`__ to do this now:
+a function in the file ```python/masked.py`` <files/python/masked.py>`__
+to do this now:
 
 .. code:: python
 
     import sys
-    sys.path.insert(0,'files/python')
+    # look in the local python (code) directory
+    sys.path.insert(0,'python')
     from masked import masked
     
-    data = masked(dataset='BHR_SW')
+    data = masked(layers=['BHR_SW'])
+    
     print type(data)
     print data.shape
     print data.ndim
@@ -1784,7 +1978,7 @@ code above), we can do some interesting things with it with numpy
     # do a plot
     
     # change the figure size
-    plt.figure()
+    plt.figure(figsize=(10,4))
     
     plt.title('SW BHR mean albedo for %d'%(year))
     # use nearest neighbour interpolation
@@ -1798,19 +1992,19 @@ code above), we can do some interesting things with it with numpy
 
 .. parsed-literal::
 
-    <matplotlib.colorbar.Colorbar instance at 0x13065ea8>
+    <matplotlib.colorbar.Colorbar instance at 0x7f8119c9f830>
 
 
 
 
-.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_148_1.png
+.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_153_1.png
 
 
 .. code:: python
 
     #std
     std_albedo = data.std(axis=0)
-    plt.figure()
+    plt.figure(figsize=(10,4))
     
     plt.title('SW BHR std albedo for %d'%(year))
     # use nearest neighbour interpolation
@@ -1824,12 +2018,12 @@ code above), we can do some interesting things with it with numpy
 
 .. parsed-literal::
 
-    <matplotlib.colorbar.Colorbar instance at 0x129f7a28>
+    <matplotlib.colorbar.Colorbar instance at 0x7f8119bfea28>
 
 
 
 
-.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_149_1.png
+.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_154_1.png
 
 
 We can see form this that most of the intra-annual variation in total
@@ -1855,13 +2049,20 @@ min, max
     sys.path.insert(0,'files/python')
     from masked import masked
     
-    vis = masked(dataset='BHR_VIS')
-    nir = masked(dataset='BHR_NIR')
+    vis = masked(layers=['BHR_VIS'])
+    nir = masked(layers=['BHR_NIR'])
     
     ndvi = (nir-vis)/(nir+vis)
     # set negative and ndvi > 1 (error) to 0
     #ndvi[ndvi>1] = 0
     #ndvi[ndvi<0] = 0
+
+
+.. parsed-literal::
+
+    /home/plewis/envs/my_root/lib/python2.7/site-packages/numpy/ma/core.py:783: RuntimeWarning: invalid value encountered in greater_equal
+      return umath.absolute(a) * self.tolerance >= umath.absolute(b)
+
 
 .. code:: python
 
@@ -1889,7 +2090,7 @@ min, max
     for k in datasets.keys():
         # note the order is not maintained
         # from when we set up the dictionary
-        plt.figure()
+        plt.figure(figsize=(10,4))
         plt.title(k)
         plt.imshow(datasets[k],interpolation='none',\
                    cmap=plt.get_cmap('YlGn'),vmin=0.0,vmax=vmax[k])
@@ -1897,23 +2098,23 @@ min, max
 
 
 
-.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_155_0.png
+.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_160_0.png
 
 
 
-.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_155_1.png
+.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_160_1.png
 
 
 
-.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_155_2.png
+.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_160_2.png
 
 
 
-.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_155_3.png
+.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_160_3.png
 
 
 
-.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_155_4.png
+.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_160_4.png
 
 
 The mean and max NDVI is pretty much what you would expect (MODIS NDVI,
@@ -1975,25 +2176,92 @@ We have the latitude associated with the dataset from:
 
 .. code:: python
 
-    lat = np.array(nc.variables['lat'])
+    # example filename : use formatting string:
+    # %d%02d
+    year = 2009
+    month = 1
+    filename = root + 'GlobAlbedo.%d%02d.mosaic.5.nc'%(year,month)
+    print filename
     
-    plt.plot(lat)
-    plt.xlim(0,len(lat))
-    plt.ylim(-90,90)
+    # read some data to get the shape
+    vis = masked(layers=['BHR_VIS'])
+    
+    # latitude, longitude
+    dd = 0.5
+    
+    lat,lon = np.mgrid[-90+dd/2:90+dd/2:dd,-180+dd/2:180+dd/2:dd]
+    print '------ latitude ------'
+    print lat
+    print '------ longitude ------'
+    print lon
+
+.. parsed-literal::
+
+    data/GlobAlbedo.200901.mosaic.5.nc
+    ------ latitude ------
+    [[-89.75 -89.75 -89.75 ..., -89.75 -89.75 -89.75]
+     [-89.25 -89.25 -89.25 ..., -89.25 -89.25 -89.25]
+     [-88.75 -88.75 -88.75 ..., -88.75 -88.75 -88.75]
+     ..., 
+     [ 88.75  88.75  88.75 ...,  88.75  88.75  88.75]
+     [ 89.25  89.25  89.25 ...,  89.25  89.25  89.25]
+     [ 89.75  89.75  89.75 ...,  89.75  89.75  89.75]]
+    ------ longitude ------
+    [[-179.75 -179.25 -178.75 ...,  178.75  179.25  179.75]
+     [-179.75 -179.25 -178.75 ...,  178.75  179.25  179.75]
+     [-179.75 -179.25 -178.75 ...,  178.75  179.25  179.75]
+     ..., 
+     [-179.75 -179.25 -178.75 ...,  178.75  179.25  179.75]
+     [-179.75 -179.25 -178.75 ...,  178.75  179.25  179.75]
+     [-179.75 -179.25 -178.75 ...,  178.75  179.25  179.75]]
+
+
+where
+`np.mgrid <http://docs.scipy.org/doc/numpy/reference/generated/numpy.mgrid.html>`__
+is a numpy method that produces sets of numbers on a grid from *slice*
+information, e.g. ``-90:90+dlat:dlat`` means *from* ``-90``, *to* (but
+not including) ``90+dlat``, in steps of ``dlat``.
+
+.. code:: python
+
+    # lets make it a masked array
+    
+    lat,lon = np.mgrid[-90+dd/2:90+dd/2:dd,-180+dd/2:180+dd/2:dd]
+    
+    # The boolean mask is stored as vis.mask
+    print 'shape of vis.mask',vis.mask.shape
+    
+    # we want a single time slice so mask[0]
+    print vis.mask[0].shape,lat.shape
+    
+    lat = ma.array(lat,mask=vis.mask[0])
+    
+    print lat.shape
+    
+    plt.figure(figsize=(10,4))
+    plt.imshow(lat)
+    
     plt.title('latitude')
-    plt.xlabel('column number')
-    plt.ylabel('latitude')
+    plt.colorbar()
+
+
+.. parsed-literal::
+
+    shape of vis.mask (12, 360, 720)
+    (360, 720) (360, 720)
+    (360, 720)
+
 
 
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x13e9c650>
+    <matplotlib.colorbar.Colorbar instance at 0x7f8119504ea8>
 
 
 
 
-.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_161_1.png
+.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_168_2.png
 
 
 for day of year ``N`` then, we have a formula for solar declination.
@@ -2006,6 +2274,19 @@ Approximating ``N`` for each month by an average:
     av_days = 365.25 / 12.
     half = av_days/2.
     N = np.arange(half,365.25,av_days)
+    print N
+
+.. parsed-literal::
+
+    [  15.21875   45.65625   76.09375  106.53125  136.96875  167.40625
+      197.84375  228.28125  258.71875  289.15625  319.59375  350.03125]
+
+
+.. code:: python
+
+    # or using mgrid:
+    
+    N = np.mgrid[half:365.25:av_days]
     print N
 
 .. parsed-literal::
@@ -2039,7 +2320,7 @@ we can approximate the solar declination as:
 
 
 
-.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_166_1.png
+.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_174_1.png
 
 
 Although we might think the formulae a little complicated, the
@@ -2075,59 +2356,39 @@ for day of year:
 
 .. parsed-literal::
 
-    lat: (360,)
+    lat: (360, 720)
     N: (12,)
 
-
-transpose
-^^^^^^^^^
 
 what we need is ``lat`` and ``N`` in the full 3-D array shape
 ``(12,360,720)``.
 
-This involves repeating, which is probably easiest to accomplish with
-lists:
+There are various ways to do this, but a simple one is to just use
+``np.mlist`` with an extra (time) dimension:
 
 .. code:: python
 
-    N2 = np.array([[N] * data.shape[1]] * data.shape[2])
-    print N2.shape
+    
+    dd = 0.5
+    month,lat,lon = np.mgrid[0:12,-90+dd/2:90+dd/2:dd,-180+dd/2:180+dd/2:dd]
+    print '------ latitude ------'
+    print lat.shape
+    print '------ longitude ------'
+    print lon.shape
 
 .. parsed-literal::
 
-    (720, 360, 12)
-
-
-but the list repetition makes the array the 'wrong way around' to whjat
-we want, so we apply a transpose operation in numpy:
-
-.. code:: python
-
-    N2 = np.array([[N] * data.shape[1]] * data.shape[2]).T
-    print N2.shape
-
-.. parsed-literal::
-
+    ------ latitude ------
     (12, 360, 720)
-
-
-Similarly then with ``lat``, but we have to be a little more careful
-with the transpose operations:
-
-.. code:: python
-
-    lat2 = np.array([np.array([lat] * data.shape[0]).T] * data.shape[2]).T
-    print lat2.shape
-
-.. parsed-literal::
-
+    ------ longitude ------
     (12, 360, 720)
 
 
 def: functions
 ^^^^^^^^^^^^^^
 
-At this point, we might consider it useful to write a *function*.
+At this point, we might consider it useful to write a *function*. We
+have used an *example* of this above, but go into it in more detail now.
 
 These are of the form:
 
@@ -2156,31 +2417,25 @@ These are of the form:
         sin_theta = np.cos (h)*np.cos (delta)*np.cos(lat) + np.sin ( delta)*np.sin(lat)
         return np.rad2deg(np.arcsin(sin_theta))
         
-zeros\_like, ones\_like
-^^^^^^^^^^^^^^^^^^^^^^^
-
 .. code:: python
 
     # create numpy arrays of the right shape
+    # using mgrid for simplicity
     
-    N2 = np.array([[N] * data.shape[1]] * data.shape[2]).T
-    lat2 = np.array([np.array([lat] * data.shape[0]).T] * data.shape[2]).T
+    N,lat,lon = np.mgrid[half:365.25:av_days,-90+dd/2:90+dd/2:dd,-180+dd/2:180+dd/2:dd]
     
-    # zeros_like creates array of the same shape as N2 here
+    # zeros_like creates array of the same shape as N here (or, lat or lon)
     # filled with zeros. Similarly ones_like
-    h2 = np.zeros_like(N2) + h
-copy
-^^^^
-
+    h2 = np.zeros_like(N) + h
 .. code:: python
 
     # now put these things together
     
     # copy the arrays, so we don't overwrite the data
     
-    delta = declination(N2.copy())
+    delta = declination(N)
     e0 = 1360.
-    sea = solar_elevation(delta,h2.copy(),lat2.copy())
+    sea = solar_elevation(delta,h2,lat)
     sin_theta = np.sin(np.deg2rad(sea))
     rad = e0*sin_theta
     # threshold at zero
@@ -2193,12 +2448,12 @@ copy
 
     # plot to visualise the data and see it looks reasonable
     
-    plt.figure()
+    plt.figure(figsize=(10,4))
     plt.title('Jan')
     plt.imshow(rad[0],interpolation='none',cmap=plt.get_cmap('jet'))
     plt.colorbar()
     
-    plt.figure()
+    plt.figure(figsize=(10,4))
     plt.title('Jun')
     plt.imshow(rad[5],interpolation='none',cmap=plt.get_cmap('jet'))
     plt.colorbar()
@@ -2208,16 +2463,16 @@ copy
 
 .. parsed-literal::
 
-    <matplotlib.colorbar.Colorbar instance at 0x13aad6c8>
+    <matplotlib.colorbar.Colorbar instance at 0x7f8118d58fc8>
 
 
 
 
-.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_185_1.png
+.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_186_1.png
 
 
 
-.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_185_2.png
+.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_186_2.png
 
 
 This sort of application really shows the power of manipulating arrays.
@@ -2228,8 +2483,8 @@ E3.5 Exercise: Solar Radiation Code: A chance for you to get feedback
 In the section above, we have developed some code to estimate solar
 radiation and we have packaged some of it into functions.
 
-**In a file called ``files/python/solar.py``, develop some Python code
-that will**
+**In a file called ``python/solar.py``, develop some Python code that
+will**
 
 1. Read GlobAlbedo data ``DHR_SW`` (shortwave directional-hemispherical
    reflectance) into a masked array ``data``
@@ -2272,8 +2527,8 @@ We will *not* release model answers for this exercise at present.
 
 Instead, we would like you to complete this exercise over the coming
 week and submit it by the following Monday morning. If you do this,
-there will be sessions run in (extended) office hours (9-12 Monday, 9-12
-Tuesday, 9-10 Wednesday) when you will bve given feedback on your
+there will be sessions run in (extended) office hours (11-12 Thursday,
+4-5 Thursday, 9-10 Wednesday) when you will bve given feedback on your
 submission. To get the most out of these feedback sessions, it would be
 adviseable to request a time slot (You should be getting a doodle poll
 email to that effect)
@@ -2310,13 +2565,13 @@ So, e.g. to save the arrays ``data`` and ``rad``:
     import numpy as np
     # there is a problem saving masked arrays at the moment, 
     # so convert and save the mask
-    np.savez('files/data/solar_rad_data.npz',\
+    np.savez('data/solar_rad_data.npz',\
              rad=np.array(rad),data=np.array(data),mask=data.mask)
 To load this again use ``np.load``, which returns a dictionary:
 
 .. code:: python
 
-    f = np.load('files/data/solar_rad_data.npz')
+    f = np.load('data/solar_rad_data.npz')
     data = ma.array(f['data'],mask=f['mask'])
     rad  = ma.array(f['rad'],mask=f['mask'])
 loadtxt, savetxt
@@ -2331,7 +2586,7 @@ That said, we can deal with some awkward issues in a dataset:
 
 .. code:: python
 
-    !head -15 < files/data/heathrowdata.txt
+    !head -15 < data/heathrowdata.txt
 
 .. parsed-literal::
 
@@ -2356,7 +2611,7 @@ That said, we can deal with some awkward issues in a dataset:
 
     # read sun hours from the heathrow data file
     
-    filename = 'files/data/heathrowdata.txt'
+    filename = 'data/heathrowdata.txt'
     
     # In this dataset, we need to know what
     # to do when we get '---' in the dataset
@@ -2394,7 +2649,7 @@ That said, we can deal with some awkward issues in a dataset:
 
 
 
-.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_198_2.png
+.. image:: Scientific_Numerical_Python_files/Scientific_Numerical_Python_199_2.png
 
 
 We can save this to a text file with:
@@ -2403,10 +2658,10 @@ We can save this to a text file with:
 
     header = 'year month sun_hours'
     # note, we transpose it if we want the data as columns
-    np.savetxt('files/data/sunshine.txt',sun_hrs.T,header=header)
+    np.savetxt('data/sunshine.txt',sun_hrs.T,header=header)
 .. code:: python
 
-    !head -10 < files/data/sunshine.txt
+    !head -10 < data/sunshine.txt
 
 .. parsed-literal::
 
@@ -2425,11 +2680,11 @@ We can save this to a text file with:
 E3.6 Exercise: awkward reading
 ------------------------------
 
-The file ``files/data/elevation.dat`` look like:
+The file ``data/elevation.dat`` look like:
 
 .. code:: python
 
-    !head -10 < files/data/elevation.dat
+    !head -10 < data/elevation.dat
 
 .. parsed-literal::
 

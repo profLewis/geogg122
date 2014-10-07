@@ -2150,16 +2150,35 @@ In&nbsp;[11]:
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[12]:
+In&nbsp;[5]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
 <div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span><span class="nn">os</span>
 <span class="c"># put local directory into the path</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s">&#39;files</span><span class="si">%s</span><span class="s">python&#39;</span><span class="o">%</span><span class="k">os</span><span class="o">.</span><span class="n">sep</span><span class="p">))</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s">&#39;python&#39;</span><span class="p">))</span>
 <span class="c"># import local module gzurl</span>
 <span class="kn">from</span> <span class="nn">gzurl</span> <span class="kn">import</span> <span class="n">gzurl</span>
-<span class="kn">from</span> <span class="nn">netCDF4</span> <span class="kn">import</span> <span class="n">Dataset</span>
+<span class="kn">import</span> <span class="nn">gdal</span>
+
+<span class="k">def</span> <span class="nf">readGA</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s">&#39;data/&#39;</span><span class="p">,</span><span class="n">year</span><span class="o">=</span><span class="mi">2009</span><span class="p">,</span><span class="n">month</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">layer</span> <span class="o">=</span> <span class="s">&#39;BHR_VIS&#39;</span><span class="p">,</span><span class="n">filename</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Method to read a GlobAlbedo file from earlier</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">file_template</span> <span class="o">=</span> <span class="s">&#39;NETCDF:&quot;</span><span class="si">%s</span><span class="s">&quot;:</span><span class="si">%s</span><span class="s">&#39;</span>
+
+    <span class="c"># allow filename to be overridden from filename=</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span> <span class="ow">or</span> <span class="n">root</span> <span class="o">+</span> <span class="s">&#39;GlobAlbedo.</span><span class="si">%d%02d</span><span class="s">.mosaic.5.nc&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">month</span><span class="p">)</span>
+
+    <span class="n">g</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span> <span class="p">(</span>  <span class="n">file_template</span> <span class="o">%</span> <span class="p">(</span> <span class="n">filename</span><span class="p">,</span> <span class="n">layer</span> <span class="p">)</span> <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">g</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">IOError</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">()</span>
+    
+    <span class="c"># return a numpy array</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+
 
 <span class="c"># codes for url specification on globalbedo.org</span>
 <span class="n">years</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1998</span><span class="p">,</span><span class="mi">2012</span><span class="p">)</span>
@@ -2180,9 +2199,8 @@ In&nbsp;[12]:
 <span class="c"># read the gzipped file</span>
 <span class="n">f</span> <span class="o">=</span> <span class="n">gzurl</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 <span class="c"># read the netCDF file from f.filename</span>
-<span class="n">nc</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span><span class="s">&#39;r&#39;</span><span class="p">)</span>
-<span class="c"># close f</span>
-<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">nc</span> <span class="o">=</span> <span class="n">readGA</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">f</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">nc</span>
 </pre></div>
 
 </div>
@@ -2197,6 +2215,19 @@ In&nbsp;[12]:
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
 http://www.globalbedo.org/GlobAlbedo56/mosaics/2009/0.5/monthly/
+[[        nan         nan         nan ...,         nan         nan
+          nan]
+ [        nan         nan         nan ...,         nan         nan
+          nan]
+ [        nan         nan         nan ...,         nan         nan
+          nan]
+ ..., 
+ [ 0.67017049  0.67017049  0.67017049 ...,  0.67199522  0.67199522
+   0.67199522]
+ [ 0.67017049  0.67017049  0.67017049 ...,  0.67199522  0.67199522
+   0.67199522]
+ [ 0.67017049  0.67017049  0.67017049 ...,  0.67199522  0.67199522
+   0.67199522]]
 
 </pre>
 </div>
@@ -2218,7 +2249,7 @@ http://www.globalbedo.org/GlobAlbedo56/mosaics/2009/0.5/monthly/
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[13]:
+In&nbsp;[8]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
@@ -2227,7 +2258,7 @@ In&nbsp;[13]:
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s">&#39;files</span><span class="si">%s</span><span class="s">python&#39;</span><span class="o">%</span><span class="k">os</span><span class="o">.</span><span class="n">sep</span><span class="p">))</span>
 <span class="c"># import local module gzurl</span>
 <span class="kn">from</span> <span class="nn">gzurl</span> <span class="kn">import</span> <span class="n">gzurl</span>
-<span class="kn">from</span> <span class="nn">netCDF4</span> <span class="kn">import</span> <span class="n">Dataset</span>
+<span class="kn">import</span> <span class="nn">gdal</span>
 
 <span class="c"># codes for url specification on globalbedo.org</span>
 <span class="n">years</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1998</span><span class="p">,</span><span class="mi">2012</span><span class="p">)</span>
@@ -2245,15 +2276,14 @@ In&nbsp;[13]:
     <span class="n">url</span> <span class="o">=</span> <span class="n">root</span> <span class="o">+</span> <span class="n">base</span> <span class="o">+</span> <span class="s">&#39;.gz&#39;</span>
     <span class="c"># specify a local filename</span>
     <span class="c"># work out how / why this works ...</span>
-    <span class="n">local</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&#39;files{0}data{0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">),</span><span class="n">base</span><span class="p">)</span>
+    <span class="n">local</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&#39;data{0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">),</span><span class="n">base</span><span class="p">)</span>
     
     <span class="c"># read the gzipped file</span>
     <span class="k">print</span> <span class="n">local</span>
     <span class="n">f</span> <span class="o">=</span> <span class="n">gzurl</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">filename</span><span class="o">=</span><span class="n">local</span><span class="p">)</span>
     <span class="c"># read the netCDF file from f.filename</span>
-    <span class="n">nc</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span><span class="s">&#39;r&#39;</span><span class="p">)</span>
-    <span class="c"># close f</span>
-    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="c"># read the gzipped file</span>
+    <span class="n">nc</span> <span class="o">=</span> <span class="n">readGA</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">f</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -2267,18 +2297,18 @@ In&nbsp;[13]:
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
-files/data/GlobAlbedo.200901.mosaic.5.nc
-files/data/GlobAlbedo.200902.mosaic.5.nc
-files/data/GlobAlbedo.200903.mosaic.5.nc
-files/data/GlobAlbedo.200904.mosaic.5.nc
-files/data/GlobAlbedo.200905.mosaic.5.nc
-files/data/GlobAlbedo.200906.mosaic.5.nc
-files/data/GlobAlbedo.200907.mosaic.5.nc
-files/data/GlobAlbedo.200908.mosaic.5.nc
-files/data/GlobAlbedo.200909.mosaic.5.nc
-files/data/GlobAlbedo.200910.mosaic.5.nc
-files/data/GlobAlbedo.200911.mosaic.5.nc
-files/data/GlobAlbedo.200912.mosaic.5.nc
+data/GlobAlbedo.200901.mosaic.5.nc
+data/GlobAlbedo.200902.mosaic.5.nc
+data/GlobAlbedo.200903.mosaic.5.nc
+data/GlobAlbedo.200904.mosaic.5.nc
+data/GlobAlbedo.200905.mosaic.5.nc
+data/GlobAlbedo.200906.mosaic.5.nc
+data/GlobAlbedo.200907.mosaic.5.nc
+data/GlobAlbedo.200908.mosaic.5.nc
+data/GlobAlbedo.200909.mosaic.5.nc
+data/GlobAlbedo.200910.mosaic.5.nc
+data/GlobAlbedo.200911.mosaic.5.nc
+data/GlobAlbedo.200912.mosaic.5.nc
 
 </pre>
 </div>
@@ -2310,12 +2340,12 @@ files/data/GlobAlbedo.200912.mosaic.5.nc
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[14]:
+In&nbsp;[9]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="o">!</span>rm -f files/data/GlobAlbedo.200901.mosaic.5.nc.gz 
-<span class="o">!</span>wget -O files/data/GlobAlbedo.200901.mosaic.5.nc.gz <span class="err">\</span>
+<div class="highlight"><pre><span class="o">!</span>rm -f data/GlobAlbedo.200901.mosaic.5.nc.gz 
+<span class="o">!</span>wget -O data/GlobAlbedo.200901.mosaic.5.nc.gz <span class="err">\</span>
   <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">globalbedo</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">GlobAlbedo56</span><span class="o">/</span><span class="n">mosaics</span><span class="o">/</span><span class="mi">2009</span><span class="o">/</span><span class="mf">0.5</span><span class="o">/</span><span class="n">monthly</span><span class="o">/</span><span class="n">GlobAlbedo</span><span class="o">.</span><span class="mf">200901.</span><span class="n">mosaic</span><span class="o">.</span><span class="mf">5.</span><span class="n">nc</span><span class="o">.</span><span class="n">gz</span>
 </pre></div>
 
@@ -2330,16 +2360,16 @@ In&nbsp;[14]:
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
---2013-10-12 20:13:51--  http://www.globalbedo.org/GlobAlbedo56/mosaics/2009/0.5/monthly/GlobAlbedo.200901.mosaic.5.nc.gz
+--2014-10-07 14:03:42--  http://www.globalbedo.org/GlobAlbedo56/mosaics/2009/0.5/monthly/GlobAlbedo.200901.mosaic.5.nc.gz
 Resolving www.globalbedo.org... 128.40.73.100
 Connecting to www.globalbedo.org|128.40.73.100|:80... connected.
 HTTP request sent, awaiting response... 200 OK
 Length: 4540366 (4.3M) [application/x-gzip]
-Saving to: &#96;files/data/GlobAlbedo.200901.mosaic.5.nc.gz&apos;
+Saving to: &#96;data/GlobAlbedo.200901.mosaic.5.nc.gz&apos;
 
-100%[======================================&gt;] 4,540,366   2.78M/s   in 1.6s    
+100%[======================================&gt;] 4,540,366   21.6M/s   in 0.2s    
 
-2013-10-12 20:13:52 (2.78 MB/s) - &#96;files/data/GlobAlbedo.200901.mosaic.5.nc.gz&apos; saved [4540366/4540366]
+2014-10-07 14:03:42 (21.6 MB/s) - &#96;data/GlobAlbedo.200901.mosaic.5.nc.gz&apos; saved [4540366/4540366]
 
 
 </pre>
@@ -2353,12 +2383,12 @@ Saving to: &#96;files/data/GlobAlbedo.200901.mosaic.5.nc.gz&apos;
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[15]:
+In&nbsp;[10]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="o">!</span>gunzip -f files/data/GlobAlbedo.200901.mosaic.5.nc.gz
-<span class="o">!</span>ls -l files/data/GlobAlbedo.200901.mosaic.5.nc
+<div class="highlight"><pre><span class="o">!</span>gunzip -f data/GlobAlbedo.200901.mosaic.5.nc.gz
+<span class="o">!</span>ls -l data/GlobAlbedo.200901.mosaic.5.nc
 </pre></div>
 
 </div>
@@ -2372,7 +2402,7 @@ In&nbsp;[15]:
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
--rw-r--r--  1 plewis  staff  18669672 12 Sep 17:12 files/data/GlobAlbedo.200901.mosaic.5.nc
+-rw-rw-r--. 1 plewis plewis 18669672 Sep 12  2013 data/GlobAlbedo.200901.mosaic.5.nc
 
 </pre>
 </div>

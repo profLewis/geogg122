@@ -316,12 +316,6 @@ You can delete a variable with ``del``:
 
     x = 100.
     print x
-
-.. parsed-literal::
-
-     100.0
-
-
 .. code:: python
 
     x = 100.
@@ -330,22 +324,6 @@ You can delete a variable with ``del``:
     # so now if we try to do anything with the variable
     # x, it should fail as x is no longer defined
     print x
-
-::
-
-
-    ---------------------------------------------------------------------------
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-11-f602427acddb> in <module>()
-          4 # so now if we try to do anything with the variable
-          5 # x, it should fail as x is no longer defined
-    ----> 6 print x
-    
-
-    NameError: name 'x' is not defined
-
-
 2.3.2 Arithmetic
 ~~~~~~~~~~~~~~~~
 
@@ -380,20 +358,6 @@ Note the way this works for integers and floating point representations.
     remainder = number%base # float remainder
     floor     = number//base # 'floor' operation
     print number,'is',floor,'times',base,'plus',remainder
-
-.. parsed-literal::
-
-    110
-    -90.0
-    0.5
-    0
-    200.0
-    8.0
-    0
-    ========
-    9.5 is 4.0 times 2.0 plus 1.5
-
-
 Exercise
 ~~~~~~~~
 
@@ -450,12 +414,6 @@ expected.
     
     # The answer will always be 3
     print x
-
-.. parsed-literal::
-
-    3.0
-
-
 2.3.4 Logical Operators
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -468,13 +426,6 @@ expected.
     dead = not alive
     print 'dead or alive is',dead or alive
     print 'dead and alive is',dead and alive
-
-.. parsed-literal::
-
-    dead or alive is True
-    dead and alive is False
-
-
 The result of running comparison operators will give a logical (i.e.
 ``bool``) output.
 
@@ -523,39 +474,12 @@ for string data types.
     # a boolean example just to see what happens
     print "is True greater than False?"
     print True > False
-
-.. parsed-literal::
-
-    is one plus one equal to two?
-    True
-    is one less than or equal to 0.999?
-    False
-    is one plus one not equal to two?
-    False
-    is "Hello" not the same as "hello"?
-    True
-    is 'more' greater than 'less'?
-    True
-    is '100' less than '2'?
-    True
-    is 100 less than 2?
-    False
-    is True greater than False?
-    True
-
-
 We can combine such logical statements, bracketing the terms as
 required:
 
 .. code:: python
 
     print (1 < 2) and (True or False)
-
-.. parsed-literal::
-
-    True
-
-
 .. code:: python
 
     #!/usr/bin/env python
@@ -588,14 +512,6 @@ required:
                                 (not (timeSinceFed >= hungerThreshold))
     print "Just hungry?",(not (timeSinceSleep >= sleepThreshold)) and \
                                 (timeSinceFed >= hungerThreshold)
-
-.. parsed-literal::
-
-    Tired and hungry? False
-    Just tired? False
-    Just hungry? True
-
-
 Exercise 2.1
 ~~~~~~~~~~~~
 
@@ -645,12 +561,6 @@ A ``tuple`` is a group of items separated by commas.
 
     t = 1, 2, 'three', False
     print t
-
-.. parsed-literal::
-
-    (1, 2, 'three', False)
-
-
 Note that when you declare the tuple, you don't need to put the braces
 (brackets) as this is implicit.
 
@@ -660,12 +570,6 @@ Often though, it is a good idea to do so.
 
     t = (1, 2, 'three', False)
     print t
-
-.. parsed-literal::
-
-    (1, 2, 'three', False)
-
-
 If there is only one element in a tuple, you must put a comma ``,`` at
 the end, otherwise it is *not* interpreted as a tuple:
 
@@ -673,34 +577,16 @@ the end, otherwise it is *not* interpreted as a tuple:
 
     t = (1)
     print t,type(t)
-
-.. parsed-literal::
-
-    1 <type 'int'>
-
-
 .. code:: python
 
     t = (1,)
     print t,type(t)
-
-.. parsed-literal::
-
-    (1,) <type 'tuple'>
-
-
 You can have an *empty* tuple though:
 
 .. code:: python
 
     t = ()
     print t,type(t)
-
-.. parsed-literal::
-
-    () <type 'tuple'>
-
-
 Notice that the tuple can contain data of different types.
 
 It can also be nested (i.e. a tuple can contain a tuple):
@@ -709,12 +595,6 @@ It can also be nested (i.e. a tuple can contain a tuple):
 
     t = ('one', 2), 3, ((4,5),6)
     print t
-
-.. parsed-literal::
-
-    (('one', 2), 3, ((4, 5), 6))
-
-
 Some operations we can perform on tuples include:
 
 -  length : ``len()``
@@ -732,13 +612,6 @@ len
     # a nested example
     t = (1,('2a','2b'),3)
     print "The length of the tuple (1,(1,('2a','2b'),3),3) is",len(t)
-
-.. parsed-literal::
-
-    The length of the tuple (1,2,3) is 3
-    The length of the tuple (1,(1,('2a','2b'),3),3) is 3
-
-
 slice
 ^^^^^
 
@@ -752,13 +625,6 @@ slice
     
     print 'item 0',t[0]
     print 'item 4',t[4]
-
-.. parsed-literal::
-
-    item 0 it
-    item 4 universally
-
-
 .. code:: python
 
     # using negative to count from the end
@@ -768,13 +634,6 @@ slice
     
     print 'item -1',t[-1]
     print 'item -3',t[-3]
-
-.. parsed-literal::
-
-    item -1 acknowledged
-    item -3 truth
-
-
 .. code:: python
 
     # select a range (a 'slice') of items with [start:end:step]
@@ -790,16 +649,6 @@ slice
     
     # Note the use of \t in the strings above e.g. 'items 0:1\t'
     # where \t is a tab character (for prettier formatting)
-
-.. parsed-literal::
-
-    items 0:1	('it',)
-    items 0:2	('it', 'is')
-    items :4:2	('it', 'a')
-    items ::-1	('acknowledged', 'universally', 'truth', 'a', 'is', 'it')
-    items 1:-1:2	('is', 'truth')
-
-
 In effect, when we set up a tuple, we are *packing* some group of items
 together:
 
@@ -815,14 +664,6 @@ And we can similarly *unpack*:
     print 'a:',a
     print 'b:',b
     print 'c:',c
-
-.. parsed-literal::
-
-    a: the
-    b: past
-    c: ('is', 'a', 'foreign', 'country')
-
-
 .. code:: python
 
     t = ('As', 'Gregor', 'Samsa', 'awoke', 'one', 'morning')
@@ -830,13 +671,6 @@ And we can similarly *unpack*:
     a,b = t[1:4:2]
     print 'a:',a
     print 'b:',b
-
-.. parsed-literal::
-
-    a: Gregor
-    b: awoke
-
-
 The set of operations we can perform on tuples includes:
 
 .. raw:: html
@@ -956,41 +790,12 @@ types, so you should make sure you are aware of them.
     print "\n('1',)*5 + (1,)*5:\n\t",('1',)*5 + (1,)*5
     
     # Note use of \t in string for tab and \n for newline
-
-.. parsed-literal::
-
-    
-    tuple('hello world'):
-    	('h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd')
-    
-    tuple('hello world').count('o'):
-    	2
-    
-    ('1',)*5 + (1,)*5:
-    	('1', '1', '1', '1', '1', 1, 1, 1, 1, 1)
-
-
 You **cannot** directly replace an element in a tuple:
 
 .. code:: python
 
     t = (1,2,3,4)
     t[2] = 'three'
-
-::
-
-
-    ---------------------------------------------------------------------------
-    TypeError                                 Traceback (most recent call last)
-
-    <ipython-input-32-0dc2fa4129fe> in <module>()
-          1 t = (1,2,3,4)
-    ----> 2 t[2] = 'three'
-    
-
-    TypeError: 'tuple' object does not support item assignment
-
-
 so you would need to find another way to do this, e.g.
 
 .. code:: python
@@ -999,12 +804,6 @@ so you would need to find another way to do this, e.g.
     
     t = t[:2] + ('three',) + t[3:]
     print t
-
-.. parsed-literal::
-
-    (1, 2, 'three', 4)
-
-
 Neither can you delete an item in a tuple:
 
 .. code:: python
@@ -1013,23 +812,6 @@ Neither can you delete an item in a tuple:
     
     del t[2]
     print t
-
-::
-
-
-    ---------------------------------------------------------------------------
-    TypeError                                 Traceback (most recent call last)
-
-    <ipython-input-34-b33678abdb80> in <module>()
-          1 t = (1,2,3,4)
-          2 
-    ----> 3 del t[2]
-          4 print t
-
-
-    TypeError: 'tuple' object doesn't support item deletion
-
-
 .. code:: python
 
     # again, find another way around
@@ -1038,12 +820,6 @@ Neither can you delete an item in a tuple:
     
     t = t[:2] + t[3:]
     print t
-
-.. parsed-literal::
-
-    (1, 2, 4)
-
-
 string as a group
 ^^^^^^^^^^^^^^^^^
 
@@ -1073,22 +849,6 @@ collection of individual characters, e.g.:
     print "word + ' again'=\t",word + ' again'
     # * (repetition)
     print "word * 2=\t",word*2
-
-.. parsed-literal::
-
-    word =	hello world 
-    
-    tuple(word) =	('h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd')
-    word[2:5] =	llo
-    len(word) =	11
-    max(word) =	w
-    'w' in word =	True
-    word.count('l')=	3
-    word.index('l')=	2
-    word + ' again'=	hello world again
-    word * 2=	hello worldhello world
-
-
 This sort of consistency or operation is one of the things that makes
 Python a good language to program in.
 
@@ -1133,30 +893,6 @@ The operators available for tuple work in much the same way as for lists
     print "\n----multiply----"
     print "t = ['It', 'was', 'the'] + ['best'] * 3 + ['of', 'times']\n\t",t
     
-
-
-.. parsed-literal::
-
-    ['It', 'was', 'the', 'best', 'of', 'times']
-    
-    ----slice----
-    t[:4:2]:
-    	['It', 'the']
-    t[::-1]:
-    	['times', 'of', 'best', 'the', 'was', 'It']
-    
-    ----index----
-    t.index("best"):
-    	3
-    
-    ----plus----
-    t = ['It', 'was'] + ['the', 'best', 'of', 'times']
-    	['It', 'was', 'the', 'best', 'of', 'times']
-    
-    ----multiply----
-    t = ['It', 'was', 'the'] + ['best'] * 3 + ['of', 'times']
-    	['It', 'was', 'the', 'best', 'best', 'best', 'of', 'times']
-
 
 But there are many other things one can do with a list, e.g.:
 
@@ -1204,31 +940,6 @@ But there are many other things one can do with a list, e.g.:
     
     print "t.insert(1,'really'):\n\t",t
 
-
-.. parsed-literal::
-
-    
-    ----replace----
-    t[3:5] = 'New York':
-    	['It', 'was', 'the', 'New', 'York', 'times']
-    
-    ----index and replace----
-    t[t.index("best")] = "worst":
-    	['It', 'was', 'the', 'worst', 'of', 'times']
-    
-    ----del item----
-    del t[2:4]:
-    	['It', 'was', 'of', 'times']
-    
-    ----sort----
-    t.sort():
-    	['It', 'best', 'of', 'the', 'times', 'was']
-    
-    ----insert----
-    t.insert(1,'really'):
-    	['It', 'really', 'was', 'the', 'best', 'of', 'times']
-
-
 range
 ^^^^^
 
@@ -1243,30 +954,12 @@ that returns a list of integers from ``start`` to (but not including)
 .. code:: python
 
     print range(10)
-
-.. parsed-literal::
-
-    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-
-
 .. code:: python
 
     print range(1,3)
-
-.. parsed-literal::
-
-    [1, 2]
-
-
 .. code:: python
 
     print range(-10,10,2)
-
-.. parsed-literal::
-
-    [-10, -8, -6, -4, -2, 0, 2, 4, 6, 8]
-
-
 .. code:: python
 
     # set a value 3 to the variable x
@@ -1275,15 +968,6 @@ that returns a list of integers from ``start`` to (but not including)
     # range(10) produces the lis
     # [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     x in range(10)
-
-
-
-.. parsed-literal::
-
-    True
-
-
-
 2.5 Loops and Conditional Statements: if, for, while
 ----------------------------------------------------
 
@@ -1308,12 +992,6 @@ statement:
         print "You do have",this_item,'in your pocket'
     else:
         print "You don't have",this_item,'in your pocket'
-
-.. parsed-literal::
-
-    You don't have nothing in your pocket
-
-
 Here,
 
 ::
@@ -1358,13 +1036,6 @@ test.
         print 'x is more than zero'
         
     print 'thresholded x = ',x
-
-.. parsed-literal::
-
-    x is more than zero
-    thresholded x =  3
-
-
 The syntax of this is:
 
 .. code:: python
@@ -1406,12 +1077,6 @@ final ``else`` block.
     
     else:
         print "Have a look at http://www.poetryfoundation.org/poem/175772"
-
-.. parsed-literal::
-
-    Yours is the Earth and everything that’s in it ...
-
-
 Exercise 2.2
 ~~~~~~~~~~~~
 
@@ -1439,12 +1104,6 @@ a string with the day of the week today is:
     
     # print item day_number in the list week
     print "today is",today
-
-.. parsed-literal::
-
-    today is Tuesday
-
-
 Based on the example below, **set up a diary for youself for the week to
 print out what you should be doing today, using the conditional
 structure ``if .. elif ... else``.**
@@ -1457,12 +1116,6 @@ structure ``if .. elif ... else``.**
         print "Remember to wake up early to go to classes at Imperial College"
     else:
         print "get some sleep"
-
-.. parsed-literal::
-
-    get some sleep
-
-
 Exercise 2.2 B.
 ^^^^^^^^^^^^^^^
 
@@ -1501,15 +1154,6 @@ is ``for ... in ...``:
         print count
         
     print 'blast off'
-
-.. parsed-literal::
-
-    1
-    2
-    3
-    blast off
-
-
 which has the syntax:
 
 ::
@@ -1548,15 +1192,6 @@ except for very large loops).
         print count
         
     print 'blast off'
-
-.. parsed-literal::
-
-    1
-    2
-    3
-    blast off
-
-
 If you need to force an
 ```iterable`` <http://docs.python.org/2/glossary.html#term-iterable>`__
 to e.g. return a list, you can convert the data type to ``list``:
@@ -1564,21 +1199,9 @@ to e.g. return a list, you can convert the data type to ``list``:
 .. code:: python
 
     print xrange(1,4)
-
-.. parsed-literal::
-
-    xrange(1, 4)
-
-
 .. code:: python
 
     print list(xrange(1,4))
-
-.. parsed-literal::
-
-    [1, 2, 3]
-
-
 enumerate
 ^^^^^^^^^
 
@@ -1596,14 +1219,6 @@ of ``item`` in ``list``.
     
     for i,w in enumerate(word_list):
         print 'The',i,'th','word is',w
-
-.. parsed-literal::
-
-    The 0 th word is Call
-    The 1 th word is me
-    The 2 th word is Ishmael
-
-
 Here the syntax:
 
 ::
@@ -1652,7 +1267,7 @@ As a recap, with some slightly more complicated examples:
 
 .. parsed-literal::
 
-    word 
+     word 
     	= hello world 
     
     list(word) 
@@ -1691,7 +1306,7 @@ As a recap, with some slightly more complicated examples:
     ---------------------------------------------------------------------------
     ValueError                                Traceback (most recent call last)
 
-    <ipython-input-55-515f07310ca9> in <module>()
+    <ipython-input-11-515f07310ca9> in <module>()
           1 # look what happens if we call index
           2 # for something that doesn't exist in the string
     ----> 3 print "word.index('x')=\t",word.index('x')
@@ -1705,12 +1320,6 @@ As a recap, with some slightly more complicated examples:
     # Sometimes, we might wish to use 
     # the string operator find instead
     print "word.find('x')=\t",word.find('x')
-
-
-.. parsed-literal::
-
-    word.find('x')=	-1
-
 
 2.6.2 split
 ~~~~~~~~~~~
@@ -1736,12 +1345,6 @@ of strings:
     data = "1964 1220 1974 2470 1984 2706 1994 4812 2004 2707"
     sdata = data.split()
     print sdata
-
-.. parsed-literal::
-
-    ['1964', '1220', '1974', '2470', '1984', '2706', '1994', '4812', '2004', '2707']
-
-
 We could the convert these to integer:
 
 .. code:: python
@@ -1770,13 +1373,6 @@ We could the convert these to integer:
         emissions.append(int(sdata[i+1]))
     print years
     print emissions
-
-.. parsed-literal::
-
-    [1964, 1974, 1984, 1994, 2004]
-    [1220, 2470, 2706, 4812, 2707]
-
-
 2.6.3 join
 ~~~~~~~~~~
 
@@ -1800,37 +1396,12 @@ the separator and ``list`` is a **list of strings** e.g.:
     # note what happens we pass a 
     # string, rather than a list
     print ':'.join(str1)
-
-.. parsed-literal::
-
-    hello world
-    helloworld
-    hello	hello	world
-    h:e:l:l:o
-
-
 .. code:: python
 
     # remember that it has to be a list
     # of strings: years here is a list
     # of integers
     print ' '.join(years)
-
-::
-
-
-    ---------------------------------------------------------------------------
-    TypeError                                 Traceback (most recent call last)
-
-    <ipython-input-61-795783cbd46a> in <module>()
-          2 # of strings: years here is a list
-          3 # of integers
-    ----> 4 print ' '.join(years)
-    
-
-    TypeError: sequence item 0: expected string, int found
-
-
 .. code:: python
 
     data = "1964 1220 1974 2470 1984 2706 1994 4812 2004 2707"
@@ -1838,133 +1409,7 @@ the separator and ``list`` is a **list of strings** e.g.:
     
     for i in xrange(0,len(sdata),2):
         print ' '.join(sdata[i:i+2])
-
-.. parsed-literal::
-
-    1964 1220
-    1974 2470
-    1984 2706
-    1994 4812
-    2004 2707
-
-
-2.6.4 listcomp
-~~~~~~~~~~~~~~
-
-That is a perfectly fine way to pull these data out of a string, but
-it's not very
-`'Pythonic' <http://python.net/~goodger/projects/pycon/2007/idiomatic/handout.html>`__
-(it does'nt make best use of some of the elegant features of this
-language).
-
-Better in this sense is what are known as
-`listcomps <http://python.net/~goodger/projects/pycon/2007/idiomatic/handout.html#list-comprehensions>`__
-(list comprehensions).
-
-With a listcomp, you define a list (enclosed in ``[``, ``]``), with two
-or three terms. The first term is some function ``fn(item)``. The second
-is a for statement. The third, if present, is a conditional (``if``)
-statement.
-
-For example:
-
-.. code:: python
-
-    fdata = [int(s) for s in data.split()]
-    
-    print fdata
-
-.. parsed-literal::
-
-    [1964, 1220, 1974, 2470, 1984, 2706, 1994, 4812, 2004, 2707]
-
-
-This generates a list. Within this list, we iterate over the loop
-``for s in data.split()``, and enter the result of the function
-``int(s)``.
-
-So this example is directly equivalent to:
-
-.. code:: python
-
-    data = "1964 1220 1974 2470 1984 2706 1994 4812 2004 2707"
-    
-    fdata = []
-    for s in data.split():
-        fdata.append(int(s))
-            
-    print fdata
-
-.. parsed-literal::
-
-    [1964, 1220, 1974, 2470, 1984, 2706, 1994, 4812, 2004, 2707]
-
-
-You will very commonly use listcomps of this nature when performing some
-function over elements in a list where you have to perform the function
-on each element at a time.
-
-.. code:: python
-
-    data = "1964 1220 1974 2470 1984 2706 1994 4812 2004 2707"
-    fdata = [int(s) for s in data.split()]
-    
-    # use slicing to separate the odd
-    # and even data
-    years     = fdata[0::2]
-    emissions = fdata[1::2]
-    
-    print years
-    print emissions
-
-.. parsed-literal::
-
-    [1964, 1974, 1984, 1994, 2004]
-    [1220, 2470, 2706, 4812, 2707]
-
-
-Listcomps can be very convenient, as they are a compact way of
-specifying a loop (with a conditonal statement oif required).
-
-Don't use listcomps if they obscure the meaning of what you are doing
-though.
-
-2.6.5 generator expressions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-A listcomp generates everything in the list, then returns the list.
-
-Sometimes, you only need one element at a time (e.g. within a loop). In
-such cases, it is better to use generator expressions.
-
-These look much like listcomps but use ``()`` rather than ``[]``
-
-.. code:: python
-
-    fdata = (int(s) for s in data.split())
-    print fdata
-    
-    for i in fdata:
-        print i
-
-.. parsed-literal::
-
-    <generator object <genexpr> at 0x106540140>
-    1964
-    1220
-    1974
-    2470
-    1984
-    2706
-    1994
-    4812
-    2004
-    2707
-
-
-but only return one item at a time, on demand in the loop.
-
-2.6.6 replace
+2.6.4 replace
 ~~~~~~~~~~~~~
 
 Another useful string operator is ``replace``, e.g.:
@@ -1974,13 +1419,7 @@ Another useful string operator is ``replace``, e.g.:
     # change white space separation to comma separation
     data = "1964 1220 1974 2470 1984 2706 1994 4812 2004 2707"
     print data.replace(' ',',')
-
-.. parsed-literal::
-
-    1964,1220,1974,2470,1984,2706,1994,4812,2004,2707
-
-
-2.6.7 format
+2.6.5 format
 ~~~~~~~~~~~~
 
 The most common way you are likely to be formatting strings is using
@@ -1993,13 +1432,6 @@ expressions such as:
     
     print "There are only %d things to learn.\
             \nBut\tit will take you %s to do so."%(how_many,how_much)
-
-.. parsed-literal::
-
-    There are only 10 things to learn.        
-    But	it will take you hours to do so.
-
-
 Using this style of string formatting, you put control characters into
 the string, e.g.:
 
@@ -2033,16 +1465,7 @@ e.g.:
             float       %f\n\
             string      %s\n\
             exponential %e"%(3,3.1415926536,"pies are squared",3.1415926536)
-
-.. parsed-literal::
-
-            integer     3
-            float       3.141593
-            string      pies are squared
-            exponential 3.141593e+00
-
-
-2.6.8 strip
+2.6.6 strip
 ~~~~~~~~~~~
 
 A useful method is ``strip()`` that strips off any unnecessary white
@@ -2084,7 +1507,7 @@ glob
 .. parsed-literal::
 
     file_list:
-    	['files/data/HadSEEP_monthly_qc.txt', 'files/data/heathrowdata.txt', 'files/data/modis_files.txt', 'files/data/modis_files2a.txt', 'files/data/modis_files2b.txt', 'files/data/some_modis_files.txt']
+    	['files/data/modis_files2a.txt', 'files/data/modis_files2b.txt', 'files/data/some_modis_files.txt', 'files/data/HadSEEP_monthly_qc.txt', 'files/data/heathrowdata.txt', 'files/data/modis_files.txt']
 
 
 .. code:: python
@@ -2115,7 +1538,7 @@ glob
     import glob
     
     # returns a list
-    file_list = glob.glob("files/data/*.txt")
+    file_list = glob.glob("data/*.txt")
     print "file_list:\n\t",file_list
     
     print "\nfile names:"
@@ -2129,15 +1552,15 @@ glob
 .. parsed-literal::
 
     file_list:
-    	['files/data/HadSEEP_monthly_qc.txt', 'files/data/heathrowdata.txt', 'files/data/modis_files.txt', 'files/data/modis_files2a.txt', 'files/data/modis_files2b.txt', 'files/data/some_modis_files.txt']
+    	['data/modis_files2a.txt', 'data/modis_files2b.txt', 'data/some_modis_files.txt', 'data/HadSEEP_monthly_qc.txt', 'data/heathrowdata.txt', 'data/modis_files.txt']
     
     file names:
-    	HadSEEP_monthly_qc.txt
-    	heathrowdata.txt
-    	modis_files.txt
     	modis_files2a.txt
     	modis_files2b.txt
     	some_modis_files.txt
+    	HadSEEP_monthly_qc.txt
+    	heathrowdata.txt
+    	modis_files.txt
 
 
 Exercise 2.3
@@ -2209,12 +1632,12 @@ You can use the Python package ``pylab`` to simply plot data on a graph:
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x1065d6590>
+    <matplotlib.text.Text at 0x7f5aee2da890>
 
 
 
 
-.. image:: python101_files/python101_185_1.png
+.. image:: python101_files/python101_173_1.png
 
 
 **Produce a plot of the number of sunshine hours for Lowestoft for the
@@ -2269,20 +1692,20 @@ contains a list of dates, times and solar elevation angles (degrees).
 
 .. code:: python
 
-    !head -10 < files/data/elevation.dat 
+    !head -10 < data/elevation.dat 
 
 .. parsed-literal::
 
-    2013/10/8 00:00:00 -44.2719952943
-    2013/10/8 00:30:00 -43.5276412785
-    2013/10/8 00:59:59 -41.9842746582
-    2013/10/8 01:30:00 -39.7226999863
-    2013/10/8 02:00:00 -36.8452198361
-    2013/10/8 02:30:00 -33.459799008
-    2013/10/8 03:00:00 -29.6691191507
-    2013/10/8 03:30:00 -25.5652187709
-    2013/10/8 03:59:59 -21.2281801291
-    2013/10/8 04:30:00 -16.7272357302
+    2014/9/30 00:00:00 -41.1227180114
+    2014/9/30 00:30:00 -40.4796625312
+    2014/9/30 00:59:59 -39.0649015428
+    2014/9/30 01:30:00 -36.9463783528
+    2014/9/30 02:00:00 -34.2136162508
+    2014/9/30 02:30:00 -30.9643006022
+    2014/9/30 03:00:00 -27.2941667536
+    2014/9/30 03:30:00 -23.2912319377
+    2014/9/30 03:59:59 -19.0337171884
+    2014/9/30 04:30:00 -14.5903017653
 
 
 What we are going to want to do is to create a new file which has the
@@ -2294,7 +1717,7 @@ Let's first concentrate on reading the data in:
 
 .. code:: python
 
-    filename = 'files/data/elevation.dat'
+    filename = 'data/elevation.dat'
     fp = open(filename,"r")
 Now we will use ``readlines`` to return a list of strings:
 
@@ -2305,7 +1728,7 @@ Now we will use ``readlines`` to return a list of strings:
 
 .. parsed-literal::
 
-    ['2013/10/8 00:00:00 -44.2719952943\n', '2013/10/8 00:30:00 -43.5276412785\n', '2013/10/8 00:59:59 -41.9842746582\n', '2013/10/8 01:30:00 -39.7226999863\n', '2013/10/8 02:00:00 -36.8452198361\n', '2013/10/8 02:30:00 -33.459799008\n', '2013/10/8 03:00:00 -29.6691191507\n', '2013/10/8 03:30:00 -25.5652187709\n', '2013/10/8 03:59:59 -21.2281801291\n', '2013/10/8 04:30:00 -16.7272357302\n', '2013/10/8 05:00:00 -12.1229087343\n', '2013/10/8 05:30:00 -7.44278286026\n', '2013/10/8 06:00:00 -1.67990284889\n', '2013/10/8 06:30:00 2.07557325291\n', '2013/10/8 06:59:59 6.41682356012\n', '2013/10/8 07:30:00 10.718795157\n', '2013/10/8 08:00:00 14.8409321418\n', '2013/10/8 08:30:00 18.7041059194\n', '2013/10/8 09:00:00 22.2360923619\n', '2013/10/8 09:30:00 25.3625807186\n', '2013/10/8 09:59:59 28.0062976444\n', '2013/10/8 10:30:00 30.0911497093\n', '2013/10/8 11:00:00 31.54841838\n', '2013/10/8 11:30:00 32.3246113226\n', '2013/10/8 12:00:00 32.389146365\n', '2013/10/8 12:30:00 31.7393119221\n', '2013/10/8 12:59:59 30.4007451089\n', '2013/10/8 13:30:00 28.4231526272\n', '2013/10/8 14:00:00 25.8729768496\n', '2013/10/8 14:30:00 22.8253857155\n', '2013/10/8 15:00:00 19.3576781834\n', '2013/10/8 15:30:00 15.5452510038\n', '2013/10/8 15:59:59 11.4587795592\n', '2013/10/8 16:30:00 7.17635425621\n', '2013/10/8 17:00:00 2.81567654312\n', '2013/10/8 17:30:00 -1.12901415483\n', '2013/10/8 18:00:00 -6.60204292249\n', '2013/10/8 18:30:00 -11.3521065185\n', '2013/10/8 18:59:59 -15.9844936391\n', '2013/10/8 19:30:00 -20.5264294183\n', '2013/10/8 20:00:00 -24.9191119037\n', '2013/10/8 20:30:00 -29.0954447321\n', '2013/10/8 21:00:00 -32.9777242563\n', '2013/10/8 21:30:00 -36.4761369039\n', '2013/10/8 21:59:59 -39.4893158374\n', '2013/10/8 22:30:00 -41.9086473886\n', '2013/10/8 23:00:00 -43.6280450593\n', '2013/10/8 23:30:00 -44.5592559753\n']
+    ['2014/9/30 00:00:00 -41.1227180114\n', '2014/9/30 00:30:00 -40.4796625312\n', '2014/9/30 00:59:59 -39.0649015428\n', '2014/9/30 01:30:00 -36.9463783528\n', '2014/9/30 02:00:00 -34.2136162508\n', '2014/9/30 02:30:00 -30.9643006022\n', '2014/9/30 03:00:00 -27.2941667536\n', '2014/9/30 03:30:00 -23.2912319377\n', '2014/9/30 03:59:59 -19.0337171884\n', '2014/9/30 04:30:00 -14.5903017653\n', '2014/9/30 05:00:00 -10.0216590927\n', '2014/9/30 05:30:00 -5.01932715546\n', '2014/9/30 06:00:00 -0.134849371939\n', '2014/9/30 06:30:00 4.09286322097\n', '2014/9/30 06:59:59 8.55453445901\n', '2014/9/30 07:30:00 12.938958392\n', '2014/9/30 08:00:00 17.1514399965\n', '2014/9/30 08:30:00 21.1181133381\n', '2014/9/30 09:00:00 24.7672136192\n', '2014/9/30 09:30:00 28.020436136\n', '2014/9/30 09:59:59 30.7949255712\n', '2014/9/30 10:30:00 33.0070257679\n', '2014/9/30 11:00:00 34.579161145\n', '2014/9/30 11:30:00 35.4491052641\n', '2014/9/30 12:00:00 35.5794764999\n', '2014/9/30 12:30:00 34.9643838142\n', '2014/9/30 12:59:59 33.6305127561\n', '2014/9/30 13:30:00 31.6322282163\n', '2014/9/30 14:00:00 29.0427156717\n', '2014/9/30 14:30:00 25.9443096378\n', '2014/9/30 15:00:00 22.4206252902\n', '2014/9/30 15:30:00 18.5516782953\n', '2014/9/30 15:59:59 14.4111578562\n', '2014/9/30 16:30:00 10.0714597095\n', '2014/9/30 17:00:00 5.61372180666\n', '2014/9/30 17:30:00 1.2203105187\n', '2014/9/30 18:00:00 -2.38322183516\n', '2014/9/30 18:30:00 -8.47981048194\n', '2014/9/30 18:59:59 -13.0951972617\n', '2014/9/30 19:30:00 -17.6077341991\n', '2014/9/30 20:00:00 -21.9594218892\n', '2014/9/30 20:30:00 -26.0849005441\n', '2014/9/30 21:00:00 -29.9096032812\n', '2014/9/30 21:30:00 -33.3488186792\n', '2014/9/30 21:59:59 -36.3086640806\n', '2014/9/30 22:30:00 -38.6902793272\n', '2014/9/30 23:00:00 -40.3983491291\n', '2014/9/30 23:30:00 -41.3537969714\n']
 
 
 We can see that each line of the file contains three fields e.g.:
@@ -2316,7 +1739,7 @@ We can see that each line of the file contains three fields e.g.:
 
 .. parsed-literal::
 
-    2013/10/8 00:00:00 -44.2719952943
+    2014/9/30 00:00:00 -41.1227180114
     
 
 
@@ -2332,7 +1755,7 @@ To decode each line then we can use ``split()`` e.g.
 
 .. parsed-literal::
 
-    ['2013/10/8', '00:00:00', '-44.2719952943']
+    ['2014/9/30', '00:00:00', '-41.1227180114']
 
 
 what we want is the time and elevation fields, so we will make a loop to
@@ -2341,7 +1764,7 @@ moment:
 
 .. code:: python
 
-    filename = 'files/data/elevation.dat'
+    filename = 'data/elevation.dat'
     fp = open(filename,"r")
     
     for i in fp.readlines():
@@ -2354,7 +1777,7 @@ moment:
 
 .. parsed-literal::
 
-    00:00:00 -44.2719952943
+    00:00:00 -41.1227180114
 
 
 We need to convert the time field to minutes. We can start this by
@@ -2392,7 +1815,7 @@ we can easily convert elevation to zenith angle.
 
 .. parsed-literal::
 
-    134.271995294
+    131.122718011
 
 
 Putting this together, only printing when the zenith is less than or
@@ -2400,7 +1823,7 @@ equal to 90.:
 
 .. code:: python
 
-    filename = 'files/data/elevation.dat'
+    filename = 'data/elevation.dat'
     fp = open(filename,"r")
     
     for i in fp.readlines():
@@ -2414,36 +1837,37 @@ equal to 90.:
 
 .. parsed-literal::
 
-    6.5 87.9244267471
-    6.99972222222 83.5831764399
-    7.5 79.281204843
-    8.0 75.1590678582
-    8.5 71.2958940806
-    9.0 67.7639076381
-    9.5 64.6374192814
-    9.99972222222 61.9937023556
-    10.5 59.9088502907
-    11.0 58.45158162
-    11.5 57.6753886774
-    12.0 57.610853635
-    12.5 58.2606880779
-    12.9997222222 59.5992548911
-    13.5 61.5768473728
-    14.0 64.1270231504
-    14.5 67.1746142845
-    15.0 70.6423218166
-    15.5 74.4547489962
-    15.9997222222 78.5412204408
-    16.5 82.8236457438
-    17.0 87.1843234569
+    6.5 85.907136779
+    6.99972222222 81.445465541
+    7.5 77.061041608
+    8.0 72.8485600035
+    8.5 68.8818866619
+    9.0 65.2327863808
+    9.5 61.979563864
+    9.99972222222 59.2050744288
+    10.5 56.9929742321
+    11.0 55.420838855
+    11.5 54.5508947359
+    12.0 54.4205235001
+    12.5 55.0356161858
+    12.9997222222 56.3694872439
+    13.5 58.3677717837
+    14.0 60.9572843283
+    14.5 64.0556903622
+    15.0 67.5793747098
+    15.5 71.4483217047
+    15.9997222222 75.5888421438
+    16.5 79.9285402905
+    17.0 84.3862781933
+    17.5 88.7796894813
 
 
 Now, writing to an output file ``files/data/zenith.dat``:
 
 .. code:: python
 
-    ifilename = 'files/data/elevation.dat'
-    ofilename = 'files/data/zenith.dat'
+    ifilename = 'data/elevation.dat'
+    ofilename = 'data/zenith.dat'
     
     ifp = open(ifilename,"r")
     ofp = open(ofilename,"w")
@@ -2461,43 +1885,42 @@ We could check the output file from unix:
 
 .. code:: python
 
-    !head -10 < files/data/zenith.dat
+    !head -10 < data/zenith.dat
 
 .. parsed-literal::
 
-    6.5 87.924
-    7.0 83.583
-    7.5 79.281
-    8.0 75.159
-    8.5 71.296
-    9.0 67.764
-    9.5 64.637
-    10.0 61.994
-    10.5 59.909
-    11.0 58.452
+    6.5 85.907
+    7.0 81.445
+    7.5 77.061
+    8.0 72.849
+    8.5 68.882
+    9.0 65.233
+    9.5 61.980
+    10.0 59.205
+    10.5 56.993
+    11.0 55.421
 
 
 .. code:: python
 
-    !ls -l files/data/zenith.dat
+    !ls -l data/zenith.dat
 
 .. parsed-literal::
 
-    -rw-r--r--  1 plewis  staff  257 30 Sep 11:04 files/data/zenith.dat
+    -rw-rw-r--. 1 plewis plewis 269 Oct  7  2014 data/zenith.dat
 
 
 Exercise 2.4
 ------------
 
-The text file
-`files/data/modis\_files.txt <files/data/modis_files.txt>`__ contains a
-listing of hdf format files that are in the directory
+The text file `data/modis\_files.txt <data/modis_files.txt>`__ contains
+a listing of hdf format files that are in the directory
 ``/data/geospatial_19/ucfajlg/fire/Angola/MOD09`` on the UCL Geography
 system. The contents of the file looks like (first 10 lines):
 
 .. code:: python
 
-    !head -10 < files/data/modis_files.txt
+    !head -10 < data/modis_files.txt
 
 .. parsed-literal::
 
@@ -2514,8 +1937,8 @@ system. The contents of the file looks like (first 10 lines):
 
 
 Your task is to create a new file
-```files/data/some_modis_files.txt`` <files/data/some_modis_files.txt>`__
-that contains *only* the file names for the month of August.
+```data/some_modis_files.txt`` <data/some_modis_files.txt>`__ that
+contains *only* the file names for the month of August.
 
 You will notice that the file names have a field in them such as
 ``A2004006``. This is the one you will need to concentrate on, as it
@@ -2600,9 +2023,9 @@ b. You could, if you really wanted, just copy and paste the data into a
 
 c. You could use the unix command ``wget``:
 
-| ``berlin% mkdir -p ~/Data/python/Chapter2_Python_intro/files/data``
-| ``berlin% cd ~/Data/python/Chapter2_Python_intro``
-| ``berlin% wget -O files/data/HadSEEP_monthly_qc.txt \         http://www.metoffice.gov.uk/hadobs/hadukp/data/monthly/HadSEEP_monthly_qc.txt``
+| ``berlin% mkdir -p ~/DATA/geogg122/Chapter2_Python_intro/files/data``
+| ``berlin% cd ~/DATA/geogg122/Chapter2_Python_intro``
+| ``berlin% wget -O data/HadSEEP_monthly_qc.txt \         http://www.metoffice.gov.uk/hadobs/hadukp/data/monthly/HadSEEP_monthly_qc.txt``
 
 d. You could download and read the file directly from a URL within
    Python
@@ -2614,7 +2037,7 @@ In this case, we would use:
 
 .. code:: python
 
-    filename = 'files/data/HadSEEP_monthly_qc.txt'
+    filename = 'data/HadSEEP_monthly_qc.txt'
     
     fp = open(filename,'r')
     raw_data = fp.readlines()
@@ -2710,7 +2133,7 @@ Putting all of this together:
 .. code:: python
 
     # specify filename
-    filename = 'files/data/HadSEEP_monthly_qc.txt'
+    filename = 'data/HadSEEP_monthly_qc.txt'
     
     # read the data, chop off first 4 lines 
     # and store in required_data
@@ -3082,7 +2505,7 @@ We could read and parse this file ourselves:
 
 .. code:: python
 
-    fp = open('files/data/modis.cfg')
+    fp = open('data/modis.cfg')
     
     # empty dict
     modis = {}
@@ -3118,7 +2541,7 @@ module:
     import ConfigParser
     
     config = ConfigParser.ConfigParser()
-    config.read('files/data/modis.cfg')
+    config.read('data/modis.cfg')
     
     # we can convert this to a normal dictionary
     modis = {}
@@ -3131,17 +2554,16 @@ module:
     {'AQUA': {'doy_end': '245', 'doy_start': '214', 'name': 'MODIS AQUA data', 'year': '2004', 'file_list': 'files/data/modis_files2b.txt', 'dir': '/data/geospatial_19/ucfajlg/fire/Angola/MYD09'}, 'TERRA': {'doy_end': '245', 'doy_start': '214', 'name': 'MODIS TERRA data', 'year': '2004', 'file_list': 'files/data/modis_files2a.txt', 'dir': '/data/geospatial_19/ucfajlg/fire/Angola/MOD09'}}
 
 
-The text file
-`files/data/modis\_files2a.txt <files/data/modis_files2a.txt>`__
+The text file `data/modis\_files2a.txt <data/modis_files2a.txt>`__
 contains a listing of hdf format files that are in the directory
 ``/data/geospatial_19/ucfajlg/fire/Angola/MOD09`` and
-`files/data/modis\_files2b.txt <files/data/modis_files2b.txt>`__ those
-in ``/data/geospatial_19/ucfajlg/fire/Angola/MYD09`` on the UCL
-Geography system. The contents of the files looks like (first 10 lines):
+`data/modis\_files2b.txt <data/modis_files2b.txt>`__ those in
+``/data/geospatial_19/ucfajlg/fire/Angola/MYD09`` on the UCL Geography
+system. The contents of the files looks like (first 10 lines):
 
 .. code:: python
 
-    !head -10 <  files/data/modis_files2b.txt 
+    !head -10 <  data/modis_files2b.txt 
 
 .. parsed-literal::
 
@@ -3311,8 +2733,6 @@ So now we have all of the parts we need to create this code:
     # just the first 10
     for f in wanted_files[:10]:
         print f
-    
-
 
 .. parsed-literal::
 

@@ -1,32 +1,34 @@
-from netCDF4 import Dataset
 import numpy as np
 import numpy.ma as ma
+import gdal
 
-def masked(dataset='BHR_SW',year=2009):
-  root = 'files/data/'
 
-  # which months?
-  months = xrange(1,13)
-
-  # empty list
-  data = []
-
-  # loop over month
-  # use enumerate so we have an index counter
-  for i,month in enumerate(months):
-    # this then is the file we want
-    local_file = root + 'GlobAlbedo.%d%02d.mosaic.5.nc'%(year,month)
+def masked(root='data/',years=[2009],months=[],\
+            layers = ['BHR_VIS']):
+    '''
+    Method to read GlobAlbedo files
+    '''
+    file_template = 'NETCDF:"%s":%s'
     
-    # load the netCDF data from the file local_file
-    nc = Dataset(local_file,'r')
-    # load into the variable 'band'
-    band = np.array(nc.variables[dataset])
-    # convert to a masked array
-    masked_band = ma.array(band,mask=np.isnan(band))
-    # append what we read to the list called data
-    data.append(masked_band)
+    if len(months) == 0:
+        months = xrange(1,13)
     
-  # convert data to a numpy array (its a list of arrays at the moment)
-  data = ma.array(data)
-  return data
+    
+    data = []   
+ 
+    for year in years:
+        for month in months:
+            for layer in layers:
+
+                # what does this do???
+                filename = root + 'GlobAlbedo.%d%02d.mosaic.5.nc'%(year,month)
+
+                g = gdal.Open (  file_template % ( filename, layer ) )
+
+                if g is None:
+                  raise IOError
+                band = g.ReadAsArray()
+                masked_band = ma.array(band,mask=np.isnan(band))
+                data.append(masked_band)
+    return(ma.array(data))
 

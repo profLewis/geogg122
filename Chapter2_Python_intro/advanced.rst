@@ -1898,3 +1898,138 @@ just starting coding to follow.
 
 .. image:: advanced_files/advanced_106_4.png
 
+
+A2.9 Listcomp and generator expressions
+---------------------------------------
+
+In the main class notes, we used expressions and loops of the form:
+
+.. code:: python
+
+    data = "1964 1220 1974 2470 1984 2706 1994 4812 2004 2707"
+    sdata = data.split()
+    
+    for i in xrange(0,len(sdata),2):
+        print ' '.join(sdata[i:i+2])
+
+.. parsed-literal::
+
+    1964 1220
+    1974 2470
+    1984 2706
+    1994 4812
+    2004 2707
+
+
+to do repeated actions by looping the variable ``i`` over some array of
+integers.
+
+That is a perfectly fine way to pull these data out of a string, but
+it's not very
+`'Pythonic' <http://python.net/~goodger/projects/pycon/2007/idiomatic/handout.html>`__
+(it does'nt make best use of some of the elegant features of this
+language).
+
+Better in this sense is what are known as
+`listcomps <http://python.net/~goodger/projects/pycon/2007/idiomatic/handout.html#list-comprehensions>`__
+(list comprehensions).
+
+With a listcomp, you define a list (enclosed in ``[``, ``]``), with two
+or three terms. The first term is some function ``fn(item)``. The second
+is a for statement. The third, if present, is a conditional (``if``)
+statement.
+
+For example:
+
+.. code:: python
+
+    fdata = [int(s) for s in data.split()]
+    
+    print fdata
+
+.. parsed-literal::
+
+    [1964, 1220, 1974, 2470, 1984, 2706, 1994, 4812, 2004, 2707]
+
+
+This generates a list. Within this list, we iterate over the loop
+``for s in data.split()``, and enter the result of the function
+``int(s)``.
+
+So this example is directly equivalent to:
+
+.. code:: python
+
+    data = "1964 1220 1974 2470 1984 2706 1994 4812 2004 2707"
+    
+    fdata = []
+    for s in data.split():
+        fdata.append(int(s))
+            
+    print fdata
+
+.. parsed-literal::
+
+    [1964, 1220, 1974, 2470, 1984, 2706, 1994, 4812, 2004, 2707]
+
+
+You will very commonly use listcomps of this nature when performing some
+function over elements in a list where you have to perform the function
+on each element at a time.
+
+.. code:: python
+
+    data = "1964 1220 1974 2470 1984 2706 1994 4812 2004 2707"
+    fdata = [int(s) for s in data.split()]
+    
+    # use slicing to separate the odd
+    # and even data
+    years     = fdata[0::2]
+    emissions = fdata[1::2]
+    
+    print years
+    print emissions
+
+.. parsed-literal::
+
+    [1964, 1974, 1984, 1994, 2004]
+    [1220, 2470, 2706, 4812, 2707]
+
+
+Listcomps can be very convenient, as they are a compact way of
+specifying a loop (with a conditonal statement oif required).
+
+Don't use listcomps if they obscure the meaning of what you are doing
+though.
+
+A listcomp generates everything in the list, then returns the list.
+
+Sometimes, you only need one element at a time (e.g. within a loop). In
+such cases, it is better to use generator expressions.
+
+These look much like listcomps but use ``()`` rather than ``[]``
+
+.. code:: python
+
+    fdata = (int(s) for s in data.split())
+    print 'fdata is',fdata
+    
+    for i in fdata:
+        print i
+
+.. parsed-literal::
+
+    fdata is <generator object <genexpr> at 0x7fc81da021e0>
+    1964
+    1220
+    1974
+    2470
+    1984
+    2706
+    1994
+    4812
+    2004
+    2707
+
+
+but only return one item at a time, on demand in the loop.

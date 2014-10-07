@@ -210,10 +210,29 @@ To use this module then:
 
     import sys,os
     # put local directory into the path
-    sys.path.insert(0,os.path.abspath('files%spython'%os.sep))
+    sys.path.insert(0,os.path.abspath('python'))
     # import local module gzurl
     from gzurl import gzurl
-    from netCDF4 import Dataset
+    import gdal
+    
+    def readGA(root='data/',year=2009,month=1,layer = 'BHR_VIS',filename=None):
+        '''
+        Method to read a GlobAlbedo file from earlier
+        '''
+        file_template = 'NETCDF:"%s":%s'
+    
+        # allow filename to be overridden from filename=
+        filename = filename or root + 'GlobAlbedo.%d%02d.mosaic.5.nc'%(year,month)
+    
+        g = gdal.Open (  file_template % ( filename, layer ) )
+    
+        if g is None:
+          raise IOError
+        data = g.ReadAsArray()
+        
+        # return a numpy array
+        return(np.array(data))
+    
     
     # codes for url specification on globalbedo.org
     years = range(1998,2012)
@@ -234,13 +253,25 @@ To use this module then:
     # read the gzipped file
     f = gzurl(url)
     # read the netCDF file from f.filename
-    nc = Dataset(f.filename,'r')
-    # close f
-    f.close()
+    nc = readGA(filename=f.filename)
+    print nc
 
 .. parsed-literal::
 
     http://www.globalbedo.org/GlobAlbedo56/mosaics/2009/0.5/monthly/
+    [[        nan         nan         nan ...,         nan         nan
+              nan]
+     [        nan         nan         nan ...,         nan         nan
+              nan]
+     [        nan         nan         nan ...,         nan         nan
+              nan]
+     ..., 
+     [ 0.67017049  0.67017049  0.67017049 ...,  0.67199522  0.67199522
+       0.67199522]
+     [ 0.67017049  0.67017049  0.67017049 ...,  0.67199522  0.67199522
+       0.67199522]
+     [ 0.67017049  0.67017049  0.67017049 ...,  0.67199522  0.67199522
+       0.67199522]]
 
 
 Alternatively, to read all of the files into the directory files/data
@@ -253,7 +284,7 @@ for the year 2011 and keep them:
     sys.path.insert(0,os.path.abspath('files%spython'%os.sep))
     # import local module gzurl
     from gzurl import gzurl
-    from netCDF4 import Dataset
+    import gdal
     
     # codes for url specification on globalbedo.org
     years = range(1998,2012)
@@ -271,30 +302,29 @@ for the year 2011 and keep them:
         url = root + base + '.gz'
         # specify a local filename
         # work out how / why this works ...
-        local = os.path.join('files{0}data{0}'.format(os.sep),base)
+        local = os.path.join('data{0}'.format(os.sep),base)
         
         # read the gzipped file
         print local
         f = gzurl(url,filename=local)
         # read the netCDF file from f.filename
-        nc = Dataset(f.filename,'r')
-        # close f
-        f.close()
+        # read the gzipped file
+        nc = readGA(filename=f.filename)
 
 .. parsed-literal::
 
-    files/data/GlobAlbedo.200901.mosaic.5.nc
-    files/data/GlobAlbedo.200902.mosaic.5.nc
-    files/data/GlobAlbedo.200903.mosaic.5.nc
-    files/data/GlobAlbedo.200904.mosaic.5.nc
-    files/data/GlobAlbedo.200905.mosaic.5.nc
-    files/data/GlobAlbedo.200906.mosaic.5.nc
-    files/data/GlobAlbedo.200907.mosaic.5.nc
-    files/data/GlobAlbedo.200908.mosaic.5.nc
-    files/data/GlobAlbedo.200909.mosaic.5.nc
-    files/data/GlobAlbedo.200910.mosaic.5.nc
-    files/data/GlobAlbedo.200911.mosaic.5.nc
-    files/data/GlobAlbedo.200912.mosaic.5.nc
+    data/GlobAlbedo.200901.mosaic.5.nc
+    data/GlobAlbedo.200902.mosaic.5.nc
+    data/GlobAlbedo.200903.mosaic.5.nc
+    data/GlobAlbedo.200904.mosaic.5.nc
+    data/GlobAlbedo.200905.mosaic.5.nc
+    data/GlobAlbedo.200906.mosaic.5.nc
+    data/GlobAlbedo.200907.mosaic.5.nc
+    data/GlobAlbedo.200908.mosaic.5.nc
+    data/GlobAlbedo.200909.mosaic.5.nc
+    data/GlobAlbedo.200910.mosaic.5.nc
+    data/GlobAlbedo.200911.mosaic.5.nc
+    data/GlobAlbedo.200912.mosaic.5.nc
 
 
 Doing this in unix
@@ -305,33 +335,33 @@ from unix instead:
 
 .. code:: python
 
-    !rm -f files/data/GlobAlbedo.200901.mosaic.5.nc.gz 
-    !wget -O files/data/GlobAlbedo.200901.mosaic.5.nc.gz \
+    !rm -f data/GlobAlbedo.200901.mosaic.5.nc.gz 
+    !wget -O data/GlobAlbedo.200901.mosaic.5.nc.gz \
       http://www.globalbedo.org/GlobAlbedo56/mosaics/2009/0.5/monthly/GlobAlbedo.200901.mosaic.5.nc.gz
 
 .. parsed-literal::
 
-    --2013-10-12 20:13:51--  http://www.globalbedo.org/GlobAlbedo56/mosaics/2009/0.5/monthly/GlobAlbedo.200901.mosaic.5.nc.gz
+    --2014-10-07 14:03:42--  http://www.globalbedo.org/GlobAlbedo56/mosaics/2009/0.5/monthly/GlobAlbedo.200901.mosaic.5.nc.gz
     Resolving www.globalbedo.org... 128.40.73.100
     Connecting to www.globalbedo.org|128.40.73.100|:80... connected.
     HTTP request sent, awaiting response... 200 OK
     Length: 4540366 (4.3M) [application/x-gzip]
-    Saving to: `files/data/GlobAlbedo.200901.mosaic.5.nc.gz'
+    Saving to: `data/GlobAlbedo.200901.mosaic.5.nc.gz'
     
-    100%[======================================>] 4,540,366   2.78M/s   in 1.6s    
+    100%[======================================>] 4,540,366   21.6M/s   in 0.2s    
     
-    2013-10-12 20:13:52 (2.78 MB/s) - `files/data/GlobAlbedo.200901.mosaic.5.nc.gz' saved [4540366/4540366]
+    2014-10-07 14:03:42 (21.6 MB/s) - `data/GlobAlbedo.200901.mosaic.5.nc.gz' saved [4540366/4540366]
     
 
 
 .. code:: python
 
-    !gunzip -f files/data/GlobAlbedo.200901.mosaic.5.nc.gz
-    !ls -l files/data/GlobAlbedo.200901.mosaic.5.nc
+    !gunzip -f data/GlobAlbedo.200901.mosaic.5.nc.gz
+    !ls -l data/GlobAlbedo.200901.mosaic.5.nc
 
 .. parsed-literal::
 
-    -rw-r--r--  1 plewis  staff  18669672 12 Sep 17:12 files/data/GlobAlbedo.200901.mosaic.5.nc
+    -rw-rw-r--. 1 plewis plewis 18669672 Sep 12  2013 data/GlobAlbedo.200901.mosaic.5.nc
 
 
 A3.2 Logical combinations in numpy

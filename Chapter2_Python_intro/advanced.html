@@ -16550,6 +16550,282 @@ QqFQRPD/A9uEQpXGwBCDAAAAAElFTkSuQmCC
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="A2.9-Listcomp-and-generator-expressions">A2.9 Listcomp and generator expressions<a class="anchor-link" href="#A2.9-Listcomp-and-generator-expressions">&#182;</a></h2>
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In the main class notes, we used expressions and loops of the form:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">
+In&nbsp;[2]:
+</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight"><pre><span class="n">data</span> <span class="o">=</span> <span class="s">&quot;1964 1220 1974 2470 1984 2706 1994 4812 2004 2707&quot;</span>
+<span class="n">sdata</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">sdata</span><span class="p">),</span><span class="mi">2</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sdata</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+1964 1220
+1974 2470
+1984 2706
+1994 4812
+2004 2707
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>to do repeated actions by looping the variable <code>i</code> over some array of integers.</p>
+<p>That is a perfectly fine way to pull these data out of a string, but it's not very <a href="http://python.net/~goodger/projects/pycon/2007/idiomatic/handout.html">'Pythonic'</a> (it does'nt make best use of some of the elegant features of this language).</p>
+<p>Better in this sense is what are known as <a href="http://python.net/~goodger/projects/pycon/2007/idiomatic/handout.html#list-comprehensions">listcomps</a> (list comprehensions).</p>
+<p>With a listcomp, you define a list (enclosed in <code>[</code>, <code>]</code>), with two or three terms. The first term is some function <code>fn(item)</code>. The second is a for statement. The third, if present, is a conditional (<code>if</code>) statement.</p>
+<p>For example:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">
+In&nbsp;[3]:
+</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight"><pre><span class="n">fdata</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">()]</span>
+
+<span class="k">print</span> <span class="n">fdata</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+[1964, 1220, 1974, 2470, 1984, 2706, 1994, 4812, 2004, 2707]
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This generates a list. Within this list, we iterate over the loop <code>for s in data.split()</code>, and enter the result of the function <code>int(s)</code>.</p>
+<p>So this example is directly equivalent to:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">
+In&nbsp;[4]:
+</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight"><pre><span class="n">data</span> <span class="o">=</span> <span class="s">&quot;1964 1220 1974 2470 1984 2706 1994 4812 2004 2707&quot;</span>
+
+<span class="n">fdata</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+    <span class="n">fdata</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+        
+<span class="k">print</span> <span class="n">fdata</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+[1964, 1220, 1974, 2470, 1984, 2706, 1994, 4812, 2004, 2707]
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You will very commonly use listcomps of this nature when performing some function over elements in a list where you have to perform the function on each element at a time.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">
+In&nbsp;[5]:
+</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight"><pre><span class="n">data</span> <span class="o">=</span> <span class="s">&quot;1964 1220 1974 2470 1984 2706 1994 4812 2004 2707&quot;</span>
+<span class="n">fdata</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">()]</span>
+
+<span class="c"># use slicing to separate the odd</span>
+<span class="c"># and even data</span>
+<span class="n">years</span>     <span class="o">=</span> <span class="n">fdata</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">emissions</span> <span class="o">=</span> <span class="n">fdata</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="k">print</span> <span class="n">years</span>
+<span class="k">print</span> <span class="n">emissions</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+[1964, 1974, 1984, 1994, 2004]
+[1220, 2470, 2706, 4812, 2707]
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Listcomps can be very convenient, as they are a compact way of specifying a loop (with a conditonal statement oif required).</p>
+<p>Don't use listcomps if they obscure the meaning of what you are doing though.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>A listcomp generates everything in the list, then returns the list.</p>
+<p>Sometimes, you only need one element at a time (e.g. within a loop). In such cases, it is better to use generator expressions.</p>
+<p>These look much like listcomps but use <code>()</code> rather than <code>[]</code></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">
+In&nbsp;[7]:
+</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight"><pre><span class="n">fdata</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+<span class="k">print</span> <span class="s">&#39;fdata is&#39;</span><span class="p">,</span><span class="n">fdata</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">fdata</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">i</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+fdata is &lt;generator object &lt;genexpr&gt; at 0x7fc81da021e0&gt;
+1964
+1220
+1974
+2470
+1984
+2706
+1994
+4812
+2004
+2707
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>but only return one item at a time, on demand in the loop.</p>
+</div>
+</div>
+</div>
     </div>
   </div>
 </body>

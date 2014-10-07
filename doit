@@ -1,0 +1,34 @@
+#!/bin/bash
+
+ipython profile create nbserver
+
+export pass=$(python -c "from IPython.lib import passwd;print passwd('a good password')")
+
+sed < $HOME/.ipython/profile_nbserver/ipython_config.py 's/^c = get_config()$/c = get_config();c.NotebookApp.password = u"'$pass'"/g' > /tmp/$$;mv /tmp/$$ $HOME/.ipython/profile_nbserver/ipython_config.py
+
+
+mkdir -p  $HOME/envs/my_root
+
+echo "setting up missing anaconda packages on $HOME/envs/my_root"
+echo "follow the instructions ... (say 'y')"
+
+conda install -n my_root PySide
+
+export OPENSSL_CONF=$HOME/envs/my_root/ssl/openssl.cnf
+
+mkdir -p $HOME/.ipython/profile_nbserver
+
+openssl req -x509 -nodes -days 365 -newkey rsa:1024 -keyout mycert.pem -out $HOME/.ipython/profile_nbserver/mycert.pem
+
+echo "On the remote machine, type:"
+
+echo "ssh -N -L localhost:8888:localhost:8887 ${USER}@`uname -n`"
+
+echo "and load the following in a browser:"
+
+echo "https://localhost:8887/"
+
+echo "If port 8887 is in use, use another"
+
+ipython notebook --certfile=$HOME/.ipython/profile_nbserver/mycert.pem --no-browser --port=8889
+
