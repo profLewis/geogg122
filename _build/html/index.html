@@ -134,11 +134,9 @@
 <li class="toctree-l3"><a class="reference internal" href="Chapter2_Python_intro/python101.html#some-basic-string-operations">2.6.1 Some basic string operations</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Chapter2_Python_intro/python101.html#split">2.6.2 split</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Chapter2_Python_intro/python101.html#join">2.6.3 join</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Chapter2_Python_intro/python101.html#listcomp">2.6.4 listcomp</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Chapter2_Python_intro/python101.html#generator-expressions">2.6.5 generator expressions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Chapter2_Python_intro/python101.html#replace">2.6.6 replace</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Chapter2_Python_intro/python101.html#format">2.6.7 format</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Chapter2_Python_intro/python101.html#strip">2.6.8 strip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Chapter2_Python_intro/python101.html#replace">2.6.4 replace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Chapter2_Python_intro/python101.html#format">2.6.5 format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Chapter2_Python_intro/python101.html#strip">2.6.6 strip</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Chapter2_Python_intro/python101.html#getting-and-splitting-filenames">2.6.9 Getting and splitting filenames</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="Chapter2_Python_intro/python101.html#glob">glob</a></li>
 </ul>
@@ -183,6 +181,8 @@
 <li class="toctree-l2"><a class="reference internal" href="Chapter3_Scientific_Numerical_Python/Scientific_Numerical_Python.html#getting-and-plotting-some-data-netcdf-format">3.2 Getting and Plotting Some Data: netCDF format</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="Chapter3_Scientific_Numerical_Python/Scientific_Numerical_Python.html#globalbedo-data">3.2.1 GlobAlbedo data</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Chapter3_Scientific_Numerical_Python/Scientific_Numerical_Python.html#loading-from-within-python">3.2.2 Loading from within Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Chapter3_Scientific_Numerical_Python/Scientific_Numerical_Python.html#exercise-e3-2-read-image-data-into-3d-list">Exercise E3.2 Read Image Data into 3D List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Chapter3_Scientific_Numerical_Python/Scientific_Numerical_Python.html#exercise-e3-3-read-more-image-data-into-a-4d-list">Exercise E3.3 Read More Image Data into a 4D List</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Chapter3_Scientific_Numerical_Python/Scientific_Numerical_Python.html#plotting-an-image">3.2.3 Plotting an image</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Chapter3_Scientific_Numerical_Python/Scientific_Numerical_Python.html#e3-2-exercise-making-movies">E3.2 Exercise: Making Movies</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Chapter3_Scientific_Numerical_Python/Scientific_Numerical_Python.html#e3-2-1-software">E3.2.1 Software</a></li>
@@ -366,6 +366,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Chapter2_Python_intro/advanced.html#a2-8-reading-files-from-a-url">A2.8 Reading Files from a URL</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter2_Python_intro/advanced.html#a2-9-advanced-dictionaries">A2.9 Advanced dictionaries</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter2_Python_intro/advanced.html#excercise">Excercise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter2_Python_intro/advanced.html#a2-9-listcomp-and-generator-expressions">A2.9 Listcomp and generator expressions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter2_Python_intro/advanced_answers.html">AE2. Advanced Exercises</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Chapter2_Python_intro/advanced_answers.html#exercise-a2-1">Exercise A2.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Chapter2_Python_intro/advanced_answers.html#answer">Answer</a></li>
@@ -415,8 +416,12 @@
 <li class="toctree-l1"><a class="reference internal" href="Chapter3_Scientific_Numerical_Python/advanced_answers.html">E3.3: Exercise: Improved Solar Radiation Modelling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter3_Scientific_Numerical_Python/advanced_answers.html#ae3-3-answer-improved-solar-radiation-modelling">AE3.3 Answer: Improved Solar Radiation Modelling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter3_Scientific_Numerical_Python/answers.html">E3 Answers to Exercise</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Chapter3_Scientific_Numerical_Python/answers.html#e3-2-exercise-listing">E3.2 Exercise: listing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Chapter3_Scientific_Numerical_Python/answers.html#a3-2-answer-listing">A3.2 Answer: listing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Chapter3_Scientific_Numerical_Python/answers.html#e3-1-exercise-listing">E3.1 Exercise: listing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Chapter3_Scientific_Numerical_Python/answers.html#a3-1-answer-listing">A3.1 Answer: listing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Chapter3_Scientific_Numerical_Python/answers.html#e3-2-read-image-data-into-3d-list">E3.2 Read Image Data into 3D List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Chapter3_Scientific_Numerical_Python/answers.html#a3-2-read-image-data-into-3d-list">A3.2 Read Image Data into 3D List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Chapter3_Scientific_Numerical_Python/answers.html#e3-3-read-more-image-data-into-a-4d-list">E3.3 Read More Image Data into a 4D List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Chapter3_Scientific_Numerical_Python/answers.html#a3-3-read-more-image-data-into-a-4d-list">A3.3 Read More Image Data into a 4D List</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Chapter3_Scientific_Numerical_Python/answers.html#e3-2-exercise-making-movies">E3.2 Exercise: Making Movies</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="Chapter3_Scientific_Numerical_Python/answers.html#e3-2-1-software">E3.2.1 Software</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Chapter3_Scientific_Numerical_Python/answers.html#e3-2-2-looping-over-a-set-of-images">E3.2.2 Looping over a set of images</a></li>

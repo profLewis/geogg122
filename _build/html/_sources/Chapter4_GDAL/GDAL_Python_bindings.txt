@@ -166,685 +166,386 @@ whether you got the right result.
 .. raw:: html
 
    <td>
-
-.. raw:: html
-
    </td>
-
-.. raw:: html
-
    <table>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <th>
 
 Park name
 
 .. raw:: html
 
-   </th>
-
-.. raw:: html
-
-   <th>
+   </th><th>
 
 Longitude [deg]
 
 .. raw:: html
 
-   </th>
-
-.. raw:: html
-
-   <th>
+   </th><th>
 
 Latitude [deg]
 
 .. raw:: html
 
    </th>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
 Dartmoor national park
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td> <td>
 
 -3.904
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td> 
 
 50.58
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
 New forest national park
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>   
 
 -1.595
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td> 
 
 50.86
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
 Exmoor national park
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>   
 
 -3.651
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td> 
 
 51.14
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
 Pembrokeshire coast national park
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>  
 
 -4.694
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td> 
 
 51.64
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
 Brecon beacons national park
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 -3.432
 
 .. raw:: html
 
+   </td><td>    
+
+51.88
+
+.. raw:: html
+
    </td>
-
-.. raw:: html
-
-   <td>
-
-::
-
-    51.88</td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
 Pembrokeshire coast national park
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>  
 
 -4.79
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>  
 
 51.99
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
 Norfolk and suffolk broads
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 1.569
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td> 
 
 52.62
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
 Snowdonia national park
 
 .. raw:: html
 
+   </td><td>    
+
+-3.898
+
+.. raw:: html
+
+   </td><td>
+
+52.9
+
+.. raw:: html
+
    </td>
-
-.. raw:: html
-
-   <td>
-
-::
-
-    -3.898  </td><td>52.9</td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
 Peak district national park
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 -1.802
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 53.3
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
 Yorkshire dales national park
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>  
 
 -2.157
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 54.23
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
 North yorkshire moors national park
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 -0.8855
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 54.37
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
 Lake district national park
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 -3.084
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 54.47
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
 Galloway forest park
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 -4.171
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 54.87
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
 Northumberland national park
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 -2.228
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 55.28
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
 Loch lomond and the trossachs national park
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 -4.593
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 56.24
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
 Tay forest park
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 -4.025
 
 .. raw:: html
 
+   </td><td>    
+
+56.59
+
+.. raw:: html
+
    </td>
-
-.. raw:: html
-
-   <td>
-
-::
-
-    56.59</td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    <tr>
-
-.. raw:: html
-
    <td>
 
 Cairngorms national park
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 -3.545
 
 .. raw:: html
 
-   </td>
-
-.. raw:: html
-
-   <td>
+   </td><td>
 
 57.08
 
 .. raw:: html
 
    </td>
-
-.. raw:: html
-
    </tr>
-
-.. raw:: html
-
    </table>
 
 

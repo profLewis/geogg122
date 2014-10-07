@@ -456,52 +456,149 @@ A&gt;&gt;3:   0b1000010011000         4248
 Area Index
 (LAI)</a>
 product:</p>
-<table><tr><td><p>Bit number</p>
-</td><td><p>Parameter Name</p>
-</td><td><p>Bit combination</p>
-</td><td><p>Interpretation</p>
-</td></tr><tr><td><p>0</p>
-</td><td><p>MODLAND_QC bits</p>
-</td><td><p>0</p>
-</td><td><p>Good quality (main algorithm with or without saturation)</p>
-</td></tr><tr><td></td><td></td><td><p>1</p>
-</td><td><p>Other Quality (back-up algorithm or fill values)</p>
-</td></tr><tr><td><p>1</p>
-</td><td><p>Sensor</p>
-</td><td><p>0</p>
-</td><td><p>Terra</p>
-</td></tr><tr><td></td><td></td><td><p>1</p>
-</td><td><p>Aqua</p>
-</td></tr><tr><td><p>2</p>
-</td><td><p>DeadDetector</p>
-</td><td><p>0</p>
-</td><td><p>Detectors apparently fine for up to 50% of channels</p>
-</td></tr><tr><td></td><td></td><td><p>1</p>
-</td><td><p>Dead detectors caused &gt;50% adjacent detector retrieval</p>
-</td></tr><tr><td><p>3-4</p>
-</td><td><p>CloudState</p>
-</td><td><p>00</p>
-</td><td><p>Significant clouds NOT present (clear)</p>
-</td></tr><tr><td></td><td></td><td><p>01</p>
-</td><td><p>Significant clouds WERE present</p>
-</td></tr><tr><td></td><td></td><td><p>10</p>
-</td><td><p>Mixed cloud present on pixel</p>
-</td></tr><tr><td></td><td></td><td><p>11</p>
-</td><td><p>Cloud state not defined (assumed clear)</p>
-</td></tr><tr><td><p>5-7</p>
-</td><td><p>CF_QC</p>
-</td><td><p>000</p>
-</td><td><p>Main (RT) method used (best result possible (no saturation))</p>
-</td></tr><tr><td></td><td></td><td><p>001</p>
-</td><td><p>Main (RT) method used with saturation. (usable)</p>
-</td></tr><tr><td></td><td></td><td><p>010</p>
-</td><td><p>Main (RT) method failed due to bad geometry (empirical algorithm used)</p>
-</td></tr><tr><td></td><td></td><td><p>010</p>
-</td><td><p>Main (RT) method failed due to problems other than geometry (empirical
+<table>
+<tr>
+<td><p>Bit number</p>
+</td>
+<td><p>Parameter Name</p>
+</td>
+<td><p>Bit combination</p>
+</td>
+<td><p>Interpretation</p>
+</td>
+</tr><tr>
+
+<td><p>0</p>
+</td>
+<td><p>MODLAND_QC bits</p>
+</td>
+<td><p>0</p>
+</td>
+<td><p>Good quality (main algorithm with or without saturation)</p>
+</td>
+</tr><tr>
+
+<td></td>
+<td></td>
+<td><p>1</p>
+</td>
+<td><p>Other Quality (back-up algorithm or fill values)</p>
+</td>
+</tr><tr>
+
+<td><p>1</p>
+</td>
+<td><p>Sensor</p>
+</td>
+<td><p>0</p>
+</td>
+<td><p>Terra</p>
+</td>
+</tr><tr>
+
+<td></td>
+<td></td>
+<td><p>1</p>
+</td>
+<td><p>Aqua</p>
+</td>
+</tr><tr>
+
+<td><p>2</p>
+</td>
+<td><p>DeadDetector</p>
+</td>
+<td><p>0</p>
+</td>
+<td><p>Detectors apparently fine for up to 50% of channels</p>
+</td>
+</tr><tr>
+
+<td></td>
+<td></td>
+<td><p>1</p>
+</td>
+<td><p>Dead detectors caused &gt;50% adjacent detector retrieval</p>
+</td>
+</tr><tr>
+
+<td><p>3-4</p>
+</td>
+<td><p>CloudState</p>
+</td>
+<td><p>00</p>
+</td>
+<td><p>Significant clouds NOT present (clear)</p>
+</td>
+</tr><tr>
+
+<td></td>
+<td></td>
+<td><p>01</p>
+</td>
+<td><p>Significant clouds WERE present</p>
+</td>
+</tr><tr>
+
+<td></td>
+<td></td>
+<td><p>10</p>
+</td>
+<td><p>Mixed cloud present on pixel</p>
+</td>
+</tr><tr>
+
+<td></td>
+<td></td>
+<td><p>11</p>
+</td>
+<td><p>Cloud state not defined (assumed clear)</p>
+</td>
+</tr><tr>
+
+<td><p>5-7</p>
+</td>
+<td><p>CF_QC</p>
+</td>
+<td><p>000</p>
+</td>
+<td><p>Main (RT) method used (best result possible (no saturation))</p>
+</td>
+</tr><tr>
+
+<td></td>
+<td></td>
+<td><p>001</p>
+</td>
+<td><p>Main (RT) method used with saturation. (usable)</p>
+</td>
+</tr><tr>
+
+<td></td>
+<td></td>
+<td><p>010</p>
+</td>
+<td><p>Main (RT) method failed due to bad geometry (empirical algorithm used)</p>
+</td>
+</tr><tr>
+
+<td></td>
+<td></td>
+<td><p>010</p>
+</td>
+<td><p>Main (RT) method failed due to problems other than geometry (empirical
 algorithm used)</p>
-</td></tr><tr><td></td><td></td><td><p>010</p>
-</td><td><p>Pixel not produced at all.</p>
-</td></tr></table><p>So, the MODIS LAI QA information is contained in one byte (8 bits),
+</td>
+</tr><tr>
+
+<td></td>
+<td></td>
+<td><p>010</p>
+</td>
+<td><p>Pixel not produced at all.</p>
+</td>
+</tr>
+</table><p>So, the MODIS LAI QA information is contained in one byte (8 bits),
 which encodes data about five different categories of QA information.</p>
 <p>When using such data, we need to make choices about what quality of data
 we are willing to accept.</p>
@@ -1340,6 +1437,111 @@ just starting coding to follow.</p>
 <img alt="../_images/advanced_106_3.png" src="../_images/advanced_106_3.png" />
 <img alt="../_images/advanced_106_4.png" src="../_images/advanced_106_4.png" />
 </div>
+<div class="section" id="a2-9-listcomp-and-generator-expressions">
+<h1>A2.9 Listcomp and generator expressions<a class="headerlink" href="#a2-9-listcomp-and-generator-expressions" title="Permalink to this headline">¶</a></h1>
+<p>In the main class notes, we used expressions and loops of the form:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">data</span> <span class="o">=</span> <span class="s">&quot;1964 1220 1974 2470 1984 2706 1994 4812 2004 2707&quot;</span>
+<span class="n">sdata</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">sdata</span><span class="p">),</span><span class="mi">2</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sdata</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>1964 1220
+1974 2470
+1984 2706
+1994 4812
+2004 2707
+</pre></div>
+</div>
+<p>to do repeated actions by looping the variable <tt class="docutils literal"><span class="pre">i</span></tt> over some array of
+integers.</p>
+<p>That is a perfectly fine way to pull these data out of a string, but
+it&#8217;s not very
+<a class="reference external" href="http://python.net/~goodger/projects/pycon/2007/idiomatic/handout.html">&#8216;Pythonic&#8217;</a>
+(it does&#8217;nt make best use of some of the elegant features of this
+language).</p>
+<p>Better in this sense is what are known as
+<a class="reference external" href="http://python.net/~goodger/projects/pycon/2007/idiomatic/handout.html#list-comprehensions">listcomps</a>
+(list comprehensions).</p>
+<p>With a listcomp, you define a list (enclosed in <tt class="docutils literal"><span class="pre">[</span></tt>, <tt class="docutils literal"><span class="pre">]</span></tt>), with two
+or three terms. The first term is some function <tt class="docutils literal"><span class="pre">fn(item)</span></tt>. The second
+is a for statement. The third, if present, is a conditional (<tt class="docutils literal"><span class="pre">if</span></tt>)
+statement.</p>
+<p>For example:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">fdata</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">()]</span>
+
+<span class="k">print</span> <span class="n">fdata</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="mi">1964</span><span class="p">,</span> <span class="mi">1220</span><span class="p">,</span> <span class="mi">1974</span><span class="p">,</span> <span class="mi">2470</span><span class="p">,</span> <span class="mi">1984</span><span class="p">,</span> <span class="mi">2706</span><span class="p">,</span> <span class="mi">1994</span><span class="p">,</span> <span class="mi">4812</span><span class="p">,</span> <span class="mi">2004</span><span class="p">,</span> <span class="mi">2707</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>This generates a list. Within this list, we iterate over the loop
+<tt class="docutils literal"><span class="pre">for</span> <span class="pre">s</span> <span class="pre">in</span> <span class="pre">data.split()</span></tt>, and enter the result of the function
+<tt class="docutils literal"><span class="pre">int(s)</span></tt>.</p>
+<p>So this example is directly equivalent to:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">data</span> <span class="o">=</span> <span class="s">&quot;1964 1220 1974 2470 1984 2706 1994 4812 2004 2707&quot;</span>
+
+<span class="n">fdata</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+    <span class="n">fdata</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+
+<span class="k">print</span> <span class="n">fdata</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="mi">1964</span><span class="p">,</span> <span class="mi">1220</span><span class="p">,</span> <span class="mi">1974</span><span class="p">,</span> <span class="mi">2470</span><span class="p">,</span> <span class="mi">1984</span><span class="p">,</span> <span class="mi">2706</span><span class="p">,</span> <span class="mi">1994</span><span class="p">,</span> <span class="mi">4812</span><span class="p">,</span> <span class="mi">2004</span><span class="p">,</span> <span class="mi">2707</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>You will very commonly use listcomps of this nature when performing some
+function over elements in a list where you have to perform the function
+on each element at a time.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">data</span> <span class="o">=</span> <span class="s">&quot;1964 1220 1974 2470 1984 2706 1994 4812 2004 2707&quot;</span>
+<span class="n">fdata</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">()]</span>
+
+<span class="c"># use slicing to separate the odd</span>
+<span class="c"># and even data</span>
+<span class="n">years</span>     <span class="o">=</span> <span class="n">fdata</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">emissions</span> <span class="o">=</span> <span class="n">fdata</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="k">print</span> <span class="n">years</span>
+<span class="k">print</span> <span class="n">emissions</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="mi">1964</span><span class="p">,</span> <span class="mi">1974</span><span class="p">,</span> <span class="mi">1984</span><span class="p">,</span> <span class="mi">1994</span><span class="p">,</span> <span class="mi">2004</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">1220</span><span class="p">,</span> <span class="mi">2470</span><span class="p">,</span> <span class="mi">2706</span><span class="p">,</span> <span class="mi">4812</span><span class="p">,</span> <span class="mi">2707</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Listcomps can be very convenient, as they are a compact way of
+specifying a loop (with a conditonal statement oif required).</p>
+<p>Don&#8217;t use listcomps if they obscure the meaning of what you are doing
+though.</p>
+<p>A listcomp generates everything in the list, then returns the list.</p>
+<p>Sometimes, you only need one element at a time (e.g. within a loop). In
+such cases, it is better to use generator expressions.</p>
+<p>These look much like listcomps but use <tt class="docutils literal"><span class="pre">()</span></tt> rather than <tt class="docutils literal"><span class="pre">[]</span></tt></p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">fdata</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+<span class="k">print</span> <span class="s">&#39;fdata is&#39;</span><span class="p">,</span><span class="n">fdata</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">fdata</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">i</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>fdata is &lt;generator object &lt;genexpr&gt; at 0x7fc81da021e0&gt;
+1964
+1220
+1974
+2470
+1984
+2706
+1994
+4812
+2004
+2707
+</pre></div>
+</div>
+<p>but only return one item at a time, on demand in the loop.</p>
+</div>
 
 
           </div>
@@ -1371,6 +1573,7 @@ just starting coding to follow.</p>
 <li><a class="reference internal" href="#a2-8-reading-files-from-a-url">A2.8 Reading Files from a URL</a></li>
 <li><a class="reference internal" href="#a2-9-advanced-dictionaries">A2.9 Advanced dictionaries</a></li>
 <li><a class="reference internal" href="#excercise">Excercise</a></li>
+<li><a class="reference internal" href="#a2-9-listcomp-and-generator-expressions">A2.9 Listcomp and generator expressions</a></li>
 </ul>
 
   </div>

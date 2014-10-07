@@ -225,10 +225,29 @@ up and delete the file:</p>
 <p>To use this module then:</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span><span class="nn">os</span>
 <span class="c"># put local directory into the path</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s">&#39;files</span><span class="si">%s</span><span class="s">python&#39;</span><span class="o">%</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">))</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s">&#39;python&#39;</span><span class="p">))</span>
 <span class="c"># import local module gzurl</span>
 <span class="kn">from</span> <span class="nn">gzurl</span> <span class="kn">import</span> <span class="n">gzurl</span>
-<span class="kn">from</span> <span class="nn">netCDF4</span> <span class="kn">import</span> <span class="n">Dataset</span>
+<span class="kn">import</span> <span class="nn">gdal</span>
+
+<span class="k">def</span> <span class="nf">readGA</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s">&#39;data/&#39;</span><span class="p">,</span><span class="n">year</span><span class="o">=</span><span class="mi">2009</span><span class="p">,</span><span class="n">month</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">layer</span> <span class="o">=</span> <span class="s">&#39;BHR_VIS&#39;</span><span class="p">,</span><span class="n">filename</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Method to read a GlobAlbedo file from earlier</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">file_template</span> <span class="o">=</span> <span class="s">&#39;NETCDF:&quot;</span><span class="si">%s</span><span class="s">&quot;:</span><span class="si">%s</span><span class="s">&#39;</span>
+
+    <span class="c"># allow filename to be overridden from filename=</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span> <span class="ow">or</span> <span class="n">root</span> <span class="o">+</span> <span class="s">&#39;GlobAlbedo.</span><span class="si">%d%02d</span><span class="s">.mosaic.5.nc&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">month</span><span class="p">)</span>
+
+    <span class="n">g</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span> <span class="p">(</span>  <span class="n">file_template</span> <span class="o">%</span> <span class="p">(</span> <span class="n">filename</span><span class="p">,</span> <span class="n">layer</span> <span class="p">)</span> <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">g</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">IOError</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">()</span>
+
+    <span class="c"># return a numpy array</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+
 
 <span class="c"># codes for url specification on globalbedo.org</span>
 <span class="n">years</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1998</span><span class="p">,</span><span class="mi">2012</span><span class="p">)</span>
@@ -249,12 +268,24 @@ up and delete the file:</p>
 <span class="c"># read the gzipped file</span>
 <span class="n">f</span> <span class="o">=</span> <span class="n">gzurl</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 <span class="c"># read the netCDF file from f.filename</span>
-<span class="n">nc</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span><span class="s">&#39;r&#39;</span><span class="p">)</span>
-<span class="c"># close f</span>
-<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">nc</span> <span class="o">=</span> <span class="n">readGA</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">f</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">nc</span>
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre>http://www.globalbedo.org/GlobAlbedo56/mosaics/2009/0.5/monthly/
+[[        nan         nan         nan ...,         nan         nan
+          nan]
+ [        nan         nan         nan ...,         nan         nan
+          nan]
+ [        nan         nan         nan ...,         nan         nan
+          nan]
+ ...,
+ [ 0.67017049  0.67017049  0.67017049 ...,  0.67199522  0.67199522
+   0.67199522]
+ [ 0.67017049  0.67017049  0.67017049 ...,  0.67199522  0.67199522
+   0.67199522]
+ [ 0.67017049  0.67017049  0.67017049 ...,  0.67199522  0.67199522
+   0.67199522]]
 </pre></div>
 </div>
 <p>Alternatively, to read all of the files into the directory files/data
@@ -264,7 +295,7 @@ for the year 2011 and keep them:</p>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s">&#39;files</span><span class="si">%s</span><span class="s">python&#39;</span><span class="o">%</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">))</span>
 <span class="c"># import local module gzurl</span>
 <span class="kn">from</span> <span class="nn">gzurl</span> <span class="kn">import</span> <span class="n">gzurl</span>
-<span class="kn">from</span> <span class="nn">netCDF4</span> <span class="kn">import</span> <span class="n">Dataset</span>
+<span class="kn">import</span> <span class="nn">gdal</span>
 
 <span class="c"># codes for url specification on globalbedo.org</span>
 <span class="n">years</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1998</span><span class="p">,</span><span class="mi">2012</span><span class="p">)</span>
@@ -282,29 +313,28 @@ for the year 2011 and keep them:</p>
     <span class="n">url</span> <span class="o">=</span> <span class="n">root</span> <span class="o">+</span> <span class="n">base</span> <span class="o">+</span> <span class="s">&#39;.gz&#39;</span>
     <span class="c"># specify a local filename</span>
     <span class="c"># work out how / why this works ...</span>
-    <span class="n">local</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&#39;files{0}data{0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">),</span><span class="n">base</span><span class="p">)</span>
+    <span class="n">local</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&#39;data{0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">),</span><span class="n">base</span><span class="p">)</span>
 
     <span class="c"># read the gzipped file</span>
     <span class="k">print</span> <span class="n">local</span>
     <span class="n">f</span> <span class="o">=</span> <span class="n">gzurl</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">filename</span><span class="o">=</span><span class="n">local</span><span class="p">)</span>
     <span class="c"># read the netCDF file from f.filename</span>
-    <span class="n">nc</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span><span class="s">&#39;r&#39;</span><span class="p">)</span>
-    <span class="c"># close f</span>
-    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="c"># read the gzipped file</span>
+    <span class="n">nc</span> <span class="o">=</span> <span class="n">readGA</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">f</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>files/data/GlobAlbedo.200901.mosaic.5.nc
-files/data/GlobAlbedo.200902.mosaic.5.nc
-files/data/GlobAlbedo.200903.mosaic.5.nc
-files/data/GlobAlbedo.200904.mosaic.5.nc
-files/data/GlobAlbedo.200905.mosaic.5.nc
-files/data/GlobAlbedo.200906.mosaic.5.nc
-files/data/GlobAlbedo.200907.mosaic.5.nc
-files/data/GlobAlbedo.200908.mosaic.5.nc
-files/data/GlobAlbedo.200909.mosaic.5.nc
-files/data/GlobAlbedo.200910.mosaic.5.nc
-files/data/GlobAlbedo.200911.mosaic.5.nc
-files/data/GlobAlbedo.200912.mosaic.5.nc
+<div class="highlight-python"><div class="highlight"><pre>data/GlobAlbedo.200901.mosaic.5.nc
+data/GlobAlbedo.200902.mosaic.5.nc
+data/GlobAlbedo.200903.mosaic.5.nc
+data/GlobAlbedo.200904.mosaic.5.nc
+data/GlobAlbedo.200905.mosaic.5.nc
+data/GlobAlbedo.200906.mosaic.5.nc
+data/GlobAlbedo.200907.mosaic.5.nc
+data/GlobAlbedo.200908.mosaic.5.nc
+data/GlobAlbedo.200909.mosaic.5.nc
+data/GlobAlbedo.200910.mosaic.5.nc
+data/GlobAlbedo.200911.mosaic.5.nc
+data/GlobAlbedo.200912.mosaic.5.nc
 </pre></div>
 </div>
 </div>
@@ -312,28 +342,28 @@ files/data/GlobAlbedo.200912.mosaic.5.nc
 <h3>Doing this in unix<a class="headerlink" href="#doing-this-in-unix" title="Permalink to this headline">¶</a></h3>
 <p>That&#8217;s not too complicated, but you might often do this sort of thing
 from unix instead:</p>
-<div class="code python highlight-python"><div class="highlight"><pre>!rm -f files/data/GlobAlbedo.200901.mosaic.5.nc.gz
-!wget -O files/data/GlobAlbedo.200901.mosaic.5.nc.gz \
+<div class="code python highlight-python"><div class="highlight"><pre>!rm -f data/GlobAlbedo.200901.mosaic.5.nc.gz
+!wget -O data/GlobAlbedo.200901.mosaic.5.nc.gz \
   http://www.globalbedo.org/GlobAlbedo56/mosaics/2009/0.5/monthly/GlobAlbedo.200901.mosaic.5.nc.gz
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>--2013-10-12 20:13:51--  http://www.globalbedo.org/GlobAlbedo56/mosaics/2009/0.5/monthly/GlobAlbedo.200901.mosaic.5.nc.gz
+<div class="highlight-python"><div class="highlight"><pre>--2014-10-07 14:03:42--  http://www.globalbedo.org/GlobAlbedo56/mosaics/2009/0.5/monthly/GlobAlbedo.200901.mosaic.5.nc.gz
 Resolving www.globalbedo.org... 128.40.73.100
 Connecting to www.globalbedo.org|128.40.73.100|:80... connected.
 HTTP request sent, awaiting response... 200 OK
 Length: 4540366 (4.3M) [application/x-gzip]
-Saving to: `files/data/GlobAlbedo.200901.mosaic.5.nc.gz&#39;
+Saving to: `data/GlobAlbedo.200901.mosaic.5.nc.gz&#39;
 
-100%[======================================&gt;] 4,540,366   2.78M/s   in 1.6s
+100%[======================================&gt;] 4,540,366   21.6M/s   in 0.2s
 
-2013-10-12 20:13:52 (2.78 MB/s) - `files/data/GlobAlbedo.200901.mosaic.5.nc.gz&#39; saved [4540366/4540366]
+2014-10-07 14:03:42 (21.6 MB/s) - `data/GlobAlbedo.200901.mosaic.5.nc.gz&#39; saved [4540366/4540366]
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre>!gunzip -f files/data/GlobAlbedo.200901.mosaic.5.nc.gz
-!ls -l files/data/GlobAlbedo.200901.mosaic.5.nc
+<div class="code python highlight-python"><div class="highlight"><pre>!gunzip -f data/GlobAlbedo.200901.mosaic.5.nc.gz
+!ls -l data/GlobAlbedo.200901.mosaic.5.nc
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>-rw-r--r--  1 plewis  staff  18669672 12 Sep 17:12 files/data/GlobAlbedo.200901.mosaic.5.nc
+<div class="highlight-python"><div class="highlight"><pre>-rw-rw-r--. 1 plewis plewis 18669672 Sep 12  2013 data/GlobAlbedo.200901.mosaic.5.nc
 </pre></div>
 </div>
 </div>

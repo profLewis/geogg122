@@ -322,56 +322,105 @@ information.</p>
 <p>We should then examine this.</p>
 <p>The codes for this are also given on the LAI product page. They are
 described as bit combinations:</p>
-<table><tr><th><p>Bit No.</p>
-</th><div class="highlight-python"><div class="highlight"><pre>&lt;th&gt;Parameter Name&lt;/th&gt;&lt;th&gt; Bit Combination&lt;/th&gt;&lt;th&gt;Explanation&lt;/th&gt;
-</pre></div>
-</div>
-<tr><td><p>0</p>
+<table>
+<tr>
+<th><p>Bit No.</p>
+</th>    <th><p>Parameter Name</p>
+</th><th><p>Bit Combination</p>
+</th><th><p>Explanation</p>
+</th>
+<tr>
+<td><p>0</p>
 </td><td><p>MODLAND_QC bits</p>
 </td><td><p>0</p>
 </td><td><p>Good quality (main algorithm with or without saturation)</p>
-</td></tr><tr><td></td><td></td><td><p>1</p>
+</td>
+</tr>
+<tr>
+<td></td><td></td><td><p>1</p>
 </td><td><p>Other Quality (back-up algorithm or fill values)</p>
-</td></tr><tr><td><p>1</p>
+</td>
+</tr>
+
+<tr>
+<td><p>1</p>
 </td><td><p>Sensor</p>
-</td><td><div class="highlight-python"><div class="highlight"><pre>0&lt;/td&gt;&lt;td&gt;  TERRA&lt;/td&gt;
-</pre></div>
-</div>
-</tr><tr><td></td><td></td><td><p>1</p>
+</td><td><p>0</p>
+</td><td><p>TERRA</p>
+</td>
+</tr>
+<tr>
+<td></td><td></td><td><p>1</p>
 </td><td><p>AQUA</p>
-</td></tr><tr><td><p>2</p>
+</td>
+</tr>
+
+<tr>
+<td><p>2</p>
 </td><td><p>DeadDetector</p>
 </td><td><p>0</p>
 </td><td><p>Detectors apparently fine for up to 50% of channels 1 2</p>
-</td></tr><tr><td></td><td></td><td><p>1</p>
+</td>
+</tr>
+<tr>
+<td></td><td></td><td><p>1</p>
 </td><td><p>Dead detectors caused &gt;50% adjacent detector retrieval</p>
-</td></tr><tr><td><p>3-4</p>
+</td>
+</tr>
+
+<tr>
+<td><p>3-4</p>
 </td><td><p>CloudState</p>
 </td><td><p>00</p>
 </td><td><p>Significant clouds NOT present (clear)</p>
-</td></tr><tr><td></td><td></td><td><p>01</p>
+</td>
+</tr>
+<tr>
+<td></td><td></td><td><p>01</p>
 </td><td><p>Significant clouds WERE present</p>
-</td></tr><tr><td></td><td></td><td><p>10</p>
+</td>
+</tr>
+<tr>
+<td></td><td></td><td><p>10</p>
 </td><td><p>Mixed clouds present on pixel</p>
-</td></tr><tr><td></td><td></td><td><p>11</p>
+</td>
+</tr>
+<tr>
+<td></td><td></td><td><p>11</p>
 </td><td><p>Cloud state not defined assumed clear</p>
-</td></tr><tr><td><p>5-7</p>
+</td>
+</tr>
+
+<tr>
+<td><p>5-7</p>
 </td><td><p>CF_QC</p>
 </td><td><p>000</p>
-</td><td><div class="highlight-python"><div class="highlight"><pre>Main (RT) method used   best result possible (no saturation)     &lt;/td&gt;
-</pre></div>
-</div>
-</tr><tr><td></td><td></td><td><p>001</p>
+</td><td><p>Main (RT) method used best result possible (no saturation)</p>
+</td>
+</tr>
+<tr>
+<td></td><td></td><td><p>001</p>
 </td><td><p>Main (RT) method used with saturation. Good very usable</p>
-</td></tr><tr><td></td><td></td><td><p>010</p>
+</td>
+</tr>
+<tr>
+<td></td><td></td><td><p>010</p>
 </td><td><p>Main (RT) method failed due to bad geometry empirical algorithm used</p>
-</td></tr><tr><td></td><td></td><td><p>011</p>
+</td>
+</tr>
+<tr>
+<td></td><td></td><td><p>011</p>
 </td><td><p>Main (RT) method failed due to problems other than geometry empirical
 algorithm used</p>
-</td></tr><tr><td></td><td></td><td><p>100</p>
+</td>
+</tr>
+<tr>
+<td></td><td></td><td><p>100</p>
 </td><td><p>Pixel not produced at all value coudn’t be retrieved (possible reasons:
 bad L1B data unusable MODAGAGG data)</p>
-</td></tr></table><p>In using this information, it is up to the use which data he/she wants
+</td>
+</tr>
+</table><p>In using this information, it is up to the use which data he/she wants
 to pass through for any further processing. There are clearly
 trade-offs: if you look for only the highest quality data, then the
 number of samples is likely to be lower than if you were more tolerant.
