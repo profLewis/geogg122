@@ -63,6 +63,13 @@ to do this calculation yourself).
 .. code:: python
 
     import gdal # Import GDAL library
+    
+    # have to make sure have access to gdal data files 
+    import os
+    if 'GDAL_DATA' not in os.environ:
+        os.environ["GDAL_DATA"] = '/opt/anaconda/share/gdal'
+    
+    
     g = gdal.Open ( "lc_h17v03.tif" ) # Open the file
     if g is None:
         print "Could not open the file!"
@@ -148,7 +155,7 @@ to add a label with an arrow:
 
 
 
-.. image:: GDAL_Python_bindings_files/GDAL_Python_bindings_10_1.svg
+.. image:: GDAL_Python_bindings_files/GDAL_Python_bindings_10_1.png
 
 
 Try it out in some other places!
@@ -548,7 +555,6 @@ Cairngorms national park
    </tr>
    </table>
 
-
 The projection
 --------------
 
@@ -628,33 +634,7 @@ it
 
 .. parsed-literal::
 
-    Driver: HFA/Erdas Imagine Images (.img)
-    Files: test_lc_h17v03.img
-    Size is 2400, 2400
-    Coordinate System is:
-    PROJCS["Sinusoidal",
-        GEOGCS["GCS_Unknown datum based upon the custom spheroid",
-            DATUM["Not_specified_based_on_custom_spheroid",
-                SPHEROID["Custom_spheroid",6371007.181,0]],
-            PRIMEM["Greenwich",0],
-            UNIT["Degree",0.017453292519943295]],
-        PROJECTION["Sinusoidal"],
-        PARAMETER["longitude_of_center",0],
-        PARAMETER["false_easting",0],
-        PARAMETER["false_northing",0],
-        UNIT["Meter",1]]
-    Origin = (-1111950.519667000044137,6671703.117999999783933)
-    Pixel Size = (463.312716527916677,-463.312716527916507)
-    Corner Coordinates:
-    Upper Left  (-1111950.520, 6671703.118) ( 20d 0' 0.00"W, 60d 0' 0.00"N)
-    Lower Left  (-1111950.520, 5559752.598) ( 15d33'26.06"W, 50d 0' 0.00"N)
-    Upper Right (       0.000, 6671703.118) (  0d 0' 0.01"E, 60d 0' 0.00"N)
-    Lower Right (       0.000, 5559752.598) (  0d 0' 0.01"E, 50d 0' 0.00"N)
-    Center      ( -555975.260, 6115727.858) (  8d43' 2.04"W, 55d 0' 0.00"N)
-    Band 1 Block=64x64 Type=Byte, ColorInterp=Undefined
-      Description = Layer_1
-      Metadata:
-        LAYER_TYPE=athematic
+    gdalinfo: error while loading shared libraries: libxerces-c-3.1.so: cannot open shared object file: No such file or directory
 
 
 So the previous code works. Since this is something we typically do
@@ -740,10 +720,9 @@ where we can gleam its EPSG code (27700). The EPSG code for longitude
 latitude is `4326 <http://spatialreference.org/ref/epsg/4326/>`__. Let's
 see this in practice:
 
-
 .. code:: python
 
-    from osgeo import osr
+    from osgeo import osr, ogr
     
     # Define the source projection, WGS84 lat/lon. 
     wgs84 = osr.SpatialReference( ) # Define a SpatialReference object
@@ -754,25 +733,34 @@ see this in practice:
     # In this case, we get the projection from a Proj4 string
     osng.ImportFromEPSG( 27700)
     # or, if using the proj4 representation
-    osng.ImportFromProj4 ( "+proj=tmerc +lat_0=49 +lon_0=-2 " + \
-                          "+k=0.9996012717 +x_0=400000 +y_0=-100000 " + \
-                          "+ellps=airy +datum=OSGB36 +units=m +no_defs" )
+    #osng.ImportFromProj4 ( "+proj=tmerc +lat_0=49 +lon_0=-2 " + \
+    #                      "+k=0.9996012717 +x_0=400000 +y_0=-100000 " + \
+    #                      "+ellps=airy +datum=OSGB36 +units=m +no_defs" )
     
     
     # Now, we define a coordinate transformtion object, *from* wgs84 *to* OSNG
     tx = osr.CoordinateTransformation( wgs84, osng)
     # We loop over the lines of park_data, 
     #         using the split method to split by newline characters
-    park_name, lon, lat = "Snowdonia national park", -3.898,	52.9
+    park_name, lon, lat = "Snowdonia national park", -3.898,52.9
+    
+    # create a geometry from coordinates
+    point = ogr.Geometry(ogr.wkbPoint)
+    point.AddPoint(lon, lat)
     
     # Actually do the transformation using the TransformPoint method
-    osng_x, osng_y, osng_z = tx.TransformPoint ( lon, lat )
+    point.Transform ( tx )
+    
+    osng_x = point.GetX()
+    osng_y = point.GetY()
+    osng_z = point.GetZ()
+    
     # Print out
-    print park_name, lon, lat, osng_x, osng_y
+    print park_name, lon, lat, osng_x, osng_y, osng_z
 
 .. parsed-literal::
 
-    Snowdonia national park -3.898 52.9 272430.180112 335304.936823
+    Snowdonia national park -3.898 52.9 272430.177073 335304.936492 -51.8129037432
 
 
 You can test the result is reasonable by feeding the data for ``osng_x``
@@ -794,7 +782,12 @@ on into latitude/longitude (WGS84):
 
 .. code:: python
 
-    !gdalwarp -of GTiff -t_srs "EPSG:4326" -ts 2400 2400 test_lc_h17v03.img  lc_h17v03_wgs84.tif
+    # in case you don't have library path set
+    # use 'locate libnetcdf` or similar if its not in here
+    LD_LIBRARY_PATH=/opt/anaconda/lib:$LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH
+    
+    gdalwarp -of GTiff -t_srs "EPSG:4326" -ts 2400 2400 test_lc_h17v03.img  lc_h17v03_wgs84.tif
 
 .. parsed-literal::
 
@@ -824,10 +817,17 @@ degrees in this case). We can use ``gdalinfo`` to see what we've done.
 
 .. code:: python
 
-    !gdalinfo test_lc_h17v03.img
+    # in case you don't have library path set
+    # use 'locate libnetcdf` or similar if its not in here
+    LD_LIBRARY_PATH=/opt/anaconda/lib:$LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH
+    
+    pwd
+    gdalinfo test_lc_h17v03.img
 
 .. parsed-literal::
 
+    /home/plewis/p/geogg122/Chapter4_GDAL
     Driver: HFA/Erdas Imagine Images (.img)
     Files: test_lc_h17v03.img
     Size is 2400, 2400
@@ -855,11 +855,17 @@ degrees in this case). We can use ``gdalinfo`` to see what we've done.
       Description = Layer_1
       Metadata:
         LAYER_TYPE=athematic
+    
 
 
 .. code:: python
 
-    !gdalinfo lc_h17v03_wgs84.tif
+    # in case you don't have library path set
+    # use 'locate libnetcdf` or similar if its not in here
+    LD_LIBRARY_PATH=/opt/anaconda/lib:$LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH
+    
+    gdalinfo lc_h17v03_wgs84.tif
 
 .. parsed-literal::
 
@@ -910,12 +916,12 @@ Let's see how different these two datasets are:
 
 .. parsed-literal::
 
-    <matplotlib.image.AxesImage at 0xe566950>
+    <matplotlib.image.AxesImage at 0x7f3a4014f310>
 
 
 
 
-.. image:: GDAL_Python_bindings_files/GDAL_Python_bindings_39_1.svg
+.. image:: GDAL_Python_bindings_files/GDAL_Python_bindings_37_1.png
 
 
 Reprojecting using the Python bindings
@@ -1047,10 +1053,10 @@ by side
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x2b9eac0b4ed0>
+    <matplotlib.text.Text at 0x7f3a37661650>
 
 
 
 
-.. image:: GDAL_Python_bindings_files/GDAL_Python_bindings_46_1.svg
+.. image:: GDAL_Python_bindings_files/GDAL_Python_bindings_44_1.png
 

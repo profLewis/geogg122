@@ -24,8 +24,8 @@ the product at that location (e.g. it was very cloudy so the results are
 not so good).
 
 To explore this, we will first consider the `MODIS Leaf Area Index
-(LAI) <http://modis.gsfc.nasa.gov/data/dataprod/dataproducts.php?MOD_NUMBER=15>`__
-product taht is mapped at 1 km resolution, every 8 days from the year
+(LAI) <https://lpdaac.usgs.gov/products/modis_products_table/mod15a2>`__
+product that is mapped at 1 km resolution, every 8 days from the year
 2000.
 
 We will learn how to read in these data (in ``hdf`` format) using
@@ -90,7 +90,7 @@ We can explore the subsets in the file with ``GetSubDatasets()``:
     
     # The file that we shall be using
     # Needs to be on current directory
-    filename = 'files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf'
+    filename = 'data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf'
     
     g = gdal.Open(filename)
     # g should now be a GDAL dataset, but if the file isn't found
@@ -110,19 +110,19 @@ We can explore the subsets in the file with ``GetSubDatasets()``:
 
 .. parsed-literal::
 
-    File files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf opened fine
+    File data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf opened fine
     [1200x1200] Fpar_1km MOD_Grid_MOD15A2 (8-bit unsigned integer)
-    	HDF4_EOS:EOS_GRID:"files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf":MOD_Grid_MOD15A2:Fpar_1km
+    	HDF4_EOS:EOS_GRID:"data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf":MOD_Grid_MOD15A2:Fpar_1km
     [1200x1200] Lai_1km MOD_Grid_MOD15A2 (8-bit unsigned integer)
-    	HDF4_EOS:EOS_GRID:"files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf":MOD_Grid_MOD15A2:Lai_1km
+    	HDF4_EOS:EOS_GRID:"data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf":MOD_Grid_MOD15A2:Lai_1km
     [1200x1200] FparLai_QC MOD_Grid_MOD15A2 (8-bit unsigned integer)
-    	HDF4_EOS:EOS_GRID:"files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf":MOD_Grid_MOD15A2:FparLai_QC
+    	HDF4_EOS:EOS_GRID:"data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf":MOD_Grid_MOD15A2:FparLai_QC
     [1200x1200] FparExtra_QC MOD_Grid_MOD15A2 (8-bit unsigned integer)
-    	HDF4_EOS:EOS_GRID:"files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf":MOD_Grid_MOD15A2:FparExtra_QC
+    	HDF4_EOS:EOS_GRID:"data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf":MOD_Grid_MOD15A2:FparExtra_QC
     [1200x1200] FparStdDev_1km MOD_Grid_MOD15A2 (8-bit unsigned integer)
-    	HDF4_EOS:EOS_GRID:"files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf":MOD_Grid_MOD15A2:FparStdDev_1km
+    	HDF4_EOS:EOS_GRID:"data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf":MOD_Grid_MOD15A2:FparStdDev_1km
     [1200x1200] LaiStdDev_1km MOD_Grid_MOD15A2 (8-bit unsigned integer)
-    	HDF4_EOS:EOS_GRID:"files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf":MOD_Grid_MOD15A2:LaiStdDev_1km
+    	HDF4_EOS:EOS_GRID:"data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf":MOD_Grid_MOD15A2:LaiStdDev_1km
 
 
 In the previous code snippet we have done a number of different things:
@@ -142,7 +142,7 @@ In the previous code snippet we have done a number of different things:
 Let's say that we want to access the LAI information. By contrasting the
 output of the above code (or ``gdalinfo``) to the contents of the
 `LAI/fAPAR product information
-page <https://lpdaac.usgs.gov/products/modis_products_table/leaf_area_index_fraction_of_photosynthetically_active_radiation/8_day_l4_global_1km/mod15a2>`__,
+page <https://lpdaac.usgs.gov/products/modis_products_table/mod15a2>`__,
 we find out that we want the layers for ``Lai_1km``, ``FparLai_Qc``,
 ``FparExtra_QC`` and ``LaiStdDev_1km``.
 
@@ -180,11 +180,11 @@ individually using GDAL, and the GDAL filenames used above:
 
 .. parsed-literal::
 
-    Opening Layer 1: HDF4_EOS:EOS_GRID:"files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf":MOD_Grid_MOD15A2:Lai_1km
+    Opening Layer 1: HDF4_EOS:EOS_GRID:"data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf":MOD_Grid_MOD15A2:Lai_1km
     	>>> Read Lai_1km!
-    Opening Layer 2: HDF4_EOS:EOS_GRID:"files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf":MOD_Grid_MOD15A2:FparLai_QC
+    Opening Layer 2: HDF4_EOS:EOS_GRID:"data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf":MOD_Grid_MOD15A2:FparLai_QC
     	>>> Read FparLai_QC!
-    Opening Layer 3: HDF4_EOS:EOS_GRID:"files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf":MOD_Grid_MOD15A2:LaiStdDev_1km
+    Opening Layer 3: HDF4_EOS:EOS_GRID:"data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf":MOD_Grid_MOD15A2:LaiStdDev_1km
     	>>> Read LaiStdDev_1km!
 
 
@@ -276,7 +276,7 @@ webpage, there is a scale factor of 0.1 involved for LAI and SD LAI:
 
 .. parsed-literal::
 
-    <matplotlib.colorbar.Colorbar instance at 0x2adc680e1830>
+    <matplotlib.colorbar.Colorbar instance at 0x7f02af3f7f80>
 
 
 
@@ -302,7 +302,7 @@ webpage, there is a scale factor of 0.1 involved for LAI and SD LAI:
 
 .. parsed-literal::
 
-    <matplotlib.colorbar.Colorbar instance at 0x2adc6954c098>
+    <matplotlib.colorbar.Colorbar instance at 0x7f02ad460bd8>
 
 
 
@@ -785,7 +785,7 @@ Let's have a look at the QC data:
 
 .. parsed-literal::
 
-     [[2 2 0 ..., 0 2 2]
+    [[2 2 0 ..., 0 2 2]
      [2 2 0 ..., 2 0 2]
      [0 2 0 ..., 0 0 0]
      ..., 
@@ -953,7 +953,7 @@ than inmterpreting all of the bits.
 
 .. parsed-literal::
 
-    <matplotlib.colorbar.Colorbar instance at 0xc6b71b8>
+    <matplotlib.colorbar.Colorbar instance at 0x7f02ad33ebd8>
 
 
 
@@ -990,7 +990,7 @@ set values outside the 0.1 and 4 to be shown as black pixels.
 
 .. parsed-literal::
 
-    <matplotlib.colorbar.Colorbar instance at 0x2adc6b8dd5a8>
+    <matplotlib.colorbar.Colorbar instance at 0x7f02ad1bdef0>
 
 
 
@@ -1012,7 +1012,7 @@ Similarly, we can do a similar thing for Standard Deviation
 
 .. parsed-literal::
 
-    <matplotlib.colorbar.Colorbar instance at 0x2adc70725878>
+    <matplotlib.colorbar.Colorbar instance at 0x7f02ad04a2d8>
 
 
 
@@ -1067,7 +1067,7 @@ For convenience, we might wrap all of this up into a function:
         
 .. code:: python
 
-    filename = 'files/data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf'
+    filename = 'data/MCD15A2.A2011185.h09v05.005.2011213154534.hdf'
     
     lai_data = getLAI(filename)
     
@@ -1084,7 +1084,7 @@ For convenience, we might wrap all of this up into a function:
 
 .. parsed-literal::
 
-    <matplotlib.colorbar.Colorbar instance at 0x2adc709ffe18>
+    <matplotlib.colorbar.Colorbar instance at 0x7f02acec95a8>
 
 
 
@@ -1096,7 +1096,7 @@ Exercise 4.1
 ------------
 
 You are given the MODIS LAI data files for the year 2012 in the
-directory ``files/data`` for the UK (MODIS tile h17v03).
+directory ``data`` for the UK (MODIS tile h17v03).
 
 Read these LAI datasets into a masked array, using QA bit 0 to mask the
 data (i.e. good quality data only) and generate a movie of LAI.
@@ -1132,28 +1132,23 @@ cart). You then view the items in your cart, click 'download' and then
 
 This should give you a text file with some urls in it, e.g.:
 
-``ftp://n4ftl01u.ecs.nasa.gov/DP0/MOST/MOD10A1.005/2013.02.21/MOD10A1.A2013052.h17v03.005.2013054054219.hdf ftp://n4ftl01u.ecs.nasa.gov/DP0/MOST/MOD10A1.005/2013.02.21/MOD10A1.A2013052.h17v03.005.2013054054219.hdf.xml ftp://n4ftl01u.ecs.nasa.gov/DP0/BRWS/Browse.001/2013.02.23/BROWSE.MOD10A1.A2013052.h17v03.005.2013054054219.1.jpg http://browse.echo.nasa.gov/NSIDC_ECS/2013/02/23/:BR:Browse.001:46841269:1.BINARY``
-
-Here, we can note that one of them is a jpeg file:
-
-.. figure:: ftp://n4ftl01u.ecs.nasa.gov/DP0/BRWS/Browse.001/2013.02.23/BROWSE.MOD10A1.A2013052.h17v03.005.2013054054219.1.jpg
-   :alt: 
-
-which is the quicklook (BROWSE file) for that tile / date.
+``ftp://n5eil01u.ecs.nsidc.org/DP0/MOST/MOD10A1.005/2013.02.21/MOD10A1.A2013052.h17v03.005.2013054054219.hdf``
 
 The hdf dataset is, in this case
-``ftp://n4ftl01u.ecs.nasa.gov/DP0/MOST/MOD10A1.005/2013.02.21/MOD10A1.A2013052.h17v03.005.2013054054219.hdf``.
+``ftp://n5eil01u.ecs.nsidc.org/DP0/MOST/MOD10A1.005/2013.02.21/MOD10A1.A2013052.h17v03.005.2013054054219.hdf``.
 
-From this, we see that the data server is ``n4ftl01u.ecs.nasa.gov`` and
-that the MODIS snow products for the MODIS Terra instrument are in the
-directory:
+From this, we see that the data server is ``n5eil01u.ecs.nsidc.org``
+(the actual server used will vary from time to time: if the links
+supplied do not work, go through reverb and work out what the new server
+is) and that the MODIS snow products for the MODIS Terra instrument are
+in the directory:
 
-``ftp://n4ftl01u.ecs.nasa.gov/DP0/MOST``.
+``ftp://n5eil01u.ecs.nsidc.org/DP0/MOST``.
 
 If we explored that, we would find the datasets from the MODIS Aqua
 platform were in:
 
-``ftp://n4ftl01u.ecs.nasa.gov/DP0/MOSA``.
+``ftp://n5eil01u.ecs.nsidc.org/DP0/MOSA``.
 
 The directories below that give the date and filename.
 
@@ -1180,7 +1175,7 @@ want to pull:
 
 .. code:: python
 
-    !head -10 < files/data/robot_snow.2012.txt
+    !head -10 < data/robot_snow.2012.txt
 
 .. parsed-literal::
 
@@ -1198,42 +1193,51 @@ want to pull:
 
 This is a file containing the filenames of *all* ``MOD10A1`` (daily snow
 cover) files for a given year, pulled from the ftp server. It is
-possible to do this in Python (see advanced section), but actually must
-easier and faster with an ftp script
-`\`files/python/zat-snow <files/python/zat-snow>`__. You don't need to
+possible to do this in Python (see advanced section). You don't need to
 run this, as it has already been run for you and the results put in the
-files:
+files, but an example is given:
 
 .. code:: python
 
-    ls -l files/data/robot_snow*txt
+    import sys
+    import runpy
+    # put the python directory in path
+    sys.path.insert(0,'./python')
+    
+    realy_want_to = False
+    if realy_want_to:
+        runpy.run_module('ftp-snow',init_globals={'year':2014})
+.. code:: python
+
+    ls -l data/robot_snow.????.txt
 
 .. parsed-literal::
 
-    [0m-rw-rw-r-- 1 plewis plewis  9034752 Oct 22 09:25 [0mfiles/data/robot_snow.2000.txt[0m
-    -rw-rw-r-- 1 plewis plewis 10820568 Oct 22 09:25 [0mfiles/data/robot_snow.2001.txt[0m
-    -rw-rw-r-- 1 plewis plewis 16321938 Oct 22 09:25 [0mfiles/data/robot_snow.2002.txt[0m
-    -rw-rw-r-- 1 plewis plewis 22423068 Oct 22 09:25 [0mfiles/data/robot_snow.2003.txt[0m
-    -rw-rw-r-- 1 plewis plewis  7633374 Oct 22 09:25 [0mfiles/data/robot_snow.2004.txt[0m
-    -rw-rw-r-- 1 plewis plewis 18872448 Oct 22 09:25 [0mfiles/data/robot_snow.2005.txt[0m
-    -rw-rw-r-- 1 plewis plewis 11433078 Oct 22 09:25 [0mfiles/data/robot_snow.2006.txt[0m
-    -rw-rw-r-- 1 plewis plewis 22663686 Oct 22 09:25 [0mfiles/data/robot_snow.2007.txt[0m
-    -rw-rw-r-- 1 plewis plewis 22668990 Oct 22 09:25 [0mfiles/data/robot_snow.2008.txt[0m
-    -rw-rw-r-- 1 plewis plewis 22705317 Oct 22 09:25 [0mfiles/data/robot_snow.2009.txt[0m
-    -rw-rw-r-- 1 plewis plewis 22712370 Oct 22 09:25 [0mfiles/data/robot_snow.2010.txt[0m
-    -rw-rw-r-- 1 plewis plewis 17129166 Oct 22 09:25 [0mfiles/data/robot_snow.2011.txt[0m
-    -rw-rw-r-- 1 plewis plewis 22756824 Oct 22 09:25 [0mfiles/data/robot_snow.2012.txt[0m
-    -rw-rw-r-- 1 plewis plewis 18104898 Oct 22 09:25 [0mfiles/data/robot_snow.2013.txt[0m
-    [m
+    -rw-rw-r--. 1 plewis plewis  9034752 Nov 11 15:58 data/robot_snow.2000.txt
+    -rw-rw-r--. 1 plewis plewis 10820568 Nov 11 15:58 data/robot_snow.2001.txt
+    -rw-rw-r--. 1 plewis plewis 16321938 Nov 11 15:58 data/robot_snow.2002.txt
+    -rw-rw-r--. 1 plewis plewis 22423068 Nov 11 15:58 data/robot_snow.2003.txt
+    -rw-rw-r--. 1 plewis plewis  7633374 Nov 11 15:58 data/robot_snow.2004.txt
+    -rw-rw-r--. 1 plewis plewis 18872448 Nov 11 15:58 data/robot_snow.2005.txt
+    -rw-rw-r--. 1 plewis plewis 11433078 Nov 11 15:58 data/robot_snow.2006.txt
+    -rw-rw-r--. 1 plewis plewis 22663686 Nov 11 15:58 data/robot_snow.2007.txt
+    -rw-rw-r--. 1 plewis plewis 22668990 Nov 11 15:59 data/robot_snow.2008.txt
+    -rw-rw-r--. 1 plewis plewis 22705317 Nov 11 15:59 data/robot_snow.2009.txt
+    -rw-rw-r--. 1 plewis plewis 22712370 Nov 11 15:59 data/robot_snow.2010.txt
+    -rw-rw-r--. 1 plewis plewis 17129166 Nov 11 15:59 data/robot_snow.2011.txt
+    -rw-rw-r--. 1 plewis plewis 22756824 Nov 11 15:59 data/robot_snow.2012.txt
+    -rw-rw-r--. 1 plewis plewis 18104898 Nov 11 15:59 data/robot_snow.2013.txt
+    -rw-rw-r--. 1 plewis plewis 10222780 Nov 11 15:38 data/robot_snow.2014.txt
+
 
 We can do similar things for http, but that is a little more complicated
-(again, see advanced notes or
-```files/zat > files/data/robot.txt`` <files/zat>`__ for the MODIS LAI
-product.
+(again, see advanced notes or ```zat > data/robot.txt`` <python/zat>`__
+for the MODIS LAI product. Note that you shouldn't need to do this
+unless you need to update the list of files.
 
 .. code:: python
 
-    !head -10 < files/data/robot.txt
+    !head -10 < data/robot.txt
 
 .. parsed-literal::
 
@@ -1249,21 +1253,22 @@ product.
     http://e4ftl01.cr.usgs.gov/MODIS_Composites/MOTA/MCD15A2.005/2002.07.04/MCD15A2.A2002185.h02v08.005.2007172150221.hdf
 
 
-The file ``files/data/robot_snow.2012.txt`` contains the names for all
-tiles and all files.
+The file ``data/robot_snow.2012.txt`` contains the names for all tiles
+and all files.
 
 So if we want just e.g. tile ``h17v03`` and sensor (``MOST``), we can
 most easily filter this in unix:
 
 .. code:: python
 
+    
     tile=h17v03
     year=2012
-    type=MOST
+    type=MOSA
     
-    file=files/data/robot_snow.${year}_${type}_${tile}.txt
+    file=data/robot_snow.${year}_${type}_${tile}.txt
     
-    grep $tile < files/data/robot_snow.$year.txt | grep $type > $file
+    grep $tile < data/robot_snow.$year.txt | grep $type > $file
     
     # how many files?
     wc -l < $file
@@ -1274,16 +1279,16 @@ most easily filter this in unix:
 .. parsed-literal::
 
     366
-    ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.01/MOD10A1.A2012001.h17v03.005.2012003054416.hdf
-    ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.02/MOD10A1.A2012002.h17v03.005.2012004061011.hdf
-    ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.03/MOD10A1.A2012003.h17v03.005.2012005061244.hdf
-    ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.04/MOD10A1.A2012004.h17v03.005.2012006054639.hdf
-    ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.05/MOD10A1.A2012005.h17v03.005.2012007052708.hdf
-    ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.06/MOD10A1.A2012006.h17v03.005.2012008070328.hdf
-    ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.07/MOD10A1.A2012007.h17v03.005.2012011144012.hdf
-    ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.08/MOD10A1.A2012008.h17v03.005.2012011154609.hdf
-    ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.09/MOD10A1.A2012009.h17v03.005.2012011222125.hdf
-    ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.10/MOD10A1.A2012010.h17v03.005.2012012062821.hdf
+    ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2012.01.01/MYD10A1.A2012001.h17v03.005.2012007000016.hdf
+    ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2012.01.02/MYD10A1.A2012002.h17v03.005.2012004055201.hdf
+    ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2012.01.03/MYD10A1.A2012003.h17v03.005.2012005071456.hdf
+    ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2012.01.04/MYD10A1.A2012004.h17v03.005.2012006212932.hdf
+    ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2012.01.05/MYD10A1.A2012005.h17v03.005.2012007050111.hdf
+    ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2012.01.06/MYD10A1.A2012006.h17v03.005.2012008045959.hdf
+    ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2012.01.07/MYD10A1.A2012007.h17v03.005.2012010223914.hdf
+    ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2012.01.08/MYD10A1.A2012008.h17v03.005.2012011144532.hdf
+    ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2012.01.09/MYD10A1.A2012009.h17v03.005.2012011204927.hdf
+    ftp://n4ftl01u.ecs.nasa.gov/MOSA/MYD10A1.005/2012.01.10/MYD10A1.A2012010.h17v03.005.2012012053808.hdf
 
 
 With a more sensible set of urls now (only a few hundred), we can
@@ -1298,12 +1303,12 @@ For example, in ``bash``:
 
     tile=h17v03
     year=2012
-    type=MOST
+    type=MOSA
 
     file=snow_list_${tile}_${year}_${type}.txt
 
     # cd temporarily to the local directory
-    pushd files/data
+    pushd data
     # -nc : no clobber : dont download if its there already
     # -nH --cut-dirs=3 : ignore the directories
     wget -nc -i $file -nH --cut-dirs=3
@@ -1315,12 +1320,12 @@ or in ``tcsh``:
 
     set tile=h17v03
     set year=2012
-    set type=MOST
+    set type=MOSA
 
     file=snow_list_${tile}_${year}_${type}.txt
 
     # cd temporarily to the local directory
-    pushd files/data
+    pushd data
     # -nc : no clobber : dont download if its there already
     # -nH --cut-dirs=3 : ignore the directories
     wget -nc -i $file -nH --cut-dirs=3
@@ -1331,16 +1336,27 @@ month as well:
 
 .. code:: python
 
+    
+    # NB -- running this will still take some time !!!
+    # so only run this cell if/when you want to
+    bothered=False
+    
     tile=h17v03
     year=2012
-    type=MOST
+    type=MOSA
     month=01
     
-    file=files/data/robot_snow.${year}_${type}_${tile}_${month}.txt
+    file=data/robot_snow.${year}_${type}_${tile}_${month}.txt
     
-    # the dot in the year / month grep need to be escaped
-    # because dot means something special to grep
-    grep $tile < files/data/robot_snow.$year.txt | grep $type | grep "${year}\.${month}" > $file
+    # conditional statement in bash
+    if [[ "$bothered" == T* ]]
+    then
+    
+    
+        # the dot in the year / month grep need to be escaped
+        # because dot means something special to grep
+        grep $tile < data/robot_snow.$year.txt | grep $type | grep "${year}\.${month}" > $file
+    fi
     
     # how many files?
     wc -l < $file
@@ -1351,40 +1367,43 @@ month as well:
 .. parsed-literal::
 
     31
-    ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.01/MOD10A1.A2012001.h17v03.005.2012003054416.hdf
-    ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.02/MOD10A1.A2012002.h17v03.005.2012004061011.hdf
-    ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.03/MOD10A1.A2012003.h17v03.005.2012005061244.hdf
-    ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.04/MOD10A1.A2012004.h17v03.005.2012006054639.hdf
-    ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.05/MOD10A1.A2012005.h17v03.005.2012007052708.hdf
-    ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.06/MOD10A1.A2012006.h17v03.005.2012008070328.hdf
-    ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.07/MOD10A1.A2012007.h17v03.005.2012011144012.hdf
-    ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.08/MOD10A1.A2012008.h17v03.005.2012011154609.hdf
-    ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.09/MOD10A1.A2012009.h17v03.005.2012011222125.hdf
-    ftp://n4ftl01u.ecs.nasa.gov/MOST/MOD10A1.005/2012.01.10/MOD10A1.A2012010.h17v03.005.2012012062821.hdf
+    ftp://n5eil01u.ecs.nsidc.org/DP0/MOSA/MYD10A1.005/2012.01.01/MYD10A1.A2012001.h17v03.005.2012007000016.hdf
+    ftp://n5eil01u.ecs.nsidc.org/DP0/MOSA/MYD10A1.005/2012.01.02/MYD10A1.A2012002.h17v03.005.2012004055201.hdf
+    ftp://n5eil01u.ecs.nsidc.org/DP0/MOSA/MYD10A1.005/2012.01.03/MYD10A1.A2012003.h17v03.005.2012005071456.hdf
+    ftp://n5eil01u.ecs.nsidc.org/DP0/MOSA/MYD10A1.005/2012.01.04/MYD10A1.A2012004.h17v03.005.2012006212932.hdf
+    ftp://n5eil01u.ecs.nsidc.org/DP0/MOSA/MYD10A1.005/2012.01.05/MYD10A1.A2012005.h17v03.005.2012007050111.hdf
+    ftp://n5eil01u.ecs.nsidc.org/DP0/MOSA/MYD10A1.005/2012.01.06/MYD10A1.A2012006.h17v03.005.2012008045959.hdf
+    ftp://n5eil01u.ecs.nsidc.org/DP0/MOSA/MYD10A1.005/2012.01.07/MYD10A1.A2012007.h17v03.005.2012010223914.hdf
+    ftp://n5eil01u.ecs.nsidc.org/DP0/MOSA/MYD10A1.005/2012.01.08/MYD10A1.A2012008.h17v03.005.2012011144532.hdf
+    ftp://n5eil01u.ecs.nsidc.org/DP0/MOSA/MYD10A1.005/2012.01.09/MYD10A1.A2012009.h17v03.005.2012011204927.hdf
+    ftp://n5eil01u.ecs.nsidc.org/DP0/MOSA/MYD10A1.005/2012.01.10/MYD10A1.A2012010.h17v03.005.2012012053808.hdf
 
 
 .. code:: python
 
     tile=h17v03
     year=2012
-    type=MOST
+    type=MOSA
     month=01
     
     file=robot_snow.${year}_${type}_${tile}_${month}.txt
     
+    
+    # NB -- running this will still take some time !!!
+    # so only run this cell if/when you want to
+    bothered=False
+    
+    # conditional statement in bash
+    if [[ "$bothered" == T* ]]
+    then
     # cd temporarily to the local directory
-    pushd files/data
-    # -nc : no clobber : dont download if its there already
-    # -nH --cut-dirs=3 : ignore the directories
-    wget -nc -i $file -nH --cut-dirs=3
-    # cd back again
-    popd
-
-.. parsed-literal::
-
-    Process is terminated.
-
-
+        pushd data
+        # -nc : no clobber : dont download if its there already
+        # -nH --cut-dirs=3 : ignore the directories
+        wget -nc -i $file -nH --cut-dirs=3
+        # cd back again
+        popd
+    fi
 Exercise 4.2 A Different Dataset
 --------------------------------
 
@@ -1406,8 +1425,8 @@ E4.2.1 Download
 
 Download the MODIS Terra daily snow product for the UK for the year 2012
 for the month of February using the urls in
-`files/data/robot\_snow.2012.txt <files/data/robot_snow.2012.txt>`__ and
-put them in the directory ``files/data``.
+`data/robot\_snow.2012.txt <data/robot_snow.2012.txt>`__ and put them in
+the directory ``data``.
 
 E4.2.1 Explore
 ~~~~~~~~~~~~~~
@@ -1455,10 +1474,10 @@ You might like to produce a movie of the result.
 
 Hint: you will need a list of filenames for this. You can either use
 ``glob`` as in previous exercises, or you might notice that you have the
-file ``files/data/robot_snow.2012_MOST_h17v03_02.txt`` with the urls,
-from which you should be able to derive the file names. However you get
-your list of filenames, you should probably apply a ``sort()`` to the
-result to make sure they are in the correct order.
+file ``data/robot_snow.2012_MOST_h17v03_02.txt`` with the urls, from
+which you should be able to derive the file names. However you get your
+list of filenames, you should probably apply a ``sort()`` to the result
+to make sure they are in the correct order.
 
 
 
@@ -1507,30 +1526,20 @@ uncompress it using unzip in the shell:
 .. code:: python
 
     # Downloads the data using wget
-    !wget -nc http://aprsworld.net/gisdata/world/world.zip -O files/data/world.zip
+    !wget -nc http://aprsworld.net/gisdata/world/world.zip -O data/world.zip
     # or if you want to use curl...
     #! curl http://aprsworld.net/gisdata/world/world.zip -o world.zip
-    !pushd files/data;unzip -o -x world.zip;popd
+    !pushd data;unzip -o -x world.zip;popd
 
 .. parsed-literal::
 
-    --2013-10-22 15:32:06--  http://aprsworld.net/gisdata/world/world.zip
-    Resolving aprsworld.net... 72.251.203.219
-    Connecting to aprsworld.net|72.251.203.219|:80... connected.
-    HTTP request sent, awaiting response... 200 OK
-    Length: 3436277 (3.3M) [application/zip]
-    Saving to: `files/data/world.zip'
-    
-    100%[======================================>] 3,436,277   3.38M/s   in 1.0s    
-    
-    2013-10-22 15:32:07 (3.38 MB/s) - `files/data/world.zip' saved [3436277/3436277]
-    
-    /archive/rsu_raid_0/plewis/public_html/geogg122_local/geogg122/Chapter4_GDAL/files/data /archive/rsu_raid_0/plewis/public_html/geogg122_local/geogg122/Chapter4_GDAL
+    File `data/world.zip' already there; not retrieving.
+    ~/p/geogg122/Chapter4_GDAL/data ~/p/geogg122/Chapter4_GDAL
     Archive:  world.zip
       inflating: world.dbf               
       inflating: world.shp               
       inflating: world.shx               
-    /archive/rsu_raid_0/plewis/public_html/geogg122_local/geogg122/Chapter4_GDAL
+    ~/p/geogg122/Chapter4_GDAL
 
 
 We need to import ``ogr``, and then open the file. As with GDAL, we get
@@ -1542,7 +1551,7 @@ the layer using ``GetLayer(0)`` (selecting the first layer).
 
     from osgeo import ogr
     
-    g = ogr.Open( "files/data/world.shp" )
+    g = ogr.Open( "data/world.shp" )
     layer = g.GetLayer( 0 )
 In order to see a field (the field ``NAME``) we can loop over the
 features in the layer, and use the ``GetField('NAME')`` method. We'll
@@ -1604,8 +1613,7 @@ raster dataset.
 This is too involved to go over in this session, so we will simply
 present you with a function to achieve this.
 
-This is available as
-`files/python/raster\_mask.py <files/python/raster_mask.py>`__.
+This is available as `python/raster\_mask.py <python/raster_mask.py>`__.
 
 Most of the code below should be familiar from above (we make use of the
 ``getLAI()`` function we developed).
@@ -1613,13 +1621,18 @@ Most of the code below should be familiar from above (we make use of the
 .. code:: python
 
     import sys
-    sys.path.insert(0,'files/python')
+    sys.path.insert(0,'python')
     from raster_mask import raster_mask,getLAI
+    
+    # have to make sure have access to gdal data files 
+    import os
+    if 'GDAL_DATA' not in os.environ:
+        os.environ["GDAL_DATA"] = '/opt/anaconda/share/gdal'
     
     # test this on an LAI file
     
     # the data file name
-    filename = 'files/data/MCD15A2.A2012273.h17v03.005.2012297134400.hdf'
+    filename = 'data/MCD15A2.A2012273.h17v03.005.2012297134400.hdf'
     
     # a layer (doesn't matter so much which: use for geometry info)
     layer = 'Lai_1km'
@@ -1630,9 +1643,9 @@ Most of the code below should be familiar from above (we make use of the
     # make a raster mask
     # from the layer IRELAND in world.shp
     mask = raster_mask(file_spec,\
-                       target_vector_file = "files/data/world.shp",\
+                       target_vector_file = "data/world.shp",\
                        attribute_filter = "NAME = 'IRELAND'")
-    
+    plt.imshow(mask)
     # get the LAI data
     data = getLAI(filename)
     
@@ -1650,12 +1663,12 @@ Most of the code below should be familiar from above (we make use of the
 
 .. parsed-literal::
 
-    <matplotlib.colorbar.Colorbar instance at 0x7153878>
+    <matplotlib.colorbar.Colorbar instance at 0x7f02b0b7a128>
 
 
 
 
-.. image:: GDAL_HDF_files/GDAL_HDF_65_1.png
+.. image:: GDAL_HDF_files/GDAL_HDF_66_1.png
 
 
 Exercise 4.3

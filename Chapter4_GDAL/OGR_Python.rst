@@ -47,16 +47,16 @@ and uncompress it using ``unzip`` in the shell:
 
 .. parsed-literal::
 
-    --2013-10-22 15:47:43--  http://aprsworld.net/gisdata/world/world.zip
+    --2014-11-11 16:00:23--  http://aprsworld.net/gisdata/world/world.zip
     Resolving aprsworld.net... 72.251.203.219
     Connecting to aprsworld.net|72.251.203.219|:80... connected.
     HTTP request sent, awaiting response... 200 OK
     Length: 3436277 (3.3M) [application/zip]
-    Saving to: `world.zip.1'
+    Saving to: `world.zip.3'
     
-    100%[======================================>] 3,436,277   3.28M/s   in 1.0s    
+    100%[======================================>] 3,436,277   2.56M/s   in 1.3s    
     
-    2013-10-22 15:47:45 (3.28 MB/s) - `world.zip.1' saved [3436277/3436277]
+    2014-11-11 16:00:25 (2.56 MB/s) - `world.zip.3' saved [3436277/3436277]
     
     Archive:  world.zip
       inflating: world.dbf               
@@ -72,6 +72,11 @@ the layer using ``GetLayer(0)`` (selecting the first layer).
 .. code:: python
 
     from osgeo import ogr
+    
+    # have to make sure have access to gdal data files 
+    import os
+    if 'GDAL_DATA' not in os.environ:
+        os.environ["GDAL_DATA"] = '/opt/anaconda/share/gdal'
     
     g = ogr.Open( "world.shp" )
     layer = g.GetLayer( 0 )
