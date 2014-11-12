@@ -101,7 +101,7 @@ if you wish.
     
     # load the data from a pickle file
     import pickle
-    pkl_file = open('files/data/data.pkl', 'rb')
+    pkl_file = open('data/data.pkl', 'rb')
     data = pickle.load(pkl_file)
     pkl_file.close()
     
@@ -119,16 +119,21 @@ if you wish.
     
     plt.legend(loc='best')
 
+::
 
 
-.. parsed-literal::
+    ---------------------------------------------------------------------------
+    IOError                                   Traceback (most recent call last)
 
-    <matplotlib.legend.Legend at 0x1a2cae10>
+    <ipython-input-1-5000a1503e2d> in <module>()
+          4 # load the data from a pickle file
+          5 import pickle
+    ----> 6 pkl_file = open('data/data.pkl', 'rb')
+          7 data = pickle.load(pkl_file)
+          8 pkl_file.close()
 
 
-
-
-.. image:: Practical_files/Practical_5_1.png
+    IOError: [Errno 2] No such file or directory: 'data/data.pkl'
 
 
 we have plotted the streamflow (scaled) in green, the snow cover in
@@ -308,11 +313,11 @@ data you want, but we take you through finding them in the advice below.
 For MODIS data, you will need to work out which data product you want
 and how to download it. To help you with this, we have included urls of
 the MODIS Terra snow data product ``MOD10A1`` and Aqua product
-``MYD10A1`` in the files ``files/data/robot_snow.????.txt``:
+``MYD10A1`` in the files ``files/robot_snow.????.txt``:
 
 .. code:: python
 
-    !ls -l files/data/robot_snow.????.txt
+    !ls -l data/robot_snow.????.txt
 
 .. parsed-literal::
 
@@ -334,7 +339,7 @@ the MODIS Terra snow data product ``MOD10A1`` and Aqua product
 
 .. code:: python
 
-    !head -10 < files/data/robot_snow.2007.txt
+    !head -10 < data/robot_snow.2007.txt
 
 .. parsed-literal::
 
@@ -356,7 +361,7 @@ We can use the usual tools to explore the MODIS hdf files:
 
     import gdal
     target_vector_file = file
-    modis_file = 'files/data/MYD10A1.A2003026.h09v05.005.2008047035848.hdf'
+    modis_file = 'data/MYD10A1.A2003026.h09v05.005.2008047035848.hdf'
     g = gdal.Open(modis_file)
     data_layer = 'MOD_Grid_Snow_500m:Fractional_Snow_Cover'
     
@@ -415,7 +420,7 @@ You can explore the shape file with the following:
 
 .. code:: python
 
-    !ogrinfo files/data/Hydrologic_Units/HUC_Polygons.shp HUC_Polygons | head -89 | tail -16
+    !ogrinfo data/Hydrologic_Units/HUC_Polygons.shp HUC_Polygons | head -89 | tail -16
 
 .. parsed-literal::
 
@@ -445,13 +450,13 @@ use a function ``raster_mask2``:
 .. code:: python
 
     import sys
-    sys.path.insert(0,'files/python')
+    sys.path.insert(0,'python')
     
     from raster_mask import *
 .. code:: python
 
     m = raster_mask2(fname,\
-                    target_vector_file="files/data/Hydrologic_Units/HUC_Polygons.shp",\
+                    target_vector_file="data/Hydrologic_Units/HUC_Polygons.shp",\
                     attribute_filter=2)
 
 .. code:: python
@@ -479,13 +484,13 @@ extract the area of data that you want.
 ^^^^^^^^^^^^^^^^^^^^^^
 
 The river discharge data are in the file
-```files/data/delnorte.dat`` <files/data/delnorte.dat>`__.
+```data/delnorte.dat`` <data/delnorte.dat>`__.
 
 If you examine the file:
 
 .. code:: python
 
-    !head -35 < files/data/delnorte.dat
+    !head -35 < data/delnorte.dat
 
 .. parsed-literal::
 
@@ -533,7 +538,7 @@ The easiest way to read these data would be to use:
 
 .. code:: python
 
-    file = 'files/data/delnorte.dat'
+    file = 'data/delnorte.dat'
     data = np.loadtxt(file,usecols=(2,3),unpack=True,dtype=str)
 .. code:: python
 
