@@ -119,21 +119,16 @@ if you wish.
     
     plt.legend(loc='best')
 
-::
 
 
-    ---------------------------------------------------------------------------
-    IOError                                   Traceback (most recent call last)
+.. parsed-literal::
 
-    <ipython-input-1-5000a1503e2d> in <module>()
-          4 # load the data from a pickle file
-          5 import pickle
-    ----> 6 pkl_file = open('data/data.pkl', 'rb')
-          7 data = pickle.load(pkl_file)
-          8 pkl_file.close()
+    <matplotlib.legend.Legend at 0x7fd7a80b3a90>
 
 
-    IOError: [Errno 2] No such file or directory: 'data/data.pkl'
+
+
+.. image:: Practical_files/Practical_5_1.png
 
 
 we have plotted the streamflow (scaled) in green, the snow cover in
@@ -237,7 +232,7 @@ be, we can get a reasonable match with the observed flow data:
 
 .. parsed-literal::
 
-    <matplotlib.legend.Legend at 0x1c0b4ed0>
+    <matplotlib.legend.Legend at 0x7fd79ffb2fd0>
 
 
 
@@ -321,20 +316,20 @@ the MODIS Terra snow data product ``MOD10A1`` and Aqua product
 
 .. parsed-literal::
 
-    -rw-rw-r-- 1 plewis plewis  9034752 Nov  6 09:12 files/data/robot_snow.2000.txt
-    -rw-rw-r-- 1 plewis plewis 10820568 Nov  6 09:12 files/data/robot_snow.2001.txt
-    -rw-rw-r-- 1 plewis plewis 16321938 Nov  6 09:12 files/data/robot_snow.2002.txt
-    -rw-rw-r-- 1 plewis plewis 22423068 Nov  6 09:12 files/data/robot_snow.2003.txt
-    -rw-rw-r-- 1 plewis plewis  7633374 Nov  6 09:12 files/data/robot_snow.2004.txt
-    -rw-rw-r-- 1 plewis plewis 18872448 Nov  6 09:12 files/data/robot_snow.2005.txt
-    -rw-rw-r-- 1 plewis plewis 11433078 Nov  6 09:12 files/data/robot_snow.2006.txt
-    -rw-rw-r-- 1 plewis plewis 22663686 Nov  6 09:12 files/data/robot_snow.2007.txt
-    -rw-rw-r-- 1 plewis plewis 22668990 Nov  6 09:12 files/data/robot_snow.2008.txt
-    -rw-rw-r-- 1 plewis plewis 22705317 Nov  6 09:12 files/data/robot_snow.2009.txt
-    -rw-rw-r-- 1 plewis plewis 22712370 Nov  6 09:13 files/data/robot_snow.2010.txt
-    -rw-rw-r-- 1 plewis plewis 17129166 Nov  6 09:13 files/data/robot_snow.2011.txt
-    -rw-rw-r-- 1 plewis plewis 22756824 Nov  6 09:13 files/data/robot_snow.2012.txt
-    -rw-rw-r-- 1 plewis plewis 18104898 Nov  6 09:13 files/data/robot_snow.2013.txt
+    -rw-rw-r--. 1 plewis plewis  9034752 Sep 30 11:58 data/robot_snow.2000.txt
+    -rw-rw-r--. 1 plewis plewis 10820568 Sep 30 11:58 data/robot_snow.2001.txt
+    -rw-rw-r--. 1 plewis plewis 16321938 Sep 30 11:58 data/robot_snow.2002.txt
+    -rw-rw-r--. 1 plewis plewis 22423068 Sep 30 11:58 data/robot_snow.2003.txt
+    -rw-rw-r--. 1 plewis plewis  7633374 Sep 30 11:58 data/robot_snow.2004.txt
+    -rw-rw-r--. 1 plewis plewis 18872448 Sep 30 11:58 data/robot_snow.2005.txt
+    -rw-rw-r--. 1 plewis plewis 11433078 Sep 30 11:58 data/robot_snow.2006.txt
+    -rw-rw-r--. 1 plewis plewis 22663686 Sep 30 11:58 data/robot_snow.2007.txt
+    -rw-rw-r--. 1 plewis plewis 22668990 Sep 30 11:58 data/robot_snow.2008.txt
+    -rw-rw-r--. 1 plewis plewis 22705317 Sep 30 11:58 data/robot_snow.2009.txt
+    -rw-rw-r--. 1 plewis plewis 22712370 Sep 30 11:59 data/robot_snow.2010.txt
+    -rw-rw-r--. 1 plewis plewis 17129166 Sep 30 11:59 data/robot_snow.2011.txt
+    -rw-rw-r--. 1 plewis plewis 22756824 Sep 30 11:59 data/robot_snow.2012.txt
+    -rw-rw-r--. 1 plewis plewis 18104898 Sep 30 11:59 data/robot_snow.2013.txt
 
 
 .. code:: python
@@ -376,13 +371,13 @@ We can use the usual tools to explore the MODIS hdf files:
 .. parsed-literal::
 
     [2400x2400] Snow_Cover_Daily_Tile MOD_Grid_Snow_500m (8-bit unsigned integer)
-    	HDF4_EOS:EOS_GRID:"files/data/MYD10A1.A2003026.h09v05.005.2008047035848.hdf":MOD_Grid_Snow_500m:Snow_Cover_Daily_Tile
+    	HDF4_EOS:EOS_GRID:"data/MYD10A1.A2003026.h09v05.005.2008047035848.hdf":MOD_Grid_Snow_500m:Snow_Cover_Daily_Tile
     [2400x2400] Snow_Spatial_QA MOD_Grid_Snow_500m (8-bit unsigned integer)
-    	HDF4_EOS:EOS_GRID:"files/data/MYD10A1.A2003026.h09v05.005.2008047035848.hdf":MOD_Grid_Snow_500m:Snow_Spatial_QA
+    	HDF4_EOS:EOS_GRID:"data/MYD10A1.A2003026.h09v05.005.2008047035848.hdf":MOD_Grid_Snow_500m:Snow_Spatial_QA
     [2400x2400] Snow_Albedo_Daily_Tile MOD_Grid_Snow_500m (8-bit unsigned integer)
-    	HDF4_EOS:EOS_GRID:"files/data/MYD10A1.A2003026.h09v05.005.2008047035848.hdf":MOD_Grid_Snow_500m:Snow_Albedo_Daily_Tile
+    	HDF4_EOS:EOS_GRID:"data/MYD10A1.A2003026.h09v05.005.2008047035848.hdf":MOD_Grid_Snow_500m:Snow_Albedo_Daily_Tile
     [2400x2400] Fractional_Snow_Cover MOD_Grid_Snow_500m (8-bit unsigned integer)
-    	HDF4_EOS:EOS_GRID:"files/data/MYD10A1.A2003026.h09v05.005.2008047035848.hdf":MOD_Grid_Snow_500m:Fractional_Snow_Cover
+    	HDF4_EOS:EOS_GRID:"data/MYD10A1.A2003026.h09v05.005.2008047035848.hdf":MOD_Grid_Snow_500m:Fractional_Snow_Cover
 
 
 6.2.3.2 Boundary Data
@@ -468,7 +463,7 @@ use a function ``raster_mask2``:
 
 .. parsed-literal::
 
-    <matplotlib.colorbar.Colorbar instance at 0x2b6b7fcd6cb0>
+    <matplotlib.colorbar.Colorbar instance at 0x7fd79c0516c8>
 
 
 
@@ -564,7 +559,7 @@ The easiest way to read these data would be to use:
 
 .. parsed-literal::
 
-    [<matplotlib.lines.Line2D at 0x2b6b7c573950>]
+    [<matplotlib.lines.Line2D at 0x7fd795a20c50>]
 
 
 

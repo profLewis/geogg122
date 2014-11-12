@@ -3,9 +3,13 @@ import numpy.ma as ma
 from osgeo import ogr,osr
 import gdal
 import Image,ImageDraw
+import os
+if 'GDAL_DATA' not in os.environ:
+    os.environ["GDAL_DATA"] = '/opt/anaconda/share/gdal'
+
 
 def raster_mask(reference_filename, \
-                target_vector_file = "files/data/world.shp",\
+                target_vector_file = "data/world.shp",\
                 attribute_filter = "NAME = 'IRELAND'"):
 
     burn_value = 1
@@ -113,7 +117,7 @@ def world2Pixel(geoMatrix, x, y):
   return (pixel, line)
 
 def raster_mask2(reference_filename, \
-                target_vector_file = "files/data/world.shp",\
+                target_vector_file = "data/world.shp",\
                 attribute_filter = 0):
 
     #import pdb;pdb.set_trace()

@@ -51,12 +51,12 @@ def get_lai(filename, \
 import numpy.ma as ma
 import numpy as np
 import sys
-sys.path.insert(0,'files/python')
+sys.path.insert(0,'python')
 from get_lai import get_lai
 from raster_mask import raster_mask
 
 
-def read_lai(filelist,datadir='files/data',\
+def read_lai(filelist,datadir='data',\
 		country=None,verbose=False):
     '''
     Read MODIS LAI data from a set of files
@@ -68,7 +68,7 @@ def read_lai(filelist,datadir='files/data',\
     
     Options:
     datadir  : data directory
-    country  : country name (in files/data/world.shp)
+    country  : country name (in data/world.shp)
     
     Returns:
     lai dictionary
@@ -79,10 +79,10 @@ def read_lai(filelist,datadir='files/data',\
         # make a raster mask
         # from the layer UNITED KINGDOM in world.shp
         file_template = 'HDF4_EOS:EOS_GRID:"%s":MOD_Grid_MOD15A2:%s'
-        file_spec = file_template%('files/data/%s'%filelist[0],'Lai_1km')
+        file_spec = file_template%('data/%s'%filelist[0],'Lai_1km')
                                    
         mask = raster_mask(file_spec,\
-                           target_vector_file = "files/data/world.shp",\
+                           target_vector_file = "data/world.shp",\
                            attribute_filter = "NAME = '%s'"%country)
         # extract just the area we want
         # by getting the min/max rows/cols
@@ -118,7 +118,7 @@ def read_lai(filelist,datadir='files/data',\
     for f in np.sort(lai['filenames']):
         if verbose:
 		print '...',f
-        this_lai = get_lai('files/data/%s'%f,\
+        this_lai = get_lai('data/%s'%f,\
                            mincol=mincol,ncol=ncol,\
                            minrow=minrow,nrow=nrow)
         for layer in data_fields.keys():

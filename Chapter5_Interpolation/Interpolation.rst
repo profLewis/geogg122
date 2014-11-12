@@ -33,8 +33,8 @@ re-use for other purposes.
 5.1.1 Downloading data
 ~~~~~~~~~~~~~~~~~~~~~~
 
-We start by filtering the file ``files/data/robot.txt`` to get only
-lines (containing urls) for a particular tile and year.
+We start by filtering the file ``data/robot.txt`` to get only lines
+(containing urls) for a particular tile and year.
 
 We might easily do this in unix:
 
@@ -44,9 +44,9 @@ We might easily do this in unix:
     # filter LAI MODIS files for this year and tile (in bash)
     tile='h17v03'
     year='2005'
-    ofile=files/data/modis_lai_${tile}_${year}.txt
+    ofile=data/modis_lai_${tile}_${year}.txt
     
-    grep $tile < files/data/robot.txt | grep \/$year > $ofile
+    grep $tile < data/robot.txt | grep \/$year > $ofile
     
     # have a look at the first few
     head -4 < $ofile
@@ -66,10 +66,10 @@ Now download the datasets:
     
     tile='h17v03'
     year='2005'
-    ofile=files/data/modis_lai_${tile}_${year}.txt
+    ofile=data/modis_lai_${tile}_${year}.txt
     
     # go into the directory we want the data
-    pushd files/data
+    pushd data
     # get the urls from the file 
     # --cut-dirs=4 this time as there are 4 laters of directory we
     # wish to ignore with this dataset
@@ -79,15 +79,15 @@ Now download the datasets:
 
 .. parsed-literal::
 
-    /archive/rsu_raid_0/plewis/public_html/geogg122_local/geogg122/Chapter5_Interpolation/files/data /archive/rsu_raid_0/plewis/public_html/geogg122_local/geogg122/Chapter5_Interpolation
-    /archive/rsu_raid_0/plewis/public_html/geogg122_local/geogg122/Chapter5_Interpolation
+    /archive/rsu_raid_0/plewis/public_html/geogg122_current/Chapter5_Interpolation/data /archive/rsu_raid_0/plewis/public_html/geogg122_current/Chapter5_Interpolation
+    /archive/rsu_raid_0/plewis/public_html/geogg122_current/Chapter5_Interpolation
 
 
 5.1.2 Read from an ASCII file
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ASCII file ``files/data/modis_lai_${tile}_${year}.txt`` contains
-lines of urls.
+The ASCII file ``data/modis_lai_${tile}_${year}.txt`` contains lines of
+urls.
 
 Each line (each url) is a string such as:
 
@@ -108,7 +108,7 @@ load it into a list that we will call ``filelist``:
     year = '2005'
     
     # specify the file with the urls in
-    ifile= 'files/data/modis_lai_%s_%s.txt'%(tile,year)
+    ifile= 'data/modis_lai_%s_%s.txt'%(tile,year)
     
     # one way to read the data from the file
     fp = open(ifile)
@@ -181,7 +181,7 @@ give it the starting cols, rows, and number of cols and rows to read
     # Now we have a list of filenames
     # load read_lai
     import sys
-    sys.path.insert(0,'files/python')
+    sys.path.insert(0,'python')
     
     from get_lai import get_lai
     
@@ -199,14 +199,14 @@ give it the starting cols, rows, and number of cols and rows to read
 
     # e.g. for reading a single file:
     
-    lai_file0 = get_lai('files/data/%s'%filelist[20],ncol=600,mincol=300,minrow=400,nrow=800)
+    lai_file0 = get_lai('data/%s'%filelist[20],ncol=600,mincol=300,minrow=400,nrow=800)
     plt.imshow(lai_file0['Lai_1km'])
 
 
 
 .. parsed-literal::
 
-    <matplotlib.image.AxesImage at 0x10342b50>
+    <matplotlib.image.AxesImage at 0x7f00000c7890>
 
 
 
@@ -245,16 +245,21 @@ We know how to create a mask from a vector dataset from thelast session:
 
 .. code:: python
 
+    # have to make sure have access to gdal data files 
+    import os
+    if 'GDAL_DATA' not in os.environ:
+        os.environ["GDAL_DATA"] = '/opt/anaconda/share/gdal'
+    
     from raster_mask import raster_mask
     
     # make a raster mask
     # from the layer IRELAND in world.shp
     filename = filelist[0]
     file_template = 'HDF4_EOS:EOS_GRID:"%s":MOD_Grid_MOD15A2:%s'
-    file_spec = file_template%('files/data/%s'%filename,'Lai_1km')
+    file_spec = file_template%('data/%s'%filename,'Lai_1km')
                                
     mask = raster_mask(file_spec,\
-                       target_vector_file = "files/data/world.shp",\
+                       target_vector_file = "data/world.shp",\
                        attribute_filter = "NAME = 'IRELAND'")
     
     
@@ -265,7 +270,7 @@ We know how to create a mask from a vector dataset from thelast session:
 
 .. parsed-literal::
 
-    <matplotlib.colorbar.Colorbar instance at 0x10ae5bd8>
+    <matplotlib.colorbar.Colorbar instance at 0x7efff3f65b48>
 
 
 
@@ -320,7 +325,7 @@ read the data:
 
 .. code:: python
 
-    lai_file0 = get_lai('files/data/%s'%filelist[20],\
+    lai_file0 = get_lai('data/%s'%filelist[20],\
                         ncol=ncol,nrow=nrow,mincol=mincol,minrow=minrow)
     
     plt.imshow(lai_file0['Lai_1km'],interpolation='none')
@@ -329,7 +334,7 @@ read the data:
 
 .. parsed-literal::
 
-    <matplotlib.image.AxesImage at 0x10ddc2d0>
+    <matplotlib.image.AxesImage at 0x7efff43764d0>
 
 
 
@@ -349,7 +354,7 @@ Now, lets extract this portion of the mask:
 
 .. parsed-literal::
 
-    <matplotlib.image.AxesImage at 0x2ae9e41a3750>
+    <matplotlib.image.AxesImage at 0x7efff4321990>
 
 
 
@@ -361,7 +366,7 @@ And combine the country mask with the small dataset:
 
 As a recap, we can use the function ``raster_mask`` that we gave you
 last time to develop a raster mask (!) from an ESRI shapefile
-(``files/data/world.shp`` here).
+(``data/world.shp`` here).
 
 We can then combine this mask with the QC-derived mask in the LAI
 dataset.
@@ -380,7 +385,7 @@ The operator to use then is an *or*, here, a bitwise or, ``|``.
 
 .. code:: python
 
-    lai_file0 = get_lai('files/data/%s'%filelist[20],\
+    lai_file0 = get_lai('data/%s'%filelist[20],\
                         ncol=ncol,nrow=nrow,mincol=mincol,minrow=minrow)
     
     layer = 'Lai_1km'
@@ -403,7 +408,7 @@ The operator to use then is an *or*, here, a bitwise or, ``|``.
 
 .. parsed-literal::
 
-    <matplotlib.image.AxesImage at 0x2ae9e4275f50>
+    <matplotlib.image.AxesImage at 0x7efff41e7590>
 
 
 
@@ -438,10 +443,10 @@ and append to each list indiviually:
     # from the layer UNITED KINGDOM in world.shp
     filename = filelist[0]
     file_template = 'HDF4_EOS:EOS_GRID:"%s":MOD_Grid_MOD15A2:%s'
-    file_spec = file_template%('files/data/%s'%filename,'Lai_1km')
+    file_spec = file_template%('data/%s'%filename,'Lai_1km')
                                
     mask = raster_mask(file_spec,\
-                       target_vector_file = "files/data/world.shp",\
+                       target_vector_file = "data/world.shp",\
                        attribute_filter = "NAME = '%s'"%country)
     # extract just the area we want
     # by getting the min/max rows/cols
@@ -470,7 +475,7 @@ and append to each list indiviually:
     
     # loop over each filename
     for f in np.sort(lai['filenames']):
-        this_lai = get_lai('files/data/%s'%f,\
+        this_lai = get_lai('data/%s'%f,\
                            mincol=mincol,ncol=ncol,\
                            minrow=minrow,nrow=nrow)
         for layer in data_fields.keys():
@@ -490,7 +495,7 @@ and append to each list indiviually:
     # just see what the shape is ...
     print lai['Lai_1km'][i].shape
     
-    root = 'files/images/lai_uk'
+    root = 'images/lai_uk'
     
     cmap = plt.cm.Greens
     
@@ -503,7 +508,7 @@ and append to each list indiviually:
     # plot a jpg
     plt.title(file_id)
     plt.colorbar()
-    plt.savefig('files/images/lai_uk_%s.jpg'%file_id)
+    plt.savefig('images/lai_uk_%s.jpg'%file_id)
 
 .. parsed-literal::
 
@@ -521,12 +526,12 @@ and append to each list indiviually:
     import numpy.ma as ma
     import numpy as np
     import sys
-    sys.path.insert(0,'files/python')
+    sys.path.insert(0,'python')
     from get_lai import get_lai
     from raster_mask import raster_mask
     
     
-    def read_lai(filelist,datadir='files/data',country=None):
+    def read_lai(filelist,datadir='data',country=None):
         '''
         Read MODIS LAI data from a set of files
         in the list filelist. Data assumed to be in
@@ -537,7 +542,7 @@ and append to each list indiviually:
         
         Options:
         datadir  : data directory
-        country  : country name (in files/data/world.shp)
+        country  : country name (in data/world.shp)
         
         Returns:
         lai dictionary
@@ -546,10 +551,10 @@ and append to each list indiviually:
             # make a raster mask
             # from the layer UNITED KINGDOM in world.shp
             file_template = 'HDF4_EOS:EOS_GRID:"%s":MOD_Grid_MOD15A2:%s'
-            file_spec = file_template%('files/data/%s'%filelist[0],'Lai_1km')
+            file_spec = file_template%('data/%s'%filelist[0],'Lai_1km')
                                        
             mask = raster_mask(file_spec,\
-                               target_vector_file = "files/data/world.shp",\
+                               target_vector_file = "data/world.shp",\
                                attribute_filter = "NAME = '%s'"%country)
             # extract just the area we want
             # by getting the min/max rows/cols
@@ -583,7 +588,7 @@ and append to each list indiviually:
         
         # loop over each filename
         for f in np.sort(lai['filenames']):
-            this_lai = get_lai('files/data/%s'%f,\
+            this_lai = get_lai('data/%s'%f,\
                                mincol=mincol,ncol=ncol,\
                                minrow=minrow,nrow=nrow)
             for layer in data_fields.keys():
@@ -613,7 +618,7 @@ and append to each list indiviually:
     # just see what the shape is ...
     print lai['Lai_1km'][i].shape
     
-    root = 'files/images/lai_eire'
+    root = 'images/lai_eire'
     
     cmap = plt.cm.Greens
     
@@ -696,7 +701,7 @@ and append to each list indiviually:
     # just see what the shape is ...
     print lai['Lai_1km'].shape
     
-    root = 'files/images/lai_country_eire'
+    root = 'images/lai_country_eire'
     
     cmap = plt.cm.Greens
     
@@ -784,7 +789,7 @@ and append to each list indiviually:
     import pylab as plt
     import os
     
-    root = 'files/images/lai_eire'
+    root = 'images/lai_eire'
     
     def make_movie(lai,root,layer='Lai_1km',vmax=4.,vmin=0.,do_plot=False):
         '''
@@ -829,7 +834,7 @@ and append to each list indiviually:
     # test it
     
     lai_uk = read_lai(filelist,country='UNITED KINGDOM')
-    root = 'files/images/lai_UK'
+    root = 'images/lai_UK'
     movie = make_movie(lai_uk,root)
     print movie
 
@@ -881,7 +886,7 @@ and append to each list indiviually:
     2005345
     2005353
     2005361
-    files/images/lai_UK_movie.gif
+    images/lai_UK_movie.gif
 
 
 .. figure:: files/images/lai_UK_movie.gif
@@ -963,7 +968,7 @@ time periods:
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x11e77950>
+    <matplotlib.text.Text at 0x7effdf7e54d0>
 
 
 
@@ -1002,16 +1007,22 @@ We also have access to uncertainty information (standard deviation):
     plt.ylabel('LAI')
     plt.title('pixel %03d %03d'%(r,c))
 
+.. parsed-literal::
+
+    /opt/anaconda/lib/python2.7/site-packages/numpy/ma/core.py:3847: UserWarning: Warning: converting a masked element to nan.
+      warnings.warn("Warning: converting a masked element to nan.")
+
+
 
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x2ae9e53409d0>
+    <matplotlib.text.Text at 0x7effdf34bc50>
 
 
 
 
-.. image:: Interpolation_files/Interpolation_49_1.png
+.. image:: Interpolation_files/Interpolation_49_2.png
 
 
 We would generally expect LAI to be quite smoothly varying over time.
@@ -1056,7 +1067,7 @@ Let's inflate them:
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x2ae9e5554910>
+    <matplotlib.text.Text at 0x7effdf476c50>
 
 
 
@@ -1119,7 +1130,7 @@ Instead here, we will repeat the dataset three times to mimic this:
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x2ae9e6108550>
+    <matplotlib.text.Text at 0x7effdfba8110>
 
 
 
@@ -1268,7 +1279,7 @@ To illustrate this in Python:
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x2ae9e579e3d0>
+    <matplotlib.text.Text at 0x7effdfb0ebd0>
 
 
 
@@ -1324,7 +1335,7 @@ If we make the filter wider (width 31 now):
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x2ae9e61f8cd0>
+    <matplotlib.text.Text at 0x7effdf266750>
 
 
 
@@ -1350,7 +1361,7 @@ the response.
 .. code:: python
 
     import sys
-    sys.path.insert(0,'files/python')
+    sys.path.insert(0,'python')
     # see http://wiki.scipy.org/Cookbook/SavitzkyGolay
     from savitzky_golay import *
     
@@ -1375,7 +1386,7 @@ the response.
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x2ae9e65e6890>
+    <matplotlib.text.Text at 0x7effbd7ed410>
 
 
 
@@ -1386,7 +1397,7 @@ the response.
 .. code:: python
 
     import sys
-    sys.path.insert(0,'files/python')
+    sys.path.insert(0,'python')
     # see http://wiki.scipy.org/Cookbook/SavitzkyGolay
     from savitzky_golay import *
     
@@ -1411,7 +1422,7 @@ the response.
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x2ae9e663bb50>
+    <matplotlib.text.Text at 0x7effdf401790>
 
 
 
@@ -1438,7 +1449,7 @@ variation (standard deviation) in the signal that control smoothness.
     year = '2005'
     
     # specify the file with the urls in
-    ifile= 'files/data/modis_lai_%s_%s.txt'%(tile,year)
+    ifile= 'data/modis_lai_%s_%s.txt'%(tile,year)
     
     fp = open(ifile)
     filelist = [url.split('/')[-1].strip() for url in fp.readlines()]
@@ -1488,7 +1499,7 @@ variation (standard deviation) in the signal that control smoothness.
 
 .. parsed-literal::
 
-    <matplotlib.legend.Legend at 0x2b75e4be2790>
+    <matplotlib.legend.Legend at 0x7effdf736410>
 
 
 
@@ -1575,7 +1586,7 @@ variation (standard deviation) in the signal that control smoothness.
 
 .. parsed-literal::
 
-    <matplotlib.legend.Legend at 0x2b75e6878890>
+    <matplotlib.legend.Legend at 0x7effe019ead0>
 
 
 
@@ -1630,7 +1641,7 @@ a fast smoothing method, so is feasible here.
 
 .. parsed-literal::
 
-    <matplotlib.colorbar.Colorbar instance at 0x2b75d2d9fd40>
+    <matplotlib.colorbar.Colorbar instance at 0x7effe816f758>
 
 
 
@@ -1661,7 +1672,7 @@ a fast smoothing method, so is feasible here.
 
 .. parsed-literal::
 
-    <matplotlib.colorbar.Colorbar instance at 0x1857ee18>
+    <matplotlib.colorbar.Colorbar instance at 0x7effdfe09c68>
 
 
 
@@ -1690,7 +1701,7 @@ a fast smoothing method, so is feasible here.
 
 .. parsed-literal::
 
-    <matplotlib.colorbar.Colorbar instance at 0x23289dd0>
+    <matplotlib.colorbar.Colorbar instance at 0x7effdff0e050>
 
 
 
@@ -1716,7 +1727,7 @@ a fast smoothing method, so is feasible here.
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x232b2ed0>
+    <matplotlib.text.Text at 0x7effe83b9550>
 
 
 
@@ -1783,7 +1794,7 @@ a fast smoothing method, so is feasible here.
     import pylab as plt
     import os
     
-    root = 'files/images/lai_eire_colourZ'
+    root = 'images/lai_eire_colourZ'
     
     for i,f in enumerate(lai['filenames']):
         fig = plt.figure(figsize=(7,7))
@@ -1897,7 +1908,8 @@ We can give a function for a double logistic:
 .. code:: python
 
     def dbl_logistic_model ( p, t ):
-            """A double logistic model, as in Sobrino and Juliean, or Zhang et al"""
+            """A double logistic model, as in Sobrino and Juliean, 
+            or Zhang et al"""
             return p[0] - p[1]* ( 1./(1+np.exp(p[2]*(t-p[3]))) + \
                                   1./(1+np.exp(-p[4]*(t-p[5])))  - 1 )
        
@@ -1907,13 +1919,13 @@ We can give a function for a double logistic:
     year = '2005'
     
     # specify the file with the urls in
-    ifile= 'files/data/modis_lai_%s_%s.txt'%(tile,year)
+    ifile= 'data/modis_lai_%s_%s.txt'%(tile,year)
     
     fp = open(ifile)
     filelist = [url.split('/')[-1].strip() for url in fp.readlines()]
     fp.close()
     import sys
-    sys.path.insert(0,'files/python')
+    sys.path.insert(0,'python')
     
     from get_lai import *
     
@@ -2067,7 +2079,8 @@ One such method is implemented in ``scipy.optimize.leastsq``:
     print 'initial parameters:',p[0],p[1],p[2],p[3],p[4],p[5]
     
     # set some bounds for the parameters
-    bound = np.array([(0.,10.),(0.,10.),(0.01,1.),(50.,300.),(0.01,1.),(50.,300.)])
+    bound = np.array([(0.,10.),(0.,10.),(0.01,1.),\
+                      (50.,300.),(0.01,1.),(50.,300.)])
     
     
     # test pixel
@@ -2119,10 +2132,10 @@ One such method is implemented in ``scipy.optimize.leastsq``:
 
 .. parsed-literal::
 
-    initial parameters: 1.04703335612 1.62445180627 0.19 140.0 0.13 220.0
-    23.2882812239
-    solved parameters:  0.614031423522 2.92120123969 0.0357337165804 159.497584338 0.0381324783625 227.002721261
-    phenology 159.497584338 67.5051369225
+    initial parameters: 0.468054306457 1.78821571141 0.19 140.0 0.13 220.0
+    23.2758024553
+    solved parameters:  0.615259703304 2.86129713068 0.035948726095 158.837861729 0.0384066709502 227.612228424
+    phenology 158.837861729 68.7743666946
 
 
 
@@ -2188,45 +2201,6 @@ One such method is implemented in ``scipy.optimize.leastsq``:
     ... 0.00 percent
     ... 2.50 percent
     ... 5.00 percent
-    ... 7.50 percent
-    ... 10.00 percent
-    ... 12.50 percent
-    ... 15.00 percent
-    ... 17.50 percent
-    ... 19.99 percent
-    ... 22.49 percent
-    ... 24.99 percent
-    ... 27.49 percent
-    ... 29.99 percent
-    ... 32.49 percent
-    ... 34.99 percent
-    ... 37.49 percent
-    ... 39.99 percent
-    ... 42.49 percent
-    ... 44.99 percent
-    ... 47.49 percent
-    ... 49.99 percent
-    ... 52.49 percent
-    ... 54.99 percent
-    ... 57.49 percent
-    ... 59.98 percent
-    ... 62.48 percent
-    ... 64.98 percent
-    ... 67.48 percent
-    ... 69.98 percent
-    ... 72.48 percent
-    ... 74.98 percent
-    ... 77.48 percent
-    ... 79.98 percent
-    ... 82.48 percent
-    ... 84.98 percent
-    ... 87.48 percent
-    ... 89.98 percent
-    ... 92.48 percent
-    ... 94.98 percent
-    ... 97.47 percent
-    ... 99.97 percent
-
 
 .. code:: python
 
@@ -2254,35 +2228,6 @@ One such method is implemented in ``scipy.optimize.leastsq``:
     plt.imshow(np.sqrt(pdata[-1]),interpolation='none',vmax=np.sqrt(500))
     plt.title('RSSE')
     plt.colorbar()
-
-
-
-.. parsed-literal::
-
-    <matplotlib.colorbar.Colorbar instance at 0x2b75e5deefc8>
-
-
-
-
-.. image:: Interpolation_files/Interpolation_98_1.png
-
-
-
-.. image:: Interpolation_files/Interpolation_98_2.png
-
-
-
-.. image:: Interpolation_files/Interpolation_98_3.png
-
-
-
-.. image:: Interpolation_files/Interpolation_98_4.png
-
-
-
-.. image:: Interpolation_files/Interpolation_98_5.png
-
-
 .. code:: python
 
     # check a few pixels
@@ -2312,56 +2257,3 @@ One such method is implemented in ``scipy.optimize.leastsq``:
         # if we define the phenology as the parameter p[3]
         # and the 'length' of the growing season:
         print 'phenology',pp[3],pp[5]-pp[3]
-
-.. parsed-literal::
-
-    solved parameters:  0.837899998448 2.82427082241 0.0164922480786 139.933827392 0.015218312802 219.620042827
-    phenology 139.933827392 79.6862154345
-    solved parameters:  1.25111026954 2.3270241822 0.0190331997407 137.746147061 0.0650489530419 220.049105733
-    phenology 137.746147061 82.3029586718
-    solved parameters:  1.24735745202 2.64641924245 0.01 139.923207754 0.0103960017819 220.21982824
-    phenology 139.923207754 80.2966204854
-    solved parameters:  0.932759824658 2.57001493023 0.0499114191497 141.274250409 1.0 220.241108243
-    phenology 141.274250409 78.9668578339
-    solved parameters:  3.3118926764 10.0 0.0227526645775 141.59060759 0.0129963184052 218.391152509
-    phenology 141.59060759 76.8005449187
-    solved parameters:  1.00690819411 2.5680266473 0.0244446244614 139.049623755 0.0196297496409 220.194411837
-    phenology 139.049623755 81.1447880828
-    solved parameters:  1.41787972842 0.735065812424 0.183737093991 139.730989265 0.0642603310649 219.975475755
-    phenology 139.730989265 80.2444864894
-    solved parameters:  1.03836639365 1.58477670269 0.0296244335923 139.895942883 0.0436631925744 220.03650496
-    phenology 139.895942883 80.1405620773
-
-
-
-.. image:: Interpolation_files/Interpolation_99_1.png
-
-
-
-.. image:: Interpolation_files/Interpolation_99_2.png
-
-
-
-.. image:: Interpolation_files/Interpolation_99_3.png
-
-
-
-.. image:: Interpolation_files/Interpolation_99_4.png
-
-
-
-.. image:: Interpolation_files/Interpolation_99_5.png
-
-
-
-.. image:: Interpolation_files/Interpolation_99_6.png
-
-
-
-.. image:: Interpolation_files/Interpolation_99_7.png
-
-
-
-.. image:: Interpolation_files/Interpolation_99_8.png
-
-
