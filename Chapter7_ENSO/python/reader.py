@@ -6,7 +6,7 @@ import gdal
 from glob import glob
 # file list
 
-files = np.sort(glob('files/data/MOD14CMH.*.005.01.hdf'))
+files = np.sort(glob('data/MOD14CMH.*.005.01.hdf'))
 
 year = np.array([f.split(os.sep)[-1].split('.')[1][:4] for f in files]).astype(int)
 month= np.array([f.split(os.sep)[-1].split('.')[1][4:] for f in files]).astype(int)

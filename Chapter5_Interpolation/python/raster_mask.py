@@ -4,7 +4,7 @@ from osgeo import ogr,osr
 import gdal
 
 def raster_mask(reference_filename, \
-                target_vector_file = "files/data/world.shp",\
+                target_vector_file = "data/world.shp",\
                 attribute_filter = "NAME = 'IRELAND'"):
 
     burn_value = 1

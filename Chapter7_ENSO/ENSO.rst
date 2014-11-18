@@ -10,9 +10,7 @@ predicting the activity of wildfires and such topics are `often in the
 media <http://www.bbc.co.uk/news/science-environment-15691060>`__.
 
 Part of this interest stems from the role fire plays in issues such as
-`land cover change, deforestation and forest
-degradation <http://www.eufirelab.org/toolbox2/library/upload/2086.pdf>`__
-and `Carbon
+land cover change, deforestation and forest degradation and `Carbon
 emissions <http://www.google.com/url?sa=t&rct=j&q=fire%20carbon%20emissions&source=web&cd=6&ved=0CFEQFjAF&url=http%3A%2F%2Fwww.kcl.ac.uk%2Fsspp%2Fdepartments%2Fgeography%2Fpeople%2Facademic%2Fwooster%2F30yongwoosteretal.pdf&ei=4FPCTuvZE9Gg8gPZybyxBA&usg=AFQjCNG81fTRoCcK1nhKnk3u0b8az24bGQ&sig2=EjJYm2S-_2gHu2vgt4ByvA&cad=rja>`__
 from the land surface to the atmosphere, but also of concern are human
 health impacts. The impacts of fire should not however be considered as
@@ -47,7 +45,8 @@ MODIS instruments on the NASA Terra and Aqua (2002) satellites. A suite
 of `‘fire’ products <http://modis-fire.umd.edu/index.html>`__ have been
 generated from these data that have been used in a large number of
 `publications <http://modis-fire.umd.edu/Publications.html>`__ and
-`practical/management projects <http://maps.geog.umd.edu/firms/#>`__.
+`practical/management
+projects <https://earthdata.nasa.gov/data/near-real-time-data/firms>`__.
 
 There is growing evidence of ‘teleconnection’ links between fire
 occurence and large scale climate patterns, such as
@@ -110,7 +109,8 @@ useful datasets such as these.
 Fire Data
 ^^^^^^^^^
 
-The MOD14CMH `CMG data <http://maps.geog.umd.edu/firms/CMG.htm>`__ are
+The MOD14CMH `CMG
+data <http://nsidc.org/data/modis/data_summaries/cmg_sample.html>`__ are
 available from the `UMD ftp
 server <ftp://fire:burnt@fuoco.geog.umd.edu/modis/C5/cmg/monthly/hdf>`__
 but the data you will need are also directly available from
@@ -123,37 +123,171 @@ following unix command:
 
 ``wget 'ftp://fire:burnt@fuoco.geog.umd.edu/modis/C5/cmg/monthly/hdf/*'``
 
-The data are in `files/data <files/data>`__ and are in HDF format, so
-you should know how to read them into a numpy array in python.
+(though you may need to update the password). The data are in
+`data <data>`__ and are in HDF format, so you should know how to read
+them into a numpy array in python.
 
 .. code:: python
 
-    !ls -l files/data/*hdf | head -10
+    !ls data/*hdf
 
 .. parsed-literal::
 
-    -rw-rw-r-- 1 plewis plewis  961993 Nov  1  2007 files/data/MOD14CMH.200011.005.01.hdf
-    -rw-rw-r-- 1 plewis plewis  923238 Nov  1  2007 files/data/MOD14CMH.200012.005.01.hdf
-    -rw-rw-r-- 1 plewis plewis  953227 Mar 22  2008 files/data/MOD14CMH.200101.005.01.hdf
-    -rw-rw-r-- 1 plewis plewis  951917 Apr 23  2008 files/data/MOD14CMH.200102.005.01.hdf
-    -rw-rw-r-- 1 plewis plewis  959282 Apr 23  2008 files/data/MOD14CMH.200103.005.01.hdf
-    -rw-rw-r-- 1 plewis plewis  943794 Apr 23  2008 files/data/MOD14CMH.200104.005.01.hdf
-    -rw-rw-r-- 1 plewis plewis  988588 Apr 23  2008 files/data/MOD14CMH.200105.005.01.hdf
-    -rw-rw-r-- 1 plewis plewis  898137 Mar 22  2008 files/data/MOD14CMH.200106.005.01.hdf
-    -rw-rw-r-- 1 plewis plewis  962767 Mar 22  2008 files/data/MOD14CMH.200107.005.01.hdf
-    -rw-rw-r-- 1 plewis plewis  982616 Nov  5  2007 files/data/MOD14CMH.200108.005.01.hdf
-    ls: write error: Broken pipe
+    data/MOD14CMH.200011.005.01.hdf  data/MOD14CMH.201211.005.01.hdf
+    data/MOD14CMH.200012.005.01.hdf  data/MOD14CMH.201212.005.01.hdf
+    data/MOD14CMH.200101.005.01.hdf  data/MOD14CMH.201301.005.01.hdf
+    data/MOD14CMH.200102.005.01.hdf  data/MOD14CMH.201302.005.01.hdf
+    data/MOD14CMH.200103.005.01.hdf  data/MOD14CMH.201303.005.01.hdf
+    data/MOD14CMH.200104.005.01.hdf  data/MOD14CMH.201304.005.01.hdf
+    data/MOD14CMH.200105.005.01.hdf  data/MOD14CMH.201305.005.01.hdf
+    data/MOD14CMH.200106.005.01.hdf  data/MOD14CMH.201306.005.01.hdf
+    data/MOD14CMH.200107.005.01.hdf  data/MOD14CMH.201307.005.01.hdf
+    data/MOD14CMH.200108.005.01.hdf  data/MOD14CMH.201308.005.01.hdf
+    data/MOD14CMH.200109.005.01.hdf  data/MYD14CMH.200207.005.01.hdf
+    data/MOD14CMH.200110.005.01.hdf  data/MYD14CMH.200208.005.01.hdf
+    data/MOD14CMH.200111.005.01.hdf  data/MYD14CMH.200209.005.01.hdf
+    data/MOD14CMH.200112.005.01.hdf  data/MYD14CMH.200210.005.01.hdf
+    data/MOD14CMH.200201.005.01.hdf  data/MYD14CMH.200211.005.01.hdf
+    data/MOD14CMH.200202.005.01.hdf  data/MYD14CMH.200212.005.01.hdf
+    data/MOD14CMH.200203.005.01.hdf  data/MYD14CMH.200301.005.01.hdf
+    data/MOD14CMH.200204.005.01.hdf  data/MYD14CMH.200302.005.01.hdf
+    data/MOD14CMH.200205.005.01.hdf  data/MYD14CMH.200303.005.01.hdf
+    data/MOD14CMH.200206.005.01.hdf  data/MYD14CMH.200304.005.01.hdf
+    data/MOD14CMH.200207.005.01.hdf  data/MYD14CMH.200305.005.01.hdf
+    data/MOD14CMH.200208.005.01.hdf  data/MYD14CMH.200306.005.01.hdf
+    data/MOD14CMH.200209.005.01.hdf  data/MYD14CMH.200307.005.01.hdf
+    data/MOD14CMH.200210.005.01.hdf  data/MYD14CMH.200308.005.01.hdf
+    data/MOD14CMH.200211.005.01.hdf  data/MYD14CMH.200309.005.01.hdf
+    data/MOD14CMH.200212.005.01.hdf  data/MYD14CMH.200310.005.01.hdf
+    data/MOD14CMH.200301.005.01.hdf  data/MYD14CMH.200311.005.01.hdf
+    data/MOD14CMH.200302.005.01.hdf  data/MYD14CMH.200312.005.01.hdf
+    data/MOD14CMH.200303.005.01.hdf  data/MYD14CMH.200401.005.01.hdf
+    data/MOD14CMH.200304.005.01.hdf  data/MYD14CMH.200402.005.01.hdf
+    data/MOD14CMH.200305.005.01.hdf  data/MYD14CMH.200403.005.01.hdf
+    data/MOD14CMH.200306.005.01.hdf  data/MYD14CMH.200404.005.01.hdf
+    data/MOD14CMH.200307.005.01.hdf  data/MYD14CMH.200405.005.01.hdf
+    data/MOD14CMH.200308.005.01.hdf  data/MYD14CMH.200406.005.01.hdf
+    data/MOD14CMH.200309.005.01.hdf  data/MYD14CMH.200407.005.01.hdf
+    data/MOD14CMH.200310.005.01.hdf  data/MYD14CMH.200408.005.01.hdf
+    data/MOD14CMH.200311.005.01.hdf  data/MYD14CMH.200409.005.01.hdf
+    data/MOD14CMH.200312.005.01.hdf  data/MYD14CMH.200410.005.01.hdf
+    data/MOD14CMH.200401.005.01.hdf  data/MYD14CMH.200411.005.01.hdf
+    data/MOD14CMH.200402.005.01.hdf  data/MYD14CMH.200412.005.01.hdf
+    data/MOD14CMH.200403.005.01.hdf  data/MYD14CMH.200501.005.01.hdf
+    data/MOD14CMH.200404.005.01.hdf  data/MYD14CMH.200502.005.01.hdf
+    data/MOD14CMH.200405.005.01.hdf  data/MYD14CMH.200503.005.01.hdf
+    data/MOD14CMH.200406.005.01.hdf  data/MYD14CMH.200504.005.01.hdf
+    data/MOD14CMH.200407.005.01.hdf  data/MYD14CMH.200505.005.01.hdf
+    data/MOD14CMH.200408.005.01.hdf  data/MYD14CMH.200506.005.01.hdf
+    data/MOD14CMH.200409.005.01.hdf  data/MYD14CMH.200507.005.01.hdf
+    data/MOD14CMH.200410.005.01.hdf  data/MYD14CMH.200508.005.01.hdf
+    data/MOD14CMH.200411.005.01.hdf  data/MYD14CMH.200509.005.01.hdf
+    data/MOD14CMH.200412.005.01.hdf  data/MYD14CMH.200510.005.01.hdf
+    data/MOD14CMH.200501.005.01.hdf  data/MYD14CMH.200511.005.01.hdf
+    data/MOD14CMH.200502.005.01.hdf  data/MYD14CMH.200512.005.01.hdf
+    data/MOD14CMH.200503.005.01.hdf  data/MYD14CMH.200601.005.01.hdf
+    data/MOD14CMH.200504.005.01.hdf  data/MYD14CMH.200602.005.01.hdf
+    data/MOD14CMH.200505.005.01.hdf  data/MYD14CMH.200603.005.01.hdf
+    data/MOD14CMH.200506.005.01.hdf  data/MYD14CMH.200604.005.01.hdf
+    data/MOD14CMH.200507.005.01.hdf  data/MYD14CMH.200605.005.01.hdf
+    data/MOD14CMH.200508.005.01.hdf  data/MYD14CMH.200606.005.01.hdf
+    data/MOD14CMH.200509.005.01.hdf  data/MYD14CMH.200607.005.01.hdf
+    data/MOD14CMH.200510.005.01.hdf  data/MYD14CMH.200608.005.01.hdf
+    data/MOD14CMH.200511.005.01.hdf  data/MYD14CMH.200609.005.01.hdf
+    data/MOD14CMH.200512.005.01.hdf  data/MYD14CMH.200610.005.01.hdf
+    data/MOD14CMH.200601.005.01.hdf  data/MYD14CMH.200611.005.01.hdf
+    data/MOD14CMH.200602.005.01.hdf  data/MYD14CMH.200612.005.01.hdf
+    data/MOD14CMH.200603.005.01.hdf  data/MYD14CMH.200701.005.01.hdf
+    data/MOD14CMH.200604.005.01.hdf  data/MYD14CMH.200702.005.01.hdf
+    data/MOD14CMH.200605.005.01.hdf  data/MYD14CMH.200703.005.01.hdf
+    data/MOD14CMH.200606.005.01.hdf  data/MYD14CMH.200704.005.01.hdf
+    data/MOD14CMH.200607.005.01.hdf  data/MYD14CMH.200705.005.01.hdf
+    data/MOD14CMH.200608.005.01.hdf  data/MYD14CMH.200706.005.01.hdf
+    data/MOD14CMH.200609.005.01.hdf  data/MYD14CMH.200707.005.01.hdf
+    data/MOD14CMH.200610.005.01.hdf  data/MYD14CMH.200708.005.01.hdf
+    data/MOD14CMH.200611.005.01.hdf  data/MYD14CMH.200709.005.01.hdf
+    data/MOD14CMH.200612.005.01.hdf  data/MYD14CMH.200710.005.01.hdf
+    data/MOD14CMH.200701.005.01.hdf  data/MYD14CMH.200711.005.01.hdf
+    data/MOD14CMH.200702.005.01.hdf  data/MYD14CMH.200712.005.01.hdf
+    data/MOD14CMH.200703.005.01.hdf  data/MYD14CMH.200801.005.01.hdf
+    data/MOD14CMH.200704.005.01.hdf  data/MYD14CMH.200802.005.01.hdf
+    data/MOD14CMH.200705.005.01.hdf  data/MYD14CMH.200803.005.01.hdf
+    data/MOD14CMH.200706.005.01.hdf  data/MYD14CMH.200804.005.01.hdf
+    data/MOD14CMH.200707.005.01.hdf  data/MYD14CMH.200805.005.01.hdf
+    data/MOD14CMH.200708.005.01.hdf  data/MYD14CMH.200806.005.01.hdf
+    data/MOD14CMH.200709.005.01.hdf  data/MYD14CMH.200807.005.01.hdf
+    data/MOD14CMH.200710.005.01.hdf  data/MYD14CMH.200808.005.01.hdf
+    data/MOD14CMH.200711.005.01.hdf  data/MYD14CMH.200809.005.01.hdf
+    data/MOD14CMH.200712.005.01.hdf  data/MYD14CMH.200810.005.01.hdf
+    data/MOD14CMH.200801.005.01.hdf  data/MYD14CMH.200811.005.01.hdf
+    data/MOD14CMH.200802.005.01.hdf  data/MYD14CMH.200812.005.01.hdf
+    data/MOD14CMH.200803.005.01.hdf  data/MYD14CMH.200901.005.01.hdf
+    data/MOD14CMH.200804.005.01.hdf  data/MYD14CMH.200902.005.01.hdf
+    data/MOD14CMH.200805.005.01.hdf  data/MYD14CMH.200903.005.01.hdf
+    data/MOD14CMH.200806.005.01.hdf  data/MYD14CMH.200904.005.01.hdf
+    data/MOD14CMH.200807.005.01.hdf  data/MYD14CMH.200905.005.01.hdf
+    data/MOD14CMH.200808.005.01.hdf  data/MYD14CMH.200906.005.01.hdf
+    data/MOD14CMH.200809.005.01.hdf  data/MYD14CMH.200907.005.01.hdf
+    data/MOD14CMH.200810.005.01.hdf  data/MYD14CMH.200908.005.01.hdf
+    data/MOD14CMH.200811.005.01.hdf  data/MYD14CMH.200909.005.01.hdf
+    data/MOD14CMH.200812.005.01.hdf  data/MYD14CMH.200910.005.01.hdf
+    data/MOD14CMH.200901.005.01.hdf  data/MYD14CMH.200911.005.01.hdf
+    data/MOD14CMH.200902.005.01.hdf  data/MYD14CMH.200912.005.01.hdf
+    data/MOD14CMH.200903.005.01.hdf  data/MYD14CMH.201001.005.01.hdf
+    data/MOD14CMH.200904.005.01.hdf  data/MYD14CMH.201002.005.01.hdf
+    data/MOD14CMH.200905.005.01.hdf  data/MYD14CMH.201003.005.01.hdf
+    data/MOD14CMH.200906.005.01.hdf  data/MYD14CMH.201004.005.01.hdf
+    data/MOD14CMH.200907.005.01.hdf  data/MYD14CMH.201005.005.01.hdf
+    data/MOD14CMH.200908.005.01.hdf  data/MYD14CMH.201006.005.01.hdf
+    data/MOD14CMH.200909.005.01.hdf  data/MYD14CMH.201007.005.01.hdf
+    data/MOD14CMH.200910.005.01.hdf  data/MYD14CMH.201008.005.01.hdf
+    data/MOD14CMH.200911.005.01.hdf  data/MYD14CMH.201009.005.01.hdf
+    data/MOD14CMH.200912.005.01.hdf  data/MYD14CMH.201010.005.01.hdf
+    data/MOD14CMH.201001.005.01.hdf  data/MYD14CMH.201011.005.01.hdf
+    data/MOD14CMH.201002.005.01.hdf  data/MYD14CMH.201012.005.01.hdf
+    data/MOD14CMH.201003.005.01.hdf  data/MYD14CMH.201101.005.01.hdf
+    data/MOD14CMH.201004.005.01.hdf  data/MYD14CMH.201102.005.01.hdf
+    data/MOD14CMH.201005.005.01.hdf  data/MYD14CMH.201103.005.01.hdf
+    data/MOD14CMH.201006.005.01.hdf  data/MYD14CMH.201104.005.01.hdf
+    data/MOD14CMH.201007.005.01.hdf  data/MYD14CMH.201105.005.01.hdf
+    data/MOD14CMH.201008.005.01.hdf  data/MYD14CMH.201106.005.01.hdf
+    data/MOD14CMH.201009.005.01.hdf  data/MYD14CMH.201107.005.01.hdf
+    data/MOD14CMH.201010.005.01.hdf  data/MYD14CMH.201108.005.01.hdf
+    data/MOD14CMH.201011.005.01.hdf  data/MYD14CMH.201109.005.01.hdf
+    data/MOD14CMH.201012.005.01.hdf  data/MYD14CMH.201110.005.01.hdf
+    data/MOD14CMH.201101.005.01.hdf  data/MYD14CMH.201111.005.01.hdf
+    data/MOD14CMH.201102.005.01.hdf  data/MYD14CMH.201112.005.01.hdf
+    data/MOD14CMH.201103.005.01.hdf  data/MYD14CMH.201201.005.01.hdf
+    data/MOD14CMH.201104.005.01.hdf  data/MYD14CMH.201202.005.01.hdf
+    data/MOD14CMH.201105.005.01.hdf  data/MYD14CMH.201203.005.01.hdf
+    data/MOD14CMH.201106.005.01.hdf  data/MYD14CMH.201204.005.01.hdf
+    data/MOD14CMH.201107.005.01.hdf  data/MYD14CMH.201205.005.01.hdf
+    data/MOD14CMH.201108.005.01.hdf  data/MYD14CMH.201206.005.01.hdf
+    data/MOD14CMH.201109.005.01.hdf  data/MYD14CMH.201207.005.01.hdf
+    data/MOD14CMH.201110.005.01.hdf  data/MYD14CMH.201208.005.01.hdf
+    data/MOD14CMH.201111.005.01.hdf  data/MYD14CMH.201209.005.01.hdf
+    data/MOD14CMH.201112.005.01.hdf  data/MYD14CMH.201210.005.01.hdf
+    data/MOD14CMH.201201.005.01.hdf  data/MYD14CMH.201211.005.01.hdf
+    data/MOD14CMH.201202.005.01.hdf  data/MYD14CMH.201212.005.01.hdf
+    data/MOD14CMH.201203.005.01.hdf  data/MYD14CMH.201301.005.01.hdf
+    data/MOD14CMH.201204.005.01.hdf  data/MYD14CMH.201302.005.01.hdf
+    data/MOD14CMH.201205.005.01.hdf  data/MYD14CMH.201303.005.01.hdf
+    data/MOD14CMH.201206.005.01.hdf  data/MYD14CMH.201304.005.01.hdf
+    data/MOD14CMH.201207.005.01.hdf  data/MYD14CMH.201305.005.01.hdf
+    data/MOD14CMH.201208.005.01.hdf  data/MYD14CMH.201306.005.01.hdf
+    data/MOD14CMH.201209.005.01.hdf  data/MYD14CMH.201307.005.01.hdf
+    data/MOD14CMH.201210.005.01.hdf  data/MYD14CMH.201308.005.01.hdf
 
 
 If you are **really** stuck on reading the data, or just want to move on
 to the next parts, you can use
-```files/python/reader.py`` <files/python/reader.py>`__ which will
-create a masked array in ``data``, and an array of years (``year``) and
-months (``month``):
+```python/reader.py`` <python/reader.py>`__ which will create a masked
+array in ``data``, and an array of years (``year``) and months
+(``month``):
 
 .. code:: python
 
-    run files/python/reader
+    run python/reader
 .. code:: python
 
     plt.figure(figsize=(10,6))
@@ -167,7 +301,7 @@ months (``month``):
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x2b4488089490>
+    <matplotlib.text.Text at 0x7fe70671a8d0>
 
 
 
@@ -223,7 +357,7 @@ those 100 cells (axis=0):
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x1e19add0>
+    <matplotlib.text.Text at 0x7fe706560390>
 
 
 
@@ -237,7 +371,7 @@ those 100 cells (axis=0):
     lf = np.log(fdata)
     vmax = np.max(lf[lf>0])
     
-    root = 'files/images/'
+    root = 'images/'
     for i in xrange(lf.shape[0]):
         fig = plt.figure(figsize=(10,5))
         plt.imshow(np.log(fdata[i]),interpolation='nearest',vmax=vmax)
@@ -246,15 +380,6 @@ those 100 cells (axis=0):
         plt.title('log fire count for %s'%file_id)
         plt.savefig('%s_%s.jpg'%(root,file_id.replace(' ','_')))
         plt.close(fig)
-
-.. parsed-literal::
-
-    -c:2: RuntimeWarning: divide by zero encountered in log
-    -c:2: RuntimeWarning: invalid value encountered in log
-    -c:8: RuntimeWarning: divide by zero encountered in log
-    -c:8: RuntimeWarning: invalid value encountered in log
-
-
 .. code:: python
 
     cmd = 'convert -delay 100 -loop 0 {0}_*month*.jpg {0}fire_movie3.gif'.format(root)
@@ -308,21 +433,16 @@ To do this, we might reoder the data first:
     (12, 14, 36, 72)
 
 
-.. parsed-literal::
-
-    -c:22: RuntimeWarning: divide by zero encountered in log
-
-
 
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x2b4489c91ad0>
+    <matplotlib.text.Text at 0x7fe715cfb510>
 
 
 
 
-.. image:: ENSO_files/ENSO_22_3.png
+.. image:: ENSO_files/ENSO_22_2.png
 
 
 .. code:: python
@@ -356,7 +476,7 @@ To do this, we might reoder the data first:
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x134d27d0>
+    <matplotlib.text.Text at 0x7fe7062909d0>
 
 
 
@@ -403,7 +523,7 @@ To do this, we might reoder the data first:
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x2b44901b2090>
+    <matplotlib.text.Text at 0x7fe706330f10>
 
 
 
@@ -459,7 +579,7 @@ Suppose we had selected AMO and we want to read directly from the url:
 
 .. parsed-literal::
 
-    ['  1948         2013\n',
+    ['  1948         2014\n',
      ' 1948   -0.006   -0.018    0.037   -0.061    0.005    0.064   -0.030   -0.013   -0.043    0.017    0.144    0.072\n']
 
 
@@ -472,12 +592,12 @@ Suppose we had selected AMO and we want to read directly from the url:
 
 .. parsed-literal::
 
-    [' 2008    0.051    0.150    0.185    0.071    0.193    0.287    0.237    0.201    0.228    0.129    0.031    0.049\n',
-     ' 2009   -0.032   -0.137   -0.139   -0.103   -0.039    0.152    0.259    0.182    0.086    0.198    0.098    0.112\n',
-     ' 2010    0.068    0.201    0.313    0.457    0.486    0.476    0.482    0.559    0.481    0.357    0.269    0.240\n',
-     ' 2011    0.173    0.134    0.082    0.119    0.172    0.206    0.126    0.180    0.183    0.094   -0.045   -0.020\n',
-     ' 2012   -0.041    0.028    0.048    0.109    0.191    0.332    0.412    0.468    0.482    0.372    0.206    0.173\n',
-     ' 2013    0.155    0.144    0.186    0.168    0.132    0.078    0.218    0.226    0.290  -99.990  -99.990  -99.990\n']
+    [' 2009   -0.039   -0.145   -0.141   -0.111   -0.042    0.141    0.247    0.172    0.077    0.184    0.089    0.102\n',
+     ' 2010    0.059    0.197    0.307    0.445    0.479    0.467    0.470    0.545    0.469    0.344    0.255    0.227\n',
+     ' 2011    0.163    0.128    0.075    0.112    0.172    0.198    0.111    0.167    0.164    0.083   -0.051   -0.025\n',
+     ' 2012   -0.045    0.024    0.046    0.100    0.184    0.320    0.395    0.451    0.468    0.349    0.185    0.161\n',
+     ' 2013    0.148    0.135    0.178    0.156    0.121    0.066    0.210    0.214    0.275    0.367    0.148    0.056\n',
+     ' 2014   -0.042   -0.023   -0.061   -0.074    0.019    0.082    0.242    0.355    0.328    0.312  -99.990  -99.990\n']
 
 
 
@@ -501,7 +621,7 @@ Suppose we had selected AMO and we want to read directly from the url:
 
 .. parsed-literal::
 
-    (12, 66)
+    (12, 67)
 
 
 
@@ -542,8 +662,8 @@ Before we get into that, let's look again at the data structure we have:
 
 .. parsed-literal::
 
-    cdata (12, 66)
-    cyears (66,)
+    cdata (12, 67)
+    cyears (67,)
     peak_count (14, 36, 72)
     av_fire_month (36, 72)
     min_year 2000
@@ -630,14 +750,14 @@ We need to consider a little carefully the implementation of lag ...
 
 .. parsed-literal::
 
-    11175.1548059 2691.89246835 0.0207363379213 3889.85050593
+    10797.4828941 2787.9505669 0.0231916998529 3856.00735281
 
 
 
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x166679d0>
+    <matplotlib.text.Text at 0x7fe706aae3d0>
 
 
 
@@ -704,7 +824,7 @@ We need to consider a little carefully the implementation of lag ...
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x6d69890>
+    <matplotlib.text.Text at 0x7fe716362510>
 
 
 
@@ -744,7 +864,7 @@ which we can now predict:
 
 .. parsed-literal::
 
-    <matplotlib.image.AxesImage at 0x7d6ab90>
+    <matplotlib.image.AxesImage at 0x7fe717339590>
 
 
 
@@ -767,7 +887,7 @@ which we can now predict:
 
 .. parsed-literal::
 
-    <matplotlib.image.AxesImage at 0x7d5a590>
+    <matplotlib.image.AxesImage at 0x7fe71674f450>
 
 
 
@@ -796,7 +916,7 @@ which we can now predict:
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x83ec750>
+    <matplotlib.text.Text at 0x7fe716431250>
 
 
 
@@ -827,11 +947,9 @@ which we can now predict:
 
 .. parsed-literal::
 
-    <class 'numpy.ma.core.MaskedArray'>
-    0.802827703736 -6.97449131978 0.880785138861 0.0 0.00848080897451
+    0.805181670827 -6.33987111286 0.882914718951 0.0 0.00841379095649
 
 
 
 .. image:: ENSO_files/ENSO_49_1.png
-
 
