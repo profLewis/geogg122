@@ -1,10 +1,6 @@
 .ipynb_checkpoints
-.git
-.pyc
 Chapter3_Scientific_Numerical_Python/data/GlobAlbedo.1998145.h17v03.nc
-*/*/*.pyc
-.pkl
-*/*/*.pkl
-.swp
-*/*/*.swp
-*/*.swp
+*.pyc
+*.pkl
+*.swp
+_build
