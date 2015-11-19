@@ -2,7 +2,11 @@ import numpy as np
 import numpy.ma as ma
 from osgeo import ogr,osr
 import gdal
-import Image,ImageDraw
+try:
+    from PIL import Image,ImageDraw
+except:
+    import Image,ImageDraw
+    
 import os
 if 'GDAL_DATA' not in os.environ:
     os.environ["GDAL_DATA"] = '/opt/anaconda/share/gdal'
@@ -188,7 +192,7 @@ def imageToArray(i):
     Converts a Python Imaging Library array to a
     numpy array.
     """
-    a=np.fromstring(i.tostring(),'b')
+    a=np.fromstring(i.tobytes(),'b')
     a.shape=i.im.size[1], i.im.size[0]
     return a
 
