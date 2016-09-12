@@ -18,6 +18,9 @@ def reader(hdf):
   # invalid is -1
   mask = (d == -1)
   d[mask] = 0.0
+  # fix any -ve numbers
+  mask[d<0] = True
+  d[d<0] = 0
   return d,mask
 
 mask = reader(files[0])[1]
