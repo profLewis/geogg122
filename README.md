@@ -150,7 +150,7 @@ In this session, we will outline the purpose and structure of the course.
 
   These notes explain about the coursework to be submitted.
 
-  [Course Notes](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter6a_Practical/Practical.ipynb)
+  [Course Notes](http://nbviewer.ipython.org/urls/raw.github.com/profLewis/geogg122/master/Chapter6_Practical/Practical.ipynb)
   
 
 - 7.0 ENSO
