@@ -2,9 +2,18 @@ import numpy as np
 import numpy.ma as ma
 from osgeo import ogr,osr
 import gdal
+try:
+    from PIL import Image,ImageDraw
+except:
+    import Image,ImageDraw
+    
+import os
+if 'GDAL_DATA' not in os.environ:
+    os.environ["GDAL_DATA"] = '/opt/anaconda/share/gdal'
+
 
 def raster_mask(reference_filename, \
-                target_vector_file = "files/data/world.shp",\
+                target_vector_file = "data/world.shp",\
                 attribute_filter = "NAME = 'IRELAND'"):
 
     burn_value = 1
@@ -96,39 +105,95 @@ def raster_mask(reference_filename, \
     return ~data.astype(bool)
 
 
-def getLAI(filename, \
-           qc_layer = 'FparLai_QC',\
-           scale = [0.1, 0.1],\
-           selected_layers = ["Lai_1km", "LaiStdDev_1km"]):
-           
-    # get the QC layer too
-    selected_layers.append(qc_layer)
-    scale.append(1)
-    # We will store the data in a dictionary
-    # Initialise an empty dictionary
-    data = {}
-    # for convenience, we will use string substitution to create a 
-    # template for GDAL filenames, which we'll substitute on the fly:
-    file_template = 'HDF4_EOS:EOS_GRID:"%s":MOD_Grid_MOD15A2:%s'
-    # This has two substitutions (the %s parts) which will refer to:
-    # - the filename
-    # - the data layer
-    for i,layer in enumerate(selected_layers):
-        this_file = file_template % ( filename, layer )
-        g = gdal.Open ( this_file )
-        
-        if g is None:
-            raise IOError
-        
-        data[layer] = g.ReadAsArray() * scale[i]
+def world2Pixel(geoMatrix, x, y):
+  """
+  Uses a gdal geomatrix (gdal.GetGeoTransform()) to calculate
+  the pixel location of a geospatial coordinate
+  """
+  ulX = geoMatrix[0]
+  ulY = geoMatrix[3]
+  xDist = geoMatrix[1]
+  yDist = geoMatrix[5]
+  rtnX = geoMatrix[2]
+  rtnY = geoMatrix[4]
+  pixel = np.round((x - ulX) / xDist).astype(np.int)
+  line = np.round((ulY - y) / xDist).astype(np.int)
+  return (pixel, line)
 
-    qc = data[qc_layer] # Get the QC data
-    # find bit 0
-    qc = qc & 1
-    
-    odata = {}
-    for layer in selected_layers[:-1]:
-        odata[layer] = ma.array(data[layer],mask=qc)
-    
-    return odata
-    
+def raster_mask2(reference_filename, \
+                target_vector_file = "data/world.shp",\
+                attribute_filter = 0):
+
+    #burn_value = 1
+
+    # First, open the file that we'll be taking as a reference
+    # We will need to gleam the size in pixels, as well as projection
+    # and geotransform.
+
+    vector_ds = ogr.Open( target_vector_file )
+
+    source_ds = ogr.GetDriverByName("Memory").CopyDataSource(vector_ds, "")
+    source_layer = source_ds.GetLayer(0)
+    source_srs = source_layer.GetSpatialRef()
+    wkt = source_srs.ExportToWkt()
+
+    lyr = vector_ds.GetLayer ( 0 )
+    #lyr.SetAttributeFilter( attribute_filter )
+    # Get a field definition from the original vector file. 
+    # We don't need much more detail here
+    poly = lyr.GetFeature(attribute_filter)
+
+    geom = poly.GetGeometryRef()
+    pts = geom.GetGeometryRef(0)
+
+    # extract and plot the transformed data
+    pnts = np.array([(pts.GetX(p), pts.GetY(p)) for p in xrange(pts.GetPointCount())]).transpose()
+
+    # MODIS
+    g = gdal.Open( reference_filename )
+    raster = gdal.Open( reference_filename )
+    # get the wicket
+    modisWKT = raster.GetProjectionRef()
+
+    oSRS = osr.SpatialReference ()
+    oSRSop = osr.SpatialReference ()
+
+    oSRSop.ImportFromWkt(modisWKT)
+    # wkt from above, is the wicket from the shapefile
+    oSRS.ImportFromWkt(wkt)
+    # now make sure we have the shapefile geom
+
+    geom = poly.GetGeometryRef()
+    pts = geom.GetGeometryRef(0)
+
+    # pts is the polygon of interest
+    pts.AssignSpatialReference(oSRS)
+    # so transform it to the MODIS geometry
+    pts.TransformTo(oSRSop)
+
+    pnts = np.array([(pts.GetX(p), pts.GetY(p)) for p in xrange(pts.GetPointCount())]).transpose()
+
+    geo_t = raster.GetGeoTransform()
+
+    pixel, line = world2Pixel(geo_t,pnts[0],pnts[1])
+
+    rasterPoly = Image.new("L", (raster.RasterXSize, raster.RasterYSize),1)
+    rasterize = ImageDraw.Draw(rasterPoly)
+    # must be a tuple now ... doh
+    listdata = list(tuple(pixel) for pixel in np.array((pixel,line)).T.tolist())
+    rasterize.polygon(listdata,outline=0,fill=0)
+    mask = imageToArray(rasterPoly).astype(bool)
+    return mask
+
+
+def imageToArray(i):
+    """
+    Converts a Python Imaging Library array to a
+    numpy array.
+    """
+    a=np.fromstring(i.tobytes(),'b')
+    a.shape=i.im.size[1], i.im.size[0]
+    return a
+
+
+
