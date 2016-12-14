@@ -182,7 +182,7 @@ def raster_mask2(reference_filename, \
     # must be a tuple now ... doh
     listdata = list(tuple(pixel) for pixel in np.array((pixel,line)).T.tolist())
     rasterize.polygon(listdata,outline=0,fill=0)
-    mask = imageToArray(rasterPoly).astype(bool)
+    mask = np.array(rasterPoly).astype(bool)
     return mask
 
 
