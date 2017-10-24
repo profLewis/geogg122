@@ -3,32 +3,36 @@ import numpy.ma as ma
 import gdal
 
 
-def masked(root='data/',years=[2009],months=[],\
-            layers = ['BHR_VIS']):
-    '''
-    Method to read GlobAlbedo files
-    '''
-    file_template = 'NETCDF:"%s":%s'
-    
-    if len(months) == 0:
-        months = xrange(1,13)
-    
-    
-    data = []   
- 
+def masked(months=range(1, 13), years=[2009], folder="data/", layer="BHR_VIS"):
+    """Read globalbedo data when given month and year.
+    Parameters
+    ------------
+    months: iter
+         An iterator with the month numbers to read
+    years: iter
+        An iterator with the years to read
+    folder: str
+        The folder where the GA data are stored.
+    layer: str
+        The data layer
+
+    Returns
+    ---------
+    A 2D array"""
+    data = []
+    file_template = 'NETCDF:"{:s}":{:s}'  # Template for the Netcdf path
+    # the actual filename
+    fname_template = '{:s}/GlobAlbedo.merge.albedo.05.{:d}{:02d}.nc'
     for year in years:
         for month in months:
-            for layer in layers:
-
-                # what does this do???
-                filename = root + 'GlobAlbedo.%d%02d.mosaic.5.nc'%(year,month)
-
-                g = gdal.Open (  file_template % ( filename, layer ) )
-
-                if g is None:
-                  raise IOError
-                band = g.ReadAsArray()
-                masked_band = ma.array(band,mask=np.isnan(band))
-                data.append(masked_band)
-    return(ma.array(data))
+            fname = fname_template.format(folder, year, month)
+            netcdf_fname = file_template.format(fname, layer)
+            g = gdal.Open(netcdf_fname)
+            if g is None:
+                raise IOError("Problem with reading file {}".format(fname))
+            the_data = g.ReadAsArray()
+            masked_data = np.ma.array(the_data,mask=np.isnan(the_data))
+            data.append(masked_data)
+    output_data = np.ma.array(data)
+    return output_data
 
