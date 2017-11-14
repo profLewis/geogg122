@@ -249,7 +249,7 @@ def smoothn(y,nS0=10,axis=None,smoothOrder=2.0,sd=None,verbose=False,\
   Lambda = zeros(sizy);
   for i in axis:
     # create a 1 x d array (so e.g. [1,1] for a 2D case
-    siz0 = ones((1,y.ndim))[0];
+    siz0 = ones((1,y.ndim), dtype=np.int)[0];
     siz0[i] = sizy[i];
     # cos(pi*(reshape(1:sizy(i),siz0)-1)/sizy(i)))
     # (arange(1,sizy[i]+1).reshape(siz0) - 1.)/sizy[i]
