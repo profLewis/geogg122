@@ -1,10 +1,17 @@
 from numpy import *
-from pylab import *
 import scipy.optimize.lbfgsb as lbfgsb
 import numpy.linalg
+from numpy.linalg import norm
 from scipy.fftpack.realtransforms import dct,idct
 import numpy as np
 import numpy.ma as ma
+
+def H(y,t0=0):
+  '''
+  Step fn with step at t0
+  '''
+  h = np.zeros_like(y)
+  args = tuple([slice(0,y.shape[i]) for i in y.ndim])   
 
 def smoothn(y,nS0=10,axis=None,smoothOrder=2.0,sd=None,verbose=False,\
 	s0=None,z0=None,isrobust=False,W=None,s=None,MaxIter=100,TolZ=1e-3,weightstr='bisquare'):
@@ -167,23 +174,23 @@ def smoothn(y,nS0=10,axis=None,smoothOrder=2.0,sd=None,verbose=False,\
     mask = y.mask
     y = np.array(y)
     y[mask] = 0.
-    if W != None:
+    if np.any(W != None):
       W  = np.array(W)
       W[mask] = 0.
-    if sd != None:
+    if np.any(sd != None):
       W = np.array(1./sd**2)
       W[mask] = 0.
       sd = None
     y[mask] = np.nan
     
-  if sd != None:
+  if np.any(sd != None):
     sd_ = np.array(sd)
     mask = (sd > 0.)
     W = np.zeros_like(sd_)
     W[mask] = 1./sd_[mask]**2
     sd = None
 
-  if W != None:
+  if np.any(W != None):
     W = W/W.max()
 
   sizy = y.shape;
@@ -201,7 +208,7 @@ def smoothn(y,nS0=10,axis=None,smoothOrder=2.0,sd=None,verbose=False,\
   # Smoothness parameter and weights
   #if s != None:
   #  s = []
-  if W == None:
+  if np.all(W == None):
     W = ones(sizy);
 
   #if z0 == None:
@@ -217,7 +224,7 @@ def smoothn(y,nS0=10,axis=None,smoothOrder=2.0,sd=None,verbose=False,\
   nof = IsFinite.sum() # number of finite elements
   W = W*IsFinite;
   if any(W<0):
-    error('smoothn:NegativeWeights',\
+    raise RuntimeError('smoothn:NegativeWeights',\
         'Weights must all be >=0')
   else:
       #W = W/np.max(W)
@@ -249,7 +256,7 @@ def smoothn(y,nS0=10,axis=None,smoothOrder=2.0,sd=None,verbose=False,\
   Lambda = zeros(sizy);
   for i in axis:
     # create a 1 x d array (so e.g. [1,1] for a 2D case
-    siz0 = ones((1,y.ndim), dtype=np.int)[0];
+    siz0 = ones((1,y.ndim))[0].astype(int);
     siz0[i] = sizy[i];
     # cos(pi*(reshape(1:sizy(i),siz0)-1)/sizy(i)))
     # (arange(1,sizy[i]+1).reshape(siz0) - 1.)/sizy[i]
@@ -324,7 +331,7 @@ def smoothn(y,nS0=10,axis=None,smoothOrder=2.0,sd=None,verbose=False,\
     #---
     while tol>TolZ and nit<MaxIter:
         if verbose:
-          print 'tol',tol,'nit',nit
+          print('tol',tol,'nit',nit)
         nit = nit+1;
         DCTy = dctND(Wtot*(y-z)+z,f=dct);
         if isauto and not remainder(log2(nit),1):
@@ -356,7 +363,7 @@ def smoothn(y,nS0=10,axis=None,smoothOrder=2.0,sd=None,verbose=False,\
               #print '==============='
             else:
               xpost = [s0]
-            xpost,f,d = lbfgsb.fmin_l_bfgs_b(gcv,xpost,fprime=None,factr=10.,\
+            xpost,f,d = lbfgsb.fmin_l_bfgs_b(gcv,xpost,fprime=None,factr=1e7,\
                approx_grad=True,bounds=[(log10(sMinBnd),log10(sMaxBnd))],\
                args=(Lambda,aow,DCTy,IsFinite,Wtot,y,nof,noe,smoothOrder))
         s = 10**xpost[0];
@@ -404,8 +411,8 @@ def smoothn(y,nS0=10,axis=None,smoothOrder=2.0,sd=None,verbose=False,\
   return z,s,exitflag,Wtot
 
 def warning(s1,s2):
-  print s1
-  print s2[0]
+  print(s1)
+  print(s2[0])
 
 ## GCV score
 #---
@@ -489,6 +496,7 @@ def InitialGuess(y,I):
 # NB: filter is 2*I - (np.roll(I,-1) + np.roll(I,1))
 
 
+
 def dctND(data,f=dct):
   nd = len(data.shape)
   if nd == 1:
@@ -499,8 +507,12 @@ def dctND(data,f=dct):
     return f(f(f(data,norm='ortho',type=2,axis=0)\
                      ,norm='ortho',type=2,axis=1)\
                      ,norm='ortho',type=2,axis=2)
-
-def peaks(n):
+  elif nd ==4:
+    return f(f(f(f(data,norm='ortho',type=2,axis=0)\
+                       ,norm='ortho',type=2,axis=1)\
+                       ,norm='ortho',type=2,axis=2)\
+                       ,norm='ortho',type=2,axis=3) 
+def peaks(n):   
   '''
   Mimic basic of matlab peaks fn
   '''
@@ -519,6 +531,7 @@ def peaks(n):
     z += f
   return z 
 
+'''
 def test1():
    plt.figure(1)
    plt.clf()
@@ -636,7 +649,7 @@ def sparseSVD(D):
   try:
     import sparsesvd
   except:
-    print 'bummer ... better get sparsesvd'
+    print('bummer ... better get sparsesvd')
     exit(0)
   Ds = scipy.sparse.csc_matrix(D)
   a = sparsesvd.sparsesvd(Ds,Ds.shape[0])
@@ -699,4 +712,4 @@ def sparseTest(n=1000):
   # ((Vt.T * (np.diag(np.array(eigenvalues).flatten())**2)) * Vt)
   # we see you get the same as m.T * m by squaring the eigenvalues
 
-
+'''
